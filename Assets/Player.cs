@@ -26,8 +26,8 @@ public class Player : MonoBehaviour
 
     [SerializeField] public bool hasArmour;
 
-    public enum PlayerNumber {Player1, Player2 };
-    
+    public PlayerIndex PlayerNumber;
+    public enum PlayerIndex { Player1, Player2 };
 
     void Start()
     {
@@ -40,30 +40,16 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        playerInput.JumpInput();
-        if(hasArmour == false)
-        {
-            armour.SetActive(false);
-            armourWeight = 0;
-            armourReduceKnockback = 0;
-            armourReduceSpeed = 0;
-        }
-        else
-        {
-            armour.SetActive(true);
-            armourWeight = armourStats.armourWeightStat();
-            armourReduceKnockback = armourReduceKnockbackStat;
-            armourReduceSpeed = armourStats.armourSpeedReduceStat();
-        }
-
+        ArmourCheck();
     }
+
     private void FixedUpdate()
     {
-        //playerInput.HorizontalInput();
         MoveCall();
         Gravity();
-        //playerInput.AttackInput();
     }
+
+
     void MoveCall()
     { 
         rb.velocity = new Vector3(playerInput.horizontal* (speed - armourReduceSpeed), rb.velocity.y,0);
@@ -73,7 +59,7 @@ public class Player : MonoBehaviour
     {
         if(playerInput.canJump> 0)
         {
-            rb.velocity = (new Vector3(rb.velocity.x, jumpForce, rb.velocity.z));
+            rb.velocity = (new Vector3(rb.velocity.x, (jumpForce - armourStats.reduceJumpForce ), rb.velocity.z));
         }
     }
 
@@ -81,10 +67,30 @@ public class Player : MonoBehaviour
     {
         rb.AddForce(Physics.gravity * ((weight + armourWeight) / 10));
     }
+
+    void ArmourCheck()
+    {
+        if (hasArmour == false)
+        {
+            armour.SetActive(false);
+            armourWeight = 0;
+            armourReduceKnockback = 0;
+            armourReduceSpeed = 0;
+        }
+        else
+        {
+            armour.SetActive(true);
+            armourWeight = armourStats.armourWeight;
+            armourReduceKnockback = armourReduceKnockbackStat;
+            armourReduceSpeed = armourStats.armourReduceSpeed;
+        }
+    }
+
+    //Collision Detections----------------------------------------------------------
     //resetting number of jumps to max jumps
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Ground")
+        if (collision.gameObject.tag == "Ground")
         {
             playerInput.canJump = playerInput.maxJumps;
         }
@@ -92,25 +98,13 @@ public class Player : MonoBehaviour
     //checking if grounded
     private void OnCollisionStay(Collision collision)
     {
-        if(collision.gameObject.tag == "Ground")
+        if (collision.gameObject.tag == "Ground")
         {
             grounded = true;
         }
         else
         {
             grounded = false;
-        }
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.tag == "Ground")
-        {
-            if (!Input.GetKeyDown(KeyCode.UpArrow))
-            {
-                playerInput.canJump++;
-            }
-            playerInput.canJump--;
         }
     }
 }

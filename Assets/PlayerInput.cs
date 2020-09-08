@@ -5,54 +5,45 @@ using UnityEngine.SocialPlatforms;
 
 public class PlayerInput : MonoBehaviour
 {
-    [SerializeField] public int maxJumps;
 
+    public float horizontal; // Being checked in Player script: MoveCall()
+    public int canJump; //Being checked in Player script: JumpMove()
 
-    [SerializeField] public float horizontal;
     [SerializeField] private float horizontalInput;
-
-    [SerializeField] private bool leftKey;
-    [SerializeField] private bool rightKey;
-    [SerializeField] public int canJump;
+    [SerializeField] private int maxJumps;
 
     [SerializeField] private Player player;
+    [SerializeField] private PlayerControls controls;
+
     private void Start()
     {
         player = GetComponent<Player>();
+        controls = GetComponent<PlayerControls>();
     }
     private void FixedUpdate()
     {
         HorizontalInput();
         AttackInput();
+        JumpInput();
     }
     public void HorizontalInput()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
+        horizontalInput = Input.GetAxis(controls.horizontalKeys);
         horizontal = (horizontalInput);
 
         if (horizontalInput < 0)
         {
-            leftKey = true;
             transform.rotation = Quaternion.Euler(0, 0, 0);
-        }
-        else
-        {
-            leftKey = false;
         }
         if (horizontalInput > 0)
         {
-            rightKey = true;
             transform.rotation = Quaternion.Euler(0, 180, 0);
-        }
-        else
-        {
-            rightKey = false;
         }
     }
 
     public void JumpInput()
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(controls.jumpKey))
         {
             player.JumpMove();
             canJump -= 1;
@@ -69,9 +60,30 @@ public class PlayerInput : MonoBehaviour
 
     public void AttackInput()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(controls.jabKey))
         {
             player.attack.JabAttack();
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.tag == "Ground")
+        {
+            if (!Input.GetKeyDown(controls.jumpKey))
+            {
+                canJump++;
+            }
+            canJump--;
+        }
+    }
+
+    //resetting number of jumps to max jumps
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Ground")
+        {
+            canJump = maxJumps;
         }
     }
 }
