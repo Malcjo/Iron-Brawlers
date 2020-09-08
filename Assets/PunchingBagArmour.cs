@@ -14,7 +14,9 @@ public class PunchingBagArmour : MonoBehaviour
         if(other.tag == "Jab")
         {
             Vector3 Hit = other.transform.forward;
-            punchingBag.knockbackResistance = knockBackResistance();
+            punchingBag.Knockback(Hit, knockBackResistance());
+            punchingBag.armour = false;
+            knockBackResistance();
         }
     }
 

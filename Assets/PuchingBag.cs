@@ -8,6 +8,7 @@ public class PuchingBag : MonoBehaviour
     public float knockbackResistance;
     public bool armour;
     public GameObject armourMesh;
+    public bool hitArmour;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,9 +25,11 @@ public class PuchingBag : MonoBehaviour
         if(other.tag == "Jab")
         {
             Vector3 Hit = other.transform.forward;
-            Knockback(Hit, knockbackResistance);
+            if(armour == false)
+            {
+                Knockback(Hit, knockbackResistance);
+            }
             knockbackResistance = 0;
-            armour = false;
         }
     }
     void CheckArmour()
