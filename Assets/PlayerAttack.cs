@@ -18,13 +18,14 @@ public class PlayerAttack : MonoBehaviour
     public void JabAttack()
     {
         StartCoroutine(Jab());
-        animationScript.Jab();
         StopCoroutine(Jab());
     }
     IEnumerator Jab()
     {
         jab.SetActive(true);
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.0001f);
         jab.SetActive(false);
     }
+
+   
 }

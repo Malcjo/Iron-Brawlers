@@ -54,6 +54,7 @@ public class PlayerInput : MonoBehaviour
     {
         if (Input.GetKeyDown(controls.jumpKey))
         {
+            animationScript.Jumping();
             player.JumpMove();
             canJump -= 1;
             if (canJump < 0)
@@ -71,7 +72,7 @@ public class PlayerInput : MonoBehaviour
     {
         if (Input.GetKeyDown(controls.jabKey))
         {
-            player.attack.JabAttack();
+            animationScript.Jab();
         }
     }
 

@@ -33,7 +33,6 @@ public class Player : MonoBehaviour
     {
         hasArmour = false;
         armourStats = GetComponent<ArmourStats>();
-        attack = GetComponent<PlayerAttack>();
         playerInput = GetComponent<PlayerInput>();
         rb = GetComponent<Rigidbody>();
     }
