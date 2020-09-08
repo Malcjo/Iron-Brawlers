@@ -10,7 +10,8 @@ public class PlayerInput : MonoBehaviour
     public int canJump; //Being checked in Player script: JumpMove()
 
     [SerializeField] private float horizontalInput;
-    [SerializeField] private int maxJumps;
+    [SerializeField] public int maxJumps;
+    MixamoAnimations animationScript;
 
     [SerializeField] private Player player;
     [SerializeField] private PlayerControls controls;
@@ -19,6 +20,7 @@ public class PlayerInput : MonoBehaviour
     {
         player = GetComponent<Player>();
         controls = GetComponent<PlayerControls>();
+        animationScript = GetComponentInChildren<MixamoAnimations>();
     }
     private void FixedUpdate()
     {
@@ -28,8 +30,9 @@ public class PlayerInput : MonoBehaviour
     }
     public void HorizontalInput()
     {
-        horizontalInput = Input.GetAxis(controls.horizontalKeys);
+        horizontalInput = Input.GetAxis("Horizontal");
         horizontal = (horizontalInput);
+        animationScript.Running();
 
         if (horizontalInput < 0)
         {

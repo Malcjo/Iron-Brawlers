@@ -629,6 +629,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bab61163a51eb2a4abba7b170449c706, type: 3}
+--- !u!1 &765537303 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: bab61163a51eb2a4abba7b170449c706,
+    type: 3}
+  m_PrefabInstance: {fileID: 765537302}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &765537304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 765537303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebc704ae8a907e74587470c09f823d90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 568482158}
 --- !u!1 &932385263
 GameObject:
   m_ObjectHideFlags: 0
@@ -1056,10 +1075,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1471934645}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ebc704ae8a907e74587470c09f823d90, type: 3}
+  m_Script: {fileID: 11500000, guid: e386846e6080adf4db4a3539dd571c33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 568482158}
+  player: {fileID: 0}
+  horizontalKeys: 
+  jumpKey: 0
+  jabKey: 0
 --- !u!4 &1471934648
 Transform:
   m_ObjectHideFlags: 0
@@ -1105,6 +1127,9 @@ MonoBehaviour:
   armourType: 0
   armourIndex: 0
   player: {fileID: 0}
+  armourWeight: 0
+  armourReduceSpeed: 0
+  reduceJumpForce: 0
 --- !u!114 &1471934651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1132,6 +1157,7 @@ MonoBehaviour:
   armourReduceSpeedStat: 0
   armourReduceKnockbackStat: 0
   hasArmour: 0
+  PlayerNumber: 0
 --- !u!114 &1471934652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1144,13 +1170,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f85bbc7d98f26ff4b88a6dc70f6f78af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxJumps: 2
   horizontal: 0
-  horizontalInput: 0
-  leftKey: 0
-  rightKey: 1
   canJump: 0
+  horizontalInput: 0
+  maxJumps: 2
   player: {fileID: 0}
+  controls: {fileID: 0}
 --- !u!1 &1555300499
 GameObject:
   m_ObjectHideFlags: 0

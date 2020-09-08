@@ -10,7 +10,7 @@ public class PlayerAttack : MonoBehaviour
 
     void Start()
     {
-        animationScript = GetComponent<MixamoAnimations>();
+        animationScript = GetComponentInChildren<MixamoAnimations>();
         jab.SetActive(false);
     }
 
