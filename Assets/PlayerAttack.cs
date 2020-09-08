@@ -5,9 +5,12 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour
 {
     public GameObject jab;
+    MixamoAnimations animationScript;
+
 
     void Start()
     {
+        animationScript = GetComponent<MixamoAnimations>();
         jab.SetActive(false);
     }
 
@@ -15,12 +18,13 @@ public class PlayerAttack : MonoBehaviour
     public void JabAttack()
     {
         StartCoroutine(Jab());
+        animationScript.Jab();
         StopCoroutine(Jab());
     }
     IEnumerator Jab()
     {
         jab.SetActive(true);
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.3f);
         jab.SetActive(false);
     }
 }
