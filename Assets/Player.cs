@@ -39,7 +39,6 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        ArmourCheck();
     }
 
     private void FixedUpdate()
@@ -51,7 +50,7 @@ public class Player : MonoBehaviour
 
     void MoveCall()
     { 
-        rb.velocity = new Vector3(playerInput.horizontal* (speed - armourReduceSpeed), rb.velocity.y,0);
+        rb.velocity = new Vector3(playerInput.horizontal* (speed - armourStats.armourReduceSpeed), rb.velocity.y,0);
     }
 
     public void JumpMove()
@@ -64,26 +63,9 @@ public class Player : MonoBehaviour
 
     void Gravity()
     {
-        rb.AddForce(Physics.gravity * ((weight + armourWeight) / 10));
+        rb.AddForce(Physics.gravity * ((weight + armourStats.armourWeight) / 10));
     }
 
-    void ArmourCheck()
-    {
-        if (hasArmour == false)
-        {
-            armour.SetActive(false);
-            armourWeight = 0;
-            armourReduceKnockback = 0;
-            armourReduceSpeed = 0;
-        }
-        else
-        {
-            armour.SetActive(true);
-            armourWeight = armourStats.armourWeight;
-            armourReduceKnockback = armourReduceKnockbackStat;
-            armourReduceSpeed = armourStats.armourReduceSpeed;
-        }
-    }
 
     //Collision Detections----------------------------------------------------------
     //resetting number of jumps to max jumps

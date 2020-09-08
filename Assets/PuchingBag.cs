@@ -19,6 +19,7 @@ public class PuchingBag : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        CheckArmour();
     }
     private void OnTriggerEnter(Collider other)
     {
