@@ -17,5 +17,15 @@ public class MixamoAnimations : MonoBehaviour
         anim.SetBool("Running", true);
     }
 
+    public void Idle()
+    {
+        anim.SetBool("Running", false);
+    }
+
+    public void Jumping()
+    {
+        anim.SetTrigger("Jumping");
+    }
+
 
 }

@@ -30,17 +30,23 @@ public class PlayerInput : MonoBehaviour
     }
     public void HorizontalInput()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
+        horizontalInput = Input.GetAxisRaw("Horizontal");
         horizontal = (horizontalInput);
-        animationScript.Running();
+        
 
         if (horizontalInput < 0)
         {
             transform.rotation = Quaternion.Euler(0, 0, 0);
+            animationScript.Running();
         }
         if (horizontalInput > 0)
         {
             transform.rotation = Quaternion.Euler(0, 180, 0);
+            animationScript.Running();
+        }
+        if (horizontalInput == 0)
+        {
+            animationScript.Idle();
         }
     }
 
