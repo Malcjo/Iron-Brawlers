@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 3c5dc42b214a04e4684b9614d6b6a1c2
+guid: 6960b34551bbbe246bfd3d674cbe4d6e
 ModelImporter:
   serializedVersion: 26
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: Punching
+    second: Hook
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -35,11 +35,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Punching
+      name: Hook
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0
-      lastFrame: 18
+      lastFrame: 20
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -59,8 +59,22 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.5642994
-        functionName: JabAttack
+      - time: 0.4203455
+        functionName: ComboPossible
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.67150724
+        functionName: Combo
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.7485605
+        functionName: ComboReset
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

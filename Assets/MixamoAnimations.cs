@@ -5,14 +5,48 @@ using UnityEngine;
 public class MixamoAnimations : MonoBehaviour
 {
     public Animator anim;
+    bool comboPossible;
+    public int comboStep;
 
 
     public void Jab()
     {
-        //jab animation has event that calls JabAttack() on PlayerAttack script setting hitboxes.
-        anim.SetTrigger("Jab");
+        if(comboStep == 0)
+        {
+           anim.SetTrigger("Punch1");
+            comboStep = 1;
+            return;
+        }
+        if (comboStep != 0)
+        {
+            if (comboPossible)
+            {
+                comboPossible = false;
+                comboStep += 1;
+            }
+        }
     }
 
+    public void ComboPossible()
+    {
+        comboPossible = true;
+    }
+
+    public void Combo()
+    {
+        if(comboStep == 2)
+            anim.SetTrigger("Punch2");
+        if (comboStep == 3)
+            anim.SetTrigger("Punch3");
+    }
+
+    public void ComboReset()
+    {
+        comboPossible = false;
+        comboStep = 0;
+    }
+
+    
     public void Jumping()
     {
         anim.SetTrigger("Jumping");
