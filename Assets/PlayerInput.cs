@@ -30,7 +30,7 @@ public class PlayerInput : MonoBehaviour
     }
     public void HorizontalInput()
     {
-        horizontalInput = Input.GetAxisRaw("Horizontal");
+        horizontalInput = Input.GetAxisRaw(controls.horizontalKeys);
         horizontal = (horizontalInput);
         
 

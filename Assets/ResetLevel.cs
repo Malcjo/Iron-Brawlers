@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class ResetLevel : MonoBehaviour
 {
+    public GameObject player;
     private void OnTriggerEnter(Collider other)
     {
-        SceneManager.LoadScene(0);
+        player.transform.position = new Vector3(0, 10, 0);
     }
 }
