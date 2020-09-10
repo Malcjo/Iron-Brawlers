@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAttack : MonoBehaviour
+public class HitBoxManager : MonoBehaviour
 {
     public GameObject jab;
-    MixamoAnimations animationScript;
+    AnimationManager animationScript;
 
 
     void Start()
     {
-        animationScript = GetComponentInChildren<MixamoAnimations>();
+        animationScript = GetComponentInChildren<AnimationManager>();
         jab.SetActive(false);
     }
 

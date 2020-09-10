@@ -11,7 +11,7 @@ public class PlayerInput : MonoBehaviour
 
     [SerializeField] private float horizontalInput;
     [SerializeField] public int maxJumps;
-    MixamoAnimations animationScript;
+    AnimationManager animationScript;
 
     [SerializeField] private Player player;
     [SerializeField] private PlayerControls controls;
@@ -20,7 +20,7 @@ public class PlayerInput : MonoBehaviour
     {
         player = GetComponent<Player>();
         controls = GetComponent<PlayerControls>();
-        animationScript = GetComponentInChildren<MixamoAnimations>();
+        animationScript = GetComponentInChildren<AnimationManager>();
     }
     private void FixedUpdate()
     {

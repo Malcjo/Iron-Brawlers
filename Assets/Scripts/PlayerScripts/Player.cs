@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
 
 
     public Rigidbody rb;
-    [SerializeField] public PlayerAttack attack;
+    [SerializeField] public HitBoxManager attack;
     [SerializeField] private PlayerInput playerInput;
     [SerializeField] private ArmourStats armourStats;
 

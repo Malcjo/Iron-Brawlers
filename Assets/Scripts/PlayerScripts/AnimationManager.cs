@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MixamoAnimations : MonoBehaviour
+public class AnimationManager : MonoBehaviour
 {
     public List<string> animlist = new List<string>();
     public Animator anim;
