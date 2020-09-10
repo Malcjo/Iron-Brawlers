@@ -54,7 +54,7 @@ public class PlayerInput : MonoBehaviour
     {
         if (Input.GetKeyDown(controls.jumpKey))
         {
-            animationScript.Jumping();
+            animationScript.JumpPrep();
             player.JumpMove();
             canJump -= 1;
             if (canJump < 0)

@@ -33,9 +33,14 @@ public class AnimationManager : MonoBehaviour
         }
     }
     
-    public void Jumping()
+    public void JumpPrep()
     {
-        anim.SetTrigger("Jumping");
+        anim.SetTrigger("JumpPrep");
+    }
+
+    public void JumpLanding()
+    {
+       
     }
 
     public void Running()
