@@ -745,7 +745,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebc704ae8a907e74587470c09f823d90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animlist:
+  - Punch Combo1
+  - Punch Combo2
+  - Punch Combo3
   anim: {fileID: 568482158}
+  comboStep: 0
+  comboTimer: 1
 --- !u!114 &765537305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1386,8 +1392,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e386846e6080adf4db4a3539dd571c33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  horizontalKeys: 
+  player: {fileID: 1471934651}
+  horizontalKeys: kl
   jumpKey: 0
   jabKey: 0
 --- !u!4 &1471934648

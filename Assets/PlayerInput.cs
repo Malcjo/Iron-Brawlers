@@ -30,7 +30,7 @@ public class PlayerInput : MonoBehaviour
     }
     public void HorizontalInput()
     {
-        horizontalInput = Input.GetAxisRaw(controls.horizontalKeys);
+        horizontalInput = Input.GetAxisRaw("Horizontal");
         horizontal = (horizontalInput);
         
 
@@ -72,7 +72,7 @@ public class PlayerInput : MonoBehaviour
     {
         if (Input.GetKeyDown(controls.jabKey))
         {
-            animationScript.Jab();
+            animationScript.JabCombo();
         }
     }
 

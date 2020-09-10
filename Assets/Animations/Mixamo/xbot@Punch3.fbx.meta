@@ -38,7 +38,7 @@ ModelImporter:
       name: Uppercut
       takeName: mixamo.com
       internalID: 0
-      firstFrame: 12.9
+      firstFrame: 2.1
       lastFrame: 30.2
       wrapMode: 0
       orientationOffsetY: 0
@@ -58,21 +58,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 0.30326295
-        functionName: JabAttack
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.671785
-        functionName: ComboReset
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

@@ -4,48 +4,34 @@ using UnityEngine;
 
 public class MixamoAnimations : MonoBehaviour
 {
+    public List<string> animlist = new List<string>();
     public Animator anim;
-    bool comboPossible;
+
     public int comboStep;
+    public float comboTimer;
 
 
-    public void Jab()
+    private void Update()
     {
-        if(comboStep == 0)
+        if(comboTimer > 0)
         {
-           anim.SetTrigger("Punch1");
-            comboStep = 1;
-            return;
-        }
-        if (comboStep != 0)
-        {
-            if (comboPossible)
+            comboTimer -= Time.deltaTime;
+            if (comboTimer < 0)
             {
-                comboPossible = false;
-                comboStep += 1;
+                comboStep = 0;
             }
         }
     }
 
-    public void ComboPossible()
+    public void JabCombo()
     {
-        comboPossible = true;
+        if(comboStep < animlist.Count)
+        {
+            anim.Play(animlist[comboStep]);
+            comboStep++;
+            comboTimer = 1;
+        }
     }
-
-    public void Combo()
-    {
-        if(comboStep == 2)
-            anim.SetTrigger("Punch2");
-        if (comboStep == 3)
-            anim.SetTrigger("Punch3");
-    }
-
-    public void ComboReset()
-    {
-        comboPossible = false;
-        comboStep = 0;
-    }
-
     
     public void Jumping()
     {
@@ -61,9 +47,6 @@ public class MixamoAnimations : MonoBehaviour
     {
         anim.SetBool("Running", false);
     }
-
-
-    
 
 
 }
