@@ -22,6 +22,13 @@ public class PlayerInput : MonoBehaviour
         controls = GetComponent<PlayerControls>();
         animationScript = GetComponentInChildren<AnimationManager>();
     }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+    }
     private void FixedUpdate()
     {
         HorizontalInput();
@@ -30,7 +37,7 @@ public class PlayerInput : MonoBehaviour
     }
     public void HorizontalInput()
     {
-        horizontalInput = Input.GetAxisRaw("Horizontal");
+        horizontalInput = Input.GetAxisRaw(controls.horizontalKeys);
         horizontal = (horizontalInput);
         
 
@@ -96,4 +103,5 @@ public class PlayerInput : MonoBehaviour
             canJump = maxJumps;
         }
     }
+
 }

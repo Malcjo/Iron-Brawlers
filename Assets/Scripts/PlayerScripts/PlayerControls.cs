@@ -10,26 +10,24 @@ public class PlayerControls : MonoBehaviour
     public KeyCode jumpKey;
     public KeyCode jabKey;
 
-    void Start()
-    {
-        player = GetComponent<Player>();
-    }
+    public PlayerIndex PlayerNumber;
+    public enum PlayerIndex { Player1, Player2 };
 
-
-    void Update()
+    void Awake()
     {
         CheckControl();
     }
+
     void CheckControl()
     {
-        switch(player.PlayerNumber)
+        switch(PlayerNumber)
         {
-            case Player.PlayerIndex.Player1:
+            case PlayerIndex.Player1:
                 horizontalKeys = "P1Horizontal";
                 jumpKey = KeyCode.Y;
                 jabKey = KeyCode.G;
                 break;
-            case Player.PlayerIndex.Player2:
+            case PlayerIndex.Player2:
                 horizontalKeys = "P2Horizontal";
                 jumpKey = KeyCode.Keypad5;
                 jabKey = KeyCode.Keypad1;

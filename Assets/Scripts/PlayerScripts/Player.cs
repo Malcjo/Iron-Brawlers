@@ -26,9 +26,6 @@ public class Player : MonoBehaviour
 
     [SerializeField] public bool hasArmour;
 
-    public PlayerIndex PlayerNumber;
-    public enum PlayerIndex { Player1, Player2 };
-
     void Start()
     {
         hasArmour = false;
