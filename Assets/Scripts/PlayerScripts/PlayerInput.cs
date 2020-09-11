@@ -16,6 +16,9 @@ public class PlayerInput : MonoBehaviour
     [SerializeField] private Player player;
     [SerializeField] private PlayerControls controls;
 
+    [Range(-1,1)]
+    public int FacingDirection;
+
     private void Start()
     {
         player = GetComponent<Player>();
@@ -43,11 +46,13 @@ public class PlayerInput : MonoBehaviour
 
         if (horizontalInput < 0)
         {
+            FacingDirection = -1;
             transform.rotation = Quaternion.Euler(0, 0, 0);
             animationScript.Running();
         }
         if (horizontalInput > 0)
         {
+            FacingDirection = 1;
             transform.rotation = Quaternion.Euler(0, 180, 0);
             animationScript.Running();
         }
