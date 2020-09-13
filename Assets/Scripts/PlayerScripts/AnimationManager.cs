@@ -35,12 +35,13 @@ public class AnimationManager : MonoBehaviour
     
     public void JumpPrep()
     {
-        anim.SetTrigger("JumpPrep");
+        anim.Play("JumpPrep");
+        anim.SetBool("Jumping", true);
     }
 
     public void JumpLanding()
     {
-       
+        anim.SetBool("Jumping", false);
     }
 
     public void Running()

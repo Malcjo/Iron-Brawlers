@@ -91,6 +91,7 @@ public class PlayerInput : MonoBehaviour
     private void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.tag == "Ground")
+            
         {
             if (!Input.GetKeyDown(controls.jumpKey))
             {
@@ -103,8 +104,10 @@ public class PlayerInput : MonoBehaviour
     //resetting number of jumps to max jumps
     private void OnCollisionEnter(Collision collision)
     {
+
         if (collision.gameObject.tag == "Ground")
         {
+            animationScript.JumpLanding();
             canJump = maxJumps;
         }
     }
