@@ -80,9 +80,13 @@ public class Player : MonoBehaviour
         {
             grounded = true;
         }
-        else
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.tag == "Ground")
         {
             grounded = false;
         }
+            
     }
 }

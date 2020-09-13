@@ -7,10 +7,19 @@ public class AnimationManager : MonoBehaviour
     public List<string> animlist = new List<string>();
     public Animator anim;
 
+    PlayerControls controls;
+
+    [SerializeField]
+    bool canDoubleJump;
+
     public int comboStep;
     public float comboTimer;
 
-
+    private void Start()
+    {
+        controls = GetComponentInParent<PlayerControls>();
+        canDoubleJump = false;
+    }
     private void Update()
     {
         if(comboTimer > 0)
@@ -21,6 +30,13 @@ public class AnimationManager : MonoBehaviour
                 comboStep = 0;
             }
         }
+
+        if (Input.GetKeyDown(controls.jumpKey) && canDoubleJump == true)
+        {
+            anim.SetBool("canDoubleJump", true);
+        }
+
+       
     }
 
     public void JabCombo()
@@ -35,14 +51,17 @@ public class AnimationManager : MonoBehaviour
     
     public void JumpPrep()
     {
-        anim.Play("JumpPrep");
         anim.SetBool("Jumping", true);
+        canDoubleJump = true;
     }
 
     public void JumpLanding()
     {
         anim.SetBool("Jumping", false);
+        anim.SetBool("canDoubleJump", false);
+        canDoubleJump = false;
     }
+
 
     public void Running()
     {
