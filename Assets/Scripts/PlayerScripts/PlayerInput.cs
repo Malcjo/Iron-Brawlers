@@ -16,11 +16,21 @@ public class PlayerInput : MonoBehaviour
     [SerializeField] private Player player;
     [SerializeField] private PlayerControls controls;
 
+    [Range(-1,1)]
+    public int FacingDirection;
+
     private void Start()
     {
         player = GetComponent<Player>();
         controls = GetComponent<PlayerControls>();
         animationScript = GetComponentInChildren<AnimationManager>();
+    }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
     private void FixedUpdate()
     {
@@ -30,17 +40,19 @@ public class PlayerInput : MonoBehaviour
     }
     public void HorizontalInput()
     {
-        horizontalInput = Input.GetAxisRaw("Horizontal");
+        horizontalInput = Input.GetAxisRaw(controls.horizontalKeys);
         horizontal = (horizontalInput);
         
 
         if (horizontalInput < 0)
         {
+            FacingDirection = -1;
             transform.rotation = Quaternion.Euler(0, 0, 0);
             animationScript.Running();
         }
         if (horizontalInput > 0)
         {
+            FacingDirection = 1;
             transform.rotation = Quaternion.Euler(0, 180, 0);
             animationScript.Running();
         }
@@ -96,4 +108,5 @@ public class PlayerInput : MonoBehaviour
             canJump = maxJumps;
         }
     }
+
 }

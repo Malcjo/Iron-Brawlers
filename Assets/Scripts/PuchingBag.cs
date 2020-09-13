@@ -25,7 +25,7 @@ public class PuchingBag : MonoBehaviour
     {
         if(other.tag == "Jab")
         {
-            Vector3 Hit = other.transform.forward;
+            Vector3 Hit = other.GetComponent<TempHitBox>().HitDirection();
             if(armour == false)
             {
                 Knockback(Hit, knockbackResistance);
