@@ -8,6 +8,7 @@ public class AnimationManager : MonoBehaviour
     public Animator anim;
 
     PlayerControls controls;
+    Player playerScript;
 
     [SerializeField]
     bool canDoubleJump;
@@ -18,6 +19,8 @@ public class AnimationManager : MonoBehaviour
     private void Start()
     {
         controls = GetComponentInParent<PlayerControls>();
+        playerScript = GetComponentInParent<Player>();
+
         canDoubleJump = false;
     }
     private void Update()
@@ -31,9 +34,9 @@ public class AnimationManager : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(controls.jumpKey) && canDoubleJump == true)
+        if (Input.GetKeyDown(controls.jumpKey) && playerScript.grounded == false)
         {
-            anim.SetBool("canDoubleJump", true);
+            anim.Play("DoubleJump");
         }
 
        
@@ -52,14 +55,14 @@ public class AnimationManager : MonoBehaviour
     public void JumpPrep()
     {
         anim.SetBool("Jumping", true);
-        canDoubleJump = true;
+        //canDoubleJump = true;
     }
 
     public void JumpLanding()
     {
         anim.SetBool("Jumping", false);
-        anim.SetBool("canDoubleJump", false);
-        canDoubleJump = false;
+        //anim.SetBool("canDoubleJump", false);
+        //canDoubleJump = false;
     }
 
 
