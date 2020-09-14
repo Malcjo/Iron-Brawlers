@@ -11,23 +11,28 @@ public class Player : MonoBehaviour
     [SerializeField] public bool grounded;
     [SerializeField] public GameObject armour;
 
+    public float friction;
 
     public Rigidbody rb;
     [SerializeField] public HitBoxManager attack;
     [SerializeField] private PlayerInput playerInput;
     [SerializeField] private ArmourStats armourStats;
 
+    /*
     [SerializeField] public float armourWeight;
     [SerializeField] public float armourReduceSpeed;
     [SerializeField] public float armourReduceKnockback;
 
     [SerializeField] public float armourReduceSpeedStat;
     [SerializeField] public float armourReduceKnockbackStat;
-
+    */
     [SerializeField] public bool hasArmour;
+
+    public bool inAnimation;
 
     void Start()
     {
+        inAnimation = false;
         hasArmour = false;
         armourStats = GetComponent<ArmourStats>();
         playerInput = GetComponent<PlayerInput>();
@@ -46,15 +51,30 @@ public class Player : MonoBehaviour
 
 
     void MoveCall()
-    { 
-        rb.velocity = new Vector3(playerInput.horizontal* (speed - armourStats.armourReduceSpeed), rb.velocity.y,0);
+    {
+        if (inAnimation == true)
+        {
+            if (grounded == true)
+            {
+                rb.velocity = new Vector3(Mathf.Lerp(rb.velocity.x, 0, friction), rb.velocity.y, 0);
+                return;
+            }
+            else if (grounded == false)
+            {
+                rb.velocity = new Vector3(playerInput.horizontal * (speed - armourStats.armourReduceSpeed), rb.velocity.y, 0);
+            }
+        }
+        else
+        {
+            rb.velocity = new Vector3(playerInput.horizontal * (speed - armourStats.armourReduceSpeed), rb.velocity.y, 0);
+        }
     }
 
     public void JumpMove()
     {
-        if(playerInput.canJump> 0)
+        if (playerInput.canJump > 0)
         {
-            rb.velocity = (new Vector3(rb.velocity.x, (jumpForce - armourStats.reduceJumpForce ), rb.velocity.z));
+            rb.velocity = (new Vector3(rb.velocity.x, (jumpForce - armourStats.reduceJumpForce), rb.velocity.z));
         }
     }
 

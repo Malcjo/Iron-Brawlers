@@ -39,7 +39,6 @@ public class AnimationManager : MonoBehaviour
             anim.Play("DoubleJump");
         }
 
-       
     }
 
     public void JabCombo()
@@ -75,6 +74,13 @@ public class AnimationManager : MonoBehaviour
     {
         anim.SetBool("Running", false);
     }
-
+    public void InAnimation()
+    {
+        playerScript.inAnimation = true;
+    }
+    public void OutAnimation()
+    {
+        playerScript.inAnimation = false;
+    }
 
 }

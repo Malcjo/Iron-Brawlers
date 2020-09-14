@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using JetBrains.Annotations;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SocialPlatforms;
@@ -13,6 +14,8 @@ public class PlayerInput : MonoBehaviour
     [SerializeField] public int maxJumps;
     AnimationManager animationScript;
 
+
+
     [SerializeField] private Player player;
     [SerializeField] private PlayerControls controls;
 
@@ -21,6 +24,7 @@ public class PlayerInput : MonoBehaviour
 
     private void Start()
     {
+
         player = GetComponent<Player>();
         controls = GetComponent<PlayerControls>();
         animationScript = GetComponentInChildren<AnimationManager>();
@@ -40,9 +44,13 @@ public class PlayerInput : MonoBehaviour
     }
     public void HorizontalInput()
     {
+
         horizontalInput = Input.GetAxisRaw(controls.horizontalKeys);
         horizontal = (horizontalInput);
-        
+        if (player.inAnimation == true)
+        {
+            return;
+        }
 
         if (horizontalInput < 0)
         {
@@ -66,6 +74,7 @@ public class PlayerInput : MonoBehaviour
     {
         if (Input.GetKeyDown(controls.jumpKey))
         {
+            player.inAnimation = false;
             animationScript.JumpPrep();
             player.JumpMove();
             canJump -= 1;

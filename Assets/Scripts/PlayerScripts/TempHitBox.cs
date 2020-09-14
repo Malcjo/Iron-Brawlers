@@ -6,25 +6,46 @@ public class TempHitBox : MonoBehaviour
 {
     public Attacktype attackIndex;
     public PlayerInput playerInput;
+    public GameObject rightArm;
+    public GameObject leftArm;
+
+    public Vector3 hitDirection;
     public enum Attacktype {Forward, Neutral, High, Low};
+    public int armIndex;
+
     private void Awake()
     {
         playerInput = GetComponentInParent<PlayerInput>();
+    }
+    private void Update()
+    {
+        if(armIndex == 0)
+        {
+            this.gameObject.transform.position = leftArm.transform.position;
+            this.gameObject.transform.rotation = leftArm.transform.rotation;
+        }
+        else if(armIndex == 1)
+        {
+            this.gameObject.transform.position = rightArm.transform.position;
+            this.gameObject.transform.rotation = rightArm.transform.rotation;
+        }
     }
     public Vector3 HitDirection()
     {
         switch (attackIndex)
         {
             case Attacktype.Forward:
-                return new Vector3(1, 0.5f, 0) * playerInput.FacingDirection;
+                hitDirection.x = 1; hitDirection.y = 0.5f; hitDirection.z = 0; ;
+                return new Vector3 (hitDirection.x * playerInput.FacingDirection, hitDirection.y, hitDirection.z);
             case Attacktype.Neutral:
-                return new Vector3(0f, 0, 0) * playerInput.FacingDirection;
+                return new Vector3(hitDirection.x * playerInput.FacingDirection, hitDirection.y, hitDirection.z);
             case Attacktype.High:
-                return new Vector3(0, 0, 0) * playerInput.FacingDirection;
+                return new Vector3(hitDirection.x * playerInput.FacingDirection, hitDirection.y, hitDirection.z);
             case Attacktype.Low:
-                return new Vector3(0, 0, 0) * playerInput.FacingDirection;
+                return new Vector3(hitDirection.x * playerInput.FacingDirection, hitDirection.y, hitDirection.z);
             default:
-                return new Vector3(0, 0f, 0) * playerInput.FacingDirection;
+                hitDirection.x = 1; hitDirection.y = 0.5f; hitDirection.z = 0; ;
+                return new Vector3(hitDirection.x * playerInput.FacingDirection, hitDirection.y, hitDirection.z);
         }
     }
 }
