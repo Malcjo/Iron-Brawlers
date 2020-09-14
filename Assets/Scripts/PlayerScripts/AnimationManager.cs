@@ -15,6 +15,9 @@ public class AnimationManager : MonoBehaviour
 
     public int comboStep;
     public float comboTimer;
+    public animationGroup state;
+
+    public enum animationGroup {idle, crouching, jumping}
 
     private void Start()
     {
@@ -34,17 +37,47 @@ public class AnimationManager : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(controls.jumpKey) && playerScript.grounded == false)
+        if (Input.GetKeyDown(controls.jumpKey))
+        {
+            state = animationGroup.jumping;
+        }
+
+        else
+        {
+            state = animationGroup.idle;
+        }
+
+        if (state == animationGroup.jumping && playerScript.grounded == false)
         {
             anim.Play("DoubleJump");
         }
 
+
+        if (Input.GetKey(controls.crouchKey))
+        {
+            state = animationGroup.crouching;
+        }
+        else
+        {
+            state = animationGroup.idle;
+        }
+        playerScript.inAnimation = Input.GetKey(controls.crouchKey);
+        anim.SetBool("isCrouching", Input.GetKey(controls.crouchKey));
+        
+        
+
+        if (state == animationGroup.crouching && Input.GetKeyDown(controls.jabKey))
+        {
+            playerScript.inAnimation = true;
+            anim.Play("Leg Sweep");
+        }
     }
 
     public void JabCombo()
     {
         if(comboStep < animlist.Count)
         {
+            playerScript.inAnimation = true;
             anim.Play(animlist[comboStep]);
             comboStep++;
             comboTimer = 1;
