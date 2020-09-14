@@ -16,15 +16,15 @@ public class TempHitBox : MonoBehaviour
         switch (attackIndex)
         {
             case Attacktype.Forward:
-                return new Vector3(1, 0, 0) * playerInput.FacingDirection;
+                return new Vector3(1, 0.5f, 0) * playerInput.FacingDirection;
             case Attacktype.Neutral:
-                return new Vector3(0.5f, 0, 0) * playerInput.FacingDirection;
+                return new Vector3(0f, 0, 0) * playerInput.FacingDirection;
             case Attacktype.High:
-                return new Vector3(0, -1, 0) * playerInput.FacingDirection;
+                return new Vector3(0, 0, 0) * playerInput.FacingDirection;
             case Attacktype.Low:
-                return new Vector3(0, 1, 0) * playerInput.FacingDirection;
+                return new Vector3(0, 0, 0) * playerInput.FacingDirection;
             default:
-                return new Vector3(1, 0, 0) * playerInput.FacingDirection;
+                return new Vector3(0, 0f, 0) * playerInput.FacingDirection;
         }
     }
 }

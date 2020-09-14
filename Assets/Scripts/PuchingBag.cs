@@ -9,14 +9,18 @@ public class PuchingBag : MonoBehaviour
     public bool armour;
     public GameObject armourMesh;
     public bool hitArmour;
-    // Start is called before the first frame update
+    private PunchingBagArmour ArmourStats;
+
+    private void Awake()
+    {
+        ArmourStats = GetComponentInChildren<PunchingBagArmour>();
+    }
     void Start()
     {
         armour = true;
         rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         CheckArmour();
@@ -25,12 +29,23 @@ public class PuchingBag : MonoBehaviour
     {
         if(other.tag == "Jab")
         {
+
             Vector3 Hit = other.GetComponent<TempHitBox>().HitDirection();
-            if(armour == false)
+
+            if (armour == true)
             {
-                Knockback(Hit, knockbackResistance);
+                Debug.Log("Hit Armour!");
+                return;
+            }
+            else if (armour == false)
+            {
+                Debug.Log("Hit Body!");
+                knockbackResistance = 0;
+                Knockback(Hit, ArmourStats.knockBackResistance());
             }
             knockbackResistance = 0;
+            
+            
         }
     }
     void CheckArmour()

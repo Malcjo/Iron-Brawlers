@@ -13,23 +13,20 @@ public class PunchingBagArmour : MonoBehaviour
     {
         if(other.tag == "Jab")
         {
-            Vector3 Hit = other.transform.forward;
+            Vector3 Hit = other.GetComponent<TempHitBox>().HitDirection();
             punchingBag.Knockback(Hit, knockBackResistance());
             punchingBag.armour = false;
-            knockBackResistance();
         }
     }
 
-    private float knockBackResistance()
+    public float knockBackResistance()
     {
         if (punchingBag.armour == true)
         {
-            this.gameObject.SetActive(true);
             return 200;
         }
         else
         {
-            this.gameObject.SetActive(false);
             return 0;
         }
 
