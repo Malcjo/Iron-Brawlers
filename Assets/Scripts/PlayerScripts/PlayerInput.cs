@@ -75,7 +75,6 @@ public class PlayerInput : MonoBehaviour
         if (Input.GetKeyDown(controls.jumpKey))
         {
             player.inAnimation = false;
-            animationScript.JumpPrep();
             player.JumpMove();
             canJump -= 1;
             if (canJump < 0)

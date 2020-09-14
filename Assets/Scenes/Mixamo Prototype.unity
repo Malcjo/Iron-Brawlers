@@ -796,6 +796,7 @@ MonoBehaviour:
   canDoubleJump: 0
   comboStep: 0
   comboTimer: 1
+  state: 0
 --- !u!114 &765537305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1472,6 +1473,12 @@ MonoBehaviour:
   player: {fileID: 0}
   controls: {fileID: 0}
   FacingDirection: 0
+--- !u!1 &1481557884 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8219362072142390352, guid: bab61163a51eb2a4abba7b170449c706,
+    type: 3}
+  m_PrefabInstance: {fileID: 765537302}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1555300499
 GameObject:
   m_ObjectHideFlags: 0
@@ -1618,6 +1625,7 @@ MonoBehaviour:
   playerInput: {fileID: 0}
   rightArm: {fileID: 1013747861}
   leftArm: {fileID: 1878368325}
+  rightLeg: {fileID: 1481557884}
   hitDirection: {x: 0, y: 0, z: 0}
   armIndex: 0
 --- !u!135 &1631853925

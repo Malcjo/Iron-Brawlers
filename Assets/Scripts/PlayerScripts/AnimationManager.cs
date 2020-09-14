@@ -9,9 +9,12 @@ public class AnimationManager : MonoBehaviour
 
     PlayerControls controls;
     Player playerScript;
+    PlayerInput playerInput;
 
     [SerializeField]
     bool canDoubleJump;
+    [SerializeField]
+    bool jumpButtonPressed;
 
     public int comboStep;
     public float comboTimer;
@@ -23,12 +26,23 @@ public class AnimationManager : MonoBehaviour
     {
         controls = GetComponentInParent<PlayerControls>();
         playerScript = GetComponentInParent<Player>();
+        playerInput = GetComponentInParent<PlayerInput>();
 
         canDoubleJump = false;
+        jumpButtonPressed = false;
     }
     private void Update()
     {
-        if(comboTimer > 0)
+        playerScript.inAnimation = Input.GetKey(controls.crouchKey);
+        anim.SetBool("isCrouching", Input.GetKey(controls.crouchKey));
+        anim.SetBool("Jumping", Input.GetKeyDown(controls.jumpKey));
+
+        if (Input.GetKeyDown(controls.jumpKey))
+        {
+            jumpButtonPressed = true;
+        }
+
+        if (comboTimer > 0)
         {
             comboTimer -= Time.deltaTime;
             if (comboTimer < 0)
@@ -37,35 +51,37 @@ public class AnimationManager : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(controls.jumpKey))
-        {
-            state = animationGroup.jumping;
-        }
-
-        else
+        if (playerScript.grounded == true)
         {
             state = animationGroup.idle;
         }
 
-        if (state == animationGroup.jumping && playerScript.grounded == false)
+        if (playerScript.grounded == false)
         {
-            anim.Play("DoubleJump");
+            state = animationGroup.jumping;
         }
 
+        if (playerInput.canJump == 1)
+        {
+            canDoubleJump = true;
+        }
+
+        else
+        {
+            canDoubleJump = false;
+        }
+
+        if (state == animationGroup.jumping && jumpButtonPressed == true && canDoubleJump == true)
+        {
+            anim.Play("DoubleJump");
+            jumpButtonPressed = false;
+        }
 
         if (Input.GetKey(controls.crouchKey))
         {
             state = animationGroup.crouching;
         }
-        else
-        {
-            state = animationGroup.idle;
-        }
-        playerScript.inAnimation = Input.GetKey(controls.crouchKey);
-        anim.SetBool("isCrouching", Input.GetKey(controls.crouchKey));
         
-        
-
         if (state == animationGroup.crouching && Input.GetKeyDown(controls.jabKey))
         {
             playerScript.inAnimation = true;
@@ -75,7 +91,7 @@ public class AnimationManager : MonoBehaviour
 
     public void JabCombo()
     {
-        if(comboStep < animlist.Count)
+        if (comboStep < animlist.Count)
         {
             playerScript.inAnimation = true;
             anim.Play(animlist[comboStep]);
@@ -87,7 +103,6 @@ public class AnimationManager : MonoBehaviour
     public void JumpPrep()
     {
         anim.SetBool("Jumping", true);
-        //canDoubleJump = true;
     }
 
     public void JumpLanding()
