@@ -22,6 +22,11 @@ public class PlayerInput : MonoBehaviour
     [Range(-1,1)]
     public int FacingDirection;
 
+    [SerializeField]
+    animationGroup state;
+
+    public enum animationGroup { idle, crouching, jumping, attack }
+
     private void Start()
     {
 
@@ -35,89 +40,128 @@ public class PlayerInput : MonoBehaviour
         {
             Application.Quit();
         }
-    }
-    private void FixedUpdate()
-    {
-        HorizontalInput();
-        AttackInput();
-        JumpInput();
-    }
-    public void HorizontalInput()
-    {
 
-        horizontalInput = Input.GetAxisRaw(controls.horizontalKeys);
-        horizontal = (horizontalInput);
-        if (player.inAnimation == true)
+        if (player.grounded == true)
         {
-            return;
-        }
-
-        if (horizontalInput < 0)
-        {
-            FacingDirection = -1;
-            transform.rotation = Quaternion.Euler(0, 0, 0);
-            animationScript.Running();
-        }
-        if (horizontalInput > 0)
-        {
-            FacingDirection = 1;
-            transform.rotation = Quaternion.Euler(0, 180, 0);
-            animationScript.Running();
-        }
-        if (horizontalInput == 0)
-        {
-            animationScript.Idle();
-        }
-    }
-
-    public void JumpInput()
-    {
-        if (Input.GetKeyDown(controls.jumpKey))
-        {
+            state = animationGroup.idle;
             player.inAnimation = false;
-            player.JumpMove();
-            canJump -= 1;
-            if (canJump < 0)
+
+            if (Input.GetKey(controls.crouchKey))
             {
-                canJump = 0;
+                state = animationGroup.crouching;
+
+                if (state == animationGroup.crouching)
+                {
+                    player.inAnimation = true;
+                    animationScript.Crouching(true);
+
+                    if (Input.GetKeyDown(controls.jabKey))
+                    {
+                        state = animationGroup.attack;
+                        animationScript.LegSweep();
+                    }
+                }
+            }
+            else
+            {
+                animationScript.Crouching(false);
             }
         }
-        if (canJump > maxJumps && player.grounded == true)
+
+        if (player.grounded == false)
         {
-            canJump = maxJumps;
+            state = animationGroup.jumping;
         }
+
+        if (Input.GetKey(controls.jumpKey))
+        {
+            animationScript.Jump();
+        }  
     }
 
-    public void AttackInput()
-    {
-        if (Input.GetKeyDown(controls.jabKey))
+        private void FixedUpdate()
         {
-            animationScript.JabCombo();
+            HorizontalInput();
+            AttackInput();
+            JumpInput();
         }
-    }
 
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.tag == "Ground")
-            
+        public void HorizontalInput()
         {
-            if (!Input.GetKeyDown(controls.jumpKey))
+
+            horizontalInput = Input.GetAxisRaw(controls.horizontalKeys);
+            horizontal = (horizontalInput);
+            if (player.inAnimation == true)
             {
-                canJump++;
+                return;
             }
-            canJump--;
+
+            if (horizontalInput < 0)
+            {
+                FacingDirection = -1;
+                transform.rotation = Quaternion.Euler(0, 0, 0);
+                animationScript.Running();
+            }
+            if (horizontalInput > 0)
+            {
+                FacingDirection = 1;
+                transform.rotation = Quaternion.Euler(0, 180, 0);
+                animationScript.Running();
+            }
+            if (horizontalInput == 0)
+            {
+                animationScript.Idle();
+            }
         }
-    }
 
-    //resetting number of jumps to max jumps
-    private void OnCollisionEnter(Collision collision)
-    {
-
-        if (collision.gameObject.tag == "Ground")
+        public void JumpInput()
         {
-            animationScript.JumpLanding();
-            canJump = maxJumps;
+            if (Input.GetKeyDown(controls.jumpKey))
+            {
+                player.inAnimation = false;
+                player.JumpMove();
+                canJump -= 1;
+                if (canJump < 0)
+                {
+                    canJump = 0;
+                }
+            }
+            if (canJump > maxJumps && player.grounded == true)
+            {
+                canJump = maxJumps;
+            }
         }
-    }
 
-}
+        public void AttackInput()
+        {
+            if (Input.GetKeyDown(controls.jabKey))
+            {
+                animationScript.JabCombo();
+            }
+        }
+
+        private void OnCollisionExit(Collision collision)
+        {
+            if (collision.gameObject.tag == "Ground")
+
+            {
+                if (!Input.GetKeyDown(controls.jumpKey))
+                {
+                    canJump++;
+                }
+                canJump--;
+            }
+        }
+
+        //resetting number of jumps to max jumps
+        private void OnCollisionEnter(Collision collision)
+        {
+
+            if (collision.gameObject.tag == "Ground")
+            {
+                animationScript.JumpLanding();
+                canJump = maxJumps;
+            }
+        }
+ }   
+
