@@ -12,11 +12,9 @@ public class TempHitBox : MonoBehaviour
 
 
     public PlayerInput playerInput;
-    private Player playerScript;
 
     public int armIndex;
-    public GameObject rightArm;
-    public GameObject leftArm;
+    public GameObject rightArm, leftArm;
 
     private Vector3 hitDirection;
 
@@ -24,56 +22,41 @@ public class TempHitBox : MonoBehaviour
     private void Awake()
     {
         playerInput = GetComponentInParent<PlayerInput>();
-        playerScript = GetComponentInParent<Player>();
     }
     private void Update()
     {
-        if(armIndex == 0)
+        HitBoxFollowArm();
+    }
+
+    void HitBoxFollowArm()
+    {
+        if (armIndex == 0)
         {
             this.gameObject.transform.position = leftArm.transform.position;
             this.gameObject.transform.rotation = leftArm.transform.rotation;
         }
-        else if(armIndex == 1)
+        else if (armIndex == 1)
         {
             this.gameObject.transform.position = rightArm.transform.position;
             this.gameObject.transform.rotation = rightArm.transform.rotation;
         }
     }
+
     public Vector3 HitDirection()
     {
-        if (playerScript.grounded == true)
+        switch (_attackDir)
         {
-            switch (_attackDir)
-            {
-                case Attackdirection.Forward:
-                    return new Vector3(playerInput.FacingDirection, 0.3f, 0);
-                case Attackdirection.Neutral:
-                    return new Vector3(hitDirection.x * playerInput.FacingDirection, hitDirection.y, 0);
-                case Attackdirection.High:
-                    return new Vector3(hitDirection.x * playerInput.FacingDirection, hitDirection.y, 0);
-                case Attackdirection.Low:
-                    return new Vector3(hitDirection.x * playerInput.FacingDirection, hitDirection.y, 0);
-                default:
-                    hitDirection.x = 1; hitDirection.y = 0.5f; hitDirection.z = 0; ;
-                    return new Vector3(hitDirection.x * playerInput.FacingDirection, hitDirection.y, 0);
-            }
-        }
-        else
-        {
-            switch (_attackDir)
-            {
-                case Attackdirection.Forward:
-                    return new Vector3(playerInput.FacingDirection, 0.3f, 0);
-                case Attackdirection.Neutral:
-                    return new Vector3(hitDirection.x * playerInput.FacingDirection, hitDirection.y, 0);
-                case Attackdirection.High:
-                    return new Vector3(hitDirection.x * playerInput.FacingDirection, hitDirection.y, 0);
-                case Attackdirection.Low:
-                    return new Vector3(hitDirection.x * playerInput.FacingDirection, hitDirection.y, 0);
-                default:
-                    hitDirection.x = 1; hitDirection.y = 0.5f; hitDirection.z = 0; ;
-                    return new Vector3(hitDirection.x * playerInput.FacingDirection, hitDirection.y, 0);
-            }
+            case Attackdirection.Forward:
+                return new Vector3(playerInput.FacingDirection, 0.3f, 0);
+            case Attackdirection.Neutral:
+                return Vector3.zero;
+            case Attackdirection.High:
+                return Vector3.zero;
+            case Attackdirection.Low:
+                return Vector3.zero;
+            default:
+                hitDirection.x = 1; hitDirection.y = 0.5f; hitDirection.z = 0; ;
+                return new Vector3(hitDirection.x * playerInput.FacingDirection, hitDirection.y, 0);
         }
     }
 

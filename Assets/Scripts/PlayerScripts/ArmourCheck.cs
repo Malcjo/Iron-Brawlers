@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArmourStats : MonoBehaviour
+public class ArmourCheck : MonoBehaviour
 {
     public Armour armourType;
     public enum Armour { none, light, heavy };
@@ -12,7 +12,6 @@ public class ArmourStats : MonoBehaviour
     public float knockBackResistance;
 
     public int armourWeight, armourReduceSpeed, reduceJumpForce;
-
 
     private void Start()
     {

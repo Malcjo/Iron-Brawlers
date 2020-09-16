@@ -6,21 +6,12 @@ using UnityEngine.SocialPlatforms;
 
 public class PlayerInput : MonoBehaviour
 {
-
-
-
-
-
-
     public float horizontal; // Being checked in Player script: MoveCall()
     public int canJump; //Being checked in Player script: JumpMove()
 
     [SerializeField] private float horizontalInput;
     [SerializeField] public int maxJumps;
     AnimationManager animationScript;
-
-
-
 
     [SerializeField] private Player player;
     [SerializeField] private PlayerControls controls;
@@ -43,23 +34,26 @@ public class PlayerInput : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        Escape();
+        CrouchCheck();
+
+
+        if (player.grounded == false)
         {
-            Application.Quit();
+            state = animationGroup.jumping;
         }
 
+    }
+    void CrouchCheck()
+    {
         if (player.grounded == true)
         {
-            state = animationGroup.idle;
-            player.inAnimation = false;
-
             if (Input.GetKey(controls.crouchKey))
             {
                 state = animationGroup.crouching;
 
                 if (state == animationGroup.crouching)
                 {
-                    player.inAnimation = true;
                     animationScript.Crouching(true);
 
                     if (Input.GetKeyDown(controls.jabKey))
@@ -74,18 +68,7 @@ public class PlayerInput : MonoBehaviour
                 animationScript.Crouching(false);
             }
         }
-
-        if (player.grounded == false)
-        {
-            state = animationGroup.jumping;
-        }
-
-        if (Input.GetKey(controls.jumpKey))
-        {
-            animationScript.Jump();
-        }  
     }
-
         private void FixedUpdate()
         {
             HorizontalInput();
@@ -108,13 +91,15 @@ public class PlayerInput : MonoBehaviour
                 FacingDirection = -1;
                 transform.rotation = Quaternion.Euler(0, 0, 0);
                 animationScript.Running();
+                animationScript.Crouching(false);
             }
             if (horizontalInput > 0)
             {
                 FacingDirection = 1;
                 transform.rotation = Quaternion.Euler(0, 180, 0);
                 animationScript.Running();
-            }
+            animationScript.Crouching(false);
+        }
             if (horizontalInput == 0)
             {
 
@@ -126,8 +111,9 @@ public class PlayerInput : MonoBehaviour
         {
             if (Input.GetKeyDown(controls.jumpKey))
             {
-                player.inAnimation = false;
-                player.JumpMove();
+            animationScript.Jump();
+            player.inAnimation = false;
+                player.Jump();
                 canJump -= 1;
                 if (canJump < 0)
                 {
@@ -144,6 +130,8 @@ public class PlayerInput : MonoBehaviour
         {
             if (Input.GetKeyDown(controls.jabKey))
             {
+                hitboxScript._attackDir = TempHitBox.Attackdirection.Forward;
+                hitboxScript._attackType = TempHitBox.AttackType.Jab;
                 animationScript.JabCombo();
             }
         }
@@ -171,5 +159,12 @@ public class PlayerInput : MonoBehaviour
                 canJump = maxJumps;
             }
         }
+    void Escape()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+    }
  }   
 

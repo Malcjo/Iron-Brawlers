@@ -4,19 +4,15 @@ using UnityEngine;
 
 public class PlayerControls : MonoBehaviour
 {
-    public Player player;
-
     public string horizontalKeys;
-    public KeyCode jumpKey;
-    public KeyCode jabKey;
-    public KeyCode crouchKey;
-    public int oppositePlayersLayer;
+    public KeyCode jumpKey, jabKey, crouchKey;
+
     public int playersLayer;
-
-    public GameObject hitbox;
-
     //player 1 = layer 8
     //player 2 = layer 9
+
+    public GameObject hitbox;
+    public Player player;
 
     public PlayerIndex PlayerNumber;
     public enum PlayerIndex { Player1, Player2 };
@@ -24,7 +20,6 @@ public class PlayerControls : MonoBehaviour
     void Awake()
     {
         CheckControl();
-        //this.gameObject.layer = playersLayer;
     }
 
     void CheckControl()

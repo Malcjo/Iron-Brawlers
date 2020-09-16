@@ -8,47 +8,39 @@ public class Player : MonoBehaviour
     [SerializeField] private float jumpForce;
     [SerializeField] private float speed;
 
-    [SerializeField] public bool grounded;
-    [SerializeField] public GameObject armour;
+    public bool inAnimation;
+    public bool grounded;
+    public bool hasArmour;
 
-    public float friction;
+    public GameObject armour;
+    private Rigidbody rb;
+    private PlayerInput playerInput;
+    private ArmourCheck armourCheck;
 
-    public Rigidbody rb;
-    [SerializeField] public HitBoxManager attack;
-    [SerializeField] private PlayerInput playerInput;
-    [SerializeField] private ArmourStats armourStats;
-    [SerializeField] private Vector3 addForceValue;
-
-    public Vector3 testAddForce;
-    public float testDirX;
-
+    private Vector3 addForceValue;
     private Vector3 hitDirection;
 
-    public float knockbackResistance;
+    private float friction = 0.25f;
 
-
-    [SerializeField] public bool hasArmour;
-
-    public bool inAnimation;
 
     void Start()
     {
         inAnimation = false;
         hasArmour = false;
-        armourStats = GetComponent<ArmourStats>();
+        armourCheck = GetComponent<ArmourCheck>();
         playerInput = GetComponent<PlayerInput>();
         rb = GetComponent<Rigidbody>();
     }
 
     private void FixedUpdate()
     {
-        MoveCall();
+        Move();
         Gravity();
         ReduceHit();
     }
 
 
-    void MoveCall()
+    void Move()
     {
         if (inAnimation == true)
         {
@@ -67,25 +59,37 @@ public class Player : MonoBehaviour
             rb.velocity = new Vector3(playerInput.horizontal * CharacterSpeed(), rb.velocity.y, 0) + addForceValue;
         }
     }
-
     private float CharacterSpeed()
     {
-        float characterSpeed = speed - armourStats.armourReduceSpeed;
+        float characterSpeed = speed - armourCheck.armourReduceSpeed;
         return characterSpeed;
     }
-    public void JumpMove()
+    public void Jump()
     {
         if (playerInput.canJump > 0)
         {
-            rb.velocity = (new Vector3(rb.velocity.x, (jumpForce - armourStats.reduceJumpForce), rb.velocity.z));
+            rb.velocity = (new Vector3(rb.velocity.x, (jumpForce - armourCheck.reduceJumpForce), rb.velocity.z));
         }
     }
-
     void Gravity()
     {
-        rb.AddForce(Physics.gravity * ((weight + armourStats.armourWeight) / 10));
+        rb.AddForce(Physics.gravity * ((weight + armourCheck.armourWeight) / 10));
     }
-
+    void ReduceHit()
+    {
+        addForceValue.x = Mathf.Lerp(addForceValue.x, 0, 5f * Time.deltaTime);
+        addForceValue.y = Mathf.Lerp(addForceValue.y, 0, 50f * Time.deltaTime);
+        //reducing to zero if small value
+        if (addForceValue.magnitude < 0.05f && addForceValue.magnitude > -0.05f)
+        {
+            addForceValue = Vector3.zero;
+        }
+    }
+    private Vector3 AddForce(float hitStrength)
+    {
+        Vector3 addForceValue = ((hitDirection) * (hitStrength));
+        return addForceValue;
+    }
 
     //Collision Detections----------------------------------------------------------
     //resetting number of jumps to max jumps
@@ -117,9 +121,8 @@ public class Player : MonoBehaviour
     {
         if (other.tag == "Jab")
         {
-            var otherScript = other.GetComponent<TempHitBox>();
-            Vector3 Hit = other.GetComponent<TempHitBox>().HitDirection();
-            float Power = other.GetComponent<TempHitBox>().HitStrength();
+            Vector3 Hit = other.GetComponent<TempHitBox>().HitDirection(); // getting the direction of the attack
+            float Power = other.GetComponent<TempHitBox>().HitStrength(); // getting the power of the attack
 
             if (hasArmour == true)
             {
@@ -132,19 +135,5 @@ public class Player : MonoBehaviour
             }
         }
     }
-    void ReduceHit()
-    {
-        addForceValue.x = Mathf.Lerp(addForceValue.x, 0, 5f * Time.deltaTime);
-        addForceValue.y = Mathf.Lerp(addForceValue.y, 0, 50f * Time.deltaTime);
-        if(addForceValue.magnitude < 0.1f && addForceValue.magnitude > -0.1f)
-        {
-            addForceValue = Vector3.zero;
-        }
-    }
 
-    private Vector3 AddForce(float hitStrength)
-    {
-        Vector3 addForceValue = ((hitDirection) * (hitStrength));
-        return addForceValue;
-    }
 }
