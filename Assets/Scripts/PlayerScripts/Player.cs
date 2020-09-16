@@ -22,10 +22,6 @@ public class Player : MonoBehaviour
     public Vector3 testAddForce;
     public float testDirX;
 
-
-    [SerializeField]private float hitDirectionX;
-    [SerializeField]private float hitDirectionY;
-
     private Vector3 hitDirection;
 
     public float knockbackResistance;
@@ -42,12 +38,6 @@ public class Player : MonoBehaviour
         armourStats = GetComponent<ArmourStats>();
         playerInput = GetComponent<PlayerInput>();
         rb = GetComponent<Rigidbody>();
-    }
-
-    void Update()
-    {
-        testAddForce = AddForce();
-        testDirX = hitDirection.x;
     }
 
     private void FixedUpdate()
@@ -127,11 +117,9 @@ public class Player : MonoBehaviour
     {
         if (other.tag == "Jab")
         {
+            var otherScript = other.GetComponent<TempHitBox>();
             Vector3 Hit = other.GetComponent<TempHitBox>().HitDirection();
-            hitDirectionX = Hit.x;
-            hitDirectionY = Hit.y;
-            Debug.Log("hitDirectionX: "+ hitDirectionX);
-            Debug.Log("hitDirectionY: "+ hitDirectionY);
+            float Power = other.GetComponent<TempHitBox>().HitStrength();
 
             if (hasArmour == true)
             {
@@ -140,28 +128,23 @@ public class Player : MonoBehaviour
             else if (hasArmour == false)
             {
                 hitDirection = Hit;
-                addForceValue = AddForce();
+                addForceValue = AddForce(Power);
             }
         }
     }
     void ReduceHit()
     {
-        if(hitDirection.x > 0)
+        addForceValue.x = Mathf.Lerp(addForceValue.x, 0, 5f * Time.deltaTime);
+        addForceValue.y = Mathf.Lerp(addForceValue.y, 0, 50f * Time.deltaTime);
+        if(addForceValue.magnitude < 0.1f && addForceValue.magnitude > -0.1f)
         {
-            addForceValue.x = Mathf.Lerp(addForceValue.x, 0, hitDirectionX / 15);
-            addForceValue.y = Mathf.Lerp(addForceValue.y, 0, hitDirectionY * 3f);
+            addForceValue = Vector3.zero;
         }
-        else if(hitDirection.x < 0)
-        {
-            addForceValue.x = Mathf.Lerp(addForceValue.x, 0, hitDirectionX / -15);
-            addForceValue.y = Mathf.Lerp(addForceValue.y, 0, (hitDirectionY * 1) * 3f);
-        }
-
     }
 
-    private Vector3 AddForce()
+    private Vector3 AddForce(float hitStrength)
     {
-        Vector3 addForceValue = ((hitDirection) * (15f));
+        Vector3 addForceValue = ((hitDirection) * (hitStrength));
         return addForceValue;
     }
 }

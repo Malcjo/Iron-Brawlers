@@ -13,6 +13,8 @@ public class PlayerControls : MonoBehaviour
     public int oppositePlayersLayer;
     public int playersLayer;
 
+    public GameObject hitbox;
+
     //player 1 = layer 8
     //player 2 = layer 9
 
@@ -22,7 +24,7 @@ public class PlayerControls : MonoBehaviour
     void Awake()
     {
         CheckControl();
-        this.gameObject.layer = playersLayer;
+        //this.gameObject.layer = playersLayer;
     }
 
     void CheckControl()
@@ -34,7 +36,7 @@ public class PlayerControls : MonoBehaviour
                 jumpKey = KeyCode.Y;
                 jabKey = KeyCode.G;
                 crouchKey = KeyCode.S;
-                oppositePlayersLayer = 9;
+                hitbox.layer = 8;
                 playersLayer = 8;
 
                 break;
@@ -43,7 +45,7 @@ public class PlayerControls : MonoBehaviour
                 jumpKey = KeyCode.Keypad5;
                 jabKey = KeyCode.Keypad1;
                 crouchKey = KeyCode.DownArrow;
-                oppositePlayersLayer = 8;
+                hitbox.layer = 9;
                 playersLayer = 9;
                 break;
         }

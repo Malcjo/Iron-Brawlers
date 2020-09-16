@@ -7,6 +7,11 @@ using UnityEngine.SocialPlatforms;
 public class PlayerInput : MonoBehaviour
 {
 
+
+
+
+
+
     public float horizontal; // Being checked in Player script: MoveCall()
     public int canJump; //Being checked in Player script: JumpMove()
 
@@ -16,8 +21,10 @@ public class PlayerInput : MonoBehaviour
 
 
 
+
     [SerializeField] private Player player;
     [SerializeField] private PlayerControls controls;
+    [SerializeField] private TempHitBox hitboxScript;
 
     [Range(-1,1)]
     public int FacingDirection;
@@ -27,9 +34,9 @@ public class PlayerInput : MonoBehaviour
 
     public enum animationGroup { idle, crouching, jumping, attack }
 
-    private void Start()
+    private void Awake()
     {
-
+        hitboxScript = GetComponentInChildren<TempHitBox>();
         player = GetComponent<Player>();
         controls = GetComponent<PlayerControls>();
         animationScript = GetComponentInChildren<AnimationManager>();

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3365,11 +3365,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01dbac5655a08604c8263b9e030e6412, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackIndex: 0
+  _attackDir: 0
+  _attackType: 0
   playerInput: {fileID: 0}
+  armIndex: 0
   rightArm: {fileID: 76782290}
   leftArm: {fileID: 1396438732}
-  armIndex: 0
 --- !u!1 &1471934645
 GameObject:
   m_ObjectHideFlags: 0
@@ -3427,6 +3428,7 @@ MonoBehaviour:
   crouchKey: 0
   oppositePlayersLayer: 0
   playersLayer: 0
+  hitbox: {fileID: 1456648803}
   PlayerNumber: 0
 --- !u!4 &1471934648
 Transform:
@@ -3490,7 +3492,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weight: 10
-  jumpForce: 10
+  jumpForce: 7.5
   speed: 8
   grounded: 0
   armour: {fileID: 1777043301}
@@ -3502,8 +3504,6 @@ MonoBehaviour:
   addForceValue: {x: 0, y: 0, z: 0}
   testAddForce: {x: 0, y: 0, z: 0}
   testDirX: 0
-  hitDirectionX: 0
-  hitDirectionY: 0
   knockbackResistance: 0
   hasArmour: 0
   inAnimation: 0
@@ -3525,6 +3525,7 @@ MonoBehaviour:
   maxJumps: 2
   player: {fileID: 0}
   controls: {fileID: 0}
+  hitboxScript: {fileID: 0}
   FacingDirection: 0
   state: 0
 --- !u!1 &1503753626 stripped
@@ -3849,6 +3850,7 @@ MonoBehaviour:
   crouchKey: 0
   oppositePlayersLayer: 0
   playersLayer: 0
+  hitbox: {fileID: 1963147813}
   PlayerNumber: 1
 --- !u!114 &1859207878
 MonoBehaviour:
@@ -3868,6 +3870,7 @@ MonoBehaviour:
   maxJumps: 2
   player: {fileID: 0}
   controls: {fileID: 0}
+  hitboxScript: {fileID: 0}
   FacingDirection: 0
   state: 0
 --- !u!114 &1859207879
@@ -3914,8 +3917,6 @@ MonoBehaviour:
   addForceValue: {x: 0, y: 0, z: 0}
   testAddForce: {x: 0, y: 0, z: 0}
   testDirX: 0
-  hitDirectionX: 0
-  hitDirectionY: 0
   knockbackResistance: 0
   hasArmour: 0
   inAnimation: 0
@@ -4163,11 +4164,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01dbac5655a08604c8263b9e030e6412, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackIndex: 0
+  _attackDir: 0
+  _attackType: 0
   playerInput: {fileID: 0}
+  armIndex: 0
   rightArm: {fileID: 1503753626}
   leftArm: {fileID: 1808848163}
-  armIndex: 0
 --- !u!4 &1963147815
 Transform:
   m_ObjectHideFlags: 0

@@ -4,18 +4,27 @@ using UnityEngine;
 
 public class TempHitBox : MonoBehaviour
 {
-    public Attacktype attackIndex;
+    public Attackdirection _attackDir;
+    public enum Attackdirection { Forward, Neutral, High, Low };
+
+    public AttackType _attackType;
+    public enum AttackType { Jab, LegSweep };
+
+
     public PlayerInput playerInput;
+    private Player playerScript;
+
+    public int armIndex;
     public GameObject rightArm;
     public GameObject leftArm;
 
     private Vector3 hitDirection;
-    public enum Attacktype {Forward, Neutral, High, Low};
-    public int armIndex;
+
 
     private void Awake()
     {
         playerInput = GetComponentInParent<PlayerInput>();
+        playerScript = GetComponentInParent<Player>();
     }
     private void Update()
     {
@@ -32,19 +41,53 @@ public class TempHitBox : MonoBehaviour
     }
     public Vector3 HitDirection()
     {
-        switch (attackIndex)
+        if (playerScript.grounded == true)
         {
-            case Attacktype.Forward:
-                return new Vector3 (1 * playerInput.FacingDirection, 0.3f, 0);
-            case Attacktype.Neutral:
-                return new Vector3(hitDirection.x * playerInput.FacingDirection, hitDirection.y, 0);
-            case Attacktype.High:
-                return new Vector3(hitDirection.x * playerInput.FacingDirection, hitDirection.y, 0);
-            case Attacktype.Low:
-                return new Vector3(hitDirection.x * playerInput.FacingDirection, hitDirection.y, 0);
-            default:
-                hitDirection.x = 1; hitDirection.y = 0.5f; hitDirection.z = 0; ;
-                return new Vector3(hitDirection.x * playerInput.FacingDirection, hitDirection.y, 0);
+            switch (_attackDir)
+            {
+                case Attackdirection.Forward:
+                    return new Vector3(playerInput.FacingDirection, 0.3f, 0);
+                case Attackdirection.Neutral:
+                    return new Vector3(hitDirection.x * playerInput.FacingDirection, hitDirection.y, 0);
+                case Attackdirection.High:
+                    return new Vector3(hitDirection.x * playerInput.FacingDirection, hitDirection.y, 0);
+                case Attackdirection.Low:
+                    return new Vector3(hitDirection.x * playerInput.FacingDirection, hitDirection.y, 0);
+                default:
+                    hitDirection.x = 1; hitDirection.y = 0.5f; hitDirection.z = 0; ;
+                    return new Vector3(hitDirection.x * playerInput.FacingDirection, hitDirection.y, 0);
+            }
+        }
+        else
+        {
+            switch (_attackDir)
+            {
+                case Attackdirection.Forward:
+                    return new Vector3(playerInput.FacingDirection, 0.3f, 0);
+                case Attackdirection.Neutral:
+                    return new Vector3(hitDirection.x * playerInput.FacingDirection, hitDirection.y, 0);
+                case Attackdirection.High:
+                    return new Vector3(hitDirection.x * playerInput.FacingDirection, hitDirection.y, 0);
+                case Attackdirection.Low:
+                    return new Vector3(hitDirection.x * playerInput.FacingDirection, hitDirection.y, 0);
+                default:
+                    hitDirection.x = 1; hitDirection.y = 0.5f; hitDirection.z = 0; ;
+                    return new Vector3(hitDirection.x * playerInput.FacingDirection, hitDirection.y, 0);
+            }
         }
     }
+
+    public float HitStrength()
+    {
+        switch (_attackType)
+        {
+            case AttackType.Jab:
+                return 15;
+            case AttackType.LegSweep:
+                return 12;
+            default:
+                return 15;
+        }
+    }
+
 }
