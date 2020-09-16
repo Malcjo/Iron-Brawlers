@@ -9,6 +9,7 @@ public class ArmourStats : MonoBehaviour
     [Range(1, 3)]
     public int armourIndex;
     [SerializeField] private Player player;
+    public float knockBackResistance;
 
     public int armourWeight, armourReduceSpeed, reduceJumpForce;
 
@@ -29,6 +30,8 @@ public class ArmourStats : MonoBehaviour
                 armourWeight = 20;
                 armourReduceSpeed = 6;
                 reduceJumpForce = 2;
+                knockBackResistance = 200;
+                player.hasArmour = true;
                 break;
 
             case Armour.light:
@@ -36,6 +39,8 @@ public class ArmourStats : MonoBehaviour
                 armourWeight = 10;
                 armourReduceSpeed = 3;
                 reduceJumpForce = 1;
+                knockBackResistance = 100;
+                player.hasArmour = true;
                 break;
 
             case Armour.none:
@@ -43,6 +48,8 @@ public class ArmourStats : MonoBehaviour
                 armourWeight = 0;
                 armourReduceSpeed = 0;
                 reduceJumpForce = 0;
+                knockBackResistance = 0;
+                player.hasArmour = false;
                 break;
                     
             default:
@@ -50,6 +57,8 @@ public class ArmourStats : MonoBehaviour
                 armourWeight = 0;
                 armourReduceSpeed = 0;
                 reduceJumpForce = 0;
+                knockBackResistance = 0;
+                player.hasArmour = false;
                 break;
         }
     }

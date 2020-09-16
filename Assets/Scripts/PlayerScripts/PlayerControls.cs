@@ -10,6 +10,11 @@ public class PlayerControls : MonoBehaviour
     public KeyCode jumpKey;
     public KeyCode jabKey;
     public KeyCode crouchKey;
+    public int oppositePlayersLayer;
+    public int playersLayer;
+
+    //player 1 = layer 8
+    //player 2 = layer 9
 
     public PlayerIndex PlayerNumber;
     public enum PlayerIndex { Player1, Player2 };
@@ -17,6 +22,7 @@ public class PlayerControls : MonoBehaviour
     void Awake()
     {
         CheckControl();
+        this.gameObject.layer = playersLayer;
     }
 
     void CheckControl()
@@ -28,12 +34,17 @@ public class PlayerControls : MonoBehaviour
                 jumpKey = KeyCode.Y;
                 jabKey = KeyCode.G;
                 crouchKey = KeyCode.S;
+                oppositePlayersLayer = 9;
+                playersLayer = 8;
+
                 break;
             case PlayerIndex.Player2:
                 horizontalKeys = "P2Horizontal";
                 jumpKey = KeyCode.Keypad5;
                 jabKey = KeyCode.Keypad1;
                 crouchKey = KeyCode.DownArrow;
+                oppositePlayersLayer = 8;
+                playersLayer = 9;
                 break;
         }
 

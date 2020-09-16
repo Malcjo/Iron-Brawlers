@@ -9,7 +9,7 @@ public class TempHitBox : MonoBehaviour
     public GameObject rightArm;
     public GameObject leftArm;
 
-    public Vector3 hitDirection;
+    private Vector3 hitDirection;
     public enum Attacktype {Forward, Neutral, High, Low};
     public int armIndex;
 
@@ -35,7 +35,7 @@ public class TempHitBox : MonoBehaviour
         switch (attackIndex)
         {
             case Attacktype.Forward:
-                hitDirection.x = 1; hitDirection.y = 0.5f; hitDirection.z = 0; ;
+                hitDirection.x = 1f; hitDirection.y = 0.2f; hitDirection.z = 0; ;
                 return new Vector3 (hitDirection.x * playerInput.FacingDirection, hitDirection.y, hitDirection.z);
             case Attacktype.Neutral:
                 return new Vector3(hitDirection.x * playerInput.FacingDirection, hitDirection.y, hitDirection.z);

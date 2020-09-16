@@ -17,15 +17,17 @@ public class Player : MonoBehaviour
     [SerializeField] public HitBoxManager attack;
     [SerializeField] private PlayerInput playerInput;
     [SerializeField] private ArmourStats armourStats;
+    public Vector3 testAddForce;
 
-    /*
-    [SerializeField] public float armourWeight;
-    [SerializeField] public float armourReduceSpeed;
-    [SerializeField] public float armourReduceKnockback;
 
-    [SerializeField] public float armourReduceSpeedStat;
-    [SerializeField] public float armourReduceKnockbackStat;
-    */
+    private float hitDirectionX;
+    private float hitDirectionY;
+
+    private Vector3 hitDirection;
+
+    public float knockbackResistance;
+
+
     [SerializeField] public bool hasArmour;
 
     public bool inAnimation;
@@ -41,12 +43,14 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        testAddForce = AddForce();
     }
 
     private void FixedUpdate()
     {
         MoveCall();
         Gravity();
+        ReduceHit();
     }
 
 
@@ -61,15 +65,20 @@ public class Player : MonoBehaviour
             }
             else if (grounded == false)
             {
-                rb.velocity = new Vector3(playerInput.horizontal * (speed - armourStats.armourReduceSpeed), rb.velocity.y, 0);
+                rb.velocity = new Vector3(playerInput.horizontal * CharacterSpeed(), rb.velocity.y, 0) + AddForce(); ;
             }
         }
         else
         {
-            rb.velocity = new Vector3(playerInput.horizontal * (speed - armourStats.armourReduceSpeed), rb.velocity.y, 0);
+            rb.velocity = new Vector3(playerInput.horizontal * CharacterSpeed(), rb.velocity.y, 0) + AddForce();
         }
     }
 
+    private float CharacterSpeed()
+    {
+        float characterSpeed = speed - armourStats.armourReduceSpeed;
+        return characterSpeed;
+    }
     public void JumpMove()
     {
         if (playerInput.canJump > 0)
@@ -108,5 +117,53 @@ public class Player : MonoBehaviour
             grounded = false;
         }
             
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Jab")
+        {
+            Vector3 Hit = other.GetComponent<TempHitBox>().HitDirection();
+            hitDirectionX = Hit.x;
+            hitDirectionY = Hit.y;
+
+
+            if (hasArmour == true)
+            {
+                Debug.Log("Hit Armour!");
+                return;
+            }
+            else if (hasArmour == false)
+            {
+                Debug.Log("Hit Body!");
+                hitDirection = Hit;
+            }
+            knockbackResistance = 0;
+        }
+    }
+    void ReduceHit()
+    {
+        if(hitDirection.x > 0)
+        {
+            hitDirection.x = Mathf.Lerp(hitDirection.x, 0, hitDirectionX / 15);
+            hitDirection.y = Mathf.Lerp(hitDirection.y, 0, hitDirectionY * 3f);
+        }
+        else
+        {
+            hitDirection.x = Mathf.Lerp(hitDirection.x, 0, hitDirectionX / 15);
+            hitDirection.y = Mathf.Lerp(hitDirection.y, 0, hitDirectionY * 3f);
+        }
+
+    }
+
+    private Vector3 AddForce()
+    {
+        Vector3 addForceValue = ((hitDirection) * (15f - armourStats.knockBackResistance));
+        return addForceValue;
+    }
+
+    public void Knockback(Vector3 direction, float knockbackResistance)
+    {
+        rb.AddForce(direction * (250 - knockbackResistance));
     }
 }
