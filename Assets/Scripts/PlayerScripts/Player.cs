@@ -17,11 +17,14 @@ public class Player : MonoBehaviour
     [SerializeField] public HitBoxManager attack;
     [SerializeField] private PlayerInput playerInput;
     [SerializeField] private ArmourStats armourStats;
+    [SerializeField] private Vector3 addForceValue;
+
     public Vector3 testAddForce;
+    public float testDirX;
 
 
-    private float hitDirectionX;
-    private float hitDirectionY;
+    [SerializeField]private float hitDirectionX;
+    [SerializeField]private float hitDirectionY;
 
     private Vector3 hitDirection;
 
@@ -44,6 +47,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         testAddForce = AddForce();
+        testDirX = hitDirection.x;
     }
 
     private void FixedUpdate()
@@ -65,12 +69,12 @@ public class Player : MonoBehaviour
             }
             else if (grounded == false)
             {
-                rb.velocity = new Vector3(playerInput.horizontal * CharacterSpeed(), rb.velocity.y, 0) + AddForce(); ;
+                rb.velocity = new Vector3(playerInput.horizontal * CharacterSpeed(), rb.velocity.y, 0) + addForceValue;
             }
         }
         else
         {
-            rb.velocity = new Vector3(playerInput.horizontal * CharacterSpeed(), rb.velocity.y, 0) + AddForce();
+            rb.velocity = new Vector3(playerInput.horizontal * CharacterSpeed(), rb.velocity.y, 0) + addForceValue;
         }
     }
 
@@ -126,44 +130,38 @@ public class Player : MonoBehaviour
             Vector3 Hit = other.GetComponent<TempHitBox>().HitDirection();
             hitDirectionX = Hit.x;
             hitDirectionY = Hit.y;
-
+            Debug.Log("hitDirectionX: "+ hitDirectionX);
+            Debug.Log("hitDirectionY: "+ hitDirectionY);
 
             if (hasArmour == true)
             {
-                Debug.Log("Hit Armour!");
                 return;
             }
             else if (hasArmour == false)
             {
-                Debug.Log("Hit Body!");
                 hitDirection = Hit;
+                addForceValue = AddForce();
             }
-            knockbackResistance = 0;
         }
     }
     void ReduceHit()
     {
         if(hitDirection.x > 0)
         {
-            hitDirection.x = Mathf.Lerp(hitDirection.x, 0, hitDirectionX / 15);
-            hitDirection.y = Mathf.Lerp(hitDirection.y, 0, hitDirectionY * 3f);
+            addForceValue.x = Mathf.Lerp(addForceValue.x, 0, hitDirectionX / 15);
+            addForceValue.y = Mathf.Lerp(addForceValue.y, 0, hitDirectionY * 3f);
         }
-        else
+        else if(hitDirection.x < 0)
         {
-            hitDirection.x = Mathf.Lerp(hitDirection.x, 0, hitDirectionX / 15);
-            hitDirection.y = Mathf.Lerp(hitDirection.y, 0, hitDirectionY * 3f);
+            addForceValue.x = Mathf.Lerp(addForceValue.x, 0, hitDirectionX / -15);
+            addForceValue.y = Mathf.Lerp(addForceValue.y, 0, (hitDirectionY * 1) * 3f);
         }
 
     }
 
     private Vector3 AddForce()
     {
-        Vector3 addForceValue = ((hitDirection) * (15f - armourStats.knockBackResistance));
+        Vector3 addForceValue = ((hitDirection) * (15f));
         return addForceValue;
-    }
-
-    public void Knockback(Vector3 direction, float knockbackResistance)
-    {
-        rb.AddForce(direction * (250 - knockbackResistance));
     }
 }

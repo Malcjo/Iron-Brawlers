@@ -110,6 +110,7 @@ public class PlayerInput : MonoBehaviour
             }
             if (horizontalInput == 0)
             {
+
                 animationScript.Idle();
             }
         }
