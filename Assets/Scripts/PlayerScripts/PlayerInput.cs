@@ -7,7 +7,7 @@ using UnityEngine.SocialPlatforms;
 public class PlayerInput : MonoBehaviour
 {
     public float horizontal; // Being checked in Player script: MoveCall()
-    public int canJump; //Being checked in Player script: JumpMove()
+    public int numberOfJumps; //Being checked in Player script: JumpMove()
 
     [SerializeField] private float horizontalInput;
     [SerializeField] public int maxJumps;
@@ -22,6 +22,7 @@ public class PlayerInput : MonoBehaviour
 
     [SerializeField]
     bool running;
+    public bool canJump;
 
     [SerializeField]
     animationGroup state;
@@ -46,6 +47,9 @@ public class PlayerInput : MonoBehaviour
             state = animationGroup.jumping;
         }
 
+        HorizontalInput();
+        AttackInput();
+        JumpInput();
     }
     void CrouchCheck()
     {
@@ -78,9 +82,7 @@ public class PlayerInput : MonoBehaviour
     }
         private void FixedUpdate()
         {
-            HorizontalInput();
-            AttackInput();
-            JumpInput();
+            
         }
 
         public void HorizontalInput()
@@ -124,15 +126,15 @@ public class PlayerInput : MonoBehaviour
             animationScript.Jump();
             player.inAnimation = false;
                 player.Jump();
-                canJump -= 1;
-                if (canJump < 0)
+                numberOfJumps --;
+                if (numberOfJumps < 0)
                 {
-                    canJump = 0;
+                    numberOfJumps = 0;
                 }
             }
-            if (canJump > maxJumps && player.grounded == true)
+            if (numberOfJumps < maxJumps && player.grounded == true)
             {
-                canJump = maxJumps;
+                numberOfJumps = maxJumps;
             }
         }
 
@@ -153,9 +155,9 @@ public class PlayerInput : MonoBehaviour
             {
                 if (!Input.GetKeyDown(controls.jumpKey))
                 {
-                    canJump++;
+                    numberOfJumps++;
                 }
-                canJump--;
+                numberOfJumps--;
             }
         }
 
@@ -166,7 +168,7 @@ public class PlayerInput : MonoBehaviour
             if (collision.gameObject.tag == "Ground")
             {
                 animationScript.JumpLanding();
-                canJump = maxJumps;
+                numberOfJumps = maxJumps;
             }
         }
     void Escape()

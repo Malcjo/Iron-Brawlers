@@ -66,7 +66,7 @@ public class Player : MonoBehaviour
     }
     public void Jump()
     {
-        if (playerInput.canJump > 0)
+        if (playerInput.numberOfJumps > 0)
         {
             rb.velocity = (new Vector3(rb.velocity.x, (jumpForce - armourCheck.reduceJumpForce), rb.velocity.z));
         }
@@ -97,7 +97,7 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.tag == "Ground")
         {
-            playerInput.canJump = playerInput.maxJumps;
+            playerInput.numberOfJumps = playerInput.maxJumps;
         }
     }
     //checking if grounded
