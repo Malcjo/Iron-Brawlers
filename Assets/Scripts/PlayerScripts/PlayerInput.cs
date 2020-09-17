@@ -39,6 +39,9 @@ public class PlayerInput : MonoBehaviour
     private void Update()
     {
         Escape();
+        HorizontalInput();
+        AttackInput();
+        JumpInput();
         CrouchCheck();
 
 
@@ -47,9 +50,7 @@ public class PlayerInput : MonoBehaviour
             state = animationGroup.jumping;
         }
 
-        HorizontalInput();
-        AttackInput();
-        JumpInput();
+        
     }
     void CrouchCheck()
     {
@@ -80,11 +81,6 @@ public class PlayerInput : MonoBehaviour
             }
         }
     }
-        private void FixedUpdate()
-        {
-            
-        }
-
         public void HorizontalInput()
         {
 

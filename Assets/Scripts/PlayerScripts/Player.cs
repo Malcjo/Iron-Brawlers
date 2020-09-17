@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
     private Vector3 addForceValue;
     private Vector3 hitDirection;
 
-    private float friction = 0.25f;
+    public float friction = 0.25f;
 
 
     void Start()
