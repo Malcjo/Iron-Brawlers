@@ -21,6 +21,9 @@ public class PlayerInput : MonoBehaviour
     public int FacingDirection;
 
     [SerializeField]
+    bool running;
+
+    [SerializeField]
     animationGroup state;
 
     public enum animationGroup { idle, crouching, jumping, attack }
@@ -62,6 +65,10 @@ public class PlayerInput : MonoBehaviour
                         animationScript.LegSweep();
                     }
                 }
+                if(running == true)
+                {
+                    animationScript.Crouching(false);
+                }
             }
             else
             {
@@ -91,6 +98,7 @@ public class PlayerInput : MonoBehaviour
                 FacingDirection = -1;
                 transform.rotation = Quaternion.Euler(0, 0, 0);
                 animationScript.Running();
+                running = true;
                 animationScript.Crouching(false);
             }
             if (horizontalInput > 0)
@@ -98,12 +106,14 @@ public class PlayerInput : MonoBehaviour
                 FacingDirection = 1;
                 transform.rotation = Quaternion.Euler(0, 180, 0);
                 animationScript.Running();
-            animationScript.Crouching(false);
-        }
+                running = true;
+                animationScript.Crouching(false);
+            }
             if (horizontalInput == 0)
             {
 
                 animationScript.Idle();
+                running = false;
             }
         }
 
