@@ -25,23 +25,25 @@ public class HitBoxManager : MonoBehaviour
         if (armIndex == 0)
         {
             tempHitBox.armIndex = 0;
-            jab.transform.position = tempHitBox.leftArm.transform.position;
-            jab.transform.rotation = tempHitBox.leftArm.transform.rotation;
         }
         else if (armIndex == 1)
         {
             tempHitBox.armIndex = 1;
-            jab.transform.position = tempHitBox.rightArm.transform.position;
-            jab.transform.rotation = tempHitBox.rightArm.transform.rotation;
         }
-
-        StartCoroutine(Jab());
-        StopCoroutine(Jab());
+        tempHitBox.FollowArm();
+        StartCoroutine(SpawnHitBox(0.1f));
+        StopCoroutine(SpawnHitBox(0));
     }
-    IEnumerator Jab()
+    public void LegSweep()
+    {
+        tempHitBox.FollowLeg();
+        StartCoroutine(SpawnHitBox(0.15f));
+        StopCoroutine(SpawnHitBox(0));
+    }
+    IEnumerator SpawnHitBox(float spawnTime)
     {
         jab.SetActive(true);
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(spawnTime);
         jab.SetActive(false);
     }
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class Player : MonoBehaviour
     public bool inAnimation;
     public bool grounded;
     public bool hasArmour;
+    public bool hitStun;
+    private float hitStunCounter;
 
     public GameObject armour;
     private Rigidbody rb;
@@ -19,6 +22,8 @@ public class Player : MonoBehaviour
 
     private Vector3 addForceValue;
     private Vector3 hitDirection;
+
+
 
     public float friction = 0.25f;
 
@@ -31,12 +36,14 @@ public class Player : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         rb = GetComponent<Rigidbody>();
     }
-
+    private void Update()
+    {
+        ReduceCounter();
+    }
     private void FixedUpdate()
     {
         Move();
         Gravity();
-        ReduceHit();
     }
 
 
@@ -62,8 +69,15 @@ public class Player : MonoBehaviour
     private float CharacterSpeed()
     {
         float characterSpeed = speed - armourCheck.armourReduceSpeed;
+        if (hitStun == true)
+        {
+            characterSpeed *= 0 + (5 * Time.deltaTime);
+        }
+
         return characterSpeed;
+
     }
+
     public void Jump()
     {
         if (playerInput.numberOfJumps > 0)
@@ -75,14 +89,32 @@ public class Player : MonoBehaviour
     {
         rb.AddForce(Physics.gravity * ((weight + armourCheck.armourWeight) / 10));
     }
+    void ReduceCounter()
+    {
+        ReduceHit();
+        ReduceHitStun();
+    }
     void ReduceHit()
     {
         addForceValue.x = Mathf.Lerp(addForceValue.x, 0, 5f * Time.deltaTime);
-        addForceValue.y = Mathf.Lerp(addForceValue.y, 0, 50f * Time.deltaTime);
+        addForceValue.y = Mathf.Lerp(addForceValue.y, 0, 25f * Time.deltaTime);
         //reducing to zero if small value
         if (addForceValue.magnitude < 0.05f && addForceValue.magnitude > -0.05f)
         {
             addForceValue = Vector3.zero;
+        }
+
+    }
+    void ReduceHitStun()
+    {
+        if (hitStun == true)
+        {
+            hitStunCounter -= 1 * Time.deltaTime;
+            if (hitStunCounter < 0.001f)
+            {
+                hitStunCounter = 0;
+                hitStun = false;
+            }
         }
     }
     private Vector3 AddForce(float hitStrength)
@@ -113,14 +145,15 @@ public class Player : MonoBehaviour
         if (collision.gameObject.tag == "Ground")
         {
             grounded = false;
-        }
-            
+        }   
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Jab")
         {
+            hitStun = true;
+            hitStunCounter = 0.8f;
             Vector3 Hit = other.GetComponent<TempHitBox>().HitDirection(); // getting the direction of the attack
             float Power = other.GetComponent<TempHitBox>().HitStrength(); // getting the power of the attack
 

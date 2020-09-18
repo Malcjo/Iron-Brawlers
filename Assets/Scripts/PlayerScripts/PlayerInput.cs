@@ -66,6 +66,8 @@ public class PlayerInput : MonoBehaviour
 
                     if (Input.GetKeyDown(controls.jabKey))
                     {
+                        hitboxScript._attackDir = TempHitBox.Attackdirection.Low;
+                        hitboxScript._attackType = TempHitBox.AttackType.LegSweep;
                         state = animationGroup.attack;
                         animationScript.LegSweep();
                     }

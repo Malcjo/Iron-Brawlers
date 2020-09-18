@@ -10,11 +10,12 @@ public class TempHitBox : MonoBehaviour
     public AttackType _attackType;
     public enum AttackType { Jab, LegSweep };
 
+    private bool followArm = false;
 
     public PlayerInput playerInput;
 
     public int armIndex;
-    public GameObject rightArm, leftArm;
+    public GameObject rightArm, leftArm, foot;
 
     private Vector3 hitDirection;
 
@@ -25,10 +26,24 @@ public class TempHitBox : MonoBehaviour
     }
     private void Update()
     {
-        HitBoxFollowArm();
+        AttackTypeCall();
     }
+    void AttackTypeCall()
+    {
+        switch(_attackType)
+        {
+            case AttackType.Jab:
+                FollowArm();
+                break;
 
-    void HitBoxFollowArm()
+            case AttackType.LegSweep:
+                FollowLeg();
+                break;
+            default:
+                break;
+        }
+    }
+    public void FollowArm()
     {
         if (armIndex == 0)
         {
@@ -40,6 +55,11 @@ public class TempHitBox : MonoBehaviour
             this.gameObject.transform.position = rightArm.transform.position;
             this.gameObject.transform.rotation = rightArm.transform.rotation;
         }
+    }
+    public void FollowLeg()
+    {
+        this.gameObject.transform.position = foot.transform.position;
+        this.gameObject.transform.rotation = foot.transform.rotation;
     }
 
     public Vector3 HitDirection()
@@ -53,7 +73,7 @@ public class TempHitBox : MonoBehaviour
             case Attackdirection.High:
                 return Vector3.zero;
             case Attackdirection.Low:
-                return Vector3.zero;
+                return new Vector3(playerInput.FacingDirection * 0.1f, 1f,0);
             default:
                 hitDirection.x = 1; hitDirection.y = 0.5f; hitDirection.z = 0; ;
                 return new Vector3(hitDirection.x * playerInput.FacingDirection, hitDirection.y, 0);
@@ -67,7 +87,7 @@ public class TempHitBox : MonoBehaviour
             case AttackType.Jab:
                 return 15;
             case AttackType.LegSweep:
-                return 12;
+                return 8;
             default:
                 return 15;
         }
