@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float jumpForce;
     [SerializeField] private float speed;
 
+    public bool canHitBox;
     public bool inAnimation;
     public bool grounded;
     public bool hasArmour;
@@ -23,13 +24,15 @@ public class Player : MonoBehaviour
     private Vector3 addForceValue;
     private Vector3 hitDirection;
 
-
+    public int lives;
+    private int maxLives = 3;
 
     public float friction = 0.25f;
 
-
     void Start()
     {
+        lives = maxLives;
+        canHitBox = true;
         inAnimation = false;
         hasArmour = false;
         armourCheck = GetComponent<ArmourCheck>();
@@ -39,13 +42,19 @@ public class Player : MonoBehaviour
     private void Update()
     {
         ReduceCounter();
+        if(lives == 0)
+        {
+        }
     }
     private void FixedUpdate()
     {
         Move();
         Gravity();
     }
+    void CheckLives()
+    {
 
+    }
 
     void Move()
     {
@@ -75,7 +84,6 @@ public class Player : MonoBehaviour
         }
 
         return characterSpeed;
-
     }
 
     public void Jump()
@@ -89,11 +97,13 @@ public class Player : MonoBehaviour
     {
         rb.AddForce(Physics.gravity * ((weight + armourCheck.armourWeight) / 10));
     }
+    #region ReduceVales
     void ReduceCounter()
     {
         ReduceHit();
         ReduceHitStun();
     }
+
     void ReduceHit()
     {
         addForceValue.x = Mathf.Lerp(addForceValue.x, 0, 5f * Time.deltaTime);
@@ -103,7 +113,6 @@ public class Player : MonoBehaviour
         {
             addForceValue = Vector3.zero;
         }
-
     }
     void ReduceHitStun()
     {
@@ -117,11 +126,14 @@ public class Player : MonoBehaviour
             }
         }
     }
+    #endregion
     private Vector3 AddForce(float hitStrength)
     {
         Vector3 addForceValue = ((hitDirection) * (hitStrength));
         return addForceValue;
     }
+
+    #region Colliders / Triggers
 
     //Collision Detections----------------------------------------------------------
     //resetting number of jumps to max jumps
@@ -145,28 +157,44 @@ public class Player : MonoBehaviour
         if (collision.gameObject.tag == "Ground")
         {
             grounded = false;
-        }   
+        }
     }
-
+    private void OnTriggerExit(Collider other)
+    {
+        canHitBox = true;
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Jab")
         {
-            hitStun = true;
-            hitStunCounter = 0.8f;
-            Vector3 Hit = other.GetComponent<TempHitBox>().HitDirection(); // getting the direction of the attack
-            float Power = other.GetComponent<TempHitBox>().HitStrength(); // getting the power of the attack
-
-            if (hasArmour == true)
+            if (canHitBox == false)
             {
+                Debug.Log("canhitbox is false");
                 return;
             }
-            else if (hasArmour == false)
+
+            else if (canHitBox == true)
             {
-                hitDirection = Hit;
-                addForceValue = AddForce(Power);
+                Debug.Log("canhitbox is true");
+
+                canHitBox = false;
+                Debug.Log("Jab");
+                hitStun = true;
+                hitStunCounter = 0.8f;
+                Vector3 Hit = other.GetComponent<TempHitBox>().HitDirection(); // getting the direction of the attack
+                float Power = other.GetComponent<TempHitBox>().HitStrength(); // getting the power of the attack
+
+                if (hasArmour == true)
+                {
+                    return;
+                }
+                else if (hasArmour == false)
+                {
+                    hitDirection = Hit;
+                    addForceValue = AddForce(Power);
+                }
             }
         }
     }
-
+    #endregion
 }

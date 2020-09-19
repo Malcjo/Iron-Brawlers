@@ -40,7 +40,7 @@ public class HitBoxManager : MonoBehaviour
         StartCoroutine(SpawnHitBox(0.15f));
         StopCoroutine(SpawnHitBox(0));
     }
-    IEnumerator SpawnHitBox(float spawnTime)
+    public IEnumerator SpawnHitBox(float spawnTime)
     {
         jab.SetActive(true);
         yield return new WaitForSeconds(spawnTime);

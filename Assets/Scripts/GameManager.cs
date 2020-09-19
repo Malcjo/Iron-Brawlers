@@ -1,10 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    public Player[] playersInScene;
+    public TMP_Text player1Lives, player2Lives;
+
 
     private void Awake()
     {
@@ -20,7 +25,21 @@ public class GameManager : MonoBehaviour
                 Destroy(gameObject);
             }
         }
+        #endregion
+        for (int i = 0; i < playersInScene.Length; i++)
+        {
+            playersInScene[i].GetComponent<Player>();
+        }
     }
-    #endregion
+
+    private void Update()
+    {
+        if(playersInScene[0].lives == 0 || playersInScene[1].lives == 0)
+        {
+            SceneManager.LoadScene(0);
+        }
+        player1Lives.text = ("player 1 Lives : " + playersInScene[0].lives);
+        player2Lives.text = ("player 2 Lives : " + playersInScene[1].lives);
+    }
 
 }
