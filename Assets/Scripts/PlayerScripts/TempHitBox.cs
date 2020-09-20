@@ -13,6 +13,7 @@ public class TempHitBox : MonoBehaviour
     private bool followArm = false;
 
     public PlayerInput playerInput;
+    public Player player;
 
     public int armIndex;
     public GameObject rightArm, leftArm, foot;
@@ -90,6 +91,13 @@ public class TempHitBox : MonoBehaviour
                 return 8;
             default:
                 return 15;
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Block")
+        {
+            this.gameObject.SetActive(false);
         }
     }
 

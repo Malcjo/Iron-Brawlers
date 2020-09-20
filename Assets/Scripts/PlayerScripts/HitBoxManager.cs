@@ -4,23 +4,30 @@ using UnityEngine;
 
 public class HitBoxManager : MonoBehaviour
 {
-    public GameObject jab;
+    public GameObject hitBox, blockBox;
     public TempHitBox tempHitBox;
     [Range(0,1)]
     private int armIndex;
-    AnimationManager animationScript;
+    public AnimationManager animationScript;
+    public Player player;
 
 
     void Start()
     {
         animationScript = GetComponentInChildren<AnimationManager>();
-        jab.SetActive(false);
+        hitBox.SetActive(false);
+        blockBox.SetActive(false);
     }
+    public void Block()
+    {
+        StartCoroutine(SpawnBlockBox());
 
+        StopCoroutine(SpawnBlockBox());
+
+    }
 
     public void JabAttack(int _armIndex)
     {
-
         armIndex = _armIndex;
         if (armIndex == 0)
         {
@@ -42,9 +49,16 @@ public class HitBoxManager : MonoBehaviour
     }
     public IEnumerator SpawnHitBox(float spawnTime)
     {
-        jab.SetActive(true);
+        hitBox.SetActive(true);
         yield return new WaitForSeconds(spawnTime);
-        jab.SetActive(false);
+        hitBox.SetActive(false);
+    }
+    public IEnumerator SpawnBlockBox()
+    {
+        blockBox.SetActive(true);
+        yield return new WaitForSeconds(0.4f);
+        player.blocking = false;
+        blockBox.SetActive(false);
     }
 
    

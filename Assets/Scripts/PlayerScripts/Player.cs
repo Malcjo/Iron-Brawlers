@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     public bool hasArmour;
     public bool hitStun;
     private float hitStunCounter;
+    public bool blocking;
 
     public GameObject armour;
     private Rigidbody rb;
@@ -31,6 +32,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        blocking = false;
         lives = maxLives;
         canHitBox = true;
         inAnimation = false;
@@ -50,10 +52,6 @@ public class Player : MonoBehaviour
     {
         Move();
         Gravity();
-    }
-    void CheckLives()
-    {
-
     }
 
     void Move()
@@ -165,6 +163,10 @@ public class Player : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        if(other.tag == "Block")
+        {
+            blocking = true;
+        }
         if (other.tag == "Jab")
         {
             if (canHitBox == false)
@@ -176,23 +178,32 @@ public class Player : MonoBehaviour
             else if (canHitBox == true)
             {
                 Debug.Log("canhitbox is true");
-
-                canHitBox = false;
-                Debug.Log("Jab");
-                hitStun = true;
-                hitStunCounter = 0.8f;
-                Vector3 Hit = other.GetComponent<TempHitBox>().HitDirection(); // getting the direction of the attack
-                float Power = other.GetComponent<TempHitBox>().HitStrength(); // getting the power of the attack
-
-                if (hasArmour == true)
+                if (blocking == true)
                 {
                     return;
                 }
-                else if (hasArmour == false)
+                else if (blocking == false)
                 {
-                    hitDirection = Hit;
-                    addForceValue = AddForce(Power);
+                    canHitBox = false;
+                    Debug.Log("Jab");
+                    hitStun = true;
+                    hitStunCounter = 0.8f;
+                    Vector3 Hit = other.GetComponent<TempHitBox>().HitDirection(); // getting the direction of the attack
+                    float Power = other.GetComponent<TempHitBox>().HitStrength(); // getting the power of the attack
+
+                    if (hasArmour == true)
+                    {
+                        return;
+                    }
+                    else if (hasArmour == false)
+                    {
+                        hitDirection = Hit;
+                        addForceValue = AddForce(Power);
+                    }
                 }
+
+
+
             }
         }
     }

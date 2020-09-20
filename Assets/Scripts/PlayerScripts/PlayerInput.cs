@@ -16,6 +16,7 @@ public class PlayerInput : MonoBehaviour
     [SerializeField] private Player player;
     [SerializeField] private PlayerControls controls;
     [SerializeField] private TempHitBox hitboxScript;
+    [SerializeField] private HitBoxManager hitBoxManager;
 
     [Range(-1,1)]
     public int FacingDirection;
@@ -31,6 +32,7 @@ public class PlayerInput : MonoBehaviour
 
     private void Awake()
     {
+        hitBoxManager = GetComponentInChildren<HitBoxManager>();
         hitboxScript = GetComponentInChildren<TempHitBox>();
         player = GetComponent<Player>();
         controls = GetComponent<PlayerControls>();
@@ -41,6 +43,7 @@ public class PlayerInput : MonoBehaviour
         Escape();
         HorizontalInput();
         AttackInput();
+        BlockInput();
         JumpInput();
         CrouchCheck();
 
@@ -83,92 +86,100 @@ public class PlayerInput : MonoBehaviour
             }
         }
     }
-        public void HorizontalInput()
+    public void HorizontalInput()
+    {
+
+        horizontalInput = Input.GetAxisRaw(controls.horizontalKeys);
+        horizontal = (horizontalInput);
+        if (player.inAnimation == true)
         {
-
-            horizontalInput = Input.GetAxisRaw(controls.horizontalKeys);
-            horizontal = (horizontalInput);
-            if (player.inAnimation == true)
-            {
-                return;
-            }
-
-            if (horizontalInput < 0)
-            {
-                FacingDirection = -1;
-                transform.rotation = Quaternion.Euler(0, 0, 0);
-                animationScript.Running();
-                running = true;
-                animationScript.Crouching(false);
-            }
-            if (horizontalInput > 0)
-            {
-                FacingDirection = 1;
-                transform.rotation = Quaternion.Euler(0, 180, 0);
-                animationScript.Running();
-                running = true;
-                animationScript.Crouching(false);
-            }
-            if (horizontalInput == 0)
-            {
-
-                animationScript.Idle();
-                running = false;
-            }
+            return;
         }
 
-        public void JumpInput()
+        if (horizontalInput < 0)
         {
-            if (Input.GetKeyDown(controls.jumpKey))
-            {
-            animationScript.Jump();
-            player.inAnimation = false;
-                player.Jump();
-                numberOfJumps --;
-                if (numberOfJumps < 0)
-                {
-                    numberOfJumps = 0;
-                }
-            }
-            if (numberOfJumps < maxJumps && player.grounded == true)
-            {
-                numberOfJumps = maxJumps;
-            }
+            FacingDirection = -1;
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+            animationScript.Running();
+            running = true;
+            animationScript.Crouching(false);
         }
-
-        public void AttackInput()
+        if (horizontalInput > 0)
         {
-            if (Input.GetKeyDown(controls.jabKey))
-            {
-                hitboxScript._attackDir = TempHitBox.Attackdirection.Forward;
-                hitboxScript._attackType = TempHitBox.AttackType.Jab;
-                animationScript.JabCombo();
-            }
+            FacingDirection = 1;
+            transform.rotation = Quaternion.Euler(0, 180, 0);
+            animationScript.Running();
+            running = true;
+            animationScript.Crouching(false);
         }
-
-        private void OnCollisionExit(Collision collision)
-        {
-            if (collision.gameObject.tag == "Ground")
-
-            {
-                if (!Input.GetKeyDown(controls.jumpKey))
-                {
-                    numberOfJumps++;
-                }
-                numberOfJumps--;
-            }
-        }
-
-        //resetting number of jumps to max jumps
-        private void OnCollisionEnter(Collision collision)
+        if (horizontalInput == 0)
         {
 
-            if (collision.gameObject.tag == "Ground")
+            animationScript.Idle();
+            running = false;
+        }
+    }
+
+    public void JumpInput()
+    {
+        if (Input.GetKeyDown(controls.jumpKey))
+        {
+        animationScript.Jump();
+        player.inAnimation = false;
+            player.Jump();
+            numberOfJumps --;
+            if (numberOfJumps < 0)
             {
-                animationScript.JumpLanding();
-                numberOfJumps = maxJumps;
+                numberOfJumps = 0;
             }
         }
+        if (numberOfJumps < maxJumps && player.grounded == true)
+        {
+            numberOfJumps = maxJumps;
+        }
+    }
+
+    public void AttackInput()
+    {
+        if (Input.GetKeyDown(controls.jabKey))
+        {
+            hitboxScript._attackDir = TempHitBox.Attackdirection.Forward;
+            hitboxScript._attackType = TempHitBox.AttackType.Jab;
+            animationScript.JabCombo();
+        }
+    }
+    public void BlockInput()
+    {
+        if (Input.GetKeyDown(controls.blockKey))
+        {
+            hitBoxManager.Block();
+            player.blocking = true;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.tag == "Ground")
+
+        {
+            if (!Input.GetKeyDown(controls.jumpKey))
+            {
+                numberOfJumps++;
+            }
+            numberOfJumps--;
+        }
+    }
+
+    //resetting number of jumps to max jumps
+    private void OnCollisionEnter(Collision collision)
+    {
+
+        if (collision.gameObject.tag == "Ground")
+        {
+            animationScript.JumpLanding();
+            numberOfJumps = maxJumps;
+        }
+    }
     void Escape()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
