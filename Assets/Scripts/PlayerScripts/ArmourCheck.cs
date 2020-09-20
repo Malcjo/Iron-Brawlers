@@ -13,6 +13,7 @@ public class ArmourCheck : MonoBehaviour
 
     public int armourWeight, armourReduceSpeed, reduceJumpForce;
 
+    public GameObject[] ArmourMesh;
     private void Start()
     {
         player = GetComponent<Player>();
@@ -26,29 +27,32 @@ public class ArmourCheck : MonoBehaviour
         {
             case Armour.heavy:
                 armourType = Armour.heavy;
-                armourWeight = 20;
-                armourReduceSpeed = 6;
+                armourWeight = 8;
+                armourReduceSpeed = 3;
                 reduceJumpForce = 2;
-                knockBackResistance = 200;
+                knockBackResistance = 6;
                 player.hasArmour = true;
+                SetArmourMeshOff();
                 break;
 
             case Armour.light:
                 armourType = Armour.light;
-                armourWeight = 10;
-                armourReduceSpeed = 3;
+                armourWeight = 5;
+                armourReduceSpeed = 1;
                 reduceJumpForce = 1;
-                knockBackResistance = 100;
+                knockBackResistance = 3;
                 player.hasArmour = true;
+                SetArmourMeshOff();
                 break;
 
             case Armour.none:
                 armourType = Armour.none;
-                armourWeight = 0;
+                armourWeight = 5;
                 armourReduceSpeed = 0;
                 reduceJumpForce = 0;
                 knockBackResistance = 0;
                 player.hasArmour = false;
+                SetArmourMeshOn();
                 break;
                     
             default:
@@ -61,7 +65,20 @@ public class ArmourCheck : MonoBehaviour
                 break;
         }
     }
-
+    void SetArmourMeshOn()
+    {
+        for (int i = 0; i < ArmourMesh.Length; i++)
+        {
+            ArmourMesh[i].SetActive(false);
+        }
+    }
+    void SetArmourMeshOff()
+    {
+        for (int i = 0; i < ArmourMesh.Length; i++)
+        {
+            ArmourMesh[i].SetActive(true);
+        }
+    }
     private void Update()
     {
         ArmourStatsCheck();

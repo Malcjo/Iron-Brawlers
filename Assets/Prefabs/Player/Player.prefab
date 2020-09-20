@@ -97,6 +97,11 @@ MonoBehaviour:
   armourWeight: 0
   armourReduceSpeed: 0
   reduceJumpForce: 0
+  ArmourMesh:
+  - {fileID: 1318380829163895054}
+  - {fileID: 1318380830198018334}
+  - {fileID: 1318380830023824502}
+  - {fileID: 1318380830542724026}
 --- !u!114 &1318380829047604143
 MonoBehaviour:
   m_ObjectHideFlags: 0

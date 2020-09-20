@@ -88,7 +88,7 @@ public class TempHitBox : MonoBehaviour
             case AttackType.Jab:
                 return 15;
             case AttackType.LegSweep:
-                return 8;
+                return 10;
             default:
                 return 15;
         }

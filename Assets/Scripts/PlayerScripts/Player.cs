@@ -17,6 +17,8 @@ public class Player : MonoBehaviour
     private float hitStunCounter;
     public bool blocking;
 
+    
+
     public GameObject armour;
     private Rigidbody rb;
     private PlayerInput playerInput;
@@ -128,6 +130,7 @@ public class Player : MonoBehaviour
     private Vector3 AddForce(float hitStrength)
     {
         Vector3 addForceValue = ((hitDirection) * (hitStrength));
+
         return addForceValue;
     }
 
@@ -193,6 +196,10 @@ public class Player : MonoBehaviour
 
                     if (hasArmour == true)
                     {
+                        hitDirection = Hit;
+                        addForceValue = AddForce(Power - armourCheck.knockBackResistance);
+                        armourCheck.armourType = ArmourCheck.Armour.none;
+                        hasArmour = false;
                         return;
                     }
                     else if (hasArmour == false)
