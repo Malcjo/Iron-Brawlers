@@ -20,10 +20,13 @@ public class HitBoxManager : MonoBehaviour
     }
     public void Block()
     {
-        StartCoroutine(SpawnBlockBox());
-
-        StopCoroutine(SpawnBlockBox());
-
+        blockBox.SetActive(true);
+        player.blocking = true;
+    }
+    public void StopBlock()
+    {
+        blockBox.SetActive(false);
+        player.blocking = false;
     }
 
     public void JabAttack(int _armIndex)
@@ -53,13 +56,4 @@ public class HitBoxManager : MonoBehaviour
         yield return new WaitForSeconds(spawnTime);
         hitBox.SetActive(false);
     }
-    public IEnumerator SpawnBlockBox()
-    {
-        blockBox.SetActive(true);
-        yield return new WaitForSeconds(0.4f);
-        player.blocking = false;
-        blockBox.SetActive(false);
-    }
-
-   
 }

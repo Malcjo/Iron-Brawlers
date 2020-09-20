@@ -150,10 +150,15 @@ public class PlayerInput : MonoBehaviour
     }
     public void BlockInput()
     {
-        if (Input.GetKeyDown(controls.blockKey))
+        if (Input.GetKey(controls.blockKey))
         {
             hitBoxManager.Block();
             player.blocking = true;
+        }
+        if (Input.GetKeyUp(controls.blockKey))
+        {
+            hitBoxManager.StopBlock();
+            player.blocking = false;
         }
     }
 

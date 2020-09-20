@@ -17,7 +17,10 @@ public class Player : MonoBehaviour
     private float hitStunCounter;
     public bool blocking;
 
-    
+    [SerializeField] private bool jumping;
+    [SerializeField] private int numberOfJumps;
+    private int maxJumps = 2;
+
 
     public GameObject armour;
     private Rigidbody rb;
@@ -34,6 +37,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        numberOfJumps = maxJumps;
         blocking = false;
         lives = maxLives;
         canHitBox = true;
@@ -90,8 +94,27 @@ public class Player : MonoBehaviour
     {
         if (playerInput.numberOfJumps > 0)
         {
-            rb.velocity = (new Vector3(rb.velocity.x, (jumpForce - armourCheck.reduceJumpForce), rb.velocity.z));
+            rb.velocity = (new Vector3(rb.velocity.x, JumpForceCalculator(), rb.velocity.z));
+            jumping = true;
+            numberOfJumps--;
         }
+    }
+
+    float JumpForceCalculator()
+    {
+        float jumpForceValue;
+        if (numberOfJumps == 0)
+        {
+            return rb.velocity.y;
+        }
+        if(jumping == false)
+        {
+            jumpForceValue = jumpForce - armourCheck.reduceJumpForce;
+            return jumpForceValue;
+        }
+        jumpForceValue = (jumpForce + 1) - armourCheck.reduceJumpForce;
+        return jumpForceValue;
+
     }
     void Gravity()
     {
@@ -166,10 +189,6 @@ public class Player : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Block")
-        {
-            blocking = true;
-        }
         if (other.tag == "Jab")
         {
             if (canHitBox == false)
