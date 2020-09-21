@@ -75,6 +75,8 @@ MonoBehaviour:
   hasArmour: 0
   hitStun: 0
   blocking: 0
+  jumping: 0
+  numberOfJumps: 0
   armour: {fileID: 1318380830023824502}
   lives: 0
   friction: 0.25
@@ -90,17 +92,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eb740759a4a17b40a67ea28d189059b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  armourType: 0
-  armourIndex: 0
-  player: {fileID: 0}
+  LegArmourType: 0
+  ChestArmourType: 0
+  hasArmour: 0
   knockBackResistance: 0
   armourWeight: 0
   armourReduceSpeed: 0
   reduceJumpForce: 0
-  ArmourMesh:
+  ChestArmourMesh:
+  - {fileID: 1318380830023824502}
+  LegArmourMesh:
   - {fileID: 1318380829163895054}
   - {fileID: 1318380830198018334}
-  - {fileID: 1318380830023824502}
   - {fileID: 1318380830542724026}
 --- !u!114 &1318380829047604143
 MonoBehaviour:
@@ -286,7 +289,7 @@ GameObject:
   - component: {fileID: 1318380829163895052}
   m_Layer: 0
   m_Name: LegArmourLeft
-  m_TagString: Untagged
+  m_TagString: LegArmour
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -597,7 +600,7 @@ GameObject:
   - component: {fileID: 1318380830023824501}
   m_Layer: 0
   m_Name: Armour
-  m_TagString: Untagged
+  m_TagString: ChestArmour
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -720,7 +723,7 @@ GameObject:
   - component: {fileID: 1318380830198018332}
   m_Layer: 0
   m_Name: LegArmourRight
-  m_TagString: Untagged
+  m_TagString: LegArmour
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -765,7 +768,7 @@ GameObject:
   - component: {fileID: 1318380830542724024}
   m_Layer: 0
   m_Name: LegArmour
-  m_TagString: Untagged
+  m_TagString: LegArmour
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -12,8 +12,9 @@ public class TempHitBox : MonoBehaviour
 
     private bool followArm = false;
 
-    public PlayerInput playerInput;
-    public Player player;
+    [SerializeField] private PlayerInput playerInput;
+    [SerializeField] private Player player;
+    [SerializeField] private ArmourCheck armourCheck;
 
     public int armIndex;
     public GameObject rightArm, leftArm, foot;
@@ -24,6 +25,8 @@ public class TempHitBox : MonoBehaviour
     private void Awake()
     {
         playerInput = GetComponentInParent<PlayerInput>();
+        player = GetComponentInParent<Player>();
+        armourCheck = GetComponentInParent<ArmourCheck>();
     }
     private void Update()
     {
@@ -98,6 +101,17 @@ public class TempHitBox : MonoBehaviour
         if(other.tag == "Block")
         {
             this.gameObject.SetActive(false);
+        }
+        if(other.tag == "LegArmour")
+        {
+            var _tempLegArmourType = other.GetComponentInParent<ArmourCheck>().LegArmourType;
+            _tempLegArmourType = ArmourCheck.Armour.none;
+            other.gameObject.GetComponent<ArmourCheck>().SetArmourMeshOff(ArmourCheck.ArmourType.Legs);
+        }
+        if(other.tag == "ChestArmour")
+        {
+            other.gameObject.GetComponent<ArmourCheck>().ChestArmourType = ArmourCheck.Armour.none;
+            other.gameObject.GetComponent<ArmourCheck>().SetArmourMeshOff(ArmourCheck.ArmourType.Chest);
         }
     }
 

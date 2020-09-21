@@ -34,7 +34,13 @@ public class Player : MonoBehaviour
     private int maxLives = 3;
 
     public float friction = 0.25f;
+    private void Awake()
+    {
 
+        armourCheck = GetComponent<ArmourCheck>();
+        playerInput = GetComponent<PlayerInput>();
+        rb = GetComponent<Rigidbody>();
+    }
     void Start()
     {
         numberOfJumps = maxJumps;
@@ -42,10 +48,7 @@ public class Player : MonoBehaviour
         lives = maxLives;
         canHitBox = true;
         inAnimation = false;
-        hasArmour = false;
-        armourCheck = GetComponent<ArmourCheck>();
-        playerInput = GetComponent<PlayerInput>();
-        rb = GetComponent<Rigidbody>();
+        armourCheck.SetAllArmourOff();
     }
     private void Update()
     {
@@ -213,23 +216,12 @@ public class Player : MonoBehaviour
                     Vector3 Hit = other.GetComponent<TempHitBox>().HitDirection(); // getting the direction of the attack
                     float Power = other.GetComponent<TempHitBox>().HitStrength(); // getting the power of the attack
 
-                    if (hasArmour == true)
-                    {
-                        hitDirection = Hit;
-                        addForceValue = AddForce(Power - armourCheck.knockBackResistance);
-                        armourCheck.armourType = ArmourCheck.Armour.none;
-                        hasArmour = false;
-                        return;
-                    }
-                    else if (hasArmour == false)
-                    {
-                        hitDirection = Hit;
-                        addForceValue = AddForce(Power);
-                    }
+                    hitDirection = Hit;
+                    addForceValue = AddForce(Power - armourCheck.knockBackResistance);
+                    armourCheck.LegArmourType = ArmourCheck.Armour.none;
+                    //armourCheck.SetAllArmourOff();
+                    armourCheck.hasArmour = false;
                 }
-
-
-
             }
         }
     }
