@@ -21,7 +21,8 @@ public class TempHitBox : MonoBehaviour
 
     private Vector3 hitDirection;
 
-
+    private float countdownDelay;
+    private float maxCountdownDelay;
     private void Awake()
     {
         playerInput = GetComponentInParent<PlayerInput>();
@@ -31,6 +32,7 @@ public class TempHitBox : MonoBehaviour
     private void Update()
     {
         AttackTypeCall();
+        Delay();
     }
     void AttackTypeCall()
     {
@@ -83,7 +85,7 @@ public class TempHitBox : MonoBehaviour
                 return new Vector3(hitDirection.x * playerInput.FacingDirection, hitDirection.y, 0);
         }
     }
-
+    
     public float HitStrength()
     {
         switch (_attackType)
@@ -96,22 +98,31 @@ public class TempHitBox : MonoBehaviour
                 return 15;
         }
     }
+    void Delay()
+    {
+        countdownDelay -= 1 * Time.deltaTime;
+    }
     private void OnTriggerEnter(Collider other)
     {
+        if(other.tag == "Player")
+        {
+            var _tempArmourCheck = GetComponent<ArmourCheck>();
+        }
         if(other.tag == "Block")
         {
             this.gameObject.SetActive(false);
         }
         if(other.tag == "LegArmour")
         {
-            var _tempLegArmourType = other.GetComponentInParent<ArmourCheck>().LegArmourType;
-            _tempLegArmourType = ArmourCheck.Armour.none;
-            other.gameObject.GetComponent<ArmourCheck>().SetArmourMeshOff(ArmourCheck.ArmourType.Legs);
+            var _tempArmourCheck = other.GetComponentInParent<ArmourCheck>();
+            _tempArmourCheck.LegArmourType = ArmourCheck.Armour.none;
+            _tempArmourCheck.SetArmourOff(ArmourCheck.ArmourType.Legs);
         }
         if(other.tag == "ChestArmour")
         {
-            other.gameObject.GetComponent<ArmourCheck>().ChestArmourType = ArmourCheck.Armour.none;
-            other.gameObject.GetComponent<ArmourCheck>().SetArmourMeshOff(ArmourCheck.ArmourType.Chest);
+            var _temptArmourCheck = other.GetComponentInParent<ArmourCheck>();
+            _temptArmourCheck.ChestArmourType = ArmourCheck.Armour.none;
+            _temptArmourCheck.SetArmourOff(ArmourCheck.ArmourType.Chest);
         }
     }
 

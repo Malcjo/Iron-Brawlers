@@ -94,6 +94,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LegArmourType: 0
   ChestArmourType: 0
+  ArmourPlacement: 0
   hasArmour: 0
   knockBackResistance: 0
   armourWeight: 0
@@ -193,7 +194,7 @@ Transform:
   m_GameObject: {fileID: 1318380829071114608}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.79533, y: 1.4378, z: -0.050266}
-  m_LocalScale: {x: 0.65811014, y: 0.65811014, z: 0.65811014}
+  m_LocalScale: {x: 0.65811014, y: 0.31618902, z: 0.65811014}
   m_Children: []
   m_Father: {fileID: 1318380829165925255}
   m_RootOrder: 0
@@ -260,6 +261,7 @@ MonoBehaviour:
   _attackType: 0
   playerInput: {fileID: 0}
   player: {fileID: 0}
+  armourCheck: {fileID: 0}
   armIndex: 0
   rightArm: {fileID: 1961792786350550441}
   leftArm: {fileID: 1321921344446132655}
@@ -781,8 +783,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1318380830542724026}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -7e-15, y: -0.161, z: -0.006}
-  m_LocalScale: {x: 0.32831728, y: 0.25126913, z: 0.42611408}
+  m_LocalPosition: {x: -1.4e-14, y: -0.161, z: -0.006}
+  m_LocalScale: {x: 0.32831728, y: 0.12744622, z: 0.42611408}
   m_Children:
   - {fileID: 1318380829870483555}
   m_Father: {fileID: 5828576688153350975}
@@ -975,6 +977,7 @@ MonoBehaviour:
   _attackType: 0
   playerInput: {fileID: 1318380829047604143}
   player: {fileID: 0}
+  armourCheck: {fileID: 0}
   armIndex: 0
   rightArm: {fileID: 1961792786350550441}
   leftArm: {fileID: 1321921344446132655}

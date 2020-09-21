@@ -7,7 +7,7 @@ public class ArmourCheck : MonoBehaviour
     public Armour LegArmourType;
     public Armour ChestArmourType;
     public enum ArmourType { Chest, Legs}
-    public ArmourType armourType;
+    public ArmourType ArmourPlacement;
     public enum Armour { none, light, heavy };
 
     public bool hasArmour;
@@ -22,7 +22,11 @@ public class ArmourCheck : MonoBehaviour
     public GameObject[] ChestArmourMesh;
     public GameObject[] LegArmourMesh;
 
-
+    private void Update()
+    {
+        ArmourStatsCheck();
+        ChangeArmourInputs();
+    }
     void ArmourStatsCheck()
     {
         switch (ChestArmourType)
@@ -110,29 +114,31 @@ public class ArmourCheck : MonoBehaviour
     public void SetAllArmourOff()
     {
         hasArmour = false;
-        SetArmourMeshOff(ArmourType.Legs);
-        SetArmourMeshOff(ArmourType.Chest);
+        SetArmourOff(ArmourType.Legs);
+        SetArmourOff(ArmourType.Chest);
     }
     public void SetAllArmourOn()
     {
         hasArmour = false;
-        SetArmourMeshOn(ArmourType.Legs);
-        SetArmourMeshOn(ArmourType.Chest);
+        SetArmourOn(ArmourType.Legs, Armour.light);
+        SetArmourOn(ArmourType.Chest, Armour.light);
     }
-    public void SetArmourMeshOn(ArmourType type)
+    public void SetArmourOn(ArmourType placement, Armour type)
     {
-        switch (type)
+        switch (placement)
         {
             case ArmourType.Chest:
                 for (int i = 0; i < ChestArmourMesh.Length; i++)
                 {
                     ChestArmourMesh[i].SetActive(true);
+                    ChestArmourType = type;
                 }
                 break;
             case ArmourType.Legs:
                 for (int i = 0; i < LegArmourMesh.Length; i++)
                 {
                     LegArmourMesh[i].SetActive(true);
+                    LegArmourType = type;
                 }
                 break;
             default:
@@ -140,29 +146,31 @@ public class ArmourCheck : MonoBehaviour
         }
     }
 
-    public void SetArmourMeshOff(ArmourType type)
+    public void SetArmourOff(ArmourType armourPlacement)
     {
-        switch (type)
+        switch (armourPlacement)
         {
             case ArmourType.Chest:
                 for (int i = 0; i < ChestArmourMesh.Length; i++)
                 {
                     ChestArmourMesh[i].SetActive(false);
+                    ChestArmourType = Armour.none;
                 }
                 break;
             case ArmourType.Legs:
                 for (int i = 0; i < LegArmourMesh.Length; i++)
                 {
                     LegArmourMesh[i].SetActive(false);
+                    LegArmourType = Armour.none;
                 }
                 break;
             default:
                 break;
         }
     }
-    private void Update()
+
+    void ChangeArmourInputs()
     {
-        ArmourStatsCheck();
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             hasArmour = false;
