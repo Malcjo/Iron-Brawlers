@@ -50,7 +50,21 @@ public class PlayerInput : MonoBehaviour
 
         if (player.grounded == false)
         {
-            state = animationGroup.jumping;
+            if (Input.GetKey(controls.jumpKey))
+            {
+                state = animationGroup.jumping;
+
+                if(state == animationGroup.jumping)
+                {
+                    animationScript.Jump();
+
+                    if (Input.GetKeyDown(controls.jabKey))
+                    {
+                        //state = animationGroup.attack;
+                        animationScript.AerialAttack();
+                    }
+                }
+            } 
         }
 
         

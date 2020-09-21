@@ -81,6 +81,11 @@ public class AnimationManager : MonoBehaviour
         anim.Play("Leg Sweep");
     }
 
+    public void AerialAttack()
+    {
+        anim.SetBool("AerialAttacking", true);
+    }
+
      public void InAnimation()
     {
         playerScript.inAnimation = true;

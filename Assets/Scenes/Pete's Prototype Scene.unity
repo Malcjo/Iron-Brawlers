@@ -2623,8 +2623,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playersInScene:
-  - {fileID: 0}
   - {fileID: 1512802346}
+  - {fileID: 1007616020}
   player1Lives: {fileID: 670933196}
   player2Lives: {fileID: 574041489}
 --- !u!4 &1925958427
