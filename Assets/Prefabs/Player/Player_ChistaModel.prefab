@@ -1,5 +1,60 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!95 &4794330819837634511
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3578408338555921467}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: fdbaadd5123864942960382174c0a565, type: 3}
+  m_Controller: {fileID: 9100000, guid: 6566e217fd2407042a93107325cd14ab, type: 2}
+  m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &4794330819837633585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3578408338555921467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afed8a1a1e82d0647870d50032667fb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitBox: {fileID: 4794330820876797291}
+  blockBox: {fileID: 4794330819513746063}
+  tempHitBox: {fileID: 4794330820876797289}
+  animationScript: {fileID: 0}
+  player: {fileID: 4794330820282701284}
+--- !u!114 &4794330819837634510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3578408338555921467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebc704ae8a907e74587470c09f823d90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animlist:
+  - Punch Combo1
+  - Punch Combo2
+  - Punch Combo3
+  anim: {fileID: 4794330819837634511}
+  comboStep: 0
+  comboTimer: 0
 --- !u!1 &4794330819122035029
 GameObject:
   m_ObjectHideFlags: 0
@@ -12,7 +67,7 @@ GameObject:
   - component: {fileID: 4794330819122035027}
   m_Layer: 0
   m_Name: LegArmourRight
-  m_TagString: Untagged
+  m_TagString: LegArmour
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -89,7 +144,7 @@ GameObject:
   - component: {fileID: 4794330819297549172}
   m_Layer: 0
   m_Name: Armour
-  m_TagString: Untagged
+  m_TagString: ChestArmour
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -295,8 +350,6 @@ MonoBehaviour:
   _attackDir: 0
   _attackType: 0
   playerInput: {fileID: 4794330820282701286}
-  player: {fileID: 0}
-  armourCheck: {fileID: 0}
   armIndex: 0
   rightArm: {fileID: 0}
   leftArm: {fileID: 0}
@@ -392,61 +445,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!95 &4794330819837634511
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3578408338555921467}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: fdbaadd5123864942960382174c0a565, type: 3}
-  m_Controller: {fileID: 9100000, guid: 6566e217fd2407042a93107325cd14ab, type: 2}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &4794330819837633585
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3578408338555921467}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afed8a1a1e82d0647870d50032667fb0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hitBox: {fileID: 4794330820876797291}
-  blockBox: {fileID: 4794330819513746063}
-  tempHitBox: {fileID: 4794330820876797289}
-  animationScript: {fileID: 0}
-  player: {fileID: 4794330820282701284}
---- !u!114 &4794330819837634510
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3578408338555921467}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ebc704ae8a907e74587470c09f823d90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animlist:
-  - Punch Combo1
-  - Punch Combo2
-  - Punch Combo3
-  anim: {fileID: 4794330819837634511}
-  comboStep: 0
-  comboTimer: 0
 --- !u!1 &4794330820282701291
 GameObject:
   m_ObjectHideFlags: 0
@@ -463,7 +461,7 @@ GameObject:
   - component: {fileID: 4794330820282701289}
   - component: {fileID: 4794330820282701288}
   m_Layer: 10
-  m_Name: Player 1 1
+  m_Name: Player_ChistaModel
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -541,14 +539,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LegArmourType: 0
   ChestArmourType: 0
-  armourType: 0
+  ArmourPlacement: 0
   hasArmour: 0
   knockBackResistance: 0
   armourWeight: 0
   armourReduceSpeed: 0
   reduceJumpForce: 0
-  ChestArmourMesh: []
-  LegArmourMesh: []
+  ChestArmourMesh:
+  - {fileID: 4794330819297549174}
+  LegArmourMesh:
+  - {fileID: 4794330821211079093}
+  - {fileID: 4794330819122035029}
+  - {fileID: 4794330820984734891}
 --- !u!114 &4794330820282701286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -698,7 +700,7 @@ GameObject:
   - component: {fileID: 4794330820876797287}
   - component: {fileID: 4794330820876797286}
   - component: {fileID: 4794330820876797289}
-  - component: {fileID: 4794330820876797288}
+  - component: {fileID: 4193868488120893632}
   m_Layer: 8
   m_Name: Jab
   m_TagString: Jab
@@ -713,13 +715,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4794330820876797291}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.79533, y: 1.4378, z: -0.050266}
-  m_LocalScale: {x: 0.65811014, y: 0.65811014, z: 0.65811014}
+  m_LocalRotation: {x: 0.707107, y: -0, z: -0, w: 0.7071067}
+  m_LocalPosition: {x: -0.79534, y: 1.4378, z: -0.050266}
+  m_LocalScale: {x: 0.51477623, y: 0.48270437, z: 0.4654845}
   m_Children: []
   m_Father: {fileID: 4794330819164813585}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0}
 --- !u!33 &4794330820876797287
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -781,13 +783,11 @@ MonoBehaviour:
   _attackDir: 0
   _attackType: 0
   playerInput: {fileID: 0}
-  player: {fileID: 0}
-  armourCheck: {fileID: 0}
   armIndex: 0
   rightArm: {fileID: 5474835900145209246}
   leftArm: {fileID: 4799533657961845656}
   foot: {fileID: 3502085527383382370}
---- !u!135 &4794330820876797288
+--- !u!135 &4193868488120893632
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -795,11 +795,11 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4794330820876797291}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5000002
-  m_Center: {x: -0.00000035762787, y: 0.0000009536743, z: 0.0000009536743}
+  m_Radius: 0.5000003
+  m_Center: {x: -0.00000047683716, y: 0, z: 0.0000009536743}
 --- !u!1 &4794330820968822730
 GameObject:
   m_ObjectHideFlags: 0
@@ -890,7 +890,7 @@ GameObject:
   - component: {fileID: 4794330820984734889}
   m_Layer: 0
   m_Name: LegArmour
-  m_TagString: Untagged
+  m_TagString: LegArmour
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -935,7 +935,7 @@ GameObject:
   - component: {fileID: 4794330821211079091}
   m_Layer: 0
   m_Name: LegArmourLeft
-  m_TagString: Untagged
+  m_TagString: LegArmour
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1058,21 +1058,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: FemaleBase_Rig
       objectReference: {fileID: 0}
-    - target: {fileID: 7814502684447367421, guid: fdbaadd5123864942960382174c0a565,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.017111488
-      objectReference: {fileID: 0}
-    - target: {fileID: 7814502684447367421, guid: fdbaadd5123864942960382174c0a565,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -0.01666041
-      objectReference: {fileID: 0}
-    - target: {fileID: -4431429744085825124, guid: fdbaadd5123864942960382174c0a565,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: fdbaadd5123864942960382174c0a565,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1127,6 +1112,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4431429744085825124, guid: fdbaadd5123864942960382174c0a565,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7814502684447367421, guid: fdbaadd5123864942960382174c0a565,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.017111488
+      objectReference: {fileID: 0}
+    - target: {fileID: 7814502684447367421, guid: fdbaadd5123864942960382174c0a565,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.01666041
       objectReference: {fileID: 0}
     - target: {fileID: -1381886020629568032, guid: fdbaadd5123864942960382174c0a565,
         type: 3}

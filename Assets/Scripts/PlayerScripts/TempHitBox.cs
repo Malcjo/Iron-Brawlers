@@ -13,26 +13,21 @@ public class TempHitBox : MonoBehaviour
     private bool followArm = false;
 
     [SerializeField] private PlayerInput playerInput;
-    [SerializeField] private Player player;
-    [SerializeField] private ArmourCheck armourCheck;
 
     public int armIndex;
     public GameObject rightArm, leftArm, foot;
 
     private Vector3 hitDirection;
 
-    private float countdownDelay;
-    private float maxCountdownDelay;
+    private bool damamgeChest;
+    private bool damageLegs;
     private void Awake()
     {
         playerInput = GetComponentInParent<PlayerInput>();
-        player = GetComponentInParent<Player>();
-        armourCheck = GetComponentInParent<ArmourCheck>();
     }
     private void Update()
     {
         AttackTypeCall();
-        Delay();
     }
     void AttackTypeCall()
     {
@@ -98,16 +93,17 @@ public class TempHitBox : MonoBehaviour
                 return 15;
         }
     }
-    void Delay()
+    void DelayChest()
     {
-        countdownDelay -= 1 * Time.deltaTime;
+        damamgeChest = true;
+    }
+    void DelayLegs()
+    {
+        damageLegs = true;
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player")
-        {
-            var _tempArmourCheck = GetComponent<ArmourCheck>();
-        }
+
         if(other.tag == "Block")
         {
             this.gameObject.SetActive(false);
@@ -117,12 +113,25 @@ public class TempHitBox : MonoBehaviour
             var _tempArmourCheck = other.GetComponentInParent<ArmourCheck>();
             _tempArmourCheck.LegArmourType = ArmourCheck.Armour.none;
             _tempArmourCheck.SetArmourOff(ArmourCheck.ArmourType.Legs);
+            Invoke("DelayLegs", 0.01f);
+            if (damageLegs == true)
+            {
+
+                damageLegs = false;
+            }
         }
         if(other.tag == "ChestArmour")
         {
             var _temptArmourCheck = other.GetComponentInParent<ArmourCheck>();
             _temptArmourCheck.ChestArmourType = ArmourCheck.Armour.none;
             _temptArmourCheck.SetArmourOff(ArmourCheck.ArmourType.Chest);
+            Invoke("DelayChest", 0.01f);
+            if (damamgeChest == true)
+            {
+
+                damamgeChest = false;
+            }
+
         }
     }
 
