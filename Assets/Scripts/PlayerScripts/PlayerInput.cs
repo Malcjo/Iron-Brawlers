@@ -23,12 +23,14 @@ public class PlayerInput : MonoBehaviour
 
     [SerializeField]
     bool running;
+    [SerializeField]
+    bool jumping;
     public bool canJump;
 
     [SerializeField]
     animationGroup state;
 
-    public enum animationGroup { idle, crouching, jumping, attack }
+    public enum animationGroup { idle, crouching, jumping, attack, running }
 
     private void Awake()
     {
@@ -45,61 +47,79 @@ public class PlayerInput : MonoBehaviour
         AttackInput();
         BlockInput();
         JumpInput();
-        CrouchCheck();
-
-
-        if (player.grounded == false)
-        {
-            if (Input.GetKey(controls.jumpKey))
-            {
-                state = animationGroup.jumping;
-
-                if(state == animationGroup.jumping)
-                {
-                    animationScript.Jump();
-
-                    if (Input.GetKeyDown(controls.jabKey))
-                    {
-                        //state = animationGroup.attack;
-                        animationScript.AerialAttack();
-                    }
-                }
-            } 
-        }
-
-        
+        CheckState(); 
     }
-    void CrouchCheck()
+
+    void CheckState()
     {
         if (player.grounded == true)
         {
+            animationScript.Jump(false);
+            state = animationGroup.idle;
+
             if (Input.GetKey(controls.crouchKey))
             {
                 state = animationGroup.crouching;
-
-                if (state == animationGroup.crouching)
-                {
-                    animationScript.Crouching(true);
-
-                    if (Input.GetKeyDown(controls.jabKey))
-                    {
-                        hitboxScript._attackDir = TempHitBox.Attackdirection.Low;
-                        hitboxScript._attackType = TempHitBox.AttackType.LegSweep;
-                        state = animationGroup.attack;
-                        animationScript.LegSweep();
-                    }
-                }
-                if(running == true)
-                {
-                    animationScript.Crouching(false);
-                }
             }
-            else
+            if (horizontalInput > 0 || horizontalInput < 0)
+            {
+                state = animationGroup.running;
+            }
+            if (Input.GetKey(controls.jumpKey))
+            {
+                state = animationGroup.jumping;
+            }
+        }
+        switch (state)
+        {
+            case animationGroup.idle: IdleStateCheck(); break;
+            case animationGroup.jumping: JumpStateCheck(); break;
+            case animationGroup.running: RunningStateCheck(); break;
+            case animationGroup.crouching: CrouchStateCheck(); break;
+        }
+    }
+
+
+    void IdleStateCheck()
+    {
+        animationScript.Crouching(false);
+        animationScript.AerialAttack(false);
+        animationScript.Jump(false);
+        animationScript.Running(false);
+    }
+
+    void RunningStateCheck()
+    {
+        
+        if (player.grounded == true)
+        {
+            animationScript.Running(true);
+            if (Input.GetKey(controls.crouchKey))
             {
                 animationScript.Crouching(false);
             }
         }
     }
+
+    void JumpStateCheck()
+    {
+        animationScript.Jump(true);
+    }
+
+    void CrouchStateCheck()
+    {
+        animationScript.Crouching(true);
+  
+
+        if (Input.GetKeyDown(controls.jabKey))
+        {
+            hitboxScript._attackDir = TempHitBox.Attackdirection.Low;
+            hitboxScript._attackType = TempHitBox.AttackType.LegSweep;
+            state = animationGroup.attack;
+            animationScript.LegSweep();
+        }
+    }
+    
     public void HorizontalInput()
     {
 
@@ -114,7 +134,7 @@ public class PlayerInput : MonoBehaviour
         {
             FacingDirection = -1;
             transform.rotation = Quaternion.Euler(0, 0, 0);
-            animationScript.Running();
+            //animationScript.Running();
             running = true;
             animationScript.Crouching(false);
         }
@@ -122,7 +142,7 @@ public class PlayerInput : MonoBehaviour
         {
             FacingDirection = 1;
             transform.rotation = Quaternion.Euler(0, 180, 0);
-            animationScript.Running();
+            //animationScript.Running();
             running = true;
             animationScript.Crouching(false);
         }
@@ -138,7 +158,7 @@ public class PlayerInput : MonoBehaviour
     {
         if (Input.GetKeyDown(controls.jumpKey))
         {
-        animationScript.Jump();
+        animationScript.Jump(true);
         player.inAnimation = false;
             player.Jump();
             numberOfJumps --;

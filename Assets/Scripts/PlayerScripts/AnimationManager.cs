@@ -55,9 +55,9 @@ public class AnimationManager : MonoBehaviour
         //canDoubleJump = false;
     }
 
-    public void Running()
+    public void Running(bool val)
     {
-        anim.SetBool("Running", true);
+        anim.SetBool("Running", val);
     }
 
     public void Idle()
@@ -71,9 +71,9 @@ public class AnimationManager : MonoBehaviour
         anim.SetBool("isCrouching", val);
     }
 
-    public void Jump()
+    public void Jump(bool val)
     {
-        anim.SetBool("Jumping", true);
+        anim.SetBool("Jumping", val);
     }
 
     public void LegSweep()
@@ -81,9 +81,9 @@ public class AnimationManager : MonoBehaviour
         anim.Play("Leg Sweep");
     }
 
-    public void AerialAttack()
+    public void AerialAttack(bool val)
     {
-        anim.SetBool("AerialAttacking", true);
+        anim.SetBool("AerialAttacking", val);
     }
 
      public void InAnimation()
