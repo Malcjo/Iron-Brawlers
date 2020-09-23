@@ -522,8 +522,6 @@ MonoBehaviour:
   _attackDir: 0
   _attackType: 0
   playerInput: {fileID: 1007616018}
-  player: {fileID: 0}
-  armourCheck: {fileID: 0}
   armIndex: 0
   rightArm: {fileID: 0}
   leftArm: {fileID: 0}
@@ -1857,8 +1855,6 @@ MonoBehaviour:
   _attackDir: 0
   _attackType: 0
   playerInput: {fileID: 0}
-  player: {fileID: 0}
-  armourCheck: {fileID: 0}
   armIndex: 0
   rightArm: {fileID: 2099164667}
   leftArm: {fileID: 2099164666}
@@ -2543,21 +2539,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1547349184}
     m_Modifications:
-    - target: {fileID: -927199367670048503, guid: fdbaadd5123864942960382174c0a565,
-        type: 3}
-      propertyPath: m_Name
-      value: FemaleBase_Rig
-      objectReference: {fileID: 0}
-    - target: {fileID: 7814502684447367421, guid: fdbaadd5123864942960382174c0a565,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.017111488
-      objectReference: {fileID: 0}
-    - target: {fileID: 7814502684447367421, guid: fdbaadd5123864942960382174c0a565,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -0.01666041
-      objectReference: {fileID: 0}
     - target: {fileID: -4431429744085825124, guid: fdbaadd5123864942960382174c0a565,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -2617,6 +2598,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7814502684447367421, guid: fdbaadd5123864942960382174c0a565,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.017111488
+      objectReference: {fileID: 0}
+    - target: {fileID: 7814502684447367421, guid: fdbaadd5123864942960382174c0a565,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.01666041
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: fdbaadd5123864942960382174c0a565,
+        type: 3}
+      propertyPath: m_Name
+      value: FemaleBase_Rig
       objectReference: {fileID: 0}
     - target: {fileID: -1381886020629568032, guid: fdbaadd5123864942960382174c0a565,
         type: 3}
@@ -2987,6 +2983,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4794330820282701285, guid: 2c23d138fa95a7c489beaea8b5ab22ee,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 112
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c23d138fa95a7c489beaea8b5ab22ee, type: 3}
