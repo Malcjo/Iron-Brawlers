@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Prototype 2.unity
     guid: c56a9d1137b989d4385017e75e7bb803
   - enabled: 1
-    path: Assets/Scenes/Pete's Prototype Scene.unity
-    guid: 7be3ab99b5e15354f8ac71a998592e18
+    path: Assets/Scenes/Prototype 3.unity
+    guid: 0807389b2ebf67e4cac95142c10f0c6f
   m_configObjects: {}

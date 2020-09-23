@@ -47,8 +47,6 @@ public class GameManager : MonoBehaviour
     {
         playersInScene = FindObjectsOfType<Player>();
 
-     
-
         for (int i = 0; i < playersInScene.Length; i++)
         {
             playersInScene[i].GetComponent<Player>();
