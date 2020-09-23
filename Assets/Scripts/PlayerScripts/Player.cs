@@ -26,6 +26,7 @@ public class Player : MonoBehaviour
     private Rigidbody rb;
     private PlayerInput playerInput;
     private ArmourCheck armourCheck;
+    private PlayerControls playerControls;
 
     private Vector3 addForceValue;
     private Vector3 hitDirection;
@@ -36,7 +37,7 @@ public class Player : MonoBehaviour
     public float friction = 0.25f;
     private void Awake()
     {
-
+        playerControls = GetComponent<PlayerControls>();
         armourCheck = GetComponent<ArmourCheck>();
         playerInput = GetComponent<PlayerInput>();
         rb = GetComponent<Rigidbody>();
@@ -192,6 +193,12 @@ public class Player : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        var playerChecker = other.GetComponentInParent<PlayerControls>();
+        if (playerChecker.playerNumber == playerControls.playerNumber)
+        {
+            Debug.Log("is same as player");
+            return;
+        }
         if (other.tag == "Jab")
         {
             if (canHitBox == false)
@@ -219,7 +226,6 @@ public class Player : MonoBehaviour
                     hitDirection = Hit;
                     addForceValue = AddForce(Power - armourCheck.knockBackResistance);
                     armourCheck.LegArmourType = ArmourCheck.Armour.none;
-                    //armourCheck.SetAllArmourOff();
                     armourCheck.hasArmour = false;
                 }
             }

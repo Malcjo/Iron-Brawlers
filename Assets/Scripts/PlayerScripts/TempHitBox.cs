@@ -13,6 +13,7 @@ public class TempHitBox : MonoBehaviour
     private bool followArm = false;
 
     [SerializeField] private PlayerInput playerInput;
+    private PlayerControls playerControls;
 
     public int armIndex;
     public GameObject rightArm, leftArm, foot;
@@ -23,6 +24,7 @@ public class TempHitBox : MonoBehaviour
     private bool damageLegs;
     private void Awake()
     {
+        playerControls = GetComponentInParent<PlayerControls>();
         playerInput = GetComponentInParent<PlayerInput>();
     }
     private void Update()
@@ -93,45 +95,30 @@ public class TempHitBox : MonoBehaviour
                 return 15;
         }
     }
-    void DelayChest()
-    {
-        damamgeChest = true;
-    }
-    void DelayLegs()
-    {
-        damageLegs = true;
-    }
+
     private void OnTriggerEnter(Collider other)
     {
-
+        Debug.Log("hitbox trigger enter");
         if(other.tag == "Block")
         {
             this.gameObject.SetActive(false);
+        }
+        var playerChecker = other.GetComponentInParent<PlayerControls>();
+        if (playerChecker.playerNumber == playerControls.playerNumber)
+        {
+            return;
         }
         if(other.tag == "LegArmour")
         {
             var _tempArmourCheck = other.GetComponentInParent<ArmourCheck>();
             _tempArmourCheck.LegArmourType = ArmourCheck.Armour.none;
             _tempArmourCheck.SetArmourOff(ArmourCheck.ArmourType.Legs);
-            Invoke("DelayLegs", 0.01f);
-            if (damageLegs == true)
-            {
-
-                damageLegs = false;
-            }
         }
         if(other.tag == "ChestArmour")
         {
-            var _temptArmourCheck = other.GetComponentInParent<ArmourCheck>();
-            _temptArmourCheck.ChestArmourType = ArmourCheck.Armour.none;
-            _temptArmourCheck.SetArmourOff(ArmourCheck.ArmourType.Chest);
-            Invoke("DelayChest", 0.01f);
-            if (damamgeChest == true)
-            {
-
-                damamgeChest = false;
-            }
-
+            var _tempArmourCheck = other.GetComponentInParent<ArmourCheck>();
+            _tempArmourCheck.ChestArmourType = ArmourCheck.Armour.none;
+            _tempArmourCheck.SetArmourOff(ArmourCheck.ArmourType.Chest);
         }
     }
 

@@ -13,8 +13,10 @@ public class PlayerControls : MonoBehaviour
 
     public GameObject hitbox;
     public Player player;
+    public GameObject[] chestArmour;
+    public GameObject[] legArmour;
 
-    public PlayerIndex PlayerNumber;
+    public PlayerIndex playerNumber;
     public enum PlayerIndex { Player1, Player2 };
 
     void Awake()
@@ -24,7 +26,7 @@ public class PlayerControls : MonoBehaviour
 
     void CheckControl()
     {
-        switch(PlayerNumber)
+        switch(playerNumber)
         {
             case PlayerIndex.Player1:
                 horizontalKeys = "P1Horizontal";
@@ -36,6 +38,7 @@ public class PlayerControls : MonoBehaviour
 
                 hitbox.layer = 8;
                 playersLayer = 8;
+                ChangeArmourLayer(8);
 
                 break;
             case PlayerIndex.Player2:
@@ -48,8 +51,20 @@ public class PlayerControls : MonoBehaviour
 
                 hitbox.layer = 9;
                 playersLayer = 9;
+                ChangeArmourLayer(9);
                 break;
         }
 
+    }
+    void ChangeArmourLayer(int layer)
+    {
+        for (int i = 0; i < chestArmour.Length; i++)
+        {
+            chestArmour[i].layer = layer;
+        }
+        for (int i = 0; i < legArmour.Length; i++)
+        {
+            legArmour[i].layer = layer;
+        }
     }
 }

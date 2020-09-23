@@ -573,6 +573,7 @@ MonoBehaviour:
   hitBoxManager: {fileID: 0}
   FacingDirection: 0
   running: 0
+  jumping: 0
   canJump: 0
   state: 0
 --- !u!114 &4794330820282701289
@@ -595,6 +596,12 @@ MonoBehaviour:
   playersLayer: 0
   hitbox: {fileID: 4794330820876797291}
   player: {fileID: 0}
+  chestArmour:
+  - {fileID: 4794330819297549174}
+  legArmour:
+  - {fileID: 4794330821211079093}
+  - {fileID: 4794330819122035029}
+  - {fileID: 4794330820984734891}
   PlayerNumber: 0
 --- !u!136 &4794330820282701288
 CapsuleCollider:
