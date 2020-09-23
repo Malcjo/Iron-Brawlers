@@ -7,13 +7,15 @@ public class MainMenu : MonoBehaviour
     
 {
     public GameObject titleScreen;
-    public GameObject mainMenuScreen;
-  
+    public GameObject mainMenuScreen;    
+    public GameObject menuGroup;
+    public GameObject gameUIGroup;
+
     private void Start()
     {
         titleScreen.SetActive(true);
-
-        
+        gameUIGroup.SetActive(false);
+             
     }
 
     private void Update()
@@ -34,12 +36,11 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
-    public void LoadLevel1()
+    public void LoadLevel(int level)
     {
-        SceneManager.LoadScene(1);
+        menuGroup.SetActive(false);
+        gameUIGroup.SetActive(true);
+        SceneManager.LoadScene(level);
     }
-    public void LoadLevel2()
-    {
-        SceneManager.LoadScene(2);
-    }
+    
 }
