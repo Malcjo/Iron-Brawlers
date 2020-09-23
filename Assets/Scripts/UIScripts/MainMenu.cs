@@ -8,9 +8,12 @@ public class MainMenu : MonoBehaviour
 {
     public GameObject titleScreen;
     public GameObject mainMenuScreen;
+  
     private void Start()
     {
         titleScreen.SetActive(true);
+
+        
     }
 
     private void Update()
@@ -29,5 +32,14 @@ public class MainMenu : MonoBehaviour
     {
         Debug.Log("Quit");
         Application.Quit();
+    }
+
+    public void LoadLevel1()
+    {
+        SceneManager.LoadScene(1);
+    }
+    public void LoadLevel2()
+    {
+        SceneManager.LoadScene(2);
     }
 }
