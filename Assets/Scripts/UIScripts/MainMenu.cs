@@ -103,5 +103,24 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene(0);
         Time.timeScale = 1;
         inGame = false;
+        gameUIGroup.SetActive(false);
+        pauseMenuGroup.SetActive(false);
+        menuGroup.SetActive(true);
+        confirmMenu.SetActive(false);
+        mainMenuScreen.SetActive(true);
+
     } 
+
+    public void GoToCharacterSelect()
+    {
+        SceneManager.LoadScene(0);
+        Time.timeScale = 1;
+        inGame = false;
+        gameUIGroup.SetActive(false);
+        pauseMenuGroup.SetActive(false);
+        menuGroup.SetActive(true);
+        confirmMenu.SetActive(false);
+        mainMenuScreen.SetActive(false);
+        characterMenu.SetActive(true);
+    }
 }

@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
         }
         if(playersInScene[0].lives == 0 || playersInScene[1].lives == 0)
         {
-            mainMenu.QuitToMenu();
+            mainMenu.GoToCharacterSelect();
         }
         player1Lives.text = ("player 1 Lives : " + playersInScene[0].lives);
         player2Lives.text = ("player 2 Lives : " + playersInScene[1].lives);
