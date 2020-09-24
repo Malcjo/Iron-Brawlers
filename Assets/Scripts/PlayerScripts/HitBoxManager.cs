@@ -50,6 +50,12 @@ public class HitBoxManager : MonoBehaviour
         StartCoroutine(SpawnHitBox(0.15f));
         StopCoroutine(SpawnHitBox(0));
     }
+    public void ArielAttack()
+    {
+        tempHitBox.FollowLeftLeg();
+        StartCoroutine(SpawnHitBox(0.3f));
+        StopCoroutine(SpawnHitBox(0));
+    }
     public IEnumerator SpawnHitBox(float spawnTime)
     {
         hitBox.SetActive(true);

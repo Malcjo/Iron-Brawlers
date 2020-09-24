@@ -804,7 +804,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4794330820876797291}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5000003
@@ -1062,6 +1062,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4794330819164813585}
     m_Modifications:
+    - target: {fileID: -927199367670048503, guid: fdbaadd5123864942960382174c0a565,
+        type: 3}
+      propertyPath: m_Name
+      value: FemaleBase_Rig
+      objectReference: {fileID: 0}
     - target: {fileID: -4431429744085825124, guid: fdbaadd5123864942960382174c0a565,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -1131,11 +1136,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.w
       value: -0.01666041
-      objectReference: {fileID: 0}
-    - target: {fileID: -927199367670048503, guid: fdbaadd5123864942960382174c0a565,
-        type: 3}
-      propertyPath: m_Name
-      value: FemaleBase_Rig
       objectReference: {fileID: 0}
     - target: {fileID: -1381886020629568032, guid: fdbaadd5123864942960382174c0a565,
         type: 3}

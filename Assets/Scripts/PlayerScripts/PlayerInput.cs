@@ -108,6 +108,7 @@ public class PlayerInput : MonoBehaviour
         {
             
             hitboxScript._attackType = TempHitBox.AttackType.Aerial;
+            hitboxScript._attackDir = TempHitBox.Attackdirection.Aerial;
             state = animationGroup.attack;
             animationScript.AerialAttack();
             player.inAnimation = false;

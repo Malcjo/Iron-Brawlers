@@ -5,7 +5,7 @@ using UnityEngine;
 public class TempHitBox : MonoBehaviour
 {
     public Attackdirection _attackDir;
-    public enum Attackdirection { Forward, Neutral, High, Low };
+    public enum Attackdirection { Forward, Neutral, High, Low, Aerial };
 
     public AttackType _attackType;
     public enum AttackType { Jab, LegSweep, Aerial };
@@ -85,6 +85,8 @@ public class TempHitBox : MonoBehaviour
                 return Vector3.zero;
             case Attackdirection.Low:
                 return new Vector3(playerInput.FacingDirection * 0.1f, 1f,0);
+            case Attackdirection.Aerial:
+                return new Vector3(playerInput.FacingDirection, 0.3f, 0);
             default:
                 hitDirection.x = 1; hitDirection.y = 0.5f; hitDirection.z = 0; ;
                 return new Vector3(hitDirection.x * playerInput.FacingDirection, hitDirection.y, 0);
@@ -99,6 +101,8 @@ public class TempHitBox : MonoBehaviour
                 return 15;
             case AttackType.LegSweep:
                 return 10;
+            case AttackType.Aerial:
+                return 12;
             default:
                 return 15;
         }
@@ -106,28 +110,23 @@ public class TempHitBox : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("hitbox trigger enter");
         if(other.tag == "Block")
         {
             this.gameObject.SetActive(false);
         }
         var playerChecker = other.GetComponentInParent<PlayerControls>();
-        if (playerChecker.playerNumber == playerControls.playerNumber)
+        if(playerChecker.playerNumber == playerControls.playerNumber)
         {
             return;
         }
-        if(other.tag == "LegArmour")
+        var _tempPlayer = other.GetComponentInParent<Player>();
+        if (other.gameObject.tag == "LegArmour")
         {
-            var _tempArmourCheck = other.GetComponentInParent<ArmourCheck>();
-            _tempArmourCheck.LegArmourType = ArmourCheck.Armour.none;
-            _tempArmourCheck.SetArmourOff(ArmourCheck.ArmourType.Legs);
+            _tempPlayer.RemoveLegArmour();
         }
-        if(other.tag == "ChestArmour")
+        if(other.gameObject.tag == "ChestArmour")
         {
-            var _tempArmourCheck = other.GetComponentInParent<ArmourCheck>();
-            _tempArmourCheck.ChestArmourType = ArmourCheck.Armour.none;
-            _tempArmourCheck.SetArmourOff(ArmourCheck.ArmourType.Chest);
+            _tempPlayer.RemoveChestArmour();
         }
     }
-
 }

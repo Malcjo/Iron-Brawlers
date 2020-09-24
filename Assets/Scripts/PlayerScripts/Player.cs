@@ -232,4 +232,14 @@ public class Player : MonoBehaviour
         }
     }
     #endregion
+    public void RemoveLegArmour()
+    {
+        armourCheck.LegArmourType = ArmourCheck.Armour.none;
+        armourCheck.SetArmourOff(ArmourCheck.ArmourType.Legs);
+    }
+    public void RemoveChestArmour()
+    {
+        armourCheck.ChestArmourType = ArmourCheck.Armour.none;
+        armourCheck.SetArmourOff(ArmourCheck.ArmourType.Chest);
+    }
 }

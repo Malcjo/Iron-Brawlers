@@ -66,8 +66,8 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.27743903
-        functionName: JabAttack
+      - time: 0.060878515
+        functionName: ArielAttack
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
