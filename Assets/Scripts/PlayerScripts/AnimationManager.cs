@@ -81,9 +81,9 @@ public class AnimationManager : MonoBehaviour
         anim.Play("Leg Sweep");
     }
 
-    public void AerialAttack(bool val)
+    public void AerialAttack()
     {
-        anim.SetBool("AerialAttacking", val);
+        anim.Play("Aerial Attack");
     }
 
      public void InAnimation()

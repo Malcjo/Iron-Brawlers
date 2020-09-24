@@ -83,7 +83,6 @@ public class PlayerInput : MonoBehaviour
     void IdleStateCheck()
     {
         animationScript.Crouching(false);
-        animationScript.AerialAttack(false);
         animationScript.Jump(false);
         animationScript.Running(false);
     }
@@ -104,12 +103,18 @@ public class PlayerInput : MonoBehaviour
     void JumpStateCheck()
     {
         animationScript.Jump(true);
+
+        if (Input.GetKeyDown(controls.jabKey))
+        {
+            state = animationGroup.attack;
+            animationScript.AerialAttack();
+            player.inAnimation = false;
+        }
     }
 
     void CrouchStateCheck()
     {
         animationScript.Crouching(true);
-  
 
         if (Input.GetKeyDown(controls.jabKey))
         {
@@ -125,11 +130,13 @@ public class PlayerInput : MonoBehaviour
 
         horizontalInput = Input.GetAxisRaw(controls.horizontalKeys);
         horizontal = (horizontalInput);
+
+       
         if (player.inAnimation == true)
         {
             return;
         }
-
+        
         if (horizontalInput < 0)
         {
             FacingDirection = -1;
