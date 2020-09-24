@@ -10,13 +10,26 @@ public class MainMenu : MonoBehaviour
     public GameObject mainMenuScreen;    
     public GameObject menuGroup;
     public GameObject pauseMenuGroup;
+    public GameObject pauseMenu;
     public GameObject gameUIGroup;
+    public GameObject settingsMenu;
+    public GameObject characterMenu;
+    public GameObject confirmMenu;
+    public GameObject stageMenu;
+    [SerializeField]
+    private bool canPause;
+    [SerializeField]
+    private bool isPaused;
+    [SerializeField]
+    private bool inGame;
 
     private void Start()
     {
         titleScreen.SetActive(true);
         gameUIGroup.SetActive(false);
-             
+        inGame = false;
+        
+
     }
 
     private void Update()
@@ -26,10 +39,39 @@ public class MainMenu : MonoBehaviour
             titleScreen.SetActive(false);
         }
 
-        if (Input.GetKey(KeyCode.Escape))
+        if(inGame == false)
         {
-            PauseGame();
+            return;
         }
+
+
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                if (isPaused == false)
+                {
+                    isPaused = true;
+                    Time.timeScale = 0;
+                    pauseMenuGroup.SetActive(true);
+                    pauseMenu.SetActive(true);
+                    gameUIGroup.SetActive(false);
+                }
+                else if (isPaused == true)
+                {
+                    Time.timeScale = 1;
+                    gameUIGroup.SetActive(true);
+                    pauseMenuGroup.SetActive(false);
+                    menuGroup.SetActive(false);
+                    settingsMenu.SetActive(false);
+                    characterMenu.SetActive(false);
+                    stageMenu.SetActive(false);
+                    confirmMenu.SetActive(false);
+                    isPaused = false;
+                }
+            }
+        }
+        
     }
     public void PlayGame()
     {
@@ -44,28 +86,22 @@ public class MainMenu : MonoBehaviour
 
     public void LoadLevel(int level)
     {
+        inGame = true;
         menuGroup.SetActive(false);
         gameUIGroup.SetActive(true);
         SceneManager.LoadScene(level);
     }
 
-    void PauseGame()
-    {
-        Time.timeScale = 0;
-        pauseMenuGroup.SetActive(true);
-        gameUIGroup.SetActive(false);
-    }
-
     public void ResumeGame()
     {
         Time.timeScale = 1;
-        pauseMenuGroup.SetActive(false);
+        pauseMenuGroup.SetActive(false);  
     }
 
     public void QuitToMenu()
     {
         SceneManager.LoadScene(0);
         Time.timeScale = 1;
-    }
-    
+        inGame = false;
+    } 
 }
