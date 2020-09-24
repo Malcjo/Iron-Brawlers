@@ -101,7 +101,7 @@ public class PlayerInput : MonoBehaviour
         {
             hitboxScript._attackType = TempHitBox.AttackType.Aerial;
             hitboxScript._attackDir = TempHitBox.Attackdirection.Aerial;
-            state = animationGroup.attack;
+            //state = animationGroup.attack;
             animationScript.AerialAttack();
             player.inAnimation = false;
         }
@@ -115,7 +115,7 @@ public class PlayerInput : MonoBehaviour
         {
             hitboxScript._attackDir = TempHitBox.Attackdirection.Low;
             hitboxScript._attackType = TempHitBox.AttackType.LegSweep;
-            state = animationGroup.attack;
+            //state = animationGroup.attack;
             animationScript.LegSweep();
         }
     }

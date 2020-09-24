@@ -198,13 +198,12 @@ public class Player : MonoBehaviour
                     canHitBox = false;
                     Debug.Log("Jab");
                     hitStun = true;
-                    hitStunCounter = 0.8f;
+                    hitStunCounter = 1.1f;
                     Vector3 Hit = other.GetComponent<TempHitBox>().HitDirection(); // getting the direction of the attack
                     float Power = other.GetComponent<TempHitBox>().HitStrength(); // getting the power of the attack
 
                     hitDirection = Hit;
                     addForceValue = AddForce(Power - (armourCheck.knockBackResistance + knockbackResistance));
-                    //armourCheck.LegArmourType = ArmourCheck.Armour.none;
                 }
             }
         }
