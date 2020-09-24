@@ -11,7 +11,7 @@ public class PlayerControls : MonoBehaviour
     //player 1 = layer 8
     //player 2 = layer 9
 
-    public GameObject hitbox;
+    public GameObject tipHitBox,midHitBox;
     public Player player;
     public GameObject[] chestArmour;
     public GameObject[] legArmour;
@@ -36,7 +36,8 @@ public class PlayerControls : MonoBehaviour
                 crouchKey = KeyCode.S;
                 blockKey = KeyCode.J;
 
-                hitbox.layer = 8;
+                tipHitBox.layer = 8;
+                midHitBox.layer = 8;
                 playersLayer = 8;
                 ChangeArmourLayer(8);
 
@@ -49,7 +50,8 @@ public class PlayerControls : MonoBehaviour
                 crouchKey = KeyCode.DownArrow;
                 blockKey = KeyCode.Keypad3;
 
-                hitbox.layer = 9;
+                tipHitBox.layer = 9;
+                midHitBox.layer = 9;
                 playersLayer = 9;
                 ChangeArmourLayer(9);
                 break;

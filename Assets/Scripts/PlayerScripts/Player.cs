@@ -6,8 +6,8 @@ using UnityEngine.UIElements;
 public class Player : MonoBehaviour
 {
     [SerializeField] private float weight = 10;
-    [SerializeField] private float jumpForce = 7.5f;
-    [SerializeField] private float speed = 8;
+
+
     [SerializeField] private float knockbackResistance = 5;
 
     public bool canHitBox;
@@ -17,9 +17,10 @@ public class Player : MonoBehaviour
     public bool hitStun;
     private float hitStunCounter;
     public bool blocking;
+    public bool canJump;
 
-    [SerializeField] private bool jumping;
-    [SerializeField] private int numberOfJumps;
+    [SerializeField] public bool jumping;
+    [SerializeField] public int numberOfJumps;
     private int maxJumps = 2;
 
 
@@ -28,12 +29,13 @@ public class Player : MonoBehaviour
     private PlayerInput playerInput;
     private ArmourCheck armourCheck;
     private PlayerControls playerControls;
+    [SerializeField] private PlayerStats playerStats;
 
     private Vector3 addForceValue;
     private Vector3 hitDirection;
 
     public int lives;
-    private int maxLives = 3;
+    public int maxLives = 3;
 
     public float friction = 0.25f;
     private void Awake()
@@ -42,6 +44,7 @@ public class Player : MonoBehaviour
         armourCheck = GetComponent<ArmourCheck>();
         playerInput = GetComponent<PlayerInput>();
         rb = GetComponent<Rigidbody>();
+        playerStats = GetComponent<PlayerStats>();
     }
     void Start()
     {
@@ -73,23 +76,15 @@ public class Player : MonoBehaviour
             }
             else if (grounded == false)
             {
-                rb.velocity = new Vector3(playerInput.horizontal * CharacterSpeed(), rb.velocity.y, 0) + addForceValue;
+                rb.velocity = new Vector3(playerInput.horizontal * playerStats.CharacterSpeed(), rb.velocity.y, 0) + addForceValue;
             }
         }
         else
         {
-            rb.velocity = new Vector3(playerInput.horizontal * CharacterSpeed(), rb.velocity.y, 0) + addForceValue;
+            rb.velocity = new Vector3(playerInput.horizontal * playerStats.CharacterSpeed(), rb.velocity.y, 0) + addForceValue;
         }
     }
-    private float CharacterSpeed()
-    {
-        float characterSpeed = speed - armourCheck.armourReduceSpeed;
-        if (hitStun == true)
-        {
-            characterSpeed *= 0 + (5 * Time.deltaTime);
-        }
-        return characterSpeed;
-    }
+
     void Gravity()
     {
         rb.AddForce(Physics.gravity * ((weight + armourCheck.armourWeight) / 10));
@@ -98,25 +93,14 @@ public class Player : MonoBehaviour
     {
         if (playerInput.numberOfJumps > 0)
         {
-            rb.velocity = (new Vector3(rb.velocity.x, JumpForceCalculator(), rb.velocity.z));
+            rb.velocity = (new Vector3(rb.velocity.x, playerStats.JumpForceCalculator(), rb.velocity.z));
             jumping = true;
             numberOfJumps--;
         }
     }
-    float JumpForceCalculator()
+    public float SetVelocityY()
     {
-        float jumpForceValue;
-        if (numberOfJumps == 0)
-        {
-            return rb.velocity.y;
-        }
-        if(jumping == false)
-        {
-            jumpForceValue = jumpForce - armourCheck.reduceJumpForce;
-            return jumpForceValue;
-        }
-        jumpForceValue = (jumpForce + 1) - armourCheck.reduceJumpForce;
-        return jumpForceValue;
+        return rb.velocity.y;
     }
 
     #region ReduceValues
@@ -155,18 +139,6 @@ public class Player : MonoBehaviour
         Vector3 addForceValue = ((hitDirection) * (hitStrength));
         return addForceValue;
     }
-    #region RemoveArmour
-    public void RemoveLegArmour()
-    {
-        armourCheck.LegArmourType = ArmourCheck.Armour.none;
-        armourCheck.SetArmourOff(ArmourCheck.ArmourType.Legs);
-    }
-    public void RemoveChestArmour()
-    {
-        armourCheck.ChestArmourType = ArmourCheck.Armour.none;
-        armourCheck.SetArmourOff(ArmourCheck.ArmourType.Chest);
-    }
-    #endregion
     #region Colliders / Triggers
     #region Groud Detection
     //Ground Detections----------------------------------------------------------
@@ -202,10 +174,8 @@ public class Player : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        var playerChecker = other.GetComponentInParent<PlayerControls>();
-        if (playerChecker.playerNumber == playerControls.playerNumber)
+        if (other.gameObject.CompareTag("Ground"))
         {
-            Debug.Log("is same as player");
             return;
         }
         if (other.tag == "Jab")
@@ -234,10 +204,11 @@ public class Player : MonoBehaviour
 
                     hitDirection = Hit;
                     addForceValue = AddForce(Power - (armourCheck.knockBackResistance + knockbackResistance));
-                    armourCheck.LegArmourType = ArmourCheck.Armour.none;
+                    //armourCheck.LegArmourType = ArmourCheck.Armour.none;
                 }
             }
         }
     }
     #endregion
 }
+

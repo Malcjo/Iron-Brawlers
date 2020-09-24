@@ -14,7 +14,8 @@ public class TempHitBox : MonoBehaviour
     PlayerControls playerControls;
 
     public int armIndex;
-    public GameObject rightArm, leftArm, rightFoot, leftFoot;
+    public GameObject tipHitBox, midHitBox;
+    public GameObject rightHand, leftHand,rightElbow, leftElbow, rightFoot, leftFoot, rightKnee, leftKnee;
 
     Vector3 hitDirection;
 
@@ -32,40 +33,48 @@ public class TempHitBox : MonoBehaviour
         switch(_attackType)
         {
             case AttackType.Jab:
-                FollowArm();
+                FollowHand();
                 break;
             case AttackType.LegSweep:
-                FollowRightLeg();
+                FollowRightFoot();
                 break;
             case AttackType.Aerial:
-                FollowLeftLeg();
+                FollowLeftFoot();
                 break;
             default:
                 break;
         }
     }
-    public void FollowArm()
+    public void FollowHand()
     {
         if (armIndex == 0)
         {
-            this.gameObject.transform.position = leftArm.transform.position;
-            this.gameObject.transform.rotation = leftArm.transform.rotation;
+            tipHitBox.gameObject.transform.position = leftHand.transform.position;
+            tipHitBox.gameObject.transform.rotation = leftHand.transform.rotation;
+            midHitBox.gameObject.transform.position = leftElbow.transform.position;
+            midHitBox.gameObject.transform.rotation = leftElbow.transform.rotation;
         }
         else if (armIndex == 1)
         {
-            this.gameObject.transform.position = rightArm.transform.position;
-            this.gameObject.transform.rotation = rightArm.transform.rotation;
+            tipHitBox.gameObject.transform.position = rightHand.transform.position;
+            tipHitBox.gameObject.transform.rotation = rightHand.transform.rotation;
+            midHitBox.gameObject.transform.position = rightElbow.transform.position;
+            midHitBox.gameObject.transform.rotation = rightElbow.transform.rotation;
         }
     }
-    public void FollowRightLeg()
+    public void FollowRightFoot()
     {
-        this.gameObject.transform.position = rightFoot.transform.position;
-        this.gameObject.transform.rotation = rightFoot.transform.rotation;
+        tipHitBox.gameObject.transform.position = rightFoot.transform.position;
+        tipHitBox.gameObject.transform.rotation = rightFoot.transform.rotation;
+        midHitBox.gameObject.transform.position = rightKnee.transform.position;
+        midHitBox.gameObject.transform.rotation = rightKnee.transform.rotation;
     }
-    public void FollowLeftLeg()
+    public void FollowLeftFoot()
     {
-        this.gameObject.transform.position = leftFoot.transform.position;
-        this.gameObject.transform.rotation = leftFoot.transform.rotation;
+        tipHitBox.gameObject.transform.position = leftFoot.transform.position;
+        tipHitBox.gameObject.transform.rotation = leftFoot.transform.rotation;
+        midHitBox.gameObject.transform.position = leftKnee.transform.position;
+        midHitBox.gameObject.transform.rotation = leftKnee.transform.rotation;
     }
 
     public Vector3 HitDirection()
@@ -77,7 +86,7 @@ public class TempHitBox : MonoBehaviour
             case Attackdirection.Low:
                 return new Vector3(playerInput.FacingDirection * 0.1f, 1f,0);
             case Attackdirection.Aerial:
-                return new Vector3(playerInput.FacingDirection, 0.3f, 0);
+                return new Vector3(playerInput.FacingDirection, 0.7f, 0);
             default:
                 hitDirection.x = 1; hitDirection.y = 0.5f; hitDirection.z = 0; ;
                 return new Vector3(playerInput.FacingDirection, 0.3f, 0);
@@ -98,26 +107,34 @@ public class TempHitBox : MonoBehaviour
                 return 15;
         }
     }
-
+    public void ShowHitBoxes()
+    {
+        tipHitBox.gameObject.SetActive(true);
+        midHitBox.gameObject.SetActive(true);
+    }
+    public void HideHitBoxes()
+    {
+        tipHitBox.gameObject.SetActive(false);
+        midHitBox.gameObject.SetActive(false);
+    }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Block"))
-        {
-            this.gameObject.SetActive(false);
-        }
-        var playerChecker = other.GetComponentInParent<PlayerControls>();
-        if (playerChecker.playerNumber == playerControls.playerNumber)
+        if (other.gameObject.CompareTag("Ground"))
         {
             return;
         }
-        var _tempPlayer = other.GetComponentInParent<Player>();
+        if (other.gameObject.CompareTag("Block"))
+        {
+            HideHitBoxes();
+        }
+        var _tempArmour = other.GetComponentInParent<ArmourCheck>();
         if (other.gameObject.CompareTag("LegArmour"))
         {
-            _tempPlayer.RemoveLegArmour();
+            _tempArmour.RemoveLegArmour();
         }
         if (other.gameObject.CompareTag("ChestArmour"))
         {
-            _tempPlayer.RemoveChestArmour();
+            _tempArmour.RemoveChestArmour();
         }
     }
 }

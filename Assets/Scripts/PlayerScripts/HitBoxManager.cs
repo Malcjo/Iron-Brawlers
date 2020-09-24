@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HitBoxManager : MonoBehaviour
 {
-    public GameObject hitBox, blockBox;
+    public GameObject tipHitBox,midHitBox, blockBox;
     public TempHitBox tempHitBox;
     [Range(0,1)]
     private int armIndex;
@@ -15,7 +15,7 @@ public class HitBoxManager : MonoBehaviour
     void Start()
     {
         animationScript = GetComponentInChildren<AnimationManager>();
-        hitBox.SetActive(false);
+        tempHitBox.HideHitBoxes();
         blockBox.SetActive(false);
     }
     public void Block()
@@ -40,26 +40,26 @@ public class HitBoxManager : MonoBehaviour
         {
             tempHitBox.armIndex = 1;
         }
-        tempHitBox.FollowArm();
+        tempHitBox.FollowHand();
         StartCoroutine(SpawnHitBox(0.1f));
         StopCoroutine(SpawnHitBox(0));
     }
     public void LegSweep()
     {
-        tempHitBox.FollowRightLeg();
+        tempHitBox.FollowRightFoot();
         StartCoroutine(SpawnHitBox(0.15f));
         StopCoroutine(SpawnHitBox(0));
     }
     public void ArielAttack()
     {
-        tempHitBox.FollowLeftLeg();
+        tempHitBox.FollowLeftFoot();
         StartCoroutine(SpawnHitBox(0.3f));
         StopCoroutine(SpawnHitBox(0));
     }
     public IEnumerator SpawnHitBox(float spawnTime)
     {
-        hitBox.SetActive(true);
+        tempHitBox.ShowHitBoxes();
         yield return new WaitForSeconds(spawnTime);
-        hitBox.SetActive(false);
+        tempHitBox.HideHitBoxes();
     }
 }

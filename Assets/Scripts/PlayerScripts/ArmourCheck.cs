@@ -32,7 +32,7 @@ public class ArmourCheck : MonoBehaviour
                 LegArmourType = Armour.armour;
                 chestWeight = 3;
                 chestArmourReduceSpeed = 1;
-                chestReduceJump = 1f;
+                chestReduceJump = 0.5f;
                 chestKnockBackResistance = 3;
                 break;
 
@@ -57,7 +57,7 @@ public class ArmourCheck : MonoBehaviour
                 LegArmourType = Armour.armour;
                 legsWeight = 4;
                 legsArmourReduceSpeed = 1f;
-                legsReduceJump = 1f;
+                legsReduceJump = 0.5f;
                 legsKnockBackResistance = 3;
                 break;
             case Armour.none:
@@ -130,6 +130,17 @@ public class ArmourCheck : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    public void RemoveLegArmour()
+    {
+        LegArmourType = ArmourCheck.Armour.none;
+        SetArmourOff(ArmourCheck.ArmourType.Legs);
+    }
+    public void RemoveChestArmour()
+    {
+        ChestArmourType = ArmourCheck.Armour.none;
+        SetArmourOff(ArmourCheck.ArmourType.Chest);
     }
 
     void ChangeArmourInputs()
