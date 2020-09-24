@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public Player[] playersInScene;
     public TMP_Text player1Lives, player2Lives;
+    MainMenu mainMenu;
 
 
     private void Awake()
@@ -29,6 +30,11 @@ public class GameManager : MonoBehaviour
         #endregion   
     }
 
+    private void Start()
+    {
+        mainMenu = GetComponentInChildren<MainMenu>();
+    }
+
     private void Update()
     {
         if("Main Menu" == SceneManager.GetActiveScene().name)
@@ -37,7 +43,7 @@ public class GameManager : MonoBehaviour
         }
         if(playersInScene[0].lives == 0 || playersInScene[1].lives == 0)
         {
-            SceneManager.LoadScene(0);
+            mainMenu.QuitToMenu();
         }
         player1Lives.text = ("player 1 Lives : " + playersInScene[0].lives);
         player2Lives.text = ("player 2 Lives : " + playersInScene[1].lives);
