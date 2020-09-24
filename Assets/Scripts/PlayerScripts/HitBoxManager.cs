@@ -46,7 +46,7 @@ public class HitBoxManager : MonoBehaviour
     }
     public void LegSweep()
     {
-        tempHitBox.FollowLeg();
+        tempHitBox.FollowRightLeg();
         StartCoroutine(SpawnHitBox(0.15f));
         StopCoroutine(SpawnHitBox(0));
     }

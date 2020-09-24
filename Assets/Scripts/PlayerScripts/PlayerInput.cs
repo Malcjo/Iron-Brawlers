@@ -106,6 +106,8 @@ public class PlayerInput : MonoBehaviour
 
         if (Input.GetKeyDown(controls.jabKey))
         {
+            
+            hitboxScript._attackType = TempHitBox.AttackType.Aerial;
             state = animationGroup.attack;
             animationScript.AerialAttack();
             player.inAnimation = false;

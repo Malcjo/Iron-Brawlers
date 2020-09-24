@@ -8,7 +8,7 @@ public class TempHitBox : MonoBehaviour
     public enum Attackdirection { Forward, Neutral, High, Low };
 
     public AttackType _attackType;
-    public enum AttackType { Jab, LegSweep };
+    public enum AttackType { Jab, LegSweep, Aerial };
 
     private bool followArm = false;
 
@@ -16,7 +16,7 @@ public class TempHitBox : MonoBehaviour
     private PlayerControls playerControls;
 
     public int armIndex;
-    public GameObject rightArm, leftArm, foot;
+    public GameObject rightArm, leftArm, rightFoot, leftFoot;
 
     private Vector3 hitDirection;
 
@@ -40,7 +40,10 @@ public class TempHitBox : MonoBehaviour
                 break;
 
             case AttackType.LegSweep:
-                FollowLeg();
+                FollowRightLeg();
+                break;
+            case AttackType.Aerial:
+                FollowLeftLeg();
                 break;
             default:
                 break;
@@ -59,10 +62,15 @@ public class TempHitBox : MonoBehaviour
             this.gameObject.transform.rotation = rightArm.transform.rotation;
         }
     }
-    public void FollowLeg()
+    public void FollowRightLeg()
     {
-        this.gameObject.transform.position = foot.transform.position;
-        this.gameObject.transform.rotation = foot.transform.rotation;
+        this.gameObject.transform.position = rightFoot.transform.position;
+        this.gameObject.transform.rotation = rightFoot.transform.rotation;
+    }
+    public void FollowLeftLeg()
+    {
+        this.gameObject.transform.position = leftFoot.transform.position;
+        this.gameObject.transform.rotation = leftFoot.transform.rotation;
     }
 
     public Vector3 HitDirection()
