@@ -54,9 +54,6 @@ public class Player : MonoBehaviour
     private void Update()
     {
         ReduceCounter();
-        if(lives == 0)
-        {
-        }
     }
     private void FixedUpdate()
     {
@@ -118,7 +115,6 @@ public class Player : MonoBehaviour
         }
         jumpForceValue = (jumpForce + 1) - armourCheck.reduceJumpForce;
         return jumpForceValue;
-
     }
     void Gravity()
     {
@@ -135,6 +131,7 @@ public class Player : MonoBehaviour
     {
         addForceValue.x = Mathf.Lerp(addForceValue.x, 0, 5f * Time.deltaTime);
         addForceValue.y = Mathf.Lerp(addForceValue.y, 0, 25f * Time.deltaTime);
+
         //reducing to zero if small value
         if (addForceValue.magnitude < 0.05f && addForceValue.magnitude > -0.05f)
         {
@@ -157,13 +154,23 @@ public class Player : MonoBehaviour
     private Vector3 AddForce(float hitStrength)
     {
         Vector3 addForceValue = ((hitDirection) * (hitStrength));
-
         return addForceValue;
     }
 
-    #region Colliders / Triggers
+    public void RemoveLegArmour()
+    {
+        armourCheck.LegArmourType = ArmourCheck.Armour.none;
+        armourCheck.SetArmourOff(ArmourCheck.ArmourType.Legs);
+    }
+    public void RemoveChestArmour()
+    {
+        armourCheck.ChestArmourType = ArmourCheck.Armour.none;
+        armourCheck.SetArmourOff(ArmourCheck.ArmourType.Chest);
+    }
 
-    //Collision Detections----------------------------------------------------------
+    #region Colliders / Triggers
+    #region Groud Detection
+    //Ground Detections----------------------------------------------------------
     //resetting number of jumps to max jumps
     private void OnCollisionEnter(Collision collision)
     {
@@ -187,6 +194,9 @@ public class Player : MonoBehaviour
             grounded = false;
         }
     }
+    //Ground Detections----------------------------------------------------------
+    #endregion
+
     private void OnTriggerExit(Collider other)
     {
         canHitBox = true;
@@ -226,20 +236,9 @@ public class Player : MonoBehaviour
                     hitDirection = Hit;
                     addForceValue = AddForce(Power - armourCheck.knockBackResistance);
                     armourCheck.LegArmourType = ArmourCheck.Armour.none;
-                    armourCheck.hasArmour = false;
                 }
             }
         }
     }
     #endregion
-    public void RemoveLegArmour()
-    {
-        armourCheck.LegArmourType = ArmourCheck.Armour.none;
-        armourCheck.SetArmourOff(ArmourCheck.ArmourType.Legs);
-    }
-    public void RemoveChestArmour()
-    {
-        armourCheck.ChestArmourType = ArmourCheck.Armour.none;
-        armourCheck.SetArmourOff(ArmourCheck.ArmourType.Chest);
-    }
 }

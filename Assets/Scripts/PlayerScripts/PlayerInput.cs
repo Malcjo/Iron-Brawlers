@@ -6,30 +6,25 @@ using UnityEngine.SocialPlatforms;
 
 public class PlayerInput : MonoBehaviour
 {
-    public float horizontal; // Being checked in Player script: MoveCall()
-    public int numberOfJumps; //Being checked in Player script: JumpMove()
+     public float horizontal; // Being checked in Player script: MoveCall()
+     public int numberOfJumps; //Being checked in Player script: JumpMove()
 
-    [SerializeField] private float horizontalInput;
-    [SerializeField] public int maxJumps;
-    AnimationManager animationScript;
+     float horizontalInput;
+     public int maxJumps;
 
-    [SerializeField] private Player player;
-    [SerializeField] private PlayerControls controls;
-    [SerializeField] private TempHitBox hitboxScript;
-    [SerializeField] private HitBoxManager hitBoxManager;
+     AnimationManager animationScript;
+     Player player;
+     PlayerControls controls;
+     TempHitBox hitboxScript;
+     HitBoxManager hitBoxManager;
 
-    [Range(-1,1)]
-    public int FacingDirection;
+    [Range(-1, 1)] public int FacingDirection;
 
-    [SerializeField]
-    bool running;
-    [SerializeField]
-    bool jumping;
+    [SerializeField] bool running;
+    [SerializeField] bool jumping;
     public bool canJump;
 
-    [SerializeField]
-    animationGroup state;
-
+    [SerializeField] animationGroup state;
     public enum animationGroup { idle, crouching, jumping, attack, running }
 
     private void Awake()
@@ -79,7 +74,6 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
-
     void IdleStateCheck()
     {
         animationScript.Crouching(false);
@@ -89,7 +83,6 @@ public class PlayerInput : MonoBehaviour
 
     void RunningStateCheck()
     {
-        
         if (player.grounded == true)
         {
             animationScript.Running(true);
@@ -106,7 +99,6 @@ public class PlayerInput : MonoBehaviour
 
         if (Input.GetKeyDown(controls.jabKey))
         {
-            
             hitboxScript._attackType = TempHitBox.AttackType.Aerial;
             hitboxScript._attackDir = TempHitBox.Attackdirection.Aerial;
             state = animationGroup.attack;
@@ -130,11 +122,9 @@ public class PlayerInput : MonoBehaviour
     
     public void HorizontalInput()
     {
-
         horizontalInput = Input.GetAxisRaw(controls.horizontalKeys);
         horizontal = (horizontalInput);
 
-       
         if (player.inAnimation == true)
         {
             return;
@@ -144,7 +134,6 @@ public class PlayerInput : MonoBehaviour
         {
             FacingDirection = -1;
             transform.rotation = Quaternion.Euler(0, 0, 0);
-            //animationScript.Running();
             running = true;
             animationScript.Crouching(false);
         }
@@ -152,13 +141,11 @@ public class PlayerInput : MonoBehaviour
         {
             FacingDirection = 1;
             transform.rotation = Quaternion.Euler(0, 180, 0);
-            //animationScript.Running();
             running = true;
             animationScript.Crouching(false);
         }
         if (horizontalInput == 0)
         {
-
             animationScript.Idle();
             running = false;
         }
