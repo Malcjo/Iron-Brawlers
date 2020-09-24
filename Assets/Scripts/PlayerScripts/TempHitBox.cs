@@ -4,24 +4,20 @@ using UnityEngine;
 
 public class TempHitBox : MonoBehaviour
 {
+    public enum Attackdirection { Forward, Low, Aerial };
     public Attackdirection _attackDir;
-    public enum Attackdirection { Forward, Neutral, High, Low, Aerial };
 
-    public AttackType _attackType;
     public enum AttackType { Jab, LegSweep, Aerial };
+    public AttackType _attackType;
 
-    private bool followArm = false;
-
-    [SerializeField] private PlayerInput playerInput;
-    private PlayerControls playerControls;
+    PlayerInput playerInput;
+    PlayerControls playerControls;
 
     public int armIndex;
     public GameObject rightArm, leftArm, rightFoot, leftFoot;
 
-    private Vector3 hitDirection;
+    Vector3 hitDirection;
 
-    private bool damamgeChest;
-    private bool damageLegs;
     private void Awake()
     {
         playerControls = GetComponentInParent<PlayerControls>();
@@ -38,7 +34,6 @@ public class TempHitBox : MonoBehaviour
             case AttackType.Jab:
                 FollowArm();
                 break;
-
             case AttackType.LegSweep:
                 FollowRightLeg();
                 break;
@@ -79,17 +74,13 @@ public class TempHitBox : MonoBehaviour
         {
             case Attackdirection.Forward:
                 return new Vector3(playerInput.FacingDirection, 0.3f, 0);
-            case Attackdirection.Neutral:
-                return Vector3.zero;
-            case Attackdirection.High:
-                return Vector3.zero;
             case Attackdirection.Low:
                 return new Vector3(playerInput.FacingDirection * 0.1f, 1f,0);
             case Attackdirection.Aerial:
                 return new Vector3(playerInput.FacingDirection, 0.3f, 0);
             default:
                 hitDirection.x = 1; hitDirection.y = 0.5f; hitDirection.z = 0; ;
-                return new Vector3(hitDirection.x * playerInput.FacingDirection, hitDirection.y, 0);
+                return new Vector3(playerInput.FacingDirection, 0.3f, 0);
         }
     }
     
@@ -100,9 +91,9 @@ public class TempHitBox : MonoBehaviour
             case AttackType.Jab:
                 return 15;
             case AttackType.LegSweep:
-                return 10;
-            case AttackType.Aerial:
                 return 12;
+            case AttackType.Aerial:
+                return 10;
             default:
                 return 15;
         }
@@ -110,21 +101,21 @@ public class TempHitBox : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Block")
+        if (other.gameObject.CompareTag("Block"))
         {
             this.gameObject.SetActive(false);
         }
         var playerChecker = other.GetComponentInParent<PlayerControls>();
-        if(playerChecker.playerNumber == playerControls.playerNumber)
+        if (playerChecker.playerNumber == playerControls.playerNumber)
         {
             return;
         }
         var _tempPlayer = other.GetComponentInParent<Player>();
-        if (other.gameObject.tag == "LegArmour")
+        if (other.gameObject.CompareTag("LegArmour"))
         {
             _tempPlayer.RemoveLegArmour();
         }
-        if(other.gameObject.tag == "ChestArmour")
+        if (other.gameObject.CompareTag("ChestArmour"))
         {
             _tempPlayer.RemoveChestArmour();
         }

@@ -349,12 +349,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _attackDir: 0
   _attackType: 0
-  playerInput: {fileID: 4794330820282701286}
   armIndex: 0
-  rightArm: {fileID: 0}
-  leftArm: {fileID: 0}
-  rightFoot: {fileID: 0}
-  leftFoot: {fileID: 0}
+  rightArm: {fileID: 5474835900145209246}
+  leftArm: {fileID: 4799533657961845656}
+  rightFoot: {fileID: 3502085527383382370}
+  leftFoot: {fileID: 2578538092460583597}
 --- !u!135 &4794330819513746061
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -514,7 +513,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weight: 10
   jumpForce: 7.5
-  speed: 8
+  speed: 7
+  knockbackResistance: 3
   canHitBox: 0
   inAnimation: 0
   grounded: 0
@@ -541,7 +541,6 @@ MonoBehaviour:
   LegArmourType: 0
   ChestArmourType: 0
   ArmourPlacement: 0
-  hasArmour: 0
   knockBackResistance: 0
   armourWeight: 0
   armourReduceSpeed: 0
@@ -566,12 +565,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   horizontal: 0
   numberOfJumps: 0
-  horizontalInput: 0
   maxJumps: 2
-  player: {fileID: 0}
-  controls: {fileID: 0}
-  hitboxScript: {fileID: 0}
-  hitBoxManager: {fileID: 0}
   FacingDirection: 0
   running: 0
   jumping: 0
@@ -790,7 +784,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _attackDir: 0
   _attackType: 0
-  playerInput: {fileID: 0}
   armIndex: 0
   rightArm: {fileID: 5474835900145209246}
   leftArm: {fileID: 4799533657961845656}

@@ -5,9 +5,10 @@ using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private float weight;
-    [SerializeField] private float jumpForce;
-    [SerializeField] private float speed;
+    [SerializeField] private float weight = 10;
+    [SerializeField] private float jumpForce = 7.5f;
+    [SerializeField] private float speed = 8;
+    [SerializeField] private float knockbackResistance = 5;
 
     public bool canHitBox;
     public bool inAnimation;
@@ -87,10 +88,12 @@ public class Player : MonoBehaviour
         {
             characterSpeed *= 0 + (5 * Time.deltaTime);
         }
-
         return characterSpeed;
     }
-
+    void Gravity()
+    {
+        rb.AddForce(Physics.gravity * ((weight + armourCheck.armourWeight) / 10));
+    }
     public void Jump()
     {
         if (playerInput.numberOfJumps > 0)
@@ -100,7 +103,6 @@ public class Player : MonoBehaviour
             numberOfJumps--;
         }
     }
-
     float JumpForceCalculator()
     {
         float jumpForceValue;
@@ -116,11 +118,8 @@ public class Player : MonoBehaviour
         jumpForceValue = (jumpForce + 1) - armourCheck.reduceJumpForce;
         return jumpForceValue;
     }
-    void Gravity()
-    {
-        rb.AddForce(Physics.gravity * ((weight + armourCheck.armourWeight) / 10));
-    }
-    #region ReduceVales
+
+    #region ReduceValues
     void ReduceCounter()
     {
         ReduceHit();
@@ -156,7 +155,7 @@ public class Player : MonoBehaviour
         Vector3 addForceValue = ((hitDirection) * (hitStrength));
         return addForceValue;
     }
-
+    #region RemoveArmour
     public void RemoveLegArmour()
     {
         armourCheck.LegArmourType = ArmourCheck.Armour.none;
@@ -167,7 +166,7 @@ public class Player : MonoBehaviour
         armourCheck.ChestArmourType = ArmourCheck.Armour.none;
         armourCheck.SetArmourOff(ArmourCheck.ArmourType.Chest);
     }
-
+    #endregion
     #region Colliders / Triggers
     #region Groud Detection
     //Ground Detections----------------------------------------------------------
@@ -234,7 +233,7 @@ public class Player : MonoBehaviour
                     float Power = other.GetComponent<TempHitBox>().HitStrength(); // getting the power of the attack
 
                     hitDirection = Hit;
-                    addForceValue = AddForce(Power - armourCheck.knockBackResistance);
+                    addForceValue = AddForce(Power - (armourCheck.knockBackResistance + knockbackResistance));
                     armourCheck.LegArmourType = ArmourCheck.Armour.none;
                 }
             }
