@@ -33,6 +33,9 @@ public class Player : MonoBehaviour
 
     private Vector3 addForceValue;
     private Vector3 hitDirection;
+    private Vector3 rayCastOrigin;
+    public Vector3 rayCastOffset;
+    public Transform[] characterJoints;
 
     public int lives;
     public int maxLives = 3;
@@ -61,10 +64,31 @@ public class Player : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        rayCastOrigin = transform.position;
+        Debug.DrawRay(rayCastOrigin, (-Vector3.down) * .65f, Color.green);
+
+        Debug.DrawRay(rayCastOrigin, (Vector3.down) * .85f, Color.green);
+        Debug.DrawRay(rayCastOrigin - new Vector3(0, 0.75f, 0), (Vector3.down) * .1f, Color.red);
+        Debug.DrawRay(rayCastOrigin, (-Vector3.right) * .2f, Color.green);
+        Debug.DrawRay(rayCastOrigin, (Vector3.right) * .2f, Color.green);
+
         Move();
         Gravity();
     }
-
+    public float GetLowestYValue(Transform[] arr)
+    {
+        float value = float.PositiveInfinity;
+        int index = -1;
+        for (int i = 0; i < arr.Length; i++)
+        {
+            if (arr[i].transform.position.y < value)
+            {
+                index = i;
+                value = arr[i].transform.position.y;
+            }
+        }
+        return index;
+    }
     void Move()
     {
         if (inAnimation == true)
