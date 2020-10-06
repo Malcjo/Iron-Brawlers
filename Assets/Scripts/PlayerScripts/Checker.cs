@@ -8,7 +8,7 @@ public class Checker : MonoBehaviour
     private Vector3 rayCastOrigin;
     public Vector3 rayCastOffset;
 
-    public float groundCheckRayLength = 0.2f;
+    private float groundCheckRayLength = 0.2f;
 
     private bool falling;
     public float distanceToGround;
@@ -53,7 +53,7 @@ public class Checker : MonoBehaviour
 
     public void GroundCheck()
     {
-        rayCastOrigin = (transform.position - new Vector3(0, 0.7f, 0));
+        rayCastOrigin = (transform.position - new Vector3(0, 0.65f, 0));
         Debug.DrawRay(rayCastOrigin, (Vector3.down) * groundCheckRayLength, Color.red);
         RaycastHit hit;
         if (Physics.Raycast(rayCastOrigin, Vector3.down, out hit, groundCheckRayLength))
@@ -63,7 +63,12 @@ public class Checker : MonoBehaviour
                 if (hit.collider.gameObject.CompareTag("Ground"))
                 {
                     distanceToGround = hit.distance;
-                    player.rb.velocity = new Vector3(player.rb.velocity.x, hit.distance, 0);
+                    player.rb.velocity = new Vector3(player.rb.velocity.x, 0, 0);
+                    if (distanceToGround >= 0 && distanceToGround <= 0.18f)
+                    {
+                        transform.position = new Vector3(hit.point.x, hit.point.y + 0.85f,0);
+                    }
+
 
                     player.grounded = true;
                 }

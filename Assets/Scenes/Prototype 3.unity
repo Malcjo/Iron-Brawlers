@@ -1042,6 +1042,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player_ChistaModel (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4794330820282701291, guid: 2c23d138fa95a7c489beaea8b5ab22ee,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c23d138fa95a7c489beaea8b5ab22ee, type: 3}
 --- !u!1 &1101936011
