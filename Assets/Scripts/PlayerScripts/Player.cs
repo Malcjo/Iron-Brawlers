@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -39,6 +40,8 @@ public class Player : MonoBehaviour
     public Vector3 rayCastOffset;
     public Transform[] characterJoints;
 
+    [SerializeField] private int groundLayer;
+
     public int lives;
     public int maxLives = 3;
 
@@ -67,15 +70,17 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         rayCastOrigin = transform.position;
+        GroundCheck();
         Debug.DrawRay(rayCastOrigin, (-Vector3.down) * .65f, Color.green);
-
         Debug.DrawRay(rayCastOrigin, (Vector3.down) * .85f, Color.green);
-        Debug.DrawRay(rayCastOrigin - new Vector3(0, 0.75f, 0), (Vector3.down) * .1f, Color.red);
+
         Debug.DrawRay(rayCastOrigin, (-Vector3.right) * .2f, Color.green);
         Debug.DrawRay(rayCastOrigin, (Vector3.right) * .2f, Color.green);
 
         Move();
+
         Gravity();
+
     }
     public float GetLowestYValue(Transform[] arr)
     {
@@ -110,17 +115,38 @@ public class Player : MonoBehaviour
             rb.velocity = new Vector3(playerInput.horizontal * playerStats.CharacterSpeed(), rb.velocity.y, 0) + addForceValue;
         }
     }
+    void GroundCheck()
+    {
+        groundLayer = 1 << 12;
+        Debug.DrawRay(rayCastOrigin - new Vector3(0, 0.75f, 0), (Vector3.down) * .15f, Color.red);
+        RaycastHit hit;
+        if(Physics.Raycast(rayCastOrigin - new Vector3(0, 0.75f, 0), Vector3.down, out hit, 0.15f))
+        {
+            if(hit.collider.gameObject.CompareTag("Ground"))
+            {
+                grounded = true;
+                return;
+            }
+        }
+        else if(!Physics.Raycast(rayCastOrigin - new Vector3(0, 0.75f, 0), Vector3.down, out hit, 0.15f))
+        {
+            grounded = false;
+            return;
+        }
 
+    }
     void Gravity()
     {
         if (grounded == false)
         {
             gravity = new Vector3 (0, -9.81f, 0);
             rb.AddForce((gravity * ((weight + armourCheck.armourWeight) / 10)));
+            Debug.Log("Not Grounded");
         }
         else if(grounded == true)
         {
             gravity = Vector3.zero;
+            Debug.Log("Grounded");
         }
 
     }
