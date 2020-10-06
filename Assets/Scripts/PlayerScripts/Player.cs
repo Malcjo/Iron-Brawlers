@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -9,6 +10,7 @@ public class Player : MonoBehaviour
 
 
     [SerializeField] private float knockbackResistance = 5;
+    [SerializeField] Vector3 gravity = new Vector3 (0,-9.81f,0);
 
     public bool canHitBox;
     public bool inAnimation;
@@ -111,7 +113,16 @@ public class Player : MonoBehaviour
 
     void Gravity()
     {
-        rb.AddForce(Physics.gravity * ((weight + armourCheck.armourWeight) / 10));
+        if (grounded == false)
+        {
+            gravity = new Vector3 (0, -9.81f, 0);
+            rb.AddForce((gravity * ((weight + armourCheck.armourWeight) / 10)));
+        }
+        else if(grounded == true)
+        {
+            gravity = Vector3.zero;
+        }
+
     }
     public void Jump()
     {
