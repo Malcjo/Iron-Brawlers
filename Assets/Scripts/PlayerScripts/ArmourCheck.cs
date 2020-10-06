@@ -29,7 +29,6 @@ public class ArmourCheck : MonoBehaviour
         switch (ChestArmourType)
         {
             case Armour.armour:
-                LegArmourType = Armour.armour;
                 chestWeight = 3;
                 chestArmourReduceSpeed = 1;
                 chestReduceJump = 0.5f;
@@ -37,15 +36,7 @@ public class ArmourCheck : MonoBehaviour
                 break;
 
             case Armour.none:
-                LegArmourType = Armour.none;
                 chestWeight = 0;
-                chestArmourReduceSpeed = 0;
-                chestReduceJump = 0;
-                chestKnockBackResistance = 0;
-                break;
-            default:
-                LegArmourType = Armour.none;
-                armourWeight = 0;
                 chestArmourReduceSpeed = 0;
                 chestReduceJump = 0;
                 chestKnockBackResistance = 0;
@@ -54,26 +45,17 @@ public class ArmourCheck : MonoBehaviour
         switch (LegArmourType)
         {
             case Armour.armour:
-                LegArmourType = Armour.armour;
                 legsWeight = 4;
                 legsArmourReduceSpeed = 1f;
                 legsReduceJump = 0.5f;
                 legsKnockBackResistance = 3;
                 break;
             case Armour.none:
-                LegArmourType = Armour.none;
                 legsWeight = 0;
                 legsArmourReduceSpeed = 0;
                 legsReduceJump = 0;
                 legsKnockBackResistance = 0;
                 break;      
-            default:
-                LegArmourType = Armour.none;
-                legsWeight = 0;
-                legsArmourReduceSpeed = 0;
-                legsReduceJump = 0;
-                legsKnockBackResistance = 0;
-                break;
         }
 
         knockBackResistance = chestKnockBackResistance + legsKnockBackResistance;
@@ -81,11 +63,13 @@ public class ArmourCheck : MonoBehaviour
         armourReduceSpeed = chestArmourReduceSpeed + legsArmourReduceSpeed;
         armourWeight = chestWeight + legsWeight;
     }
+
     public void SetAllArmourOff()
     {
         SetArmourOff(ArmourType.Legs);
         SetArmourOff(ArmourType.Chest);
     }
+
     public void SetArmourOn(ArmourType placement, Armour type)
     {
         switch (placement)
@@ -134,13 +118,12 @@ public class ArmourCheck : MonoBehaviour
 
     public void RemoveLegArmour()
     {
-        LegArmourType = ArmourCheck.Armour.none;
-        SetArmourOff(ArmourCheck.ArmourType.Legs);
+        SetArmourOff(ArmourType.Legs);
     }
+
     public void RemoveChestArmour()
     {
-        ChestArmourType = ArmourCheck.Armour.none;
-        SetArmourOff(ArmourCheck.ArmourType.Chest);
+        SetArmourOff(ArmourType.Chest);
     }
 
     void ChangeArmourInputs()

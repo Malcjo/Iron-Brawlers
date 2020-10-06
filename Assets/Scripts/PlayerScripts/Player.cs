@@ -28,19 +28,17 @@ public class Player : MonoBehaviour
 
 
     public GameObject armour;
-    private Rigidbody rb;
+    public Rigidbody rb;
     private PlayerInput playerInput;
     private ArmourCheck armourCheck;
     private PlayerControls playerControls;
+    private Checker checker;
     [SerializeField] private PlayerStats playerStats;
 
     private Vector3 addForceValue;
     private Vector3 hitDirection;
-    private Vector3 rayCastOrigin;
-    public Vector3 rayCastOffset;
-    public Transform[] characterJoints;
 
-    [SerializeField] private int groundLayer;
+    public Transform[] characterJoints;
 
     public int lives;
     public int maxLives = 3;
@@ -48,6 +46,7 @@ public class Player : MonoBehaviour
     public float friction = 0.25f;
     private void Awake()
     {
+        checker = GetComponent<Checker>();
         playerControls = GetComponent<PlayerControls>();
         armourCheck = GetComponent<ArmourCheck>();
         playerInput = GetComponent<PlayerInput>();
@@ -69,33 +68,12 @@ public class Player : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        rayCastOrigin = transform.position;
-        GroundCheck();
-        Debug.DrawRay(rayCastOrigin, (-Vector3.down) * .65f, Color.green);
-        Debug.DrawRay(rayCastOrigin, (Vector3.down) * .85f, Color.green);
-
-        Debug.DrawRay(rayCastOrigin, (-Vector3.right) * .2f, Color.green);
-        Debug.DrawRay(rayCastOrigin, (Vector3.right) * .2f, Color.green);
-
+        checker.GroundCheck();
         Move();
-
         Gravity();
+    }
 
-    }
-    public float GetLowestYValue(Transform[] arr)
-    {
-        float value = float.PositiveInfinity;
-        int index = -1;
-        for (int i = 0; i < arr.Length; i++)
-        {
-            if (arr[i].transform.position.y < value)
-            {
-                index = i;
-                value = arr[i].transform.position.y;
-            }
-        }
-        return index;
-    }
+
     void Move()
     {
         if (inAnimation == true)
@@ -115,45 +93,25 @@ public class Player : MonoBehaviour
             rb.velocity = new Vector3(playerInput.horizontal * playerStats.CharacterSpeed(), rb.velocity.y, 0) + addForceValue;
         }
     }
-    void GroundCheck()
-    {
-        groundLayer = 1 << 12;
-        Debug.DrawRay(rayCastOrigin - new Vector3(0, 0.75f, 0), (Vector3.down) * .15f, Color.red);
-        RaycastHit hit;
-        if(Physics.Raycast(rayCastOrigin - new Vector3(0, 0.75f, 0), Vector3.down, out hit, 0.15f))
-        {
-            if(hit.collider.gameObject.CompareTag("Ground"))
-            {
-                grounded = true;
-                return;
-            }
-        }
-        else if(!Physics.Raycast(rayCastOrigin - new Vector3(0, 0.75f, 0), Vector3.down, out hit, 0.15f))
-        {
-            grounded = false;
-            return;
-        }
 
-    }
     void Gravity()
     {
         if (grounded == false)
         {
             gravity = new Vector3 (0, -9.81f, 0);
             rb.AddForce((gravity * ((weight + armourCheck.armourWeight) / 10)));
-            Debug.Log("Not Grounded");
         }
         else if(grounded == true)
         {
+            rb.velocity = new Vector3(rb.velocity.x, 0, 0);
             gravity = Vector3.zero;
-            Debug.Log("Grounded");
         }
-
     }
     public void Jump()
     {
         if (playerInput.numberOfJumps > 0)
         {
+            grounded = false;
             rb.velocity = (new Vector3(rb.velocity.x, playerStats.JumpForceCalculator(), rb.velocity.z));
             jumping = true;
             numberOfJumps--;
@@ -268,6 +226,22 @@ public class Player : MonoBehaviour
                 }
             }
         }
+    }
+    #endregion
+    #region not being used
+    public float GetLowestYValue(Transform[] arr)
+    {
+        float value = float.PositiveInfinity;
+        int index = -1;
+        for (int i = 0; i < arr.Length; i++)
+        {
+            if (arr[i].transform.position.y < value)
+            {
+                index = i;
+                value = arr[i].transform.position.y;
+            }
+        }
+        return index;
     }
     #endregion
 }
