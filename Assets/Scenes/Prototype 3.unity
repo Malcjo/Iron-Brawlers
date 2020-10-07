@@ -1347,20 +1347,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2107257160}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1599645251
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1599645249}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43a183ff1d38f5a43a167d93f2733962, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rayCastOffset: {x: 0, y: 0, z: 0}
-  distanceToGround: 0
 --- !u!1 &1630072807
 GameObject:
   m_ObjectHideFlags: 0
@@ -1782,23 +1768,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4794330820282701284, guid: 2c23d138fa95a7c489beaea8b5ab22ee,
-        type: 3}
-      propertyPath: weight
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 4794330820282701288, guid: 2c23d138fa95a7c489beaea8b5ab22ee,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4794330820282701291, guid: 2c23d138fa95a7c489beaea8b5ab22ee,
         type: 3}
       propertyPath: m_Name
       value: Player_ChistaModel
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 0}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c23d138fa95a7c489beaea8b5ab22ee, type: 3}
 --- !u!1 &2142351104
 GameObject:
