@@ -5,13 +5,10 @@ using UnityEngine;
 public class Checker : MonoBehaviour
 {
     public float previousVelocity;
-    private Vector3 rayCastOrigin;
-    public Vector3 rayCastOffset;
-
-    private float groundCheckRayLength = 0.2f;
-
-    private bool falling;
-    public float distanceToGround;
+    public bool falling;
+    public bool jumping;
+    float boundsLeft, boundsRight;
+    float boundsUp, boundsDown;
 
     Player player;
     private void Awake()
@@ -20,12 +17,11 @@ public class Checker : MonoBehaviour
     }
     void Start()
     {
+        boundsLeft = -20;
+        boundsRight = 20;
+        boundsUp = 10;
+        boundsDown = -10;
         StartCoroutine(FallingCheck());
-    }
-
-    private void FixedUpdate()
-    {
-
     }
     IEnumerator FallingCheck()
     {
@@ -37,47 +33,29 @@ public class Checker : MonoBehaviour
             {
                 Debug.Log("Jumping");
                 falling = false;
+                jumping = true;
             }
             else if (player.rb.velocity.y < -0.1f)
             {
                 Debug.Log("Falling");
                 falling = true;
+                jumping = false;
             }
             else if (player.rb.velocity.y == 0)
             {
                 Debug.Log("Stopped");
                 falling = false;
+                jumping = false;
             }
         }
     }
-
-    public void GroundCheck()
+    public void BoundsChecker()
     {
-        rayCastOrigin = (transform.position - new Vector3(0, 0.65f, 0));
-        Debug.DrawRay(rayCastOrigin, (Vector3.down) * groundCheckRayLength, Color.red);
-        RaycastHit hit;
-        if (Physics.Raycast(rayCastOrigin, Vector3.down, out hit, groundCheckRayLength))
+        if(transform.position.x > boundsRight || transform.position.x < boundsLeft || transform.position.y > boundsUp || transform.position.y < boundsDown)
         {
-            if (falling == true)
-            {
-                if (hit.collider.gameObject.CompareTag("Ground"))
-                {
-                    distanceToGround = hit.distance;
-                    player.rb.velocity = new Vector3(player.rb.velocity.x, 0, 0);
-                    if (distanceToGround >= 0 && distanceToGround <= 0.18f)
-                    {
-                        transform.position = new Vector3(hit.point.x, hit.point.y + 0.85f,0);
-                    }
-
-
-                    player.grounded = true;
-                }
-            }
-        }
-        else if (!Physics.Raycast(rayCastOrigin - new Vector3(0, 0.75f, 0), Vector3.down, out hit, 0.15f))
-        {
-            player.grounded = false;
-            return;
+            transform.position = new Vector3(0, 10, 0);
+            player.lives--;
         }
     }
+
 }

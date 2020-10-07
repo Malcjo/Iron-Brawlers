@@ -9,6 +9,8 @@ TagManager:
   - Block
   - ChestArmour
   - LegArmour
+  - Bounds
+  - Platform
   layers:
   - Default
   - TransparentFX

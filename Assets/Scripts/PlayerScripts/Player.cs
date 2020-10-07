@@ -33,6 +33,7 @@ public class Player : MonoBehaviour
     private ArmourCheck armourCheck;
     private PlayerControls playerControls;
     private Checker checker;
+    private Raycasts raycasts;
     [SerializeField] private PlayerStats playerStats;
 
     private Vector3 addForceValue;
@@ -47,6 +48,7 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         checker = GetComponent<Checker>();
+        raycasts = GetComponent<Raycasts>();
         playerControls = GetComponent<PlayerControls>();
         armourCheck = GetComponent<ArmourCheck>();
         playerInput = GetComponent<PlayerInput>();
@@ -65,14 +67,15 @@ public class Player : MonoBehaviour
     private void Update()
     {
         ReduceCounter();
+
     }
     private void FixedUpdate()
     {
-        checker.GroundCheck();
+        checker.BoundsChecker();
+        raycasts.PublicRayCasting();
         Move();
         Gravity();
     }
-
 
     void Move()
     {
