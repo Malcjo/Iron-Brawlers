@@ -62,7 +62,12 @@ public class PlayerInput : MonoBehaviour
             if (horizontalInput > 0 || horizontalInput < 0)
             {
                 state = animationGroup.running;
+                if (Input.GetKeyDown(controls.crouchKey))
+                {
+                    Debug.Log("Slide");
+                }
             }
+
             if (Input.GetKey(controls.jumpKey))
             {
                 state = animationGroup.jumping;

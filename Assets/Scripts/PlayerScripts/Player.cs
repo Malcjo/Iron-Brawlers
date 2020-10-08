@@ -97,7 +97,10 @@ public class Player : MonoBehaviour
             rb.velocity = new Vector3(playerInput.horizontal * playerStats.CharacterSpeed(), rb.velocity.y, 0) + addForceValue;
         }
     }
+    public void Slide()
+    {
 
+    }
     void Gravity()
     {
         if (grounded == false)

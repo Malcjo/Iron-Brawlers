@@ -19,7 +19,7 @@ public class Checker : MonoBehaviour
     {
         boundsLeft = -20;
         boundsRight = 20;
-        boundsUp = 10;
+        boundsUp = 20;
         boundsDown = -10;
         StartCoroutine(FallingCheck());
     }

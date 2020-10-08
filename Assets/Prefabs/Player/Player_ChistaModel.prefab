@@ -634,6 +634,7 @@ MonoBehaviour:
   running: 0
   jumping: 0
   canJump: 0
+  wall: 0
   state: 0
 --- !u!114 &4794330820282701289
 MonoBehaviour:
@@ -704,9 +705,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43a183ff1d38f5a43a167d93f2733962, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rayCastOffset: {x: 0, y: 0, z: 0}
   distanceToGround: 0
   distanceToCeiling: 0
+  distanceToRight: 0
+  distanceToLeft: 0
+  debugModeOn: 1
 --- !u!1 &4794330820843357680
 GameObject:
   m_ObjectHideFlags: 0
