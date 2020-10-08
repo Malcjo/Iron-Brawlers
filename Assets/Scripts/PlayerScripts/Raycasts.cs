@@ -37,7 +37,13 @@ public class Raycasts : MonoBehaviour
         RaycastHit hit;
         Vector3 rayCastOrigin = transform.position;
         Debug.DrawRay(rayCastOrigin, Vector3.left * sideCheckRayLength, Color.red);
-        if (Physics.Raycast(rayCastOrigin, Vector3.left, out hit, sideCheckRayLength))
+        Debug.DrawRay(rayCastOrigin + new Vector3(0, 0.5f, 0), Vector3.left * sideCheckRayLength, Color.red);
+        Debug.DrawRay(rayCastOrigin + new Vector3(0, -0.7f, 0), Vector3.left * sideCheckRayLength, Color.red);
+
+        Debug.DrawRay(rayCastOrigin, Vector3.right * sideCheckRayLength, Color.red);
+        Debug.DrawRay(rayCastOrigin + new Vector3(0, 0.5f, 0), Vector3.right * sideCheckRayLength, Color.red);
+        Debug.DrawRay(rayCastOrigin + new Vector3(0, -0.7f, 0), Vector3.right * sideCheckRayLength, Color.red);
+        if (Physics.Raycast(rayCastOrigin, Vector3.left, out hit, sideCheckRayLength) || Physics.Raycast(rayCastOrigin + new Vector3 (0,0.5f,0), Vector3.left, out hit, sideCheckRayLength) || Physics.Raycast(rayCastOrigin + new Vector3(0, -0.7f, 0), Vector3.left, out hit, sideCheckRayLength))
         {
             if (checker.jumping == true || checker.falling == true || player.grounded == true)
             {
@@ -48,7 +54,7 @@ public class Raycasts : MonoBehaviour
                 }
             }
         }
-        else if (Physics.Raycast(rayCastOrigin, Vector3.right, out hit, sideCheckRayLength))
+        else if (Physics.Raycast(rayCastOrigin, Vector3.right, out hit, sideCheckRayLength) || Physics.Raycast(rayCastOrigin + new Vector3(0, 0.5f, 0), Vector3.right, out hit, sideCheckRayLength) || Physics.Raycast(rayCastOrigin + new Vector3(0, -0.7f, 0), Vector3.right, out hit, sideCheckRayLength))
         {
             if (checker.jumping == true || checker.falling == true || player.grounded == true)
             {
@@ -111,7 +117,7 @@ public class Raycasts : MonoBehaviour
         player.rb.velocity = new Vector3(player.rb.velocity.x, 0, 0);
         if (distanceToCeiling >= 0 && distanceToCeiling <= 0.37f)
         {
-            transform.position = new Vector3(hit.point.x, hit.point.y + 0.85f, 0);
+            transform.position = new Vector3(hit.point.x, hit.point.y + 0.9f, 0);
         }
         distanceToCeiling = hit.distance;
     }
