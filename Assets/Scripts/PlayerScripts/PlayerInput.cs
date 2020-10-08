@@ -22,11 +22,14 @@ public class PlayerInput : MonoBehaviour
 
     [SerializeField] bool running;
     [SerializeField] bool jumping;
+    
     public bool canJump;
+    
+    public enum wallCollision {leftWall, rightWall, none}
+    public wallCollision wall;
 
-    [SerializeField] animationGroup state;
     public enum animationGroup { idle, crouching, jumping, attack, running }
-
+    [SerializeField] animationGroup state;
     private void Awake()
     {
         hitBoxManager = GetComponentInChildren<HitBoxManager>();
@@ -123,13 +126,32 @@ public class PlayerInput : MonoBehaviour
     public void HorizontalInput()
     {
         horizontalInput = Input.GetAxisRaw(controls.horizontalKeys);
-        horizontal = (horizontalInput);
 
+        switch (wall)
+        {
+            case wallCollision.none:
+                break;
+            case wallCollision.leftWall:
+                if (horizontalInput < 0)
+                {
+                    horizontalInput = 0;
+                }
+                break;
+            case wallCollision.rightWall:
+                if (horizontalInput > 0)
+                {
+                    horizontalInput = 0;
+                }
+                break;
+        }
+
+        horizontal = (horizontalInput);
         if (player.inAnimation == true)
         {
             return;
         }
-        
+
+
         if (horizontalInput < 0)
         {
             FacingDirection = -1;

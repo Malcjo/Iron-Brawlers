@@ -7,7 +7,7 @@ public class Raycasts : MonoBehaviour
 
     private float groundCheckRayLength = 0.4f;
     private float headCheckRayLength = 0.5f;
-    private float sideCheckRayLength = 0.2f;
+    private float sideCheckRayLength = 0.3f;
 
 
     public float distanceToGround;
@@ -17,68 +17,74 @@ public class Raycasts : MonoBehaviour
 
     Checker checker;
     Player player;
+    PlayerInput playerInput;
+
     private void Awake()
     {
         checker = GetComponent<Checker>();
         player = GetComponent<Player>();
+        playerInput = GetComponent<PlayerInput>();
     }
 
     public void PublicRayCasting()
     {
         DownRays();
         UpRays();
-        LeftRays();
-        RightRays();
-
+        SideRayChecker();
     }
-
-    private void LeftRays()
+    void SideRayChecker()
     {
         RaycastHit hit;
         Vector3 rayCastOrigin = transform.position;
         Debug.DrawRay(rayCastOrigin, Vector3.left * sideCheckRayLength, Color.red);
         if (Physics.Raycast(rayCastOrigin, Vector3.left, out hit, sideCheckRayLength))
         {
-            if(checker.jumping == true || checker.falling == true)
+            if (checker.jumping == true || checker.falling == true || player.grounded == true)
             {
                 if (hit.collider.CompareTag("Ground"))
                 {
+                    playerInput.wall = PlayerInput.wallCollision.leftWall;
                     HitLeft(hit);
                 }
             }
+        }
+        else if (Physics.Raycast(rayCastOrigin, Vector3.right, out hit, sideCheckRayLength))
+        {
+            if (checker.jumping == true || checker.falling == true || player.grounded == true)
+            {
+                if (hit.collider.CompareTag("Ground"))
+                {
+                    playerInput.wall = PlayerInput.wallCollision.rightWall;
+                    HitRight(hit);
+                }
+            }
+        }
+        else
+        {
+            playerInput.wall = PlayerInput.wallCollision.none;
         }
     }
     void HitLeft(RaycastHit hit)
     {
         distanceToLeft = hit.distance;
-        player.rb.velocity = new Vector3(player.rb.velocity.x, 0, 0);
-        if (distanceToLeft >= 0 && distanceToLeft <= 0.37f)
+        if (distanceToLeft >= 0 && distanceToLeft <= 0.2f)
         {
-            transform.position = new Vector3(hit.point.x + 0.25f, hit.point.y, 0);
+            if (player.rb.velocity.x > 0)
+            {
+                player.rb.velocity = new Vector3(0, player.rb.velocity.y, 0);
+            }
         }
         distanceToLeft = hit.distance;
-    }
-    //--------------------------------------------------------------------------------
-    private void RightRays()
-    {
-        RaycastHit hit;
-        Vector3 rayCastOrigin = transform.position;
-        Debug.DrawRay(rayCastOrigin, Vector3.right * sideCheckRayLength, Color.red);
-        if (Physics.Raycast(rayCastOrigin, Vector3.right, out hit, sideCheckRayLength)) 
-        {
-            if (checker.jumping == true || checker.falling == true) 
-            {
-                HitRight(hit);
-            } 
-        }
     }
     void HitRight(RaycastHit hit)
     {
         distanceToRight = hit.distance;
-        player.rb.velocity = new Vector3(player.rb.velocity.x, 0, 0);
-        if (distanceToRight >= 0 && distanceToRight <= 0.37f)
+        if (distanceToRight >= 0 && distanceToRight <= 0.2f)
         {
-            transform.position = new Vector3(hit.point.x - 0.25f, hit.point.y, 0);
+            if(player.rb.velocity.x > 0)
+            {
+                player.rb.velocity = new Vector3(0, player.rb.velocity.y, 0);
+            }
         }
         distanceToRight = hit.distance;
     }
@@ -108,7 +114,6 @@ public class Raycasts : MonoBehaviour
             transform.position = new Vector3(hit.point.x, hit.point.y + 0.85f, 0);
         }
         distanceToCeiling = hit.distance;
-
     }
     //--------------------------------------------------------------------------------
     private void DownRays()
@@ -145,8 +150,4 @@ public class Raycasts : MonoBehaviour
 
         player.grounded = true;
     }
-
-
-
-
 }

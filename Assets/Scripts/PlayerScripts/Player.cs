@@ -88,6 +88,7 @@ public class Player : MonoBehaviour
             }
             else if (grounded == false)
             {
+
                 rb.velocity = new Vector3(playerInput.horizontal * playerStats.CharacterSpeed(), rb.velocity.y, 0) + addForceValue;
             }
         }
