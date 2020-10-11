@@ -5,14 +5,13 @@ using UnityEngine;
 public class PlayerControls : MonoBehaviour
 {
     public string horizontalKeys;
-    public KeyCode jumpKey, jabKey, crouchKey, blockKey;
+    public KeyCode jumpKey, jabKey, crouchKey, blockKey, armourKey;
 
     public int playersLayer;
     //player 1 = layer 8
     //player 2 = layer 9
 
     public GameObject tipHitBox,midHitBox;
-    public Player player;
     public GameObject[] chestArmour;
     public GameObject[] legArmour;
 
@@ -35,6 +34,8 @@ public class PlayerControls : MonoBehaviour
                 jabKey = KeyCode.G;
                 crouchKey = KeyCode.S;
                 blockKey = KeyCode.J;
+                armourKey = KeyCode.H;
+
 
                 tipHitBox.layer = 8;
                 midHitBox.layer = 8;
@@ -49,6 +50,7 @@ public class PlayerControls : MonoBehaviour
                 jabKey = KeyCode.Keypad1;
                 crouchKey = KeyCode.DownArrow;
                 blockKey = KeyCode.Keypad3;
+                armourKey = KeyCode.Keypad2;
 
                 tipHitBox.layer = 9;
                 midHitBox.layer = 9;

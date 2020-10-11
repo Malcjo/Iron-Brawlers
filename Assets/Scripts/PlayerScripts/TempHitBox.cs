@@ -11,7 +11,6 @@ public class TempHitBox : MonoBehaviour
     public AttackType _attackType;
 
     PlayerInput playerInput;
-    PlayerControls playerControls;
 
     public int armIndex;
     public GameObject tipHitBox, midHitBox;
@@ -21,7 +20,6 @@ public class TempHitBox : MonoBehaviour
 
     private void Awake()
     {
-        playerControls = GetComponentInParent<PlayerControls>();
         playerInput = GetComponentInParent<PlayerInput>();
     }
     private void Update()

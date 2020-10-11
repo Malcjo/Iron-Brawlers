@@ -7,7 +7,6 @@ public class AnimationManager : MonoBehaviour
     public List<string> animlist = new List<string>();
     public Animator anim;
 
-    PlayerControls controls;
     Player playerScript;
 
     public int comboStep;
@@ -16,7 +15,6 @@ public class AnimationManager : MonoBehaviour
 
     private void Start()
     {
-        controls = GetComponentInParent<PlayerControls>();
         playerScript = GetComponentInParent<Player>();
        
     }

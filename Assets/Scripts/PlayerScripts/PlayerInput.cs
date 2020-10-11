@@ -15,6 +15,7 @@ public class PlayerInput : MonoBehaviour
      AnimationManager animationScript;
      Player player;
      PlayerControls controls;
+     ArmourCheck armourCheck;
      TempHitBox hitboxScript;
      HitBoxManager hitBoxManager;
 
@@ -32,6 +33,7 @@ public class PlayerInput : MonoBehaviour
     [SerializeField] animationGroup state;
     private void Awake()
     {
+        armourCheck = GetComponent<ArmourCheck>();
         hitBoxManager = GetComponentInChildren<HitBoxManager>();
         hitboxScript = GetComponentInChildren<TempHitBox>();
         player = GetComponent<Player>();
@@ -72,8 +74,17 @@ public class PlayerInput : MonoBehaviour
             {
                 state = animationGroup.jumping;
             }
+
         }
-        switch (state)
+        if (Input.GetKey(controls.crouchKey))
+        {
+            if (Input.GetKeyDown(controls.armourKey))
+            {
+                armourCheck.SetAllArmourOff();
+                Debug.Log("Destroy Armour");
+            }
+        }
+            switch (state)
         {
             case animationGroup.idle: IdleStateCheck(); break;
             case animationGroup.jumping: JumpStateCheck(); break;
