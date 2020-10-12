@@ -29,9 +29,9 @@ public class Player : MonoBehaviour
 
     public GameObject armour;
     public Rigidbody rb;
+
     private PlayerInput playerInput;
     private ArmourCheck armourCheck;
-    private PlayerControls playerControls;
     private Checker checker;
     private Raycasts raycasts;
     [SerializeField] private PlayerStats playerStats;
@@ -47,12 +47,12 @@ public class Player : MonoBehaviour
     public float friction = 0.25f;
     private void Awake()
     {
+        rb = GetComponent<Rigidbody>();
+
         checker = GetComponent<Checker>();
         raycasts = GetComponent<Raycasts>();
-        playerControls = GetComponent<PlayerControls>();
         armourCheck = GetComponent<ArmourCheck>();
         playerInput = GetComponent<PlayerInput>();
-        rb = GetComponent<Rigidbody>();
         playerStats = GetComponent<PlayerStats>();
     }
     void Start()

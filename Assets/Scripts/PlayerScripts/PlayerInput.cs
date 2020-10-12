@@ -143,30 +143,13 @@ public class PlayerInput : MonoBehaviour
     {
         horizontalInput = Input.GetAxisRaw(controls.horizontalKeys);
 
-        switch (wall)
-        {
-            case wallCollision.none:
-                break;
-            case wallCollision.leftWall:
-                if (horizontalInput < 0)
-                {
-                    horizontalInput = 0;
-                }
-                break;
-            case wallCollision.rightWall:
-                if (horizontalInput > 0)
-                {
-                    horizontalInput = 0;
-                }
-                break;
-        }
+        WallCheck();
 
         horizontal = (horizontalInput);
         if (player.inAnimation == true)
         {
             return;
         }
-
 
         if (horizontalInput < 0)
         {
@@ -188,7 +171,26 @@ public class PlayerInput : MonoBehaviour
             running = false;
         }
     }
-
+    void WallCheck()
+    {
+        switch (wall)
+        {
+            case wallCollision.none:
+                break;
+            case wallCollision.leftWall:
+                if (horizontalInput < 0)
+                {
+                    horizontalInput = 0;
+                }
+                break;
+            case wallCollision.rightWall:
+                if (horizontalInput > 0)
+                {
+                    horizontalInput = 0;
+                }
+                break;
+        }
+    }
     public void JumpInput()
     {
         if (Input.GetKeyDown(controls.jumpKey))
