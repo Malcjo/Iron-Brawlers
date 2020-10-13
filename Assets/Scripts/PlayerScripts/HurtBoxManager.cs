@@ -5,13 +5,16 @@ using UnityEngine;
 public class HurtBoxManager : MonoBehaviour
 {
     public float radius;
-    public Transform[] HurtBoxLocation;
+    public Transform[] locator;
     public GameObject hurtbox;
     private void Start()
     {
-        for(int i = 0; i < HurtBoxLocation.Length; i++)
+        for(int i = 0; i < locator.Length; i++)
         {
-            Instantiate(hurtbox, HurtBoxLocation[i].transform.position, Quaternion.identity, HurtBoxLocation[i]);
+            float tempLocatorRadius = locator[i].GetComponent<Locator>().radius;
+            radius = tempLocatorRadius * 5;
+            GameObject tempHurtBox = Instantiate(hurtbox, locator[i].transform.position, Quaternion.identity, locator[i]);
+            tempHurtBox.transform.localScale = Vector3.one * (radius);
         }
     }
 }
