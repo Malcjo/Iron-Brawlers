@@ -10,6 +10,7 @@ public class HurtBox : MonoBehaviour
     [SerializeField] private int playerLayer;
     [SerializeField] private int opponentLayer;
     [SerializeField] private int activeLayer;
+    private float newRadius;
 
     private void Awake()
     {
@@ -21,6 +22,7 @@ public class HurtBox : MonoBehaviour
         radius = (manager.radius);
         transform.localScale = Vector3.one * radius;
         this.gameObject.layer = playerLayer;
+        newRadius = radius * 0.1f;
     }
     private void FixedUpdate()
     {
@@ -40,6 +42,6 @@ public class HurtBox : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, radius * 0.1f);
+        Gizmos.DrawWireSphere(transform.position, newRadius);
     }
 }
