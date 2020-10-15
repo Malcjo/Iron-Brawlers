@@ -70,31 +70,31 @@ public class TempHitBox : MonoBehaviour
     {
         if (armIndex == 0)
         {
-            tipHitBox.gameObject.transform.position = leftHand.transform.position;
+            tipHitBox.gameObject.transform.position = new Vector3(leftHand.transform.position.x, leftHand.transform.position.y, 0);
             tipHitBox.gameObject.transform.rotation = leftHand.transform.rotation;
-            midHitBox.gameObject.transform.position = leftElbow.transform.position;
+            midHitBox.gameObject.transform.position = new Vector3(leftElbow.transform.position.x, leftElbow.transform.position.y, 0);
             midHitBox.gameObject.transform.rotation = leftElbow.transform.rotation;
         }
         else if (armIndex == 1)
         {
-            tipHitBox.gameObject.transform.position = rightHand.transform.position;
+            tipHitBox.gameObject.transform.position = new Vector3(rightHand.transform.position.x, rightHand.transform.position.y, 0);
             tipHitBox.gameObject.transform.rotation = rightHand.transform.rotation;
-            midHitBox.gameObject.transform.position = rightElbow.transform.position;
+            midHitBox.gameObject.transform.position = new Vector3(rightElbow.transform.position.x, rightElbow.transform.position.y, 0);
             midHitBox.gameObject.transform.rotation = rightElbow.transform.rotation;
         }
     }
     public void FollowRightFoot()
     {
-        tipHitBox.gameObject.transform.position = rightFoot.transform.position;
+        tipHitBox.gameObject.transform.position = new Vector3(rightFoot.transform.position.x, rightFoot.transform.position.y, 0);
         tipHitBox.gameObject.transform.rotation = rightFoot.transform.rotation;
-        midHitBox.gameObject.transform.position = rightKnee.transform.position;
+        midHitBox.gameObject.transform.position = new Vector3(rightKnee.transform.position.x, rightKnee.transform.position.y, 0);
         midHitBox.gameObject.transform.rotation = rightKnee.transform.rotation;
     }
     public void FollowLeftFoot()
     {
-        tipHitBox.gameObject.transform.position = leftFoot.transform.position;
+        tipHitBox.gameObject.transform.position = new Vector3(leftFoot.transform.position.x, leftFoot.transform.position.y, 0);
         tipHitBox.gameObject.transform.rotation = leftFoot.transform.rotation;
-        midHitBox.gameObject.transform.position = leftKnee.transform.position;
+        midHitBox.gameObject.transform.position = new Vector3(leftKnee.transform.position.x, leftKnee.transform.position.y, 0);
         midHitBox.gameObject.transform.rotation = leftKnee.transform.rotation;
     }
 
