@@ -311,7 +311,7 @@ GameObject:
   - component: {fileID: 296285005}
   - component: {fileID: 296285004}
   - component: {fileID: 296285003}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Platform
   m_TagString: Platform
   m_Icon: {fileID: 0}
@@ -1705,7 +1705,7 @@ GameObject:
   - component: {fileID: 1736942553}
   - component: {fileID: 1736942552}
   - component: {fileID: 1736942551}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Platform
   m_TagString: Platform
   m_Icon: {fileID: 0}
@@ -2057,6 +2057,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player_ChistaModel
+      objectReference: {fileID: 0}
+    - target: {fileID: 8177501159901593537, guid: 2c23d138fa95a7c489beaea8b5ab22ee,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c23d138fa95a7c489beaea8b5ab22ee, type: 3}

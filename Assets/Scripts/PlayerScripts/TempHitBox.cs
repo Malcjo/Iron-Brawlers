@@ -2,19 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum AttackType { Jab, LegSweep, Aerial, Shine };
+public enum Attackdirection { Forward, Low, Aerial, Down };
+public enum HitBoxScale { Jab, Shine };
 public class TempHitBox : MonoBehaviour
 {
-    public enum Attackdirection { Forward, Low, Aerial };
-    public Attackdirection _attackDir;
 
-    public enum AttackType { Jab, LegSweep, Aerial };
+    public HitBoxScale _hitBoxScale;
+    public Attackdirection _attackDir;
     public AttackType _attackType;
 
     PlayerInput playerInput;
 
     public int armIndex;
     public GameObject tipHitBox, midHitBox;
-    public GameObject rightHand, leftHand,rightElbow, leftElbow, rightFoot, leftFoot, rightKnee, leftKnee;
+    public GameObject rightHand, leftHand,rightElbow, leftElbow, rightFoot, leftFoot, rightKnee, leftKnee, waist;
 
     Vector3 hitDirection;
 
@@ -39,9 +41,30 @@ public class TempHitBox : MonoBehaviour
             case AttackType.Aerial:
                 FollowLeftFoot();
                 break;
+            case AttackType.Shine:
+                FollowCenter();
+                break;
             default:
                 break;
         }
+    }
+    Vector3 HitBoxSize()
+    {
+        switch (_hitBoxScale)
+        {
+            case HitBoxScale.Jab:
+                return  new Vector3(0.4f,0.4f,0.4f);
+            case HitBoxScale.Shine:
+                transform.localScale = new Vector3();
+                return new Vector3(1,1,1);
+            default:
+                return new Vector3(0.4f, 0.4f, 0.4f);
+        }
+    }
+    public void FollowCenter()
+    {
+        tipHitBox.gameObject.transform.position = waist.transform.position;
+        tipHitBox.gameObject.transform.rotation = waist.transform.rotation;
     }
     public void FollowHand()
     {
@@ -85,6 +108,8 @@ public class TempHitBox : MonoBehaviour
                 return new Vector3(playerInput.FacingDirection * 0.1f, 1f,0);
             case Attackdirection.Aerial:
                 return new Vector3(playerInput.FacingDirection, 0.7f, 0);
+            case Attackdirection.Down:
+                return new Vector3(playerInput.FacingDirection, -1, 0);
             default:
                 hitDirection.x = 1; hitDirection.y = 0.5f; hitDirection.z = 0; ;
                 return new Vector3(playerInput.FacingDirection, 0.3f, 0);
@@ -101,14 +126,15 @@ public class TempHitBox : MonoBehaviour
                 return 12;
             case AttackType.Aerial:
                 return 10;
-            default:
+            case AttackType.Shine:
                 return 15;
         }
+        return 0;
     }
     public void ShowHitBoxes()
     {
         tipHitBox.gameObject.SetActive(true);
-        midHitBox.gameObject.SetActive(true);
+        //midHitBox.gameObject.SetActive(true);
     }
     public void HideHitBoxes()
     {

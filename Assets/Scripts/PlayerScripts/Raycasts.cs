@@ -9,6 +9,8 @@ public class Raycasts : MonoBehaviour
     private float headCheckRayLength = 0.5f;
     private float sideCheckRayLength = 0.3f;
 
+    [SerializeField] private LayerMask mask = 1<<12;
+    [SerializeField] private int groundLayer = 12;
 
     public float distanceToGround;
     public float distanceToCeiling;
@@ -54,9 +56,9 @@ public class Raycasts : MonoBehaviour
         RaycastHit hit;
         Vector3 rayCastOrigin = transform.position;
 
-        if (Physics.Raycast(rayCastOrigin, Vector3.left, out hit, sideCheckRayLength) || 
-            Physics.Raycast(rayCastOrigin + new Vector3 (0,0.5f,0), Vector3.left, out hit, sideCheckRayLength) || 
-            Physics.Raycast(rayCastOrigin + new Vector3(0, -0.7f, 0), Vector3.left, out hit, sideCheckRayLength))
+        if (Physics.Raycast(rayCastOrigin, Vector3.left, out hit, sideCheckRayLength, mask) || 
+            Physics.Raycast(rayCastOrigin + new Vector3 (0,0.5f,0), Vector3.left, out hit, sideCheckRayLength, mask) || 
+            Physics.Raycast(rayCastOrigin + new Vector3(0, -0.7f, 0), Vector3.left, out hit, sideCheckRayLength, mask))
         {
             if (checker.jumping == true || checker.falling == true || player.grounded == true)
             {
@@ -67,9 +69,9 @@ public class Raycasts : MonoBehaviour
                 }
             }
         }
-        else if (Physics.Raycast(rayCastOrigin, Vector3.right, out hit, sideCheckRayLength) || 
-            Physics.Raycast(rayCastOrigin + new Vector3(0, 0.5f, 0), Vector3.right, out hit, sideCheckRayLength) || 
-            Physics.Raycast(rayCastOrigin + new Vector3(0, -0.7f, 0), Vector3.right, out hit, sideCheckRayLength))
+        else if (Physics.Raycast(rayCastOrigin, Vector3.right, out hit, sideCheckRayLength, mask) || 
+            Physics.Raycast(rayCastOrigin + new Vector3(0, 0.5f, 0), Vector3.right, out hit, sideCheckRayLength, mask) || 
+            Physics.Raycast(rayCastOrigin + new Vector3(0, -0.7f, 0), Vector3.right, out hit, sideCheckRayLength, mask))
         {
             if (checker.jumping == true || checker.falling == true || player.grounded == true)
             {
@@ -115,7 +117,7 @@ public class Raycasts : MonoBehaviour
         RaycastHit hit;
         Vector3 rayCastOrigin = transform.position;
         Debug.DrawRay(rayCastOrigin, Vector3.up * headCheckRayLength, Color.red);
-        if (Physics.Raycast(rayCastOrigin, Vector3.up, out hit, headCheckRayLength))
+        if (Physics.Raycast(rayCastOrigin, Vector3.up, out hit, headCheckRayLength, mask))
         {
             if(checker.jumping == true)
             {
@@ -142,9 +144,9 @@ public class Raycasts : MonoBehaviour
         RaycastHit hit;
         Vector3 rayCastOrigin = transform.position - new Vector3(0, 0.45f, 0);
         Debug.DrawRay(rayCastOrigin, Vector3.down * groundCheckRayLength, Color.red);
-        if (Physics.Raycast(rayCastOrigin, Vector3.down, out hit, groundCheckRayLength))
+        if (Physics.Raycast(rayCastOrigin, Vector3.down, out hit, groundCheckRayLength, mask))
         {
-
+            Debug.Log("HitGroundLayer");
             if (checker.falling == true)
             {
                 if (hit.collider.CompareTag("Ground") || (hit.collider.CompareTag("Platform")))
@@ -159,7 +161,7 @@ public class Raycasts : MonoBehaviour
             return;
         }
     }
-    void LandOnGround(RaycastHit hit)
+    private void LandOnGround(RaycastHit hit)
     {
         distanceToGround = hit.distance;
         player.rb.velocity = new Vector3(player.rb.velocity.x, 0, 0);

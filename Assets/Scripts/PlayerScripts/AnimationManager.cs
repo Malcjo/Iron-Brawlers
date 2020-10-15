@@ -7,7 +7,7 @@ public class AnimationManager : MonoBehaviour
     public List<string> animlist = new List<string>();
     public Animator anim;
 
-    Player playerScript;
+    Player player;
 
     public int comboStep;
     public float comboTimer;
@@ -15,7 +15,7 @@ public class AnimationManager : MonoBehaviour
 
     private void Start()
     {
-        playerScript = GetComponentInParent<Player>();
+        player = GetComponentInParent<Player>();
        
     }
     private void Update()
@@ -34,7 +34,7 @@ public class AnimationManager : MonoBehaviour
     {
         if (comboStep < animlist.Count)
         {
-            playerScript.inAnimation = true;
+            player.inAnimation = true;
             anim.Play(animlist[comboStep]);
             comboStep++;
             comboTimer = 1;
@@ -86,10 +86,10 @@ public class AnimationManager : MonoBehaviour
 
      public void InAnimation()
     {
-        playerScript.inAnimation = true;
+        player.inAnimation = true;
     }
     public void OutAnimation()
     {
-        playerScript.inAnimation = false;
+        player.inAnimation = false;
     }
 }

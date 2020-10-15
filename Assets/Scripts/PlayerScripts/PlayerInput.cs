@@ -64,10 +64,7 @@ public class PlayerInput : MonoBehaviour
             if (horizontalInput > 0 || horizontalInput < 0)
             {
                 state = animationGroup.running;
-                if (Input.GetKeyDown(controls.crouchKey))
-                {
-                    Debug.Log("Slide");
-                }
+                Slide();
             }
 
             if (Input.GetKey(controls.jumpKey))
@@ -78,11 +75,7 @@ public class PlayerInput : MonoBehaviour
         }
         if (Input.GetKey(controls.crouchKey))
         {
-            if (Input.GetKeyDown(controls.armourKey))
-            {
-                armourCheck.SetAllArmourOff();
-                Debug.Log("Destroy Armour");
-            }
+            DestroyArmourKnockBack();
         }
             switch (state)
         {
@@ -90,6 +83,13 @@ public class PlayerInput : MonoBehaviour
             case animationGroup.jumping: JumpStateCheck(); break;
             case animationGroup.running: RunningStateCheck(); break;
             case animationGroup.crouching: CrouchStateCheck(); break;
+        }
+    }
+    void Slide()
+    {
+        if (Input.GetKeyDown(controls.crouchKey))
+        {
+            Debug.Log("Slide");
         }
     }
 
@@ -118,9 +118,8 @@ public class PlayerInput : MonoBehaviour
 
         if (Input.GetKeyDown(controls.jabKey))
         {
-            hitboxScript._attackType = TempHitBox.AttackType.Aerial;
-            hitboxScript._attackDir = TempHitBox.Attackdirection.Aerial;
-            //state = animationGroup.attack;
+            hitboxScript._attackType = AttackType.Aerial;
+            hitboxScript._attackDir = Attackdirection.Aerial;
             animationScript.AerialAttack();
             player.inAnimation = false;
         }
@@ -132,9 +131,8 @@ public class PlayerInput : MonoBehaviour
 
         if (Input.GetKeyDown(controls.jabKey))
         {
-            hitboxScript._attackDir = TempHitBox.Attackdirection.Low;
-            hitboxScript._attackType = TempHitBox.AttackType.LegSweep;
-            //state = animationGroup.attack;
+            hitboxScript._attackDir = Attackdirection.Low;
+            hitboxScript._attackType = AttackType.LegSweep;
             animationScript.LegSweep();
         }
     }
@@ -214,8 +212,8 @@ public class PlayerInput : MonoBehaviour
     {
         if (Input.GetKeyDown(controls.jabKey))
         {
-            hitboxScript._attackDir = TempHitBox.Attackdirection.Forward;
-            hitboxScript._attackType = TempHitBox.AttackType.Jab;
+            hitboxScript._attackDir = Attackdirection.Forward;
+            hitboxScript._attackType = AttackType.Jab;
             animationScript.JabCombo();
         }
     }
@@ -233,6 +231,16 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
+    void DestroyArmourKnockBack()
+    {
+        if (Input.GetKeyDown(controls.armourKey))
+        {
+            armourCheck.SetAllArmourOff();
+            hitboxScript._attackDir = Attackdirection.Down;
+            hitboxScript._attackType = AttackType.Shine;
+            hitBoxManager.ShineAttack();
+        }
+    }
     private void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.tag == "Ground")

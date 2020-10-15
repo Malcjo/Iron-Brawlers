@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1288164786145783550}
   - component: {fileID: 1288164786145783551}
   - component: {fileID: 750838365825087839}
+  - component: {fileID: 9217493218779129357}
   m_Layer: 0
   m_Name: Hurtbox
   m_TagString: Untagged
@@ -96,3 +97,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 0
   hitBoxMesh: {fileID: 0}
+  playerLayer: 0
+  opponentLayer: 0
+  activeLayer: 0
+--- !u!135 &9217493218779129357
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288164786145783548}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}

@@ -29,24 +29,29 @@ public class Checker : MonoBehaviour
         {
             yield return new WaitForSeconds(0.01f);
             previousVelocity = player.rb.velocity.y;
-            if (player.rb.velocity.y > 0.1f)
+            if (player.rb.velocity.y != 0)
             {
-                Debug.Log("Jumping");
-                falling = false;
-                jumping = true;
+                if (player.rb.velocity.y > 0.1f)
+                {
+                    Debug.Log("Jumping");
+                    falling = false;
+                    jumping = true;
+                }
+                else if (player.rb.velocity.y < -0.1f)
+                {
+                    Debug.Log("Falling");
+                    falling = true;
+                    jumping = false;
+                }
             }
-            else if (player.rb.velocity.y < -0.1f)
-            {
-                Debug.Log("Falling");
-                falling = true;
-                jumping = false;
-            }
-            else if (player.rb.velocity.y == 0)
+            else
             {
                 Debug.Log("Stopped");
                 falling = false;
                 jumping = false;
             }
+
+
         }
     }
     public void BoundsChecker()

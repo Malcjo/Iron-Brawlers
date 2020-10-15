@@ -2,12 +2,38 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ColliderState { Closed, Open, Colliding }
 public class HurtBoxManager : MonoBehaviour
 {
+    public LayerMask mask;
     public float radius;
+    public Color inactiveColour;
+    public Color collisionOpenColour;
+    public Color collidingColour;
+
+    private ColliderState _state;
+
+
+
     public Transform[] locator;
     public GameObject hurtbox;
     private PlayerControls playerControls;
+
+    private void CheckGizmoColour()
+    {
+        switch (_state)
+        {
+            case ColliderState.Closed:
+                Gizmos.color = inactiveColour;
+                break;
+            case ColliderState.Open:
+                Gizmos.color = collisionOpenColour;
+                break;
+            case ColliderState.Colliding:
+                Gizmos.color = collidingColour;
+                break;
+        }
+    }
     private void Awake()
     {
         playerControls = GetComponentInParent<PlayerControls>();

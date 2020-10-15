@@ -11,7 +11,6 @@ public class HurtBox : MonoBehaviour
     [SerializeField] private int opponentLayer;
     [SerializeField] private int activeLayer;
     private float newRadius;
-
     private void Awake()
     {
 
@@ -28,7 +27,11 @@ public class HurtBox : MonoBehaviour
     {
 
     }
-    
+    private void Update()
+    {
+        transform.localPosition = Vector3.zero;
+    }
+
     public void SetRadius(float externalRadius)
     {
         radius = externalRadius;

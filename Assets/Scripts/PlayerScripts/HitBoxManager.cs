@@ -40,20 +40,26 @@ public class HitBoxManager : MonoBehaviour
         {
             tempHitBox.armIndex = 1;
         }
-        tempHitBox.FollowHand();
+        tempHitBox.FollowHand();//to snap into place before hitbox is played
         StartCoroutine(SpawnHitBox(0.1f));
         StopCoroutine(SpawnHitBox(0));
     }
     public void LegSweep()
     {
-        tempHitBox.FollowRightFoot();
+        tempHitBox.FollowRightFoot();//to snap into place before hitbox is played
         StartCoroutine(SpawnHitBox(0.15f));
         StopCoroutine(SpawnHitBox(0));
     }
     public void ArielAttack()
     {
-        tempHitBox.FollowLeftFoot();
+        tempHitBox.FollowLeftFoot();//to snap into place before hitbox is played
         StartCoroutine(SpawnHitBox(0.3f));
+        StopCoroutine(SpawnHitBox(0));
+    }
+    public void ShineAttack()
+    {
+        tempHitBox.FollowCenter();//to snap into place before hitbox is played
+        StartCoroutine(SpawnHitBox(0.25f));
         StopCoroutine(SpawnHitBox(0));
     }
     public IEnumerator SpawnHitBox(float spawnTime)

@@ -610,7 +610,7 @@ Transform:
   m_LocalScale: {x: 0.20000006, y: 0.20000006, z: 0.20000006}
   m_Children: []
   m_Father: {fileID: 8218558389895653121}
-  m_RootOrder: 26
+  m_RootOrder: 25
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1419867722748567894
 MeshFilter:
@@ -899,7 +899,7 @@ Transform:
   m_LocalScale: {x: 0.20000009, y: 0.20000003, z: 0.20000008}
   m_Children: []
   m_Father: {fileID: 8218558389895653121}
-  m_RootOrder: 20
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2397933392669358873
 MeshFilter:
@@ -1202,7 +1202,6 @@ Transform:
   - {fileID: 6224660812263480577}
   - {fileID: 7406700109743357469}
   - {fileID: 4995955479285054397}
-  - {fileID: 3099823361004415797}
   - {fileID: 4817089950801831}
   - {fileID: 6178068993711628935}
   - {fileID: 5210193506443839175}
@@ -1213,6 +1212,7 @@ Transform:
   - {fileID: 8502823031637440689}
   - {fileID: 5327973033737250587}
   - {fileID: 7674200022053845013}
+  - {fileID: 3099823361004415797}
   - {fileID: 8806348484385216439}
   - {fileID: 3391877123968481122}
   - {fileID: 7650053083954850342}
@@ -1352,7 +1352,7 @@ Transform:
   m_LocalScale: {x: 0.20000006, y: 0.20000006, z: 0.20000006}
   m_Children: []
   m_Father: {fileID: 8218558389895653121}
-  m_RootOrder: 29
+  m_RootOrder: 28
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8648382541616997408
 MeshFilter:
@@ -1448,7 +1448,7 @@ Transform:
   m_LocalScale: {x: 0.20000006, y: 0.20000006, z: 0.20000006}
   m_Children: []
   m_Father: {fileID: 8218558389895653121}
-  m_RootOrder: 25
+  m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8238361171856655889
 MeshFilter:
@@ -2286,6 +2286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01dbac5655a08604c8263b9e030e6412, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _hitBoxScale: 0
   _attackDir: 0
   _attackType: 0
   armIndex: 0
@@ -2299,6 +2300,7 @@ MonoBehaviour:
   leftFoot: {fileID: 2578538092460583597}
   rightKnee: {fileID: 0}
   leftKnee: {fileID: 0}
+  waist: {fileID: 0}
 --- !u!135 &4794330819513746061
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2587,6 +2589,7 @@ MonoBehaviour:
   blockKey: 0
   armourKey: 0
   playersLayer: 0
+  opponentLayer: 0
   tipHitBox: {fileID: 4794330820876797291}
   midHitBox: {fileID: 8177501159901593537}
   chestArmour:
@@ -2637,6 +2640,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43a183ff1d38f5a43a167d93f2733962, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mask:
+    serializedVersion: 2
+    m_Bits: 4096
+  groundLayer: 12
   distanceToGround: 0
   distanceToCeiling: 0
   distanceToRight: 0
@@ -2654,7 +2661,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6c7ca999314c5e408b3e130442f0a30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mask:
+    serializedVersion: 2
+    m_Bits: 0
   radius: 1
+  inactiveColour: {r: 0, g: 0, b: 0, a: 0}
+  collisionOpenColour: {r: 0, g: 0, b: 0, a: 0}
+  collidingColour: {r: 0, g: 0, b: 0, a: 0}
   locator:
   - {fileID: 2797175941368241256}
   - {fileID: 6428733773147613704}
@@ -2872,19 +2885,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01dbac5655a08604c8263b9e030e6412, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _hitBoxScale: 0
   _attackDir: 0
   _attackType: 0
   armIndex: 0
   tipHitBox: {fileID: 4794330820876797291}
   midHitBox: {fileID: 8177501159901593537}
-  rightHand: {fileID: 5474835900145209246}
-  leftHand: {fileID: 4799533657961845656}
-  rightElbow: {fileID: 3902711138131714387}
-  leftElbow: {fileID: 7437882534984019126}
-  rightFoot: {fileID: 3502085527383382370}
-  leftFoot: {fileID: 2578538092460583597}
-  rightKnee: {fileID: 4312540038789812142}
-  leftKnee: {fileID: 8760120064338685210}
+  rightHand: {fileID: 7380895687470846760}
+  leftHand: {fileID: 3726241293528160766}
+  rightElbow: {fileID: 7332417383804322565}
+  leftElbow: {fileID: 14222418156877555}
+  rightFoot: {fileID: 5020273109701373212}
+  leftFoot: {fileID: 5784213424798375098}
+  rightKnee: {fileID: 8095389040568588807}
+  leftKnee: {fileID: 3523845285612890815}
+  waist: {fileID: 8872389987938967629}
 --- !u!135 &4193868488120893632
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3211,7 +3226,7 @@ Transform:
   m_LocalScale: {x: 0.20000003, y: 0.20000006, z: 0.20000003}
   m_Children: []
   m_Father: {fileID: 8218558389895653121}
-  m_RootOrder: 21
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4685348361023073395
 MeshFilter:
@@ -3802,7 +3817,7 @@ Transform:
   m_LocalScale: {x: 0.20000006, y: 0.20000006, z: 0.20000006}
   m_Children: []
   m_Father: {fileID: 8218558389895653121}
-  m_RootOrder: 27
+  m_RootOrder: 26
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7228369119106356555
 MeshFilter:
@@ -3898,7 +3913,7 @@ Transform:
   m_LocalScale: {x: 0.20000006, y: 0.20000006, z: 0.20000006}
   m_Children: []
   m_Father: {fileID: 8218558389895653121}
-  m_RootOrder: 24
+  m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &126685550819393909
 MeshFilter:
@@ -3994,7 +4009,7 @@ Transform:
   m_LocalScale: {x: 0.2, y: 0.20000005, z: 0.20000005}
   m_Children: []
   m_Father: {fileID: 8218558389895653121}
-  m_RootOrder: 19
+  m_RootOrder: 29
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5025780219087776275
 MeshFilter:
@@ -4090,7 +4105,7 @@ Transform:
   m_LocalScale: {x: 0.20000006, y: 0.20000006, z: 0.20000006}
   m_Children: []
   m_Father: {fileID: 8218558389895653121}
-  m_RootOrder: 28
+  m_RootOrder: 27
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5525446616383137161
 MeshFilter:
@@ -4666,7 +4681,7 @@ Transform:
   m_LocalScale: {x: 0.2, y: 0.20000008, z: 0.20000003}
   m_Children: []
   m_Father: {fileID: 8218558389895653121}
-  m_RootOrder: 23
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2171499028912322741
 MeshFilter:
@@ -4858,7 +4873,7 @@ Transform:
   m_LocalScale: {x: 0.20000006, y: 0.20000006, z: 0.20000006}
   m_Children: []
   m_Father: {fileID: 8218558389895653121}
-  m_RootOrder: 22
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2199544400935863887
 MeshFilter:
@@ -5018,6 +5033,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01dbac5655a08604c8263b9e030e6412, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _hitBoxScale: 0
   _attackDir: 0
   _attackType: 0
   armIndex: 0
@@ -5031,6 +5047,7 @@ MonoBehaviour:
   leftFoot: {fileID: 2578538092460583597}
   rightKnee: {fileID: 4312540038789812142}
   leftKnee: {fileID: 8760120064338685210}
+  waist: {fileID: 0}
 --- !u!135 &4563235220741484893
 SphereCollider:
   m_ObjectHideFlags: 0
