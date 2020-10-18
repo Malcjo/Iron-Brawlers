@@ -41,25 +41,31 @@ public class HitBoxManager : MonoBehaviour
             tempHitBox.armIndex = 1;
         }
         tempHitBox.FollowHand();//to snap into place before hitbox is played
+        tempHitBox._hitBoxScale = HitBoxScale.Jab;
         StartCoroutine(SpawnHitBox(0.1f));
         StopCoroutine(SpawnHitBox(0));
     }
     public void LegSweep()
     {
         tempHitBox.FollowRightFoot();//to snap into place before hitbox is played
+        tempHitBox._hitBoxScale = HitBoxScale.Jab;
         StartCoroutine(SpawnHitBox(0.15f));
         StopCoroutine(SpawnHitBox(0));
     }
     public void ArielAttack()
     {
         tempHitBox.FollowLeftFoot();//to snap into place before hitbox is played
+        tempHitBox._hitBoxScale = HitBoxScale.Jab;
         StartCoroutine(SpawnHitBox(0.3f));
         StopCoroutine(SpawnHitBox(0));
     }
     public void ShineAttack()
     {
         tempHitBox.FollowCenter();//to snap into place before hitbox is played
+        tempHitBox._hitBoxScale = HitBoxScale.Shine;
+        StartCoroutine(InAnimation(0.1f, 0.1f));
         StartCoroutine(SpawnHitBox(0.25f));
+        StopCoroutine(InAnimation(0, 0));
         StopCoroutine(SpawnHitBox(0));
     }
     public IEnumerator SpawnHitBox(float spawnTime)
@@ -67,5 +73,13 @@ public class HitBoxManager : MonoBehaviour
         tempHitBox.ShowHitBoxes();
         yield return new WaitForSeconds(spawnTime);
         tempHitBox.HideHitBoxes();
+    }
+
+    public IEnumerator InAnimation(float delayTime, float AnimationTime)
+    {
+        yield return new WaitForSeconds(delayTime);
+        player.inAnimation = true;
+        yield return new WaitForSeconds(AnimationTime);
+        player.inAnimation = false;
     }
 }

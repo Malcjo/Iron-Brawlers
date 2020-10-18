@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
     private float hitStunCounter;
     public bool blocking;
     public bool canJump;
+    public bool canAirMove;
 
     [SerializeField] public bool jumping;
     [SerializeField] public int numberOfJumps;
@@ -66,13 +67,12 @@ public class Player : MonoBehaviour
     }
     private void Update()
     {
+        jumping = checker.jumping;
+        hasArmour = armourCheck.HasArmour(); ;
         ReduceCounter();
-
     }
     private void FixedUpdate()
     {
-        checker.BoundsChecker();
-        raycasts.PublicRayCasting();
         Move();
         Gravity();
     }
@@ -81,15 +81,22 @@ public class Player : MonoBehaviour
     {
         if (inAnimation == true)
         {
-            if (grounded == true)
+            if(grounded == true)
             {
                 rb.velocity = new Vector3(Mathf.Lerp(rb.velocity.x, 0, friction), rb.velocity.y, 0);
                 return;
             }
             else if (grounded == false)
             {
-
-                rb.velocity = new Vector3(playerInput.horizontal * playerStats.CharacterSpeed(), rb.velocity.y, 0) + addForceValue;
+                if (canAirMove == false)
+                {
+                    rb.velocity = new Vector3(Mathf.Lerp(rb.velocity.x, 0, friction), rb.velocity.y, 0);
+                    return;
+                }
+                else if (canAirMove == true)
+                {
+                    rb.velocity = new Vector3(playerInput.horizontal * playerStats.CharacterSpeed(), rb.velocity.y, 0) + addForceValue;
+                }
             }
         }
         else
@@ -97,7 +104,7 @@ public class Player : MonoBehaviour
             rb.velocity = new Vector3(playerInput.horizontal * playerStats.CharacterSpeed(), rb.velocity.y, 0) + addForceValue;
         }
     }
-    public void Slide()
+    public void Roll()
     {
 
     }
@@ -121,7 +128,6 @@ public class Player : MonoBehaviour
         {
             grounded = false;
             rb.velocity = (new Vector3(rb.velocity.x, playerStats.JumpForceCalculator(), rb.velocity.z));
-            jumping = true;
             numberOfJumps--;
         }
     }
@@ -167,33 +173,6 @@ public class Player : MonoBehaviour
         return addForceValue;
     }
     #region Colliders / Triggers
-    #region Groud Detection
-    //Ground Detections----------------------------------------------------------
-    //resetting number of jumps to max jumps
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "Ground")
-        {
-            playerInput.numberOfJumps = playerInput.maxJumps;
-        }
-    }
-    //checking if grounded
-    private void OnCollisionStay(Collision collision)
-    {
-        if (collision.gameObject.tag == "Ground")
-        {
-            grounded = true;
-        }
-    }
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.tag == "Ground")
-        {
-            grounded = false;
-        }
-    }
-    //Ground Detections----------------------------------------------------------
-    #endregion
 
     private void OnTriggerExit(Collider other)
     {
@@ -205,7 +184,7 @@ public class Player : MonoBehaviour
         {
             return;
         }
-        if (other.tag == "Jab")
+        if (other.tag == "Hitbox")
         {
             if (canHitBox == false)
             {

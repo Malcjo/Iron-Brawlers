@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1428972291864349874}
   - component: {fileID: 9100930360473475676}
   m_Layer: 0
-  m_Name: HurtBoxLocationLeftElbowMid
+  m_Name: LocatorLeftElbowMid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 4417127905211710344}
   - component: {fileID: 1460995802437226826}
   m_Layer: 0
-  m_Name: HurtBoxLocationLeftElbow
+  m_Name: LocatorLeftElbow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -205,7 +205,7 @@ GameObject:
   - component: {fileID: 4292798880234448156}
   - component: {fileID: 660904848820333577}
   m_Layer: 0
-  m_Name: HurtBoxLocationLeftUpLegHigh
+  m_Name: LocatorLeftUpLegHigh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -302,7 +302,7 @@ GameObject:
   - component: {fileID: 5123095342203061274}
   - component: {fileID: 695971776922966943}
   m_Layer: 0
-  m_Name: HurtBoxLocationLeftUpLegLow
+  m_Name: LocatorLeftUpLegLow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -399,7 +399,7 @@ GameObject:
   - component: {fileID: 6339145523376664036}
   - component: {fileID: 7840996381919637593}
   m_Layer: 0
-  m_Name: HurtBoxLocationRightElbow
+  m_Name: LocatorRightElbow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -495,7 +495,7 @@ GameObject:
   - component: {fileID: 1509369209074116272}
   - component: {fileID: 2155656690976909501}
   m_Layer: 0
-  m_Name: HurtBoxLocationNeckLower
+  m_Name: LocatorNeckLower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -592,7 +592,7 @@ GameObject:
   - component: {fileID: 7542607154829129276}
   - component: {fileID: 2155027465818963608}
   m_Layer: 0
-  m_Name: HurtBoxLocationRightUpLegHigh
+  m_Name: LocatorRightUpLegHigh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -688,7 +688,7 @@ GameObject:
   - component: {fileID: 4323322257178457537}
   - component: {fileID: 8904845371019066233}
   m_Layer: 0
-  m_Name: HurtBoxLocationRightShoulderMid
+  m_Name: LocatorRightShoulderMid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -784,7 +784,7 @@ GameObject:
   - component: {fileID: 1705384655289719386}
   - component: {fileID: 2506064825122077286}
   m_Layer: 0
-  m_Name: HurtBoxLocationLeftKneeLow
+  m_Name: LocatorLeftKneeLow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -881,7 +881,7 @@ GameObject:
   - component: {fileID: 5290506669478738468}
   - component: {fileID: 326767459635003306}
   m_Layer: 0
-  m_Name: HurtBoxLocationRightFootBase
+  m_Name: LocatorRightFootBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -977,7 +977,7 @@ GameObject:
   - component: {fileID: 8136370909402305476}
   - component: {fileID: 7487080368494439910}
   m_Layer: 0
-  m_Name: HurtBoxLocationRightShoulder
+  m_Name: LocatorRightShoulder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1073,7 +1073,7 @@ GameObject:
   - component: {fileID: 2534680171406300446}
   - component: {fileID: 6637079894757548429}
   m_Layer: 0
-  m_Name: HurtBoxLocationLeftShoulderMid
+  m_Name: LocatorLeftShoulderMid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1238,7 +1238,7 @@ GameObject:
   - component: {fileID: 8557239996967402260}
   - component: {fileID: 7601854026733255382}
   m_Layer: 0
-  m_Name: HurtBoxLocationLeftUpLeg
+  m_Name: LocatorLeftUpLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1334,7 +1334,7 @@ GameObject:
   - component: {fileID: 5894153181246973930}
   - component: {fileID: 834261657870306209}
   m_Layer: 0
-  m_Name: HurtBoxLocationRightKneeHigh
+  m_Name: LocatorRightKneeHigh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1430,7 +1430,7 @@ GameObject:
   - component: {fileID: 195021141180493582}
   - component: {fileID: 8234957903596587661}
   m_Layer: 0
-  m_Name: HurtBoxLocationRightUpLegMid
+  m_Name: LocatorRightUpLegMid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1526,7 +1526,7 @@ GameObject:
   - component: {fileID: 2198260468160053162}
   - component: {fileID: 1298583830625720600}
   m_Layer: 0
-  m_Name: HurtBoxLocationLeftKnee
+  m_Name: LocatorLeftKnee
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1679,7 +1679,7 @@ GameObject:
   - component: {fileID: 6422618603941288167}
   - component: {fileID: 832334518112948515}
   m_Layer: 0
-  m_Name: HurtBoxLocationLeftHand
+  m_Name: LocatorLeftHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1775,7 +1775,7 @@ GameObject:
   - component: {fileID: 6660118214108665319}
   - component: {fileID: 2217499807416580865}
   m_Layer: 0
-  m_Name: HurtBoxLocationNeckMid
+  m_Name: LocatorNeckMid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1871,7 +1871,7 @@ GameObject:
   - component: {fileID: 670093884848056835}
   - component: {fileID: 6646957578730390149}
   m_Layer: 0
-  m_Name: HurtBoxLocationRightClavicle
+  m_Name: LocatorRightClavicle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2414,6 +2414,7 @@ GameObject:
   - component: {fileID: 7184785464435220257}
   - component: {fileID: 1599645251}
   - component: {fileID: 8289314926182218368}
+  - component: {fileID: 7956690532064525043}
   m_Layer: 10
   m_Name: Player_ChistaModel
   m_TagString: Player
@@ -2475,11 +2476,12 @@ MonoBehaviour:
   hitStun: 0
   blocking: 0
   canJump: 0
+  canAirMove: 0
   jumping: 0
   numberOfJumps: 0
   armour: {fileID: 4794330819297549174}
-  rb: {fileID: 0}
-  playerStats: {fileID: 0}
+  rb: {fileID: 4794330820282701285}
+  playerStats: {fileID: 6194861110830156426}
   characterJoints:
   - {fileID: 2397324954219694}
   - {fileID: 9063528341037934663}
@@ -2567,6 +2569,7 @@ MonoBehaviour:
   FacingDirection: 0
   running: 0
   jumping: 0
+  falling: 0
   canJump: 0
   wall: 0
   state: 0
@@ -2626,7 +2629,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   previousVelocity: 0
-  falling: 1
+  falling: 0
   jumping: 0
 --- !u!114 &1599645251
 MonoBehaviour:
@@ -2709,6 +2712,18 @@ MonoBehaviour:
   - {fileID: 1248339567776807328}
   - {fileID: 7950446245240995156}
   hurtbox: {fileID: 1288164786145783548, guid: e039712a67a047e4b81ee7e73f64b9b7, type: 3}
+--- !u!114 &7956690532064525043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4794330820282701291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1094a52ef9098de4c91a24cd0f0ec1ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4794330820843357680
 GameObject:
   m_ObjectHideFlags: 0
@@ -2805,7 +2820,7 @@ GameObject:
   - component: {fileID: 4193868488120893632}
   m_Layer: 8
   m_Name: TipHitBox
-  m_TagString: Jab
+  m_TagString: Hitbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3208,7 +3223,7 @@ GameObject:
   - component: {fileID: 1295635678695342123}
   - component: {fileID: 7892700481491071175}
   m_Layer: 0
-  m_Name: HurtBoxLocationRightFoot
+  m_Name: LocatorRightFoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3304,7 +3319,7 @@ GameObject:
   - component: {fileID: 6884221564005070551}
   - component: {fileID: 6329169960789345064}
   m_Layer: 0
-  m_Name: HurtBoxLocationLeftUpLegMid
+  m_Name: LocatorLeftUpLegMid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3401,7 +3416,7 @@ GameObject:
   - component: {fileID: 5082405985504277002}
   - component: {fileID: 2519235191410046009}
   m_Layer: 0
-  m_Name: HurtBoxLocationLeftShoulder
+  m_Name: LocatorLeftShoulder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3497,7 +3512,7 @@ GameObject:
   - component: {fileID: 4523629399495886397}
   - component: {fileID: 4062270540937751063}
   m_Layer: 0
-  m_Name: HurtBoxLocationSpineHigh
+  m_Name: LocatorSpineHigh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3593,7 +3608,7 @@ GameObject:
   - component: {fileID: 7661344263275486166}
   - component: {fileID: 7944139505717001072}
   m_Layer: 0
-  m_Name: HurtBoxLocationLeftFoot
+  m_Name: LocatorLeftFoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3799,7 +3814,7 @@ GameObject:
   - component: {fileID: 7460745921874698067}
   - component: {fileID: 1802306364649288674}
   m_Layer: 0
-  m_Name: HurtBoxLocationRightKneeLow
+  m_Name: LocatorRightKneeLow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3895,7 +3910,7 @@ GameObject:
   - component: {fileID: 8237702791928140235}
   - component: {fileID: 8969533361351178716}
   m_Layer: 0
-  m_Name: HurtBoxLocationRightUpLegLow
+  m_Name: LocatorRightUpLegLow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3991,7 +4006,7 @@ GameObject:
   - component: {fileID: 5199275935387642456}
   - component: {fileID: 6120268301165165048}
   m_Layer: 0
-  m_Name: HurtBoxLocationLeftFootBase
+  m_Name: LocatorLeftFootBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4087,7 +4102,7 @@ GameObject:
   - component: {fileID: 7331995261806028100}
   - component: {fileID: 6187126449492945091}
   m_Layer: 0
-  m_Name: HurtBoxLocationRightKneeMid
+  m_Name: LocatorRightKneeMid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4183,7 +4198,7 @@ GameObject:
   - component: {fileID: 8835506169960588465}
   - component: {fileID: 1332917795217696574}
   m_Layer: 0
-  m_Name: HurtBoxLocationLeftClavicle
+  m_Name: LocatorLeftClavicle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4279,7 +4294,7 @@ GameObject:
   - component: {fileID: 2408442405645222720}
   - component: {fileID: 2626163919723931222}
   m_Layer: 0
-  m_Name: HurtBoxLocationRightElbowMid
+  m_Name: LocatorRightElbowMid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4375,7 +4390,7 @@ GameObject:
   - component: {fileID: 2173493174263710446}
   - component: {fileID: 6569944858468971891}
   m_Layer: 0
-  m_Name: HurtBoxLocationRightHand
+  m_Name: LocatorRightHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4471,7 +4486,7 @@ GameObject:
   - component: {fileID: 7986235318429174584}
   - component: {fileID: 219065999830823823}
   m_Layer: 0
-  m_Name: HurtBoxLocationSpineLower
+  m_Name: LocatorSpineLower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4567,7 +4582,7 @@ GameObject:
   - component: {fileID: 949873586253975918}
   - component: {fileID: 7861779387682955487}
   m_Layer: 0
-  m_Name: HurtBoxLocationSpineMid
+  m_Name: LocatorSpineMid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4663,7 +4678,7 @@ GameObject:
   - component: {fileID: 918747971676852409}
   - component: {fileID: 7137150068217227756}
   m_Layer: 0
-  m_Name: HurtBoxLocationRightUpLeg
+  m_Name: LocatorRightUpLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4759,7 +4774,7 @@ GameObject:
   - component: {fileID: 1532214992523001142}
   - component: {fileID: 5252153784785278957}
   m_Layer: 0
-  m_Name: HurtBoxLocationNeckHigh
+  m_Name: LocatorNeckHigh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4855,7 +4870,7 @@ GameObject:
   - component: {fileID: 2852128523947587075}
   - component: {fileID: 7568097788537273434}
   m_Layer: 0
-  m_Name: HurtBoxLocationRightKnee
+  m_Name: LocatorRightKnee
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4953,7 +4968,7 @@ GameObject:
   - component: {fileID: 4563235220741484893}
   m_Layer: 8
   m_Name: MidHitBox
-  m_TagString: Jab
+  m_TagString: Hitbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5074,7 +5089,7 @@ GameObject:
   - component: {fileID: 8965089361064655058}
   - component: {fileID: 2185274205775036095}
   m_Layer: 0
-  m_Name: HurtBoxLocationLeftKneeMid
+  m_Name: LocatorLeftKneeMid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5171,7 +5186,7 @@ GameObject:
   - component: {fileID: 7520159408240575123}
   - component: {fileID: 3416428959570112045}
   m_Layer: 0
-  m_Name: HurtBoxLocationHips
+  m_Name: LocatorHips
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5267,7 +5282,7 @@ GameObject:
   - component: {fileID: 8253009717123203140}
   - component: {fileID: 295111262971980038}
   m_Layer: 0
-  m_Name: HurtBoxLocationLeftKneeHigh
+  m_Name: LocatorLeftKneeHigh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5558,9 +5573,9 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 4794330820555095346}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &572615435191391784 stripped
+--- !u!4 &8520987723680514704 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: fdbaadd5123864942960382174c0a565,
+  m_CorrespondingSourceObject: {fileID: -5420008163957686366, guid: fdbaadd5123864942960382174c0a565,
     type: 3}
   m_PrefabInstance: {fileID: 4794330820555095346}
   m_PrefabAsset: {fileID: 0}
@@ -5582,9 +5597,9 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 4794330820555095346}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &6748185477286261544 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2246940569206803994, guid: fdbaadd5123864942960382174c0a565,
+--- !u!1 &3578408338555921467 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: fdbaadd5123864942960382174c0a565,
     type: 3}
   m_PrefabInstance: {fileID: 4794330820555095346}
   m_PrefabAsset: {fileID: 0}
@@ -5618,15 +5633,21 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 4794330820555095346}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &8520987723680514704 stripped
+--- !u!4 &572615435191391784 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: -5420008163957686366, guid: fdbaadd5123864942960382174c0a565,
+  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: fdbaadd5123864942960382174c0a565,
     type: 3}
   m_PrefabInstance: {fileID: 4794330820555095346}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &2397324954219694 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4431429744085825124, guid: fdbaadd5123864942960382174c0a565,
+    type: 3}
+  m_PrefabInstance: {fileID: 4794330820555095346}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6748185477286261544 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2246940569206803994, guid: fdbaadd5123864942960382174c0a565,
     type: 3}
   m_PrefabInstance: {fileID: 4794330820555095346}
   m_PrefabAsset: {fileID: 0}
@@ -5645,12 +5666,6 @@ GameObject:
 --- !u!4 &1969739101186314439 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6475341992876109301, guid: fdbaadd5123864942960382174c0a565,
-    type: 3}
-  m_PrefabInstance: {fileID: 4794330820555095346}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &3578408338555921467 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: fdbaadd5123864942960382174c0a565,
     type: 3}
   m_PrefabInstance: {fileID: 4794330820555095346}
   m_PrefabAsset: {fileID: 0}

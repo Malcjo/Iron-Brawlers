@@ -6,23 +6,25 @@ using UnityEngine.SocialPlatforms;
 
 public class PlayerInput : MonoBehaviour
 {
-     public float horizontal; // Being checked in Player script: MoveCall()
-     public int numberOfJumps; //Being checked in Player script: JumpMove()
+    public float horizontal; // Being checked in Player script: MoveCall()
+    public int numberOfJumps; //Being checked in Player script: JumpMove()
 
-     float horizontalInput;
-     public int maxJumps;
+    float horizontalInput;
+    public int maxJumps;
 
-     AnimationManager animationScript;
-     Player player;
-     PlayerControls controls;
-     ArmourCheck armourCheck;
-     TempHitBox hitboxScript;
-     HitBoxManager hitBoxManager;
-
+    AnimationManager animationScript;
+    Player player;
+    PlayerControls controls;
+    ArmourCheck armourCheck;
+    TempHitBox hitboxScript;
+    HitBoxManager hitBoxManager;
+    Checker checker;
+    AttackManager attackManger;
     [Range(-1, 1)] public int FacingDirection;
 
-    [SerializeField] bool running;
-    [SerializeField] bool jumping;
+    public bool running;
+    [SerializeField] private bool jumping;
+    [SerializeField] private bool falling;
     
     public bool canJump;
     
@@ -33,6 +35,8 @@ public class PlayerInput : MonoBehaviour
     [SerializeField] animationGroup state;
     private void Awake()
     {
+        attackManger = GetComponent<AttackManager>();
+        checker = GetComponent<Checker>();
         armourCheck = GetComponent<ArmourCheck>();
         hitBoxManager = GetComponentInChildren<HitBoxManager>();
         hitboxScript = GetComponentInChildren<TempHitBox>();
@@ -42,24 +46,37 @@ public class PlayerInput : MonoBehaviour
     }
     private void Update()
     {
+        States();
         Escape();
         HorizontalInput();
-        AttackInput();
+        //AeiralAttackCheck();
         BlockInput();
         JumpInput();
         CheckState(); 
     }
-
+    void States()
+    {
+        falling = checker.falling;
+        jumping = checker.jumping;
+    }
     void CheckState()
     {
         if (player.grounded == true)
         {
             animationScript.Jump(false);
             state = animationGroup.idle;
+            if (Input.GetKeyDown(controls.jabKey))
+            {
+                attackManger.Jab();
+            }
 
             if (Input.GetKey(controls.crouchKey))
             {
                 state = animationGroup.crouching;
+                if (Input.GetKeyDown(controls.jabKey))
+                {
+                    attackManger.LegSweep();
+                }
             }
             if (horizontalInput > 0 || horizontalInput < 0)
             {
@@ -71,13 +88,10 @@ public class PlayerInput : MonoBehaviour
             {
                 state = animationGroup.jumping;
             }
-
         }
-        if (Input.GetKey(controls.crouchKey))
-        {
-            DestroyArmourKnockBack();
-        }
-            switch (state)
+        DestroyArmourKnockBack();
+        AeiralAttackCheck();
+        switch (state)
         {
             case animationGroup.idle: IdleStateCheck(); break;
             case animationGroup.jumping: JumpStateCheck(); break;
@@ -115,26 +129,11 @@ public class PlayerInput : MonoBehaviour
     void JumpStateCheck()
     {
         animationScript.Jump(true);
-
-        if (Input.GetKeyDown(controls.jabKey))
-        {
-            hitboxScript._attackType = AttackType.Aerial;
-            hitboxScript._attackDir = Attackdirection.Aerial;
-            animationScript.AerialAttack();
-            player.inAnimation = false;
-        }
     }
 
     void CrouchStateCheck()
     {
         animationScript.Crouching(true);
-
-        if (Input.GetKeyDown(controls.jabKey))
-        {
-            hitboxScript._attackDir = Attackdirection.Low;
-            hitboxScript._attackType = AttackType.LegSweep;
-            animationScript.LegSweep();
-        }
     }
     
     public void HorizontalInput()
@@ -208,13 +207,11 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
-    public void AttackInput()
+    public void AeiralAttackCheck()
     {
-        if (Input.GetKeyDown(controls.jabKey))
+        if (player.jumping == true && Input.GetKeyDown(controls.jabKey))
         {
-            hitboxScript._attackDir = Attackdirection.Forward;
-            hitboxScript._attackType = AttackType.Jab;
-            animationScript.JabCombo();
+            attackManger.AerialAttack();
         }
     }
     public void BlockInput()
@@ -233,12 +230,20 @@ public class PlayerInput : MonoBehaviour
 
     void DestroyArmourKnockBack()
     {
-        if (Input.GetKeyDown(controls.armourKey))
+        if (Input.GetKey(controls.armourKey) && Input.GetKey(controls.crouchKey))
         {
-            armourCheck.SetAllArmourOff();
-            hitboxScript._attackDir = Attackdirection.Down;
-            hitboxScript._attackType = AttackType.Shine;
-            hitBoxManager.ShineAttack();
+            if(player.hasArmour == false)
+            {
+                return;
+            }
+            else if(player.hasArmour == true)
+            {
+                armourCheck.SetAllArmourOff();
+                hitboxScript._attackDir = Attackdirection.Down;
+                hitboxScript._attackType = AttackType.Shine;
+                hitBoxManager.ShineAttack();
+            }
+
         }
     }
     private void OnCollisionExit(Collision collision)

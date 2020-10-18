@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ArmourCheck : MonoBehaviour
 {
+
     public Armour LegArmourType;
     public Armour ChestArmourType;
     public enum ArmourType { Chest, Legs}
@@ -23,6 +24,18 @@ public class ArmourCheck : MonoBehaviour
     {
         ArmourStatsCheck();
         ChangeArmourInputs();
+    }
+    public bool HasArmour()
+    {
+        if (ChestArmourType == Armour.armour || LegArmourType == Armour.armour)
+        {
+            return true;
+        }
+        else if (ChestArmourType == Armour.none && LegArmourType == Armour.none)
+        {
+            return false;
+        }
+        return false;
     }
     void ArmourStatsCheck()
     {
@@ -139,6 +152,7 @@ public class ArmourCheck : MonoBehaviour
             LegArmourType = Armour.armour;
             SetArmourOn(ArmourType.Legs,Armour.armour);
             SetArmourOn(ArmourType.Chest, Armour.armour);
+
         }
     }
 }

@@ -29,7 +29,10 @@ public class Raycasts : MonoBehaviour
         player = GetComponent<Player>();
         playerInput = GetComponent<PlayerInput>();
     }
-
+    private void FixedUpdate()
+    {
+        PublicRayCasting();
+    }
     public void PublicRayCasting()
     {
         DownRays();
@@ -172,5 +175,7 @@ public class Raycasts : MonoBehaviour
         distanceToGround = hit.distance;
 
         player.grounded = true;
+        checker.falling = false;
+        checker.jumping = false;
     }
 }

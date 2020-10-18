@@ -21,37 +21,34 @@ public class Checker : MonoBehaviour
         boundsRight = 20;
         boundsUp = 20;
         boundsDown = -10;
-        StartCoroutine(FallingCheck());
     }
-    IEnumerator FallingCheck()
+    private void Update()
     {
-        while (true)
+        BoundsChecker();
+    }
+    private void FixedUpdate()
+    {
+        previousVelocity = player.rb.velocity.y;
+        if (player.rb.velocity.y != 0)
         {
-            yield return new WaitForSeconds(0.01f);
-            previousVelocity = player.rb.velocity.y;
-            if (player.rb.velocity.y != 0)
+            if (player.rb.velocity.y > 0.1f)
             {
-                if (player.rb.velocity.y > 0.1f)
-                {
-                    Debug.Log("Jumping");
-                    falling = false;
-                    jumping = true;
-                }
-                else if (player.rb.velocity.y < -0.1f)
-                {
-                    Debug.Log("Falling");
-                    falling = true;
-                    jumping = false;
-                }
-            }
-            else
-            {
-                Debug.Log("Stopped");
+                Debug.Log("Jumping");
                 falling = false;
+                jumping = true;
+            }
+            else if (player.rb.velocity.y < -0.1f)
+            {
+                Debug.Log("Falling");
+                falling = true;
                 jumping = false;
             }
-
-
+        }
+        else
+        {
+            Debug.Log("Stopped");
+            falling = false;
+            jumping = false;
         }
     }
     public void BoundsChecker()

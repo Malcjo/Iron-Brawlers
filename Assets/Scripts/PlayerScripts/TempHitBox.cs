@@ -27,6 +27,7 @@ public class TempHitBox : MonoBehaviour
     private void Update()
     {
         AttackTypeCall();
+        HitBoxSize();
     }
     void AttackTypeCall()
     {
@@ -44,21 +45,19 @@ public class TempHitBox : MonoBehaviour
             case AttackType.Shine:
                 FollowCenter();
                 break;
-            default:
-                break;
         }
     }
-    Vector3 HitBoxSize()
+    void HitBoxSize()
     {
         switch (_hitBoxScale)
         {
             case HitBoxScale.Jab:
-                return  new Vector3(0.4f,0.4f,0.4f);
+                transform.localScale = new Vector3(0.4f,0.4f,0.4f);
+                break;
             case HitBoxScale.Shine:
                 transform.localScale = new Vector3();
-                return new Vector3(1,1,1);
-            default:
-                return new Vector3(0.4f, 0.4f, 0.4f);
+                transform.localScale = new Vector3(1.5f,1.5f,1.5f);
+                break;
         }
     }
     public void FollowCenter()
