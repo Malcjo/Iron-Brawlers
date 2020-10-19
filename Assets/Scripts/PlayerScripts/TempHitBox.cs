@@ -124,7 +124,7 @@ public class TempHitBox : MonoBehaviour
             case AttackType.LegSweep:
                 return 12;
             case AttackType.Aerial:
-                return 10;
+                return 15;
             case AttackType.Shine:
                 return 15;
         }

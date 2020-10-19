@@ -33,20 +33,20 @@ public class Checker : MonoBehaviour
         {
             if (player.rb.velocity.y > 0.1f)
             {
-                Debug.Log("Jumping");
+                //Debug.Log("Jumping");
                 falling = false;
                 jumping = true;
             }
             else if (player.rb.velocity.y < -0.1f)
             {
-                Debug.Log("Falling");
+                //Debug.Log("Falling");
                 falling = true;
                 jumping = false;
             }
         }
         else
         {
-            Debug.Log("Stopped");
+            //Debug.Log("Stopped");
             falling = false;
             jumping = false;
         }

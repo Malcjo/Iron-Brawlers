@@ -22,6 +22,11 @@ public class Player : MonoBehaviour
     public bool blocking;
     public bool canJump;
     public bool canAirMove;
+    private bool reduceAddForce;
+
+    [SerializeField] private float reduceCounterValue;
+    [SerializeField] private float reduceCounterMax;
+
 
     [SerializeField] public bool jumping;
     [SerializeField] public int numberOfJumps;
@@ -145,8 +150,8 @@ public class Player : MonoBehaviour
 
     void ReduceHit()
     {
-        addForceValue.x = Mathf.Lerp(addForceValue.x, 0, 5f * Time.deltaTime);
-        addForceValue.y = Mathf.Lerp(addForceValue.y, 0, 25f * Time.deltaTime);
+        addForceValue.x = Mathf.Lerp(addForceValue.x, 0, 7f * Time.deltaTime);
+        addForceValue.y = Mathf.Lerp(addForceValue.y, 0, 27f * Time.deltaTime);
 
         //reducing to zero if small value
         if (addForceValue.magnitude < 0.05f && addForceValue.magnitude > -0.05f)
@@ -186,33 +191,28 @@ public class Player : MonoBehaviour
         }
         if (other.tag == "Hitbox")
         {
+            reduceCounterValue = 0.5f;
             TempHitBox _hitbox = other.GetComponent<TempHitBox>();
             _hitbox.HideHitBoxes();
-            if (canHitBox == false)
+            if (blocking == true)
             {
-                Debug.Log("canhitbox is false");
+                _hitbox.HideHitBoxes();
                 return;
             }
-
-            else if (canHitBox == true)
+            else if (blocking == false)
             {
-                Debug.Log("canhitbox is true");
-                if (blocking == true)
-                {
-                    return;
-                }
-                else if (blocking == false)
-                {
-                    canHitBox = false;
-                    Debug.Log("Jab");
-                    hitStun = true;
-                    hitStunCounter = 1.1f;
-                    Vector3 Hit = _hitbox.HitDirection(); // getting the direction of the attack
-                    float Power = _hitbox.HitStrength(); // getting the power of the attack
+                canHitBox = false;
+                Debug.Log("Jab");
+                hitStun = true;
+                hitStunCounter = 1.1f;
+                Vector3 Hit = _hitbox.HitDirection(); // getting the direction of the attack
+                float Power = _hitbox.HitStrength(); // getting the power of the attack
 
-                    hitDirection = Hit;
-                    addForceValue = AddForce(Power - (armourCheck.knockBackResistance + knockbackResistance));
-                }
+                hitDirection = Hit;
+                addForceValue = AddForce(Power - (armourCheck.knockBackResistance + knockbackResistance));
+                Debug.Log("Hit Power with resistance : " + _hitbox._attackType + (Power - (armourCheck.knockBackResistance + knockbackResistance)));
+                Debug.Log("Hit direction : " + _hitbox._attackType + " " + Hit);
+                Debug.Log("Hit Power : " + _hitbox._attackType +" " + Power);
             }
         }
     }
