@@ -12,6 +12,7 @@ TagManager:
   - Bounds
   - Platform
   - Hitbox
+  - Hurtbox
   layers:
   - Default
   - TransparentFX
