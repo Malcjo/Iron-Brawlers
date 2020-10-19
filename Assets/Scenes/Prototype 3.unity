@@ -1048,6 +1048,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4794330819297549175, guid: 2c23d138fa95a7c489beaea8b5ab22ee,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.27323774
+      objectReference: {fileID: 0}
     - target: {fileID: 4794330820282701282, guid: 2c23d138fa95a7c489beaea8b5ab22ee,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1225,6 +1230,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1130003576 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4794330821211079093, guid: 2c23d138fa95a7c489beaea8b5ab22ee,
+    type: 3}
+  m_PrefabInstance: {fileID: 2107257160}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1130003578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1130003576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  location: 0
+  radius: 0
+  Location: {fileID: 1395654038}
 --- !u!1 &1226519943
 GameObject:
   m_ObjectHideFlags: 0
@@ -1701,6 +1727,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1395654038 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 826572440070780527, guid: 2c23d138fa95a7c489beaea8b5ab22ee,
+    type: 3}
+  m_PrefabInstance: {fileID: 2107257160}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1492860413 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4794330820282701291, guid: 2c23d138fa95a7c489beaea8b5ab22ee,
@@ -2518,16 +2550,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player_ChistaModel
-      objectReference: {fileID: 0}
-    - target: {fileID: 8177501159901593537, guid: 2c23d138fa95a7c489beaea8b5ab22ee,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8289314926182218368, guid: 2c23d138fa95a7c489beaea8b5ab22ee,
-        type: 3}
-      propertyPath: viewHurtBoxes
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c23d138fa95a7c489beaea8b5ab22ee, type: 3}

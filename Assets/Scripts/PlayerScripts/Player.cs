@@ -191,30 +191,29 @@ public class Player : MonoBehaviour
         }
         if (other.tag == "Hitbox")
         {
-            reduceCounterValue = 0.5f;
             TempHitBox _hitbox = other.GetComponent<TempHitBox>();
             _hitbox.HideHitBoxes();
             if (blocking == true)
             {
-                _hitbox.HideHitBoxes();
+
                 return;
             }
             else if (blocking == false)
             {
-                canHitBox = false;
-                Debug.Log("Jab");
-                hitStun = true;
-                hitStunCounter = 1.1f;
                 Vector3 Hit = _hitbox.HitDirection(); // getting the direction of the attack
                 float Power = _hitbox.HitStrength(); // getting the power of the attack
 
-                hitDirection = Hit;
-                addForceValue = AddForce(Power - (armourCheck.knockBackResistance + knockbackResistance));
-                Debug.Log("Hit Power with resistance : " + _hitbox._attackType + (Power - (armourCheck.knockBackResistance + knockbackResistance)));
-                Debug.Log("Hit direction : " + _hitbox._attackType + " " + Hit);
-                Debug.Log("Hit Power : " + _hitbox._attackType +" " + Power);
+
             }
         }
+    }
+    public void Damage(Vector3 Hit, float Power)
+    {
+        Debug.Log("Jab");
+        hitStun = true;
+        hitStunCounter = 1.1f;
+        hitDirection = Hit;
+        addForceValue = AddForce(Power - (armourCheck.knockBackResistance + knockbackResistance));
     }
     #endregion
     #region not being used

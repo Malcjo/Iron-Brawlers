@@ -153,11 +153,33 @@ public class TempHitBox : MonoBehaviour
         var _tempArmour = other.GetComponentInParent<ArmourCheck>();
         if (other.gameObject.CompareTag("LegArmour"))
         {
+            Debug.Log("Remove Leg Armour!");
             _tempArmour.RemoveLegArmour();
+            return;
         }
-        if (other.gameObject.CompareTag("ChestArmour"))
+        else if (other.gameObject.CompareTag("ChestArmour"))
         {
+            Debug.Log("Remove Chest Armour!");
             _tempArmour.RemoveChestArmour();
+            return;
+        }
+
+        if (other.gameObject.CompareTag("Hurtbox"))
+        {
+            var tempPlayer = other.GetComponentInParent<Player>();
+            Debug.Log("Hit Player");
+
+            if (tempPlayer.blocking == true)
+            {
+                HideHitBoxes();
+                return;
+            }
+            else if (tempPlayer.blocking == false)
+            {
+                tempPlayer.Damage(HitDirection(), HitStrength());
+                HideHitBoxes();
+            }
+
         }
     }
 }

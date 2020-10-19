@@ -94,6 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: 1
   radius: 0
   Location: {fileID: 3201375223764699464}
 --- !u!1 &15354080345138614
@@ -190,6 +191,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: 1
   radius: 0
   Location: {fileID: 3201375223764699464}
 --- !u!1 &123434607311173661
@@ -287,6 +289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: 0
   radius: 0
   Location: {fileID: 9063528341037934663}
 --- !u!1 &212952194474370276
@@ -384,6 +387,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: 0
   radius: 0
   Location: {fileID: 9063528341037934663}
 --- !u!1 &410900332663567973
@@ -480,6 +484,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: 1
   radius: 0
   Location: {fileID: 2608076737821238999}
 --- !u!1 &693736789127603047
@@ -577,6 +582,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: 1
   radius: 0
   Location: {fileID: 1621964958978557887}
 --- !u!1 &1154575703752256735
@@ -673,6 +679,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: 0
   radius: 0
   Location: {fileID: 3385108998879894991}
 --- !u!1 &1216347981192088441
@@ -769,6 +776,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: 1
   radius: 0
   Location: {fileID: 1771951631572843343}
 --- !u!1 &1280459499925833144
@@ -866,6 +874,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: 0
   radius: 0
   Location: {fileID: 1969739101186314439}
 --- !u!1 &1757476517500473647
@@ -962,6 +971,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: 0
   radius: 0
   Location: {fileID: 4488062142483369095}
 --- !u!1 &1768234720523346910
@@ -1058,6 +1068,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: 1
   radius: 0
   Location: {fileID: 1771951631572843343}
 --- !u!1 &1788567608732302693
@@ -1154,6 +1165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: 1
   radius: 0
   Location: {fileID: 3807367721846909075}
 --- !u!1 &2688233547510755480
@@ -1319,6 +1331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: 0
   radius: 0
   Location: {fileID: 9063528341037934663}
 --- !u!1 &3089323543290774378
@@ -1415,6 +1428,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: 0
   radius: 0
   Location: {fileID: 5424941569936505231}
 --- !u!1 &3447515765386911618
@@ -1511,6 +1525,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: 0
   radius: 0
   Location: {fileID: 3385108998879894991}
 --- !u!1 &3523845285612890815
@@ -1608,6 +1623,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: 0
   radius: 0
   Location: {fileID: 1969739101186314439}
 --- !u!95 &4794330819837634511
@@ -1645,7 +1661,7 @@ MonoBehaviour:
   midHitBox: {fileID: 8177501159901593537}
   blockBox: {fileID: 4794330819513746063}
   tempHitBox: {fileID: 4794330820876797289}
-  animationScript: {fileID: 0}
+  animationScript: {fileID: 4794330819837634510}
   player: {fileID: 4794330820282701284}
 --- !u!114 &4794330819837634510
 MonoBehaviour:
@@ -1760,6 +1776,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: 1
   radius: 0
   Location: {fileID: 8520987723680514704}
 --- !u!1 &3829334372194802591
@@ -1856,6 +1873,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: 1
   radius: 0
   Location: {fileID: 7779246905199243487}
 --- !u!1 &4146292834353746582
@@ -1952,6 +1970,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: 1
   radius: 0
   Location: {fileID: 6748185477286261544}
 --- !u!1 &4794330819122035029
@@ -1964,7 +1983,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4794330819122035026}
   - component: {fileID: 4794330819122035027}
-  - component: {fileID: 2585020811248223437}
+  - component: {fileID: 1677505199}
   m_Layer: 0
   m_Name: LegArmourRight
   m_TagString: LegArmour
@@ -2000,7 +2019,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2585020811248223437
+--- !u!114 &1677505199
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2009,11 +2028,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4794330819122035029}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
+  m_Script: {fileID: 11500000, guid: e1860b3d96d7c3945b5f657a5f4f7479, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 0
-  Location: {fileID: 235013250821660712}
+  location: {fileID: 8502823031637440689}
 --- !u!1 &4794330819164813584
 GameObject:
   m_ObjectHideFlags: 0
@@ -2060,7 +2078,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4794330819297549175}
   - component: {fileID: 4794330819297549172}
-  - component: {fileID: 690007084861172745}
+  - component: {fileID: 946482239}
   m_Layer: 0
   m_Name: Armour
   m_TagString: ChestArmour
@@ -2096,7 +2114,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &690007084861172745
+--- !u!114 &946482239
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2105,11 +2123,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4794330819297549174}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
+  m_Script: {fileID: 11500000, guid: e1860b3d96d7c3945b5f657a5f4f7479, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 0
-  Location: {fileID: 3154690614833740758}
+  location: {fileID: 3154690614833740758}
 --- !u!1 &4794330819392305805
 GameObject:
   m_ObjectHideFlags: 0
@@ -2477,6 +2494,8 @@ MonoBehaviour:
   blocking: 0
   canJump: 0
   canAirMove: 0
+  reduceCounterValue: 0
+  reduceCounterMax: 0
   jumping: 0
   numberOfJumps: 0
   armour: {fileID: 4794330819297549174}
@@ -2664,53 +2683,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6c7ca999314c5e408b3e130442f0a30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mask:
-    serializedVersion: 2
-    m_Bits: 0
   radius: 1
-  inactiveColour: {r: 0, g: 0, b: 0, a: 0}
-  collisionOpenColour: {r: 0, g: 0, b: 0, a: 0}
-  collidingColour: {r: 0, g: 0, b: 0, a: 0}
+  viewHurtBoxes: 0
   locator:
-  - {fileID: 2797175941368241256}
-  - {fileID: 6428733773147613704}
-  - {fileID: 5132810818496966101}
-  - {fileID: 3154690614833740758}
-  - {fileID: 8156728684031336637}
-  - {fileID: 4786391473975819084}
-  - {fileID: 6948339328235997602}
-  - {fileID: 385460340458124867}
-  - {fileID: 5041270748954331463}
-  - {fileID: 7221715054836015438}
-  - {fileID: 2445193071074211268}
-  - {fileID: 8587187807923676479}
-  - {fileID: 9016951632211735479}
-  - {fileID: 7852982837852731653}
-  - {fileID: 8232957528516622920}
-  - {fileID: 3987897567393427925}
-  - {fileID: 6224660812263480577}
-  - {fileID: 7406700109743357469}
-  - {fileID: 4995955479285054397}
-  - {fileID: 3099823361004415797}
-  - {fileID: 4817089950801831}
-  - {fileID: 6178068993711628935}
-  - {fileID: 5210193506443839175}
-  - {fileID: 235013250821660712}
-  - {fileID: 5809244857614234766}
-  - {fileID: 8828870664764625336}
-  - {fileID: 5029666809722008022}
-  - {fileID: 8502823031637440689}
-  - {fileID: 5327973033737250587}
-  - {fileID: 7674200022053845013}
-  - {fileID: 8806348484385216439}
-  - {fileID: 3391877123968481122}
-  - {fileID: 7650053083954850342}
-  - {fileID: 3199615581111065058}
-  - {fileID: 5223694848107073193}
-  - {fileID: 5611916558515475194}
-  - {fileID: 826572440070780527}
-  - {fileID: 1248339567776807328}
-  - {fileID: 7950446245240995156}
+  - {fileID: 8049354560083521445}
+  - {fileID: 693736789127603047}
+  - {fileID: 3829334372194802591}
+  - {fileID: 5546486007838193473}
+  - {fileID: 7633301299377395207}
+  - {fileID: 7613676391939531480}
+  - {fileID: 8872389987938967629}
+  - {fileID: 7380895687470846760}
+  - {fileID: 7332417383804322565}
+  - {fileID: 410900332663567973}
+  - {fileID: 1216347981192088441}
+  - {fileID: 1768234720523346910}
+  - {fileID: 4146292834353746582}
+  - {fileID: 3726241293528160766}
+  - {fileID: 14222418156877555}
+  - {fileID: 15354080345138614}
+  - {fileID: 1788567608732302693}
+  - {fileID: 5173249790340502537}
+  - {fileID: 7203836356114044037}
+  - {fileID: 1757476517500473647}
+  - {fileID: 5020273109701373212}
+  - {fileID: 8095389040568588807}
+  - {fileID: 7985045482217379320}
+  - {fileID: 6223997873096653855}
+  - {fileID: 3447515765386911618}
+  - {fileID: 1154575703752256735}
+  - {fileID: 6105900059616891704}
+  - {fileID: 7066111740724635302}
+  - {fileID: 3089323543290774378}
+  - {fileID: 6811713278963881043}
+  - {fileID: 5784213424798375098}
+  - {fileID: 3523845285612890815}
+  - {fileID: 2954753593675931284}
+  - {fileID: 212952194474370276}
+  - {fileID: 5044006085465424804}
+  - {fileID: 123434607311173661}
+  - {fileID: 1280459499925833144}
+  - {fileID: 8255598936665312734}
+  - {fileID: 8909031678252848376}
   hurtbox: {fileID: 1288164786145783548, guid: e039712a67a047e4b81ee7e73f64b9b7, type: 3}
 --- !u!114 &7956690532064525043
 MonoBehaviour:
@@ -3019,7 +3033,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4794330820984734888}
   - component: {fileID: 4794330820984734889}
-  - component: {fileID: 7318523894758709386}
+  - component: {fileID: 157342734}
   m_Layer: 0
   m_Name: LegArmour
   m_TagString: LegArmour
@@ -3055,7 +3069,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7318523894758709386
+--- !u!114 &157342734
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3064,11 +3078,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4794330820984734891}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
+  m_Script: {fileID: 11500000, guid: e1860b3d96d7c3945b5f657a5f4f7479, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 0
-  Location: {fileID: 6948339328235997602}
+  location: {fileID: 6948339328235997602}
 --- !u!1 &4794330821211079093
 GameObject:
   m_ObjectHideFlags: 0
@@ -3079,7 +3092,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4794330821211079090}
   - component: {fileID: 4794330821211079091}
-  - component: {fileID: 1549537390564144879}
+  - component: {fileID: 1130003580}
   m_Layer: 0
   m_Name: LegArmourLeft
   m_TagString: LegArmour
@@ -3115,7 +3128,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1549537390564144879
+--- !u!114 &1130003580
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3124,11 +3137,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4794330821211079093}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
+  m_Script: {fileID: 11500000, guid: e1860b3d96d7c3945b5f657a5f4f7479, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 0
-  Location: {fileID: 7650053083954850342}
+  location: {fileID: 826572440070780527}
 --- !u!1 &4794330821218324155
 GameObject:
   m_ObjectHideFlags: 0
@@ -3304,6 +3316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: 0
   radius: 0
   Location: {fileID: 7757990984314467630}
 --- !u!1 &5044006085465424804
@@ -3401,6 +3414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: 0
   radius: 0
   Location: {fileID: 9063528341037934663}
 --- !u!1 &5173249790340502537
@@ -3497,6 +3511,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: 1
   radius: 0
   Location: {fileID: 3807367721846909075}
 --- !u!1 &5546486007838193473
@@ -3593,6 +3608,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: 1
   radius: 0
   Location: {fileID: 1972406709174842207}
 --- !u!1 &5784213424798375098
@@ -3689,6 +3705,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: 0
   radius: 0
   Location: {fileID: 6064433477128629328}
 --- !u!1 &5836066097156167215
@@ -3799,6 +3816,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: 0
   radius: 0
   Location: {fileID: 2397324954219694}
 --- !u!1 &6105900059616891704
@@ -3895,6 +3913,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: 0
   radius: 0
   Location: {fileID: 5424941569936505231}
 --- !u!1 &6223997873096653855
@@ -3991,6 +4010,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: 0
   radius: 0
   Location: {fileID: 3385108998879894991}
 --- !u!1 &6811713278963881043
@@ -4087,6 +4107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: 0
   radius: 0
   Location: {fileID: 6059706806121472875}
 --- !u!1 &7066111740724635302
@@ -4183,6 +4204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: 0
   radius: 0
   Location: {fileID: 5424941569936505231}
 --- !u!1 &7203836356114044037
@@ -4279,6 +4301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: 1
   radius: 0
   Location: {fileID: 5907782009126113229}
 --- !u!1 &7332417383804322565
@@ -4375,6 +4398,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: 1
   radius: 0
   Location: {fileID: 2608076737821238999}
 --- !u!1 &7380895687470846760
@@ -4471,6 +4495,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: 1
   radius: 0
   Location: {fileID: 1281205937476194635}
 --- !u!1 &7613676391939531480
@@ -4567,6 +4592,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: 1
   radius: 0
   Location: {fileID: 9136418939990280}
 --- !u!1 &7633301299377395207
@@ -4663,6 +4689,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: 1
   radius: 0
   Location: {fileID: 3747900705456834938}
 --- !u!1 &7985045482217379320
@@ -4759,6 +4786,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: 0
   radius: 0
   Location: {fileID: 3385108998879894991}
 --- !u!1 &8049354560083521445
@@ -4855,6 +4883,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: 1
   radius: 0
   Location: {fileID: 705628549716508250}
 --- !u!1 &8095389040568588807
@@ -4951,6 +4980,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: 0
   radius: 0
   Location: {fileID: 5424941569936505231}
 --- !u!1 &8177501159901593537
@@ -4972,7 +5002,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2268648524422357593
 Transform:
   m_ObjectHideFlags: 0
@@ -5171,6 +5201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: 0
   radius: 0
   Location: {fileID: 1969739101186314439}
 --- !u!1 &8872389987938967629
@@ -5267,6 +5298,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: 0
   radius: 0
   Location: {fileID: 2397324954219694}
 --- !u!1 &8909031678252848376
@@ -5364,6 +5396,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda146b4166e10c46a88cc09241668aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  location: 0
   radius: 0
   Location: {fileID: 1969739101186314439}
 --- !u!1 &9008309003301184516

@@ -149,7 +149,6 @@ public class Raycasts : MonoBehaviour
         Debug.DrawRay(rayCastOrigin, Vector3.down * groundCheckRayLength, Color.red);
         if (Physics.Raycast(rayCastOrigin, Vector3.down, out hit, groundCheckRayLength, mask))
         {
-            Debug.Log("HitGroundLayer");
             if (checker.falling == true)
             {
                 if (hit.collider.CompareTag("Ground") || (hit.collider.CompareTag("Platform")))

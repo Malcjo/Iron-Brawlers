@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class HurtBox : MonoBehaviour
 {
+    public LocationTag location;
     [SerializeField] private float radius;
     public MeshRenderer hitBoxMesh;
     HurtBoxManager manager;
@@ -21,6 +22,7 @@ public class HurtBox : MonoBehaviour
         radius = (manager.radius);
         transform.localScale = Vector3.one * radius;
         this.gameObject.layer = playerLayer;
+
         newRadius = radius * 0.1f;
         if(manager.viewHurtBoxes == false)
         {

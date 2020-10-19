@@ -63,9 +63,9 @@ public class HitBoxManager : MonoBehaviour
     {
         tempHitBox.FollowCenter();//to snap into place before hitbox is played
         tempHitBox._hitBoxScale = HitBoxScale.Shine;
-        StartCoroutine(InAnimation(0.1f, 0.1f));
+        StartCoroutine(FreeFrames(0.1f, 0.1f));
         StartCoroutine(SpawnHitBox(0.25f));
-        StopCoroutine(InAnimation(0, 0));
+        StopCoroutine(FreeFrames(0, 0));
         StopCoroutine(SpawnHitBox(0));
     }
     public IEnumerator SpawnHitBox(float spawnTime)
@@ -75,7 +75,7 @@ public class HitBoxManager : MonoBehaviour
         tempHitBox.HideHitBoxes();
     }
 
-    public IEnumerator InAnimation(float delayTime, float AnimationTime)
+    public IEnumerator FreeFrames(float delayTime, float AnimationTime)
     {
         yield return new WaitForSeconds(delayTime);
         player.inAnimation = true;
