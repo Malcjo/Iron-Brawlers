@@ -11,6 +11,7 @@ TagManager:
   - LegArmour
   - Bounds
   - Platform
+  - Hitbox
   layers:
   - Default
   - TransparentFX

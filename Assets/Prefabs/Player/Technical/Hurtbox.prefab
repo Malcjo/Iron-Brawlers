@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 0
-  hitBoxMesh: {fileID: 0}
+  hitBoxMesh: {fileID: 1288164786145783550}
   playerLayer: 0
   opponentLayer: 0
   activeLayer: 0

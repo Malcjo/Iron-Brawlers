@@ -31,6 +31,7 @@ public class HitBoxManager : MonoBehaviour
 
     public void JabAttack(int _armIndex)
     {
+        tempHitBox._hitBoxScale = HitBoxScale.Jab;
         armIndex = _armIndex;
         if (armIndex == 0)
         {
@@ -41,7 +42,6 @@ public class HitBoxManager : MonoBehaviour
             tempHitBox.armIndex = 1;
         }
         tempHitBox.FollowHand();//to snap into place before hitbox is played
-        tempHitBox._hitBoxScale = HitBoxScale.Jab;
         StartCoroutine(SpawnHitBox(0.1f));
         StopCoroutine(SpawnHitBox(0));
     }

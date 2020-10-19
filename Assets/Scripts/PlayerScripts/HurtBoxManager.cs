@@ -13,7 +13,7 @@ public class HurtBoxManager : MonoBehaviour
 
     private ColliderState _state;
 
-
+    public bool viewHurtBoxes;
 
     public Transform[] locator;
     public GameObject hurtbox;

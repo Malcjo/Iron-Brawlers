@@ -5,7 +5,7 @@ using UnityEngine;
 public class HurtBox : MonoBehaviour
 {
     [SerializeField] private float radius;
-    public GameObject hitBoxMesh;
+    public MeshRenderer hitBoxMesh;
     HurtBoxManager manager;
     [SerializeField] private int playerLayer;
     [SerializeField] private int opponentLayer;
@@ -22,6 +22,14 @@ public class HurtBox : MonoBehaviour
         transform.localScale = Vector3.one * radius;
         this.gameObject.layer = playerLayer;
         newRadius = radius * 0.1f;
+        if(manager.viewHurtBoxes == false)
+        {
+            hitBoxMesh.enabled = false;
+        }
+        else if (manager.viewHurtBoxes == true)
+        {
+            hitBoxMesh.enabled = true;
+        }
     }
     private void FixedUpdate()
     {

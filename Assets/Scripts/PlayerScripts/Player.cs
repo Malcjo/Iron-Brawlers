@@ -186,6 +186,8 @@ public class Player : MonoBehaviour
         }
         if (other.tag == "Hitbox")
         {
+            TempHitBox _hitbox = other.GetComponent<TempHitBox>();
+            _hitbox.HideHitBoxes();
             if (canHitBox == false)
             {
                 Debug.Log("canhitbox is false");
@@ -205,8 +207,8 @@ public class Player : MonoBehaviour
                     Debug.Log("Jab");
                     hitStun = true;
                     hitStunCounter = 1.1f;
-                    Vector3 Hit = other.GetComponent<TempHitBox>().HitDirection(); // getting the direction of the attack
-                    float Power = other.GetComponent<TempHitBox>().HitStrength(); // getting the power of the attack
+                    Vector3 Hit = _hitbox.HitDirection(); // getting the direction of the attack
+                    float Power = _hitbox.HitStrength(); // getting the power of the attack
 
                     hitDirection = Hit;
                     addForceValue = AddForce(Power - (armourCheck.knockBackResistance + knockbackResistance));

@@ -243,7 +243,6 @@ public class PlayerInput : MonoBehaviour
                 hitboxScript._attackType = AttackType.Shine;
                 hitBoxManager.ShineAttack();
             }
-
         }
     }
     private void OnCollisionExit(Collision collision)
