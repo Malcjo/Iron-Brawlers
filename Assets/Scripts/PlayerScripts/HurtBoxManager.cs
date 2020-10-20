@@ -14,9 +14,11 @@ public class HurtBoxManager : MonoBehaviour
     public GameObject[] locator;
     public GameObject hurtbox;
     private PlayerControls playerControls;
+    private Player player;
 
     private void Awake()
     {
+        player = GetComponent<Player>();
         playerControls = GetComponentInParent<PlayerControls>();
     }
     private void Start()

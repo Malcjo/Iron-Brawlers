@@ -7,8 +7,10 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private Player player;
     private ArmourCheck armourCheck;
 
-    [SerializeField] private float speed = 8;
-    [SerializeField] private float jumpForce = 7.5f;
+    public float speed;
+    public float jumpForce;
+    public float weight;
+    public float knockbackResistance;
 
     private void Awake()
     {

@@ -13,7 +13,7 @@ public class PunchingBagArmour : MonoBehaviour
     {
         if(other.tag == "Jab")
         {
-            Vector3 Hit = other.GetComponent<TempHitBox>().HitDirection();
+            Vector3 Hit = other.GetComponent<Hitbox>().HitDirection();
             punchingBag.Knockback(Hit, knockBackResistance());
             punchingBag.armour = false;
         }

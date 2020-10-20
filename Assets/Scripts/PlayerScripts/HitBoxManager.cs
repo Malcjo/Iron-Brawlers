@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class HitBoxManager : MonoBehaviour
 {
-    public GameObject tipHitBox,midHitBox, blockBox;
-    public TempHitBox tempHitBox;
+    public GameObject tipHitBox, blockBox;
+    public Hitbox hitBox;
     [Range(0,1)]
     private int armIndex;
     public AnimationManager animationScript;
@@ -15,7 +15,7 @@ public class HitBoxManager : MonoBehaviour
     void Start()
     {
         animationScript = GetComponentInChildren<AnimationManager>();
-        tempHitBox.HideHitBoxes();
+        hitBox.HideHitBoxes();
         blockBox.SetActive(false);
     }
     public void Block()
@@ -31,51 +31,51 @@ public class HitBoxManager : MonoBehaviour
 
     public void JabAttack(int _armIndex)
     {
-        tempHitBox._hitBoxScale = HitBoxScale.Jab;
+        hitBox._hitBoxScale = HitBoxScale.Jab;
         armIndex = _armIndex;
         if (armIndex == 0)
         {
-            tempHitBox.armIndex = 0;
+            hitBox.armIndex = 0;
         }
         else if (armIndex == 1)
         {
-            tempHitBox.armIndex = 1;
+            hitBox.armIndex = 1;
         }
-        tempHitBox.FollowHand();//to snap into place before hitbox is played
+        hitBox.FollowHand();//to snap into place before hitbox is played
         StartCoroutine(SpawnHitBox(0.1f));
         StopCoroutine(SpawnHitBox(0));
     }
     public void LegSweep()
     {
-        tempHitBox.FollowRightFoot();//to snap into place before hitbox is played
-        tempHitBox._hitBoxScale = HitBoxScale.Jab;
+        hitBox.FollowRightFoot();//to snap into place before hitbox is played
+        hitBox._hitBoxScale = HitBoxScale.Jab;
         StartCoroutine(SpawnHitBox(0.15f));
         StopCoroutine(SpawnHitBox(0));
     }
     public void ArielAttack()
     {
-        tempHitBox.FollowLeftFoot();//to snap into place before hitbox is played
-        tempHitBox._hitBoxScale = HitBoxScale.Jab;
+        hitBox.FollowLeftFoot();//to snap into place before hitbox is played
+        hitBox._hitBoxScale = HitBoxScale.Jab;
         StartCoroutine(SpawnHitBox(0.3f));
         StopCoroutine(SpawnHitBox(0));
     }
     public void ShineAttack()
     {
-        tempHitBox.FollowCenter();//to snap into place before hitbox is played
-        tempHitBox._hitBoxScale = HitBoxScale.Shine;
-        StartCoroutine(FreeFrames(0.1f, 0.1f));
+        hitBox.FollowCenter();//to snap into place before hitbox is played
+        hitBox._hitBoxScale = HitBoxScale.Shine;
+        StartCoroutine(FreezeFrames(0.1f, 0.1f));
         StartCoroutine(SpawnHitBox(0.25f));
-        StopCoroutine(FreeFrames(0, 0));
+        StopCoroutine(FreezeFrames(0, 0));
         StopCoroutine(SpawnHitBox(0));
     }
     public IEnumerator SpawnHitBox(float spawnTime)
     {
-        tempHitBox.ShowHitBoxes();
+        hitBox.ShowHitBoxes();
         yield return new WaitForSeconds(spawnTime);
-        tempHitBox.HideHitBoxes();
+        hitBox.HideHitBoxes();
     }
 
-    public IEnumerator FreeFrames(float delayTime, float AnimationTime)
+    public IEnumerator FreezeFrames(float delayTime, float AnimationTime)
     {
         yield return new WaitForSeconds(delayTime);
         player.inAnimation = true;

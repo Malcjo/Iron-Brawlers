@@ -5,12 +5,12 @@ using UnityEngine;
 public class AttackManager : MonoBehaviour
 {
     AnimationManager animationManager;
-    TempHitBox hitboxScript;
+    Hitbox hitboxScript;
     Player player;
     private void Awake()
     {
         player = GetComponent<Player>();
-        hitboxScript = GetComponentInChildren<TempHitBox>();
+        hitboxScript = GetComponentInChildren<Hitbox>();
         animationManager = GetComponentInChildren<AnimationManager>();
     }
     public void Jab()

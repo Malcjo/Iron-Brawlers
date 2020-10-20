@@ -38,7 +38,6 @@ public class PlayerControls : MonoBehaviour
 
 
                 tipHitBox.layer = 8;
-                midHitBox.layer = 8;
                 playersLayer = 8;
                 opponentLayer = 9;
                 ChangeArmourLayer(8);
@@ -54,7 +53,6 @@ public class PlayerControls : MonoBehaviour
                 armourKey = KeyCode.Keypad2;
 
                 tipHitBox.layer = 9;
-                midHitBox.layer = 9;
                 playersLayer = 9;
                 opponentLayer = 8;
                 ChangeArmourLayer(9);

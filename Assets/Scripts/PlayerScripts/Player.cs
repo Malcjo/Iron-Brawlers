@@ -7,10 +7,6 @@ using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private float weight = 10;
-
-
-    [SerializeField] private float knockbackResistance = 5;
     [SerializeField] Vector3 gravity = new Vector3 (0,-9.81f,0);
 
     public bool canHitBox;
@@ -23,6 +19,8 @@ public class Player : MonoBehaviour
     public bool canJump;
     public bool canAirMove;
     private bool reduceAddForce;
+
+    public bool DebugModeOn;
 
     [SerializeField] private float reduceCounterValue;
     [SerializeField] private float reduceCounterMax;
@@ -118,7 +116,7 @@ public class Player : MonoBehaviour
         if (grounded == false)
         {
             gravity = new Vector3 (0, -9.81f, 0);
-            rb.AddForce((gravity * ((weight + armourCheck.armourWeight) / 10)));
+            rb.AddForce((gravity * ((playerStats.weight + armourCheck.armourWeight) / 10)));
         }
         else if(grounded == true)
         {
@@ -189,23 +187,6 @@ public class Player : MonoBehaviour
         {
             return;
         }
-        if (other.tag == "Hitbox")
-        {
-            TempHitBox _hitbox = other.GetComponent<TempHitBox>();
-            _hitbox.HideHitBoxes();
-            if (blocking == true)
-            {
-
-                return;
-            }
-            else if (blocking == false)
-            {
-                Vector3 Hit = _hitbox.HitDirection(); // getting the direction of the attack
-                float Power = _hitbox.HitStrength(); // getting the power of the attack
-
-
-            }
-        }
     }
     public void Damage(Vector3 Hit, float Power)
     {
@@ -213,7 +194,7 @@ public class Player : MonoBehaviour
         hitStun = true;
         hitStunCounter = 1.1f;
         hitDirection = Hit;
-        addForceValue = AddForce(Power - (armourCheck.knockBackResistance + knockbackResistance));
+        addForceValue = AddForce(Power - (armourCheck.knockBackResistance + playerStats.knockbackResistance));
     }
     #endregion
     #region not being used

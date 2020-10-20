@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ArmourCheck : MonoBehaviour
 {
-
     public Armour LegArmourType;
     public Armour ChestArmourType;
     public enum ArmourType { Chest, Legs}
@@ -17,9 +16,14 @@ public class ArmourCheck : MonoBehaviour
     float chestArmourReduceSpeed, legsArmourReduceSpeed;
     float chestReduceJump, legsReduceJump;
 
+    public ArmourStats stats;
     public GameObject[] ChestArmourMesh;
     public GameObject[] LegArmourMesh;
 
+    private void Awake()
+    {
+        stats = GetComponent<ArmourStats>();
+    }
     private void Update()
     {
         ArmourStatsCheck();
@@ -42,10 +46,10 @@ public class ArmourCheck : MonoBehaviour
         switch (ChestArmourType)
         {
             case Armour.armour:
-                chestWeight = 3;
-                chestArmourReduceSpeed = 1;
-                chestReduceJump = 0.5f;
-                chestKnockBackResistance = 3;
+                chestWeight = stats.weightChest;
+                chestArmourReduceSpeed = stats.reduceSpeedChest;
+                chestReduceJump = stats.reduceJumpChest;
+                chestKnockBackResistance = stats.knockBackResistanceChest;
                 break;
 
             case Armour.none:
@@ -58,10 +62,10 @@ public class ArmourCheck : MonoBehaviour
         switch (LegArmourType)
         {
             case Armour.armour:
-                legsWeight = 4;
-                legsArmourReduceSpeed = 1f;
-                legsReduceJump = 0.5f;
-                legsKnockBackResistance = 3;
+                legsWeight = stats.weightLegs;
+                legsArmourReduceSpeed = stats.reduceSpeedLegs;
+                legsReduceJump = stats.reduceJumpLegs;
+                legsKnockBackResistance = stats.knockBackRsistanceLegs;
                 break;
             case Armour.none:
                 legsWeight = 0;
@@ -145,14 +149,12 @@ public class ArmourCheck : MonoBehaviour
         {
             LegArmourType = Armour.none;
             SetAllArmourOff();
-
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             LegArmourType = Armour.armour;
             SetArmourOn(ArmourType.Legs,Armour.armour);
             SetArmourOn(ArmourType.Chest, Armour.armour);
-
         }
     }
 }

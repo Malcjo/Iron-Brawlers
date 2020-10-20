@@ -16,7 +16,7 @@ public class PlayerInput : MonoBehaviour
     Player player;
     PlayerControls controls;
     ArmourCheck armourCheck;
-    TempHitBox hitboxScript;
+    Hitbox hitboxScript;
     HitBoxManager hitBoxManager;
     Checker checker;
     AttackManager attackManger;
@@ -39,7 +39,7 @@ public class PlayerInput : MonoBehaviour
         checker = GetComponent<Checker>();
         armourCheck = GetComponent<ArmourCheck>();
         hitBoxManager = GetComponentInChildren<HitBoxManager>();
-        hitboxScript = GetComponentInChildren<TempHitBox>();
+        hitboxScript = GetComponentInChildren<Hitbox>();
         player = GetComponent<Player>();
         controls = GetComponent<PlayerControls>();
         animationScript = GetComponentInChildren<AnimationManager>();
@@ -209,7 +209,7 @@ public class PlayerInput : MonoBehaviour
 
     public void AeiralAttackCheck()
     {
-        if (player.jumping == true && Input.GetKeyDown(controls.jabKey))
+        if ((checker.jumping == true || checker.falling) && Input.GetKeyDown(controls.jabKey))
         {
             attackManger.AerialAttack();
         }
