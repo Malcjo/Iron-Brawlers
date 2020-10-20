@@ -159,17 +159,16 @@ public class Hitbox : MonoBehaviour
             }
             else if (tempPlayer.blocking == false)
             {
+                DamagePlayer(tempPlayer);
                 if (tempHurtBox.location == LocationTag.Chest)
                 {
                     Debug.Log("Hit Chest");
                     if (tempArmour.ChestArmourType == ArmourCheck.Armour.none)
                     {
-                        DamagePlayer(tempPlayer);
                         return;
                     }
                     else if(tempArmour.ChestArmourType == ArmourCheck.Armour.armour)
                     {
-                        DamagePlayer(tempPlayer);
                         tempArmour.RemoveChestArmour();
                     }
                 }
@@ -178,12 +177,10 @@ public class Hitbox : MonoBehaviour
                     Debug.Log("Hit Legs");
                     if (tempArmour.LegArmourType == ArmourCheck.Armour.none)
                     {
-                        DamagePlayer(tempPlayer);
                         return;
                     }
                     else if (tempArmour.LegArmourType == ArmourCheck.Armour.armour)
                     {
-                        DamagePlayer(tempPlayer);
                         tempArmour.RemoveLegArmour();
                     }
                 }
