@@ -111,7 +111,6 @@ public class Hitbox : MonoBehaviour
                 return new Vector3(playerInput.FacingDirection, 0.3f, 0);
         }
     }
-    
     public float HitStrength()
     {
         switch (_attackType)

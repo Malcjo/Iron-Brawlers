@@ -32,14 +32,6 @@ public class HitBoxManager : MonoBehaviour
         blockBox.SetActive(false);
         player.blocking = false;
     }
-    void BlockCheck()
-    {
-        if(player.blocking == true)
-        {
-            player.blocking = false;
-            StopBlock();
-        }
-    }
     public void JabAttack(int _armIndex)
     {
         hitBox._hitBoxScale = HitBoxScale.Jab;
