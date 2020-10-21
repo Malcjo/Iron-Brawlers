@@ -67,14 +67,26 @@ public class PlayerInput : MonoBehaviour
             state = animationGroup.idle;
             if (Input.GetKeyDown(controls.jabKey))
             {
+                if (player.blocking == true)
+                {
+                    return;
+                }
                 attackManger.Jab();
             }
 
             if (Input.GetKey(controls.crouchKey))
             {
+                if (player.blocking == true)
+                {
+                    return;
+                }
                 state = animationGroup.crouching;
                 if (Input.GetKeyDown(controls.jabKey))
                 {
+                    if (player.blocking == true)
+                    {
+                        return;
+                    }
                     attackManger.LegSweep();
                 }
             }
@@ -86,6 +98,10 @@ public class PlayerInput : MonoBehaviour
 
             if (Input.GetKey(controls.jumpKey))
             {
+                if (player.blocking == true)
+                {
+                    return;
+                }
                 state = animationGroup.jumping;
             }
         }
@@ -138,15 +154,23 @@ public class PlayerInput : MonoBehaviour
     
     public void HorizontalInput()
     {
+        if (player.blocking == true)
+        {
+            horizontalInput = 0;
+            horizontal = 0;
+            return;
+        }
         horizontalInput = Input.GetAxisRaw(controls.horizontalKeys);
 
         WallCheck();
+
 
         horizontal = (horizontalInput);
         if (player.inAnimation == true)
         {
             return;
         }
+
 
         if (horizontalInput < 0)
         {
@@ -190,6 +214,10 @@ public class PlayerInput : MonoBehaviour
     }
     public void JumpInput()
     {
+        if (player.blocking == true)
+        {
+            return;
+        }
         if (Input.GetKeyDown(controls.jumpKey))
         {
         animationScript.Jump(true);
@@ -209,6 +237,10 @@ public class PlayerInput : MonoBehaviour
 
     public void AeiralAttackCheck()
     {
+        if (player.blocking == true)
+        {
+            return;
+        }
         if ((checker.jumping == true || checker.falling) && Input.GetKeyDown(controls.jabKey))
         {
             attackManger.AerialAttack();
@@ -227,9 +259,12 @@ public class PlayerInput : MonoBehaviour
             player.blocking = false;
         }
     }
-
     void DestroyArmourKnockBack()
     {
+        if (player.blocking == true)
+        {
+            return;
+        }
         if (Input.GetKey(controls.armourKey) && Input.GetKey(controls.crouchKey))
         {
             if(player.hasArmour == false)

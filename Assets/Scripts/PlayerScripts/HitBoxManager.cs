@@ -10,16 +10,20 @@ public class HitBoxManager : MonoBehaviour
     private int armIndex;
     public AnimationManager animationScript;
     public Player player;
+    private PlayerInput playerInput;
+    public Vector3 blockOffset;
 
 
     void Start()
     {
+        playerInput = GetComponentInParent<PlayerInput>();
         animationScript = GetComponentInChildren<AnimationManager>();
         hitBox.HideHitBoxes();
         blockBox.SetActive(false);
     }
     public void Block()
     {
+        blockBox.transform.position = transform.position + new Vector3(playerInput.FacingDirection * blockOffset.x, blockOffset.y, 0);
         blockBox.SetActive(true);
         player.blocking = true;
     }
@@ -28,7 +32,14 @@ public class HitBoxManager : MonoBehaviour
         blockBox.SetActive(false);
         player.blocking = false;
     }
-
+    void BlockCheck()
+    {
+        if(player.blocking == true)
+        {
+            player.blocking = false;
+            StopBlock();
+        }
+    }
     public void JabAttack(int _armIndex)
     {
         hitBox._hitBoxScale = HitBoxScale.Jab;

@@ -44,6 +44,7 @@ public class Player : MonoBehaviour
     private Vector3 hitDirection;
 
     public Transform[] characterJoints;
+    public float facingDirection;
 
     public int lives;
     public int maxLives = 3;
