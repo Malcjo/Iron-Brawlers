@@ -13,9 +13,18 @@ public class Hitbox : MonoBehaviour
     public AttackType _attackType;
 
     MeshRenderer meshRenderer;
+    Collider hitboxCollider;
 
+    [SerializeField] private float freezeCounter;
+    [SerializeField] private float freezeStep;
+    [SerializeField] private float freezeMaxValue;
+    public Animator anim;
+    [SerializeField] Player player;
     PlayerInput playerInput;
     HitBoxManager hitBoxManager;
+
+    [SerializeField] private bool freezeCharacter;
+
 
     public int armIndex;
     public GameObject tipHitBox, midHitBox;
@@ -25,14 +34,32 @@ public class Hitbox : MonoBehaviour
 
     private void Awake()
     {
+        hitboxCollider = GetComponent<Collider>();
         meshRenderer = GetComponent<MeshRenderer>();
         hitBoxManager = GetComponent<HitBoxManager>();
         playerInput = GetComponentInParent<PlayerInput>();
+        player = GetComponentInParent<Player>();
+    }
+    private void Start()
+    {
+        ShowHitBoxes();
     }
     private void Update()
     {
         AttackTypeCall();
         HitBoxSize();
+        freezeCounter -= freezeStep * Time.deltaTime;
+        if (freezeCounter == 0)
+        {
+            player.enabled = true;
+            playerInput.enabled = true;
+            anim.enabled = true;
+            freezeCharacter = false;
+        }
+        if (freezeCounter < 0)
+        {
+            freezeCounter = 0;
+        }
     }
     void AttackTypeCall()
     {
@@ -105,7 +132,7 @@ public class Hitbox : MonoBehaviour
             case Attackdirection.Aerial:
                 return new Vector3(playerInput.FacingDirection, 0.7f, 0);
             case Attackdirection.Down:
-                return new Vector3(playerInput.FacingDirection, -1, 0);
+                return new Vector3(playerInput.FacingDirection, -0.5f, 0);
             default:
                 hitDirection.x = 1; hitDirection.y = 0.5f; hitDirection.z = 0; ;
                 return new Vector3(playerInput.FacingDirection, 0.3f, 0);
@@ -128,11 +155,13 @@ public class Hitbox : MonoBehaviour
     }
     public void ShowHitBoxes()
     {
-        tipHitBox.gameObject.SetActive(true);
+        meshRenderer.enabled = true;
+        hitboxCollider.enabled = true;
     }
     public void HideHitBoxes()
     {
-        tipHitBox.gameObject.SetActive(false);
+        meshRenderer.enabled = false;
+        hitboxCollider.enabled = false;
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -159,6 +188,7 @@ public class Hitbox : MonoBehaviour
             else if (tempPlayer.blocking == false)
             {
                 DamagePlayer(tempPlayer);
+
                 if (tempHurtBox.location == LocationTag.Chest)
                 {
                     Debug.Log("Hit Chest");
@@ -192,4 +222,21 @@ public class Hitbox : MonoBehaviour
         player.Damage(HitDirection(), HitStrength());
         HideHitBoxes();
     }
+    void FreezeCharacter()
+    {
+        if(freezeCharacter == true)
+        {
+            return;
+        }
+        else
+        {
+            player.enabled = false;
+            playerInput.enabled = false;
+            anim.enabled = false;
+            freezeCounter = freezeMaxValue;
+            freezeCharacter = true;
+        }
+
+    }
+
 }

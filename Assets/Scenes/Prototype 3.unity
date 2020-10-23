@@ -475,6 +475,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &435453935 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4794330819837634511, guid: 2c23d138fa95a7c489beaea8b5ab22ee,
+    type: 3}
+  m_PrefabInstance: {fileID: 2107257160}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &669353114
 GameObject:
   m_ObjectHideFlags: 0
@@ -2578,6 +2584,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8105067918949625573, guid: 2c23d138fa95a7c489beaea8b5ab22ee,
+        type: 3}
+      propertyPath: anim
+      value: 
+      objectReference: {fileID: 435453935}
+    - target: {fileID: 8105067918949625573, guid: 2c23d138fa95a7c489beaea8b5ab22ee,
+        type: 3}
+      propertyPath: freezeCounter
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8105067918949625573, guid: 2c23d138fa95a7c489beaea8b5ab22ee,
+        type: 3}
+      propertyPath: freezeStep
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 8105067918949625573, guid: 2c23d138fa95a7c489beaea8b5ab22ee,
+        type: 3}
+      propertyPath: freezeMaxValue
+      value: 0.2
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6719962872538011883, guid: 2c23d138fa95a7c489beaea8b5ab22ee, type: 3}
