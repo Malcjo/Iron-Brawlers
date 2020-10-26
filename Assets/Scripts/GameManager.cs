@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public Player[] playersInScene;
     public TMP_Text player1Lives, player2Lives;
     MainMenu mainMenu;
-
+    public int player1CharacterIndex, player2CharacterIndex;
 
     private void Awake()
     {
@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+
         mainMenu = GetComponentInChildren<MainMenu>();
     }
 
@@ -56,6 +57,20 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < playersInScene.Length; i++)
         {
             playersInScene[i].GetComponent<Player>();
+            PlayerNumberDetermine(i);
+        }
+    }
+    void PlayerNumberDetermine(int i)
+    {
+        if (i == 0)
+        {
+            playersInScene[i].playerNumber = PlayerIndex.Player1;
+            playersInScene[i].characterType = player1CharacterIndex;
+        }
+        else if (i == 1)
+        {
+            playersInScene[i].playerNumber = PlayerIndex.Player2;
+            playersInScene[i].characterType = player2CharacterIndex;
         }
     }
 

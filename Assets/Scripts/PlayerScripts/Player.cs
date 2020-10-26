@@ -20,6 +20,9 @@ public class Player : MonoBehaviour
     public bool canAirMove;
     private bool reduceAddForce;
 
+    public PlayerIndex playerNumber;
+    public int characterType;
+
     public bool DebugModeOn;
 
     [SerializeField] private float reduceCounterValue;

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+public enum PlayerIndex { Player1, Player2 };
 public class PlayerControls : MonoBehaviour
 {
     public string horizontalKeys;
@@ -15,11 +15,18 @@ public class PlayerControls : MonoBehaviour
     public GameObject[] chestArmour;
     public GameObject[] legArmour;
 
-    public PlayerIndex playerNumber;
-    public enum PlayerIndex { Player1, Player2 };
+    Player player;
+
+    private PlayerIndex playerNumber;
+
 
     void Awake()
     {
+        player = GetComponent<Player>();
+    }
+    private void Start()
+    {
+        playerNumber = player.playerNumber;
         CheckControl();
     }
 

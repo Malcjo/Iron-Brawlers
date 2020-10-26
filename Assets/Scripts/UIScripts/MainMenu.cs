@@ -23,13 +23,20 @@ public class MainMenu : MonoBehaviour
     [SerializeField]
     private bool inGame;
 
+    [SerializeField] private bool player1Selected, player2Selected;
+
+    [SerializeField] private GameManager gamemanager;
+    private void Awake()
+    {
+        gamemanager = GetComponentInParent<GameManager>();
+    }
     private void Start()
     {
+        player1Selected = true;
+        player2Selected = false;
         titleScreen.SetActive(true);
         gameUIGroup.SetActive(false);
         inGame = false;
-        
-
     }
 
     private void Update()
@@ -122,5 +129,43 @@ public class MainMenu : MonoBehaviour
         confirmMenu.SetActive(false);
         mainMenuScreen.SetActive(false);
         characterMenu.SetActive(true);
+    }
+    public void SelectCharacter1()
+    {
+        if (player1Selected == true && player2Selected == false)
+        {
+            gamemanager.player1CharacterIndex = 1;
+            player1Selected = false;
+            player2Selected = true;
+        }
+        else if (player1Selected == false && player2Selected == true)
+        {
+            gamemanager.player2CharacterIndex = 1;
+            player1Selected = true;
+            player2Selected = false;
+            GotToStageSelect();
+        }
+    }
+    public void SelectCharacter2()
+    {
+        if (player1Selected == true && player2Selected == false)
+        {
+            gamemanager.player1CharacterIndex = 2;
+            player1Selected = false;
+            player2Selected = true;
+
+        }
+        else if (player1Selected == false && player2Selected == true)
+        {
+            gamemanager.player2CharacterIndex = 2;
+            player1Selected = true;
+            player2Selected = false;
+            GotToStageSelect();
+        }
+    }
+    void GotToStageSelect()
+    {
+        characterMenu.SetActive(false);
+        stageMenu.SetActive(true);
     }
 }
