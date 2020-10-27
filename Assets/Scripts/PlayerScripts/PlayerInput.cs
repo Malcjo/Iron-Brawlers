@@ -266,6 +266,7 @@ public class PlayerInput : MonoBehaviour
             return;
         }
         if (Input.GetKey(controls.armourKey) && Input.GetKey(controls.crouchKey))
+            
         {
             if(player.hasArmour == false)
             {
@@ -273,6 +274,7 @@ public class PlayerInput : MonoBehaviour
             }
             else if(player.hasArmour == true)
             {
+                attackManger.ArmourBreak();
                 armourCheck.SetAllArmourOff();
                 hitboxScript._attackDir = Attackdirection.Down;
                 hitboxScript._attackType = AttackType.Shine;

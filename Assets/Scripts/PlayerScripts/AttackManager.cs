@@ -34,6 +34,6 @@ public class AttackManager : MonoBehaviour
     }
     public void ArmourBreak()
     {
-
+        animationManager.ArmourBreak();
     }
 }

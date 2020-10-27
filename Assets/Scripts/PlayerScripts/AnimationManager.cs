@@ -92,4 +92,9 @@ public class AnimationManager : MonoBehaviour
     {
         player.inAnimation = false;
     }
+
+    public void ArmourBreak()
+    {
+        anim.Play("Armour Break");
+    }
 }
