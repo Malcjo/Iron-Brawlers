@@ -40,19 +40,20 @@ public class AnimationManager : MonoBehaviour
             comboTimer = 1;
         }
     }
-
+    /*
     public void JumpPrep()
     {
         anim.SetBool("Jumping", true);
     }
-
+    */
     public void JumpLanding()
     {
         anim.SetBool("Jumping", false);
+        
         //anim.SetBool("canDoubleJump", false);
         //canDoubleJump = false;
     }
-
+    
     public void Running(bool val)
     {
         anim.SetBool("Running", val);
@@ -72,6 +73,7 @@ public class AnimationManager : MonoBehaviour
     public void Jump(bool val)
     {
         anim.SetBool("Jumping", val);
+        
     }
 
     public void LegSweep()
