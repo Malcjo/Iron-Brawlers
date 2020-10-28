@@ -54,14 +54,14 @@ public class HitBoxManager : MonoBehaviour
     }
     public void LegSweep()
     {
-        hitBox.FollowRightFoot();//to snap into place before hitbox is played
+        hitBox.FollowHand();//to snap into place before hitbox is played
         hitBox._hitBoxScale = HitBoxScale.Jab;
         StartCoroutine(SpawnHitBox(0.15f));
         StopCoroutine(SpawnHitBox(0));
     }
-    public void ArielAttack()
+    public void AeiralAttack()
     {
-        hitBox.FollowLeftFoot();//to snap into place before hitbox is played
+        hitBox.FollowRightElbow();//to snap into place before hitbox is played
         hitBox._hitBoxScale = HitBoxScale.Jab;
         StartCoroutine(SpawnHitBox(0.3f));
         StopCoroutine(SpawnHitBox(0));

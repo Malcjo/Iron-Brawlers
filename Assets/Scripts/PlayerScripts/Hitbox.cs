@@ -69,10 +69,10 @@ public class Hitbox : MonoBehaviour
                 FollowHand();
                 break;
             case AttackType.LegSweep:
-                FollowRightFoot();
+                FollowHand();
                 break;
             case AttackType.Aerial:
-                FollowLeftFoot();
+                FollowRightElbow();
                 break;
             case AttackType.Shine:
                 FollowCenter();
@@ -109,6 +109,11 @@ public class Hitbox : MonoBehaviour
             tipHitBox.gameObject.transform.position = new Vector3(rightHand.transform.position.x, rightHand.transform.position.y, 0);
             tipHitBox.gameObject.transform.rotation = rightHand.transform.rotation;
         }
+    }
+    public void FollowRightElbow()
+    {
+        tipHitBox.gameObject.transform.position = new Vector3(rightElbow.transform.position.x, rightElbow.transform.position.y, 0);
+        tipHitBox.gameObject.transform.rotation = rightElbow.transform.rotation;
     }
     public void FollowRightFoot()
     {
