@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
-public class VolumeControl : MonoBehaviour
+public class SettingsMenu : MonoBehaviour
 {
     public AudioMixer audioMixer;
     public void SetMasterVolume (float masterVolume)
