@@ -36,6 +36,14 @@ public class HurtBoxManager : MonoBehaviour
             tempHurtBoxScript.SetLayers(playerControls.playersLayer, playerControls.opponentLayer);
             tempHurtBoxScript.SetRadius(radius);
             tempHurtBox.transform.localScale = Vector3.one * (radius);
+            if(viewHurtBoxes == true)
+            {
+                tempHurtBox.GetComponent<MeshRenderer>().enabled = true;
+            }
+            else if (viewHurtBoxes == false)
+            {
+                tempHurtBox.GetComponent<MeshRenderer>().enabled = false;
+            }
         }
     }
 }
