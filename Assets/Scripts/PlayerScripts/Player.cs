@@ -47,6 +47,9 @@ public class Player : MonoBehaviour
     public Transform[] characterJoints;
     public float facingDirection;
 
+    [SerializeField] private float VisualVelocity;
+    [SerializeField] private float YVelocity;
+
     public int lives;
     public int maxLives = 3;
 
@@ -78,8 +81,14 @@ public class Player : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        VisualVelocity = rb.velocity.magnitude;
+        YVelocity = rb.velocity.y;
         Move();
         Gravity();
+        if(rb.velocity.y < -20)
+        {
+            rb.velocity = new Vector3(playerInput.horizontal * playerStats.CharacterSpeed(), -20, 0) + addForceValue;
+        }
     }
 
     void Move()
