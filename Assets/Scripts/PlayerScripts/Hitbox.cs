@@ -42,7 +42,8 @@ public class Hitbox : MonoBehaviour
     }
     private void Start()
     {
-        ShowHitBoxes();
+        //ShowHitBoxes();
+        HideHitBoxes();
     }
     private void Update()
     {
