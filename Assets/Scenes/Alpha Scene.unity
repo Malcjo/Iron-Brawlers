@@ -711,7 +711,7 @@ MonoBehaviour:
   focusLevel: {fileID: 1837554095}
   Players:
   - {fileID: 622830218}
-  - {fileID: 0}
+  - {fileID: 1372282976}
   depthUpdateSpeed: 5
   angleUpdateSpeed: 7
   positionUpdateSpeed: 5
@@ -1027,6 +1027,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 37009752b17dd8d44ba5f73f5cc71ab5, type: 3}
+--- !u!1 &1372282976 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3086570786498850738, guid: 37009752b17dd8d44ba5f73f5cc71ab5,
+    type: 3}
+  m_PrefabInstance: {fileID: 1372282975}
+  m_PrefabAsset: {fileID: 0}
 --- !u!850595691 &1708349188
 LightingSettings:
   m_ObjectHideFlags: 0
