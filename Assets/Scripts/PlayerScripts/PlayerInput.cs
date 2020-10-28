@@ -95,16 +95,19 @@ public class PlayerInput : MonoBehaviour
                 state = animationGroup.running;
                 Slide();
             }
-
+        }
+        else if (player.grounded == false)
+        {
             if (Input.GetKey(controls.jumpKey))
             {
+                state = animationGroup.jumping;
                 if (player.blocking == true)
                 {
                     return;
                 }
-                state = animationGroup.jumping;
             }
         }
+
         DestroyArmourKnockBack();
         AeiralAttackCheck();
         switch (state)
@@ -301,7 +304,7 @@ public class PlayerInput : MonoBehaviour
 
         if (collision.gameObject.tag == "Ground")
         {
-            animationScript.JumpLanding();
+            animationScript.JumpLanding(false);
             numberOfJumps = maxJumps;
         }
     }

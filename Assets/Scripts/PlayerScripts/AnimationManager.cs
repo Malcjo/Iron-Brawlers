@@ -46,9 +46,9 @@ public class AnimationManager : MonoBehaviour
         anim.SetBool("Jumping", true);
     }
     */
-    public void JumpLanding()
+    public void JumpLanding(bool val)
     {
-        anim.SetBool("Jumping", false);
+        anim.SetBool("Jumping", val);
         
         //anim.SetBool("canDoubleJump", false);
         //canDoubleJump = false;
