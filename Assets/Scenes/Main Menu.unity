@@ -473,7 +473,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 187680328, guid: 352c744c25ec7a0419ecca1424da1d4c, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 187680328, guid: 352c744c25ec7a0419ecca1424da1d4c, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -543,6 +543,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 543212333, guid: 352c744c25ec7a0419ecca1424da1d4c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 734010367, guid: 352c744c25ec7a0419ecca1424da1d4c, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -561,7 +565,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1098109469, guid: 352c744c25ec7a0419ecca1424da1d4c, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1098109469, guid: 352c744c25ec7a0419ecca1424da1d4c, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
