@@ -30,13 +30,13 @@ public class PlayerStats : MonoBehaviour
             case 1:
                 foreach (GameObject mesh in meshRendering)
                 {
-                    mesh.GetComponent<MeshRenderer>().material = flowerBoiSkin1;
+                    mesh.GetComponent<SkinnedMeshRenderer>().material = flowerBoiSkin1;
                 }
                 break;
             case 2:
                 foreach (GameObject mesh in meshRendering)
                 {
-                    mesh.GetComponent<MeshRenderer>().material = flowerBoiSkin2;
+                    mesh.GetComponent<SkinnedMeshRenderer>().material = flowerBoiSkin2;
                 }
                 break;
         }
