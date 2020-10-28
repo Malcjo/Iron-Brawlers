@@ -32,7 +32,7 @@ public class HitBoxManager : MonoBehaviour
         blockBox.SetActive(false);
         player.blocking = false;
     }
-    public void JabAttack(int _armIndex)
+    public void SwapHands(int _armIndex)
     {
         hitBox._hitBoxScale = HitBoxScale.Jab;
         armIndex = _armIndex;
@@ -45,7 +45,11 @@ public class HitBoxManager : MonoBehaviour
             hitBox.armIndex = 1;
         }
         hitBox.FollowHand();//to snap into place before hitbox is played
-        StartCoroutine(SpawnHitBox(0.1f));
+    }
+    public void JabAttack(float spawnTime)
+    {
+
+        StartCoroutine(SpawnHitBox(spawnTime));
         StopCoroutine(SpawnHitBox(0));
     }
     public void LegSweep()
