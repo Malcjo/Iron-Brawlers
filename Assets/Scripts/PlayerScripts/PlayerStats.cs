@@ -7,6 +7,8 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private Player player;
     private ArmourCheck armourCheck;
 
+
+
     public float speed;
     public float jumpForce;
     public float weight;
