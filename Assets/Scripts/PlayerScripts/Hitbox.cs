@@ -200,10 +200,12 @@ public class Hitbox : MonoBehaviour
                     Debug.Log("Hit Chest");
                     if (tempArmour.ChestArmourType == ArmourCheck.Armour.none)
                     {
+                        //Player just punch sound
                         return;
                     }
                     else if(tempArmour.ChestArmourType == ArmourCheck.Armour.armour)
                     {
+                        //Player Armour break sound
                         tempArmour.RemoveChestArmour();
                     }
                 }
@@ -212,10 +214,12 @@ public class Hitbox : MonoBehaviour
                     Debug.Log("Hit Legs");
                     if (tempArmour.LegArmourType == ArmourCheck.Armour.none)
                     {
+                        //Player just punch sound
                         return;
                     }
                     else if (tempArmour.LegArmourType == ArmourCheck.Armour.armour)
                     {
+                        //Player Armour break sound
                         tempArmour.RemoveLegArmour();
                     }
                 }

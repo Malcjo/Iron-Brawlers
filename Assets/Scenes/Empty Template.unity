@@ -1063,7 +1063,7 @@ PrefabInstance:
     - target: {fileID: 3086570786498850747, guid: 37009752b17dd8d44ba5f73f5cc71ab5,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 3086570786498850747, guid: 37009752b17dd8d44ba5f73f5cc71ab5,
         type: 3}
@@ -1080,6 +1080,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4442168709701513427, guid: 37009752b17dd8d44ba5f73f5cc71ab5,
+        type: 3}
+      propertyPath: flowerBoiSkin1
+      value: 
+      objectReference: {fileID: 2100000, guid: 76ed61d702e2326459f4ddebd5b837d7, type: 2}
+    - target: {fileID: 4442168709701513427, guid: 37009752b17dd8d44ba5f73f5cc71ab5,
+        type: 3}
+      propertyPath: flowerBoiSkin2
+      value: 
+      objectReference: {fileID: 2100000, guid: ae9fc474293d2044a88d8a6b55315885, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 37009752b17dd8d44ba5f73f5cc71ab5, type: 3}
 --- !u!1 &1837554093
@@ -3786,7 +3796,7 @@ PrefabInstance:
     - target: {fileID: 2715126386276838130, guid: 64e668433726302488d7af35c9e4939a,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2715126386276838130, guid: 64e668433726302488d7af35c9e4939a,
         type: 3}

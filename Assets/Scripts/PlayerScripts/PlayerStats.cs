@@ -7,7 +7,10 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private Player player;
     private ArmourCheck armourCheck;
 
+    public GameObject[] meshRendering;
 
+    public Material flowerBoiSkin1, flowerBoiSkin2;
+    private int characterType;
 
     public float speed;
     public float jumpForce;
@@ -18,6 +21,25 @@ public class PlayerStats : MonoBehaviour
     {
         armourCheck = GetComponent<ArmourCheck>();
         player = GetComponent<Player>();
+    }
+    private void Start()
+    {
+        characterType = player.characterType; 
+        switch (characterType)
+        {
+            case 1:
+                foreach (GameObject mesh in meshRendering)
+                {
+                    mesh.GetComponent<MeshRenderer>().material = flowerBoiSkin1;
+                }
+                break;
+            case 2:
+                foreach (GameObject mesh in meshRendering)
+                {
+                    mesh.GetComponent<MeshRenderer>().material = flowerBoiSkin2;
+                }
+                break;
+        }
     }
     public float CharacterSpeed()
     {

@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Main Menu.unity
     guid: c6784fa207a05c64da48d6d80dd66992
   - enabled: 0
@@ -20,7 +20,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Alpha Stage 2.unity
     guid: bb534b03fb346734aa4c95708401ebe2
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SkyLevel.unity
     guid: 79cf12ec408c55b4d820d30e61e406c7
+  - enabled: 1
+    path: Assets/Scenes/Alpha Scene.unity
+    guid: adc54216aefb02646aa19c4b8627c803
   m_configObjects: {}
