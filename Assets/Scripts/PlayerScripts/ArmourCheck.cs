@@ -16,7 +16,7 @@ public class ArmourCheck : MonoBehaviour
     float chestArmourReduceSpeed, legsArmourReduceSpeed;
     float chestReduceJump, legsReduceJump;
 
-    public ArmourStats stats;
+    [SerializeField] private ArmourStats stats;
     public GameObject[] ChestArmourMesh;
     public GameObject[] LegArmourMesh;
 

@@ -33,8 +33,6 @@ public class Player : MonoBehaviour
     [SerializeField] public int numberOfJumps;
     private int maxJumps = 2;
 
-
-    public GameObject armour;
     public Rigidbody rb;
 
     private PlayerInput playerInput;

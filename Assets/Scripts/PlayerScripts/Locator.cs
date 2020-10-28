@@ -15,7 +15,7 @@ public class Locator : MonoBehaviour
     {
         radius = transform.localScale.x;
         transform.SetParent(Location);
-        transform.rotation = Quaternion.Euler(Location.rotation.x,Location.rotation.y,Location.rotation.z);
+        transform.rotation = Location.transform.rotation;
     }
 
     // Update is called once per frame
