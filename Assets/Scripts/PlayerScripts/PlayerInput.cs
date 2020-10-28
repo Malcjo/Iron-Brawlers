@@ -74,6 +74,8 @@ public class PlayerInput : MonoBehaviour
                 attackManger.Jab();
             }
 
+            
+
             if (Input.GetKey(controls.crouchKey))
             {
                 if (player.blocking == true)

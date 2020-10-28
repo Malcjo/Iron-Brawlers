@@ -215,11 +215,13 @@ public class Hitbox : MonoBehaviour
                     if (tempArmour.LegArmourType == ArmourCheck.Armour.none)
                     {
                         //Player just punch sound
+                        FindObjectOfType<AudioManager>().Play("Punch");
                         return;
                     }
                     else if (tempArmour.LegArmourType == ArmourCheck.Armour.armour)
                     {
                         //Player Armour break sound
+                        FindObjectOfType<AudioManager>().Play("ArmourBreak");
                         tempArmour.RemoveLegArmour();
                     }
                 }

@@ -99,4 +99,9 @@ public class AnimationManager : MonoBehaviour
     {
         anim.Play("Armour Break");
     }
+
+    public void HitStun()
+    {
+        anim.Play("HitStun");
+    }
 }

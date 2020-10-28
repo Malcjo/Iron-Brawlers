@@ -4,6 +4,9 @@ using UnityEngine;
 [System.Serializable]
 public class Sound
 { 
+   
+    public AudioMixerGroup audioMixerGroup;
+
     public string name;
 
     public bool loop;
