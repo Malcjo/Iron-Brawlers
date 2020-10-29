@@ -26,7 +26,6 @@ public class ArmourCheck : MonoBehaviour
     }
     private void Start()
     {
-        SetAllArmourOn();
     }
     private void Update()
     {

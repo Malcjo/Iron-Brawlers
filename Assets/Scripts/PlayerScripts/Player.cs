@@ -76,7 +76,7 @@ public class Player : MonoBehaviour
         lives = maxLives;
         canHitBox = true;
         inAnimation = false;
-        armourCheck.SetAllArmourOff();
+        armourCheck.SetAllArmourOn();
     }
     private void Update()
     {

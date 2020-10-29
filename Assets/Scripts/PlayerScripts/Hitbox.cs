@@ -163,7 +163,7 @@ public class Hitbox : MonoBehaviour
             case AttackType.Aerial:
                 return 25;
             case AttackType.Shine:
-                return 20;
+                return 10;
             case AttackType.HeavyJab:
                 return 25;
         }
