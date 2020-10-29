@@ -90,6 +90,7 @@ public class Player : MonoBehaviour
         {
             transform.position = new Vector3(0, 10, 0);
             lives --;
+            armourCheck.SetAllArmourOn();
             Debug.Log("Player Dead");
         }
         VisualVelocity = rb.velocity.magnitude;

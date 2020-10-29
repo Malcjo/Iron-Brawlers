@@ -3421,7 +3421,7 @@ MonoBehaviour:
   - {fileID: 2978306882167266017}
   flowerBoiSkin1: {fileID: 2100000, guid: 76ed61d702e2326459f4ddebd5b837d7, type: 2}
   flowerBoiSkin2: {fileID: 2100000, guid: ae9fc474293d2044a88d8a6b55315885, type: 2}
-  speed: 5
+  speed: 8
   jumpForce: 8
   weight: 22
   knockbackResistance: 3

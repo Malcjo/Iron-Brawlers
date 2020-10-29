@@ -86,7 +86,11 @@ public class ArmourCheck : MonoBehaviour
         SetArmourOff(ArmourType.Legs);
         SetArmourOff(ArmourType.Chest);
     }
-
+    public void SetAllArmourOn()
+    {
+        SetArmourOn(ArmourType.Legs, Armour.armour);
+        SetArmourOn(ArmourType.Chest, Armour.armour);
+    }
     public void SetArmourOn(ArmourType placement, Armour type)
     {
         switch (placement)
@@ -152,9 +156,8 @@ public class ArmourCheck : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            LegArmourType = Armour.armour;
-            SetArmourOn(ArmourType.Legs,Armour.armour);
-            SetArmourOn(ArmourType.Chest, Armour.armour);
+            //LegArmourType = Armour.armour;
+            SetAllArmourOn();
         }
     }
 }

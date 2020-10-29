@@ -141,7 +141,7 @@ public class Hitbox : MonoBehaviour
             case Attackdirection.Low:
                 return new Vector3(playerInput.FacingDirection * 0.1f, 1f,0);
             case Attackdirection.Aerial:
-                return new Vector3(playerInput.FacingDirection, 0.7f, 0);
+                return new Vector3(playerInput.FacingDirection * 1.25f, 0.1f, 0);
             case Attackdirection.Down:
                 return new Vector3(playerInput.FacingDirection, -0.5f, 0);
             default:
