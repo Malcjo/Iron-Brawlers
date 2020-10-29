@@ -39,7 +39,7 @@ public class Raycasts : MonoBehaviour
     }
     public void PublicRayCasting()
     {
-        WaterTest();
+        //WaterTest();
         DownRays();
         UpRays();
         SideRayChecker();
