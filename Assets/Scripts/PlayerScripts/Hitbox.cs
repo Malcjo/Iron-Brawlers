@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum AttackType { Jab, LegSweep, Aerial, Shine };
 public enum Attackdirection { Forward, Low, Aerial, Down };
-public enum HitBoxScale { Jab, Shine };
+public enum HitBoxScale { Jab, Shine, Aerial };
 public class Hitbox : MonoBehaviour
 {
     public bool viewHitBox;
@@ -90,8 +90,10 @@ public class Hitbox : MonoBehaviour
                 transform.localScale = new Vector3(0.4f,0.4f,0.4f);
                 break;
             case HitBoxScale.Shine:
-                transform.localScale = new Vector3();
                 transform.localScale = new Vector3(1.5f,1.5f,1.5f);
+                break;
+            case HitBoxScale.Aerial:
+                transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
                 break;
         }
     }

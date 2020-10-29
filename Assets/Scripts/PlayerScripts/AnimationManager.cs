@@ -104,4 +104,13 @@ public class AnimationManager : MonoBehaviour
     {
         anim.Play("HitStun");
     }
+
+    public void GravityOff()
+    {
+
+    }
+    public void GravityOn()
+    {
+
+    }
 }
