@@ -991,30 +991,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 476287182, guid: 352c744c25ec7a0419ecca1424da1d4c, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 476287182, guid: 352c744c25ec7a0419ecca1424da1d4c, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 734010367, guid: 352c744c25ec7a0419ecca1424da1d4c, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 734010367, guid: 352c744c25ec7a0419ecca1424da1d4c, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1671517426, guid: 352c744c25ec7a0419ecca1424da1d4c, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 1671517426, guid: 352c744c25ec7a0419ecca1424da1d4c, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3560223692973814112, guid: 352c744c25ec7a0419ecca1424da1d4c,
         type: 3}
       propertyPath: m_Name
@@ -1075,14 +1051,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5730885117553402095, guid: 352c744c25ec7a0419ecca1424da1d4c,
+    - target: {fileID: 3560223692973814115, guid: 352c744c25ec7a0419ecca1424da1d4c,
         type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7943246506651731124, guid: 352c744c25ec7a0419ecca1424da1d4c,
+      propertyPath: player2Image
+      value: 
+      objectReference: {fileID: 1685943852}
+    - target: {fileID: 3560223692973814115, guid: 352c744c25ec7a0419ecca1424da1d4c,
         type: 3}
-      propertyPath: m_IsActive
+      propertyPath: player1CharacterIndex
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2008,6 +1984,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1685943852 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1059225804637422200, guid: 352c744c25ec7a0419ecca1424da1d4c,
+    type: 3}
+  m_PrefabInstance: {fileID: 739408245}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!850595691 &1708349188
 LightingSettings:
   m_ObjectHideFlags: 0
