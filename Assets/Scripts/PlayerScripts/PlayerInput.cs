@@ -47,7 +47,7 @@ public class PlayerInput : MonoBehaviour
     private void Update()
     {
         States();
-        Escape();
+        //Escape();
         HorizontalInput();
         //AeiralAttackCheck();
         BlockInput();

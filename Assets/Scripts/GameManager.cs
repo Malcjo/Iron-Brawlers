@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     MainMenu mainMenu;
     public int player1CharacterIndex, player2CharacterIndex;
 
+    public Sprite flowerBoi1, flowerBoi2;
+
     private void Awake()
     {
         #region Singleton Pattern
@@ -50,6 +52,22 @@ public class GameManager : MonoBehaviour
         }
         player1Lives.text = ("player 1 Lives : " + playersInScene[0].lives);
         player2Lives.text = ("player 2 Lives : " + playersInScene[1].lives);
+        if(playersInScene[0].characterType == 0)
+        {
+            player1Image.sprite = flowerBoi1;
+        }
+        else if (playersInScene[0].characterType == 1)
+        {
+            player1Image.sprite = flowerBoi2;
+        }
+        if(playersInScene[1].characterType == 0)
+        {
+            player2Image.sprite = flowerBoi1;
+        }
+        else if (playersInScene[1].characterType == 1)
+        {
+            player2Image.sprite = flowerBoi2;
+        }
     }
 
     public void FindPlayers()
