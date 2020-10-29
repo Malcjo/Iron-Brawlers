@@ -55,7 +55,7 @@ public class HitBoxManager : MonoBehaviour
     public void LegSweep()
     {
         hitBox.FollowHand();//to snap into place before hitbox is played
-        hitBox._hitBoxScale = HitBoxScale.Jab;
+        hitBox._hitBoxScale = HitBoxScale.Aerial;
         StartCoroutine(SpawnHitBox(0.15f));
         StopCoroutine(SpawnHitBox(0));
     }

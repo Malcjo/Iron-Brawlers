@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum AttackType { Jab, LegSweep, Aerial, Shine };
+public enum AttackType { Jab, LegSweep, Aerial, Shine, HeavyJab };
 public enum Attackdirection { Forward, Low, Aerial, Down };
 public enum HitBoxScale { Jab, Shine, Aerial };
 public class Hitbox : MonoBehaviour
@@ -81,6 +81,9 @@ public class Hitbox : MonoBehaviour
             case AttackType.Shine:
                 FollowCenter();
                 break;
+            case AttackType.HeavyJab:
+                FollowHand();
+                break;
         }
     }
     void HitBoxSize()
@@ -141,7 +144,7 @@ public class Hitbox : MonoBehaviour
             case Attackdirection.Low:
                 return new Vector3(playerInput.FacingDirection * 0.1f, 1f,0);
             case Attackdirection.Aerial:
-                return new Vector3(playerInput.FacingDirection * 1.25f, 0.1f, 0);
+                return new Vector3(playerInput.FacingDirection, 0.5f, 0);
             case Attackdirection.Down:
                 return new Vector3(playerInput.FacingDirection, -0.5f, 0);
             default:
@@ -156,11 +159,13 @@ public class Hitbox : MonoBehaviour
             case AttackType.Jab:
                 return 15;
             case AttackType.LegSweep:
-                return 12;
+                return 14;
             case AttackType.Aerial:
-                return 15;
+                return 25;
             case AttackType.Shine:
-                return 15;
+                return 20;
+            case AttackType.HeavyJab:
+                return 25;
         }
         return 0;
     }

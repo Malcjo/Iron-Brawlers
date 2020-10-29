@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
             mainMenu.GoToCharacterSelect();
         }
         player1Lives.text = ("P1: " + playersInScene[0].lives);
-        player2Lives.text = ("P2s: " + playersInScene[1].lives);
+        player2Lives.text = ("P2: " + playersInScene[1].lives);
         if(playersInScene[0].characterType == 1)
         {
             player1Image.sprite = flowerBoi1;

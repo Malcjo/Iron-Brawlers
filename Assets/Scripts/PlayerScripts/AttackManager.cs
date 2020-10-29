@@ -40,7 +40,7 @@ public class AttackManager : MonoBehaviour
     public void Heavy()
     {
         hitboxScript._attackDir = Attackdirection.Forward;
-        hitboxScript._attackType = AttackType.Jab;
+        hitboxScript._attackType = AttackType.HeavyJab;
         animationManager.Heavy();
     }
 }
