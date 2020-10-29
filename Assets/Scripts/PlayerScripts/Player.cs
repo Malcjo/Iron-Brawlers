@@ -40,6 +40,7 @@ public class Player : MonoBehaviour
     private Checker checker;
     private Raycasts raycasts;
     [SerializeField] private PlayerStats playerStats;
+    private AnimationManager animationManager;
 
     private Vector3 addForceValue;
     private Vector3 hitDirection;
@@ -60,6 +61,7 @@ public class Player : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
 
+        animationManager = GetComponentInChildren<AnimationManager>();
         checker = GetComponent<Checker>();
         raycasts = GetComponent<Raycasts>();
         armourCheck = GetComponent<ArmourCheck>();
@@ -162,7 +164,10 @@ public class Player : MonoBehaviour
     {
         return rb.velocity.y;
     }
-
+    public void HitStun()
+    {
+        animationManager.HitStun();
+    }
 
     #region ReduceValues
     void ReduceCounter()
@@ -200,19 +205,6 @@ public class Player : MonoBehaviour
         Vector3 addForceValue = ((hitDirection) * (hitStrength));
         return addForceValue;
     }
-    #region Colliders / Triggers
-
-    private void OnTriggerExit(Collider other)
-    {
-        canHitBox = true;
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Ground"))
-        {
-            return;
-        }
-    }
     public void Damage(Vector3 Hit, float Power)
     {
         Debug.Log("Jab");
@@ -221,7 +213,6 @@ public class Player : MonoBehaviour
         hitDirection = Hit;
         addForceValue = AddForce(Power - (armourCheck.knockBackResistance + playerStats.knockbackResistance));
     }
-    #endregion
     #region not being used
     public float GetLowestYValue(Transform[] arr)
     {

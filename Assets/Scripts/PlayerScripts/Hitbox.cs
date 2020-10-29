@@ -189,6 +189,7 @@ public class Hitbox : MonoBehaviour
         {
             var tempPlayer = other.GetComponentInParent<Player>();
             var tempArmour = other.GetComponentInParent<ArmourCheck>();
+            var tempAnimationManager = other.GetComponentInChildren<AnimationManager>();
             HurtBox tempHurtBox = other.GetComponent<HurtBox>();
 
             if (tempPlayer.blocking == true)
@@ -242,6 +243,7 @@ public class Hitbox : MonoBehaviour
     }
     void DamagePlayer(Player player)
     {
+        player.HitStun();
         Debug.Log("Hit Player");
         player.Damage(HitDirection(), HitStrength());
         HideHitBoxes();

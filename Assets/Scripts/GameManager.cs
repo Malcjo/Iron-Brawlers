@@ -52,19 +52,19 @@ public class GameManager : MonoBehaviour
         }
         player1Lives.text = ("player 1 Lives : " + playersInScene[0].lives);
         player2Lives.text = ("player 2 Lives : " + playersInScene[1].lives);
-        if(playersInScene[0].characterType == 0)
+        if(playersInScene[0].characterType == 1)
         {
             player1Image.sprite = flowerBoi1;
         }
-        else if (playersInScene[0].characterType == 1)
+        else if (playersInScene[0].characterType == 2)
         {
             player1Image.sprite = flowerBoi2;
         }
-        if(playersInScene[1].characterType == 0)
+        if(playersInScene[1].characterType == 1)
         {
             player2Image.sprite = flowerBoi1;
         }
-        else if (playersInScene[1].characterType == 1)
+        else if (playersInScene[1].characterType == 2)
         {
             player2Image.sprite = flowerBoi2;
         }
