@@ -118,7 +118,7 @@ public class AnimationManager : MonoBehaviour
     }
     IEnumerator GravityCountDown()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.1f);
         player.gravityOn = true;
     }
 }
