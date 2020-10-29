@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Alpha Scene.unity
     guid: adc54216aefb02646aa19c4b8627c803
+  - enabled: 1
+    path: Assets/Scenes/Alpha Scene 2.unity
+    guid: e150316bf94e4b648a16959c10ba923e
   m_configObjects: {}
