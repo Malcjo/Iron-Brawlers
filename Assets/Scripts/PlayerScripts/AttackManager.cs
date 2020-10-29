@@ -18,6 +18,7 @@ public class AttackManager : MonoBehaviour
         hitboxScript._attackDir = Attackdirection.Forward;
         hitboxScript._attackType = AttackType.Jab;
         animationManager.JabCombo();
+        player.MovePlayer();
     }
     public void AerialAttack()
     {

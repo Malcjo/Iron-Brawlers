@@ -50,6 +50,8 @@ public class Player : MonoBehaviour
     [SerializeField] private float VisualVelocity;
     [SerializeField] private float YVelocity;
 
+    public bool gravityOn;
+
     public int lives;
     public int maxLives = 3;
 
@@ -66,6 +68,7 @@ public class Player : MonoBehaviour
     }
     void Start()
     {
+        gravityOn = true;
         numberOfJumps = maxJumps;
         blocking = false;
         lives = maxLives;
@@ -75,6 +78,10 @@ public class Player : MonoBehaviour
     }
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            MovePlayer();
+        }
         jumping = checker.jumping;
         hasArmour = armourCheck.HasArmour(); ;
         ReduceCounter();
@@ -84,7 +91,15 @@ public class Player : MonoBehaviour
         VisualVelocity = rb.velocity.magnitude;
         YVelocity = rb.velocity.y;
         Move();
-        Gravity();
+        if(gravityOn == false)
+        {
+            return;
+        }
+        else if(gravityOn == true)
+        {
+            Gravity();
+        }
+
         if(rb.velocity.y < -20)
         {
             rb.velocity = new Vector3(playerInput.horizontal * playerStats.CharacterSpeed(), -20, 0) + addForceValue;
@@ -149,6 +164,12 @@ public class Player : MonoBehaviour
     {
         return rb.velocity.y;
     }
+
+    public void MovePlayer()
+    {
+        rb.velocity = new Vector3(facingDirection * 10, 0, 0);
+    }
+
 
     #region ReduceValues
     void ReduceCounter()

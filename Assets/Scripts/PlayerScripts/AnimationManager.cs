@@ -112,10 +112,10 @@ public class AnimationManager : MonoBehaviour
 
     public void GravityOff()
     {
-
+        player.gravityOn = false;
     }
     public void GravityOn()
     {
-
+        player.gravityOn = true;
     }
 }
