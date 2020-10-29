@@ -34,15 +34,27 @@ public class Raycasts : MonoBehaviour
     }
     private void FixedUpdate()
     {
+
         PublicRayCasting();
     }
     public void PublicRayCasting()
     {
+        WaterTest();
         DownRays();
         UpRays();
         SideRayChecker();
         DebugMode();
     }
+    //void WaterTest()
+    //{
+    //    RaycastHit hit;
+    //    Vector3 rayCastOrigin = transform.position - new Vector3(0, 0.45f, 0);
+    //    if (Physics.Raycast(rayCastOrigin, Vector3.down, out hit, groundCheckRayLength, waterMask))
+    //    {
+    //        Instantiate(splashParticle, transform.position, transform.rotation);
+    //        Debug.Log("Splash");
+    //    }
+    //}
     void DebugMode()
     {
         if (debugModeOn == true)
@@ -165,11 +177,7 @@ public class Raycasts : MonoBehaviour
             player.grounded = false;
             return;
         }
-        if (Physics.Raycast(rayCastOrigin, Vector3.down, out hit, groundCheckRayLength, waterMask))
-        {
-            Instantiate(splashParticle, transform.position, transform.rotation);
-            Debug.Log("Splash");
-        }
+
     }
     private void LandOnGround(RaycastHit hit)
     {
