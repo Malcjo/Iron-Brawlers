@@ -18,6 +18,7 @@ public class Hitbox : MonoBehaviour
     [SerializeField] private float freezeCounter;
     [SerializeField] private float freezeStep;
     [SerializeField] private float freezeMaxValue;
+    public AnimationManager animantionManager;
     public Animator anim;
     [SerializeField] Player player;
     PlayerInput playerInput;
@@ -197,6 +198,7 @@ public class Hitbox : MonoBehaviour
             }
             else if (tempPlayer.blocking == false)
             {
+
                 DamagePlayer(tempPlayer);
 
                 if (tempHurtBox.location == LocationTag.Chest)

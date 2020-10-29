@@ -113,9 +113,12 @@ public class AnimationManager : MonoBehaviour
     public void GravityOff()
     {
         player.gravityOn = false;
+        StartCoroutine(GravityCountDown());
+
     }
-    public void GravityOn()
+    IEnumerator GravityCountDown()
     {
+        yield return new WaitForSeconds(1);
         player.gravityOn = true;
     }
 }

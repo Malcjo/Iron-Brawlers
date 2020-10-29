@@ -78,16 +78,18 @@ public class Player : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            MovePlayer();
-        }
         jumping = checker.jumping;
         hasArmour = armourCheck.HasArmour(); ;
         ReduceCounter();
     }
     private void FixedUpdate()
     {
+        if(transform.position.y < -5.5f)
+        {
+            transform.position = new Vector3(0, 10, 0);
+            lives --;
+            Debug.Log("Player Dead");
+        }
         VisualVelocity = rb.velocity.magnitude;
         YVelocity = rb.velocity.y;
         Move();
@@ -133,10 +135,6 @@ public class Player : MonoBehaviour
             rb.velocity = new Vector3(playerInput.horizontal * playerStats.CharacterSpeed(), rb.velocity.y, 0) + addForceValue;
         }
     }
-    public void Roll()
-    {
-
-    }
     void Gravity()
     {
         if (grounded == false)
@@ -163,11 +161,6 @@ public class Player : MonoBehaviour
     public float SetVelocityY()
     {
         return rb.velocity.y;
-    }
-
-    public void MovePlayer()
-    {
-        rb.velocity = new Vector3(facingDirection * 10, 0, 0);
     }
 
 
