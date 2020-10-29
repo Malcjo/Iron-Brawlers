@@ -36,4 +36,11 @@ public class AttackManager : MonoBehaviour
     {
         animationManager.ArmourBreak();
     }
+
+    public void Heavy()
+    {
+        hitboxScript._attackDir = Attackdirection.Forward;
+        hitboxScript._attackType = AttackType.Jab;
+        animationManager.Heavy();
+    }
 }

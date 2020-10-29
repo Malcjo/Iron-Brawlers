@@ -19,7 +19,7 @@ public class PlayerInput : MonoBehaviour
     Hitbox hitboxScript;
     HitBoxManager hitBoxManager;
     Checker checker;
-    AttackManager attackManger;
+    AttackManager attackManager;
     [Range(-1, 1)] public int FacingDirection;
 
     public bool running;
@@ -35,7 +35,7 @@ public class PlayerInput : MonoBehaviour
     [SerializeField] animationGroup state;
     private void Awake()
     {
-        attackManger = GetComponent<AttackManager>();
+        attackManager = GetComponent<AttackManager>();
         checker = GetComponent<Checker>();
         armourCheck = GetComponent<ArmourCheck>();
         hitBoxManager = GetComponentInChildren<HitBoxManager>();
@@ -65,16 +65,16 @@ public class PlayerInput : MonoBehaviour
         {
             animationScript.Jump(false);
             state = animationGroup.idle;
+
             if (Input.GetKeyDown(controls.jabKey))
             {
                 if (player.blocking == true)
                 {
                     return;
                 }
-                attackManger.Jab();
+                attackManager.Jab();
             }
 
-            
 
             if (Input.GetKey(controls.crouchKey))
             {
@@ -89,13 +89,18 @@ public class PlayerInput : MonoBehaviour
                     {
                         return;
                     }
-                    attackManger.LegSweep();
+                    attackManager.LegSweep();
                 }
             }
             if (horizontalInput > 0 || horizontalInput < 0)
             {
                 state = animationGroup.running;
                 Slide();
+
+                if (Input.GetKeyDown(controls.jabKey))
+                {
+                    attackManager.Heavy();
+                }
             }
         }
         else if (player.grounded == false)
@@ -248,7 +253,7 @@ public class PlayerInput : MonoBehaviour
         }
         if ((checker.jumping == true || checker.falling) && Input.GetKeyDown(controls.jabKey))
         {
-            attackManger.AerialAttack();
+            attackManager.AerialAttack();
         }
     }
     public void BlockInput()
@@ -279,7 +284,7 @@ public class PlayerInput : MonoBehaviour
             }
             else if(player.hasArmour == true)
             {
-                attackManger.ArmourBreak();
+                attackManager.ArmourBreak();
                 armourCheck.SetAllArmourOff();
                 hitboxScript._attackDir = Attackdirection.Down;
                 hitboxScript._attackType = AttackType.Shine;

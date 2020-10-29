@@ -105,6 +105,11 @@ public class AnimationManager : MonoBehaviour
         anim.Play("HitStun");
     }
 
+    public void Heavy()
+    {
+        anim.Play("Heavy");
+    }
+
     public void GravityOff()
     {
 
