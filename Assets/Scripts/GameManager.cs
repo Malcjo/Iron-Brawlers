@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public Player[] playersInScene;
     public TMP_Text player1Lives, player2Lives;
+    public Image player1Image, player2Image;
     MainMenu mainMenu;
     public int player1CharacterIndex, player2CharacterIndex;
 

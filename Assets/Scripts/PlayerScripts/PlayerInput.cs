@@ -310,12 +310,12 @@ public class PlayerInput : MonoBehaviour
             numberOfJumps = maxJumps;
         }
     }
-    void Escape()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Application.Quit();
-        }
-    }
+    //void Escape()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.Escape))
+    //    {
+    //        Application.Quit();
+    //    }
+    //}
  }   
 
