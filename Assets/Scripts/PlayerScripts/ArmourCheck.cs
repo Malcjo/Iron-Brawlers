@@ -24,6 +24,10 @@ public class ArmourCheck : MonoBehaviour
     {
         stats = GetComponent<ArmourStats>();
     }
+    private void Start()
+    {
+        SetAllArmourOn();
+    }
     private void Update()
     {
         ArmourStatsCheck();
