@@ -73,7 +73,12 @@ public class AnimationManager : MonoBehaviour
     public void Jump(bool val)
     {
         anim.SetBool("Jumping", val);
-        
+              
+    }
+
+    public void DoubleJump(bool val)
+    {
+        anim.SetBool("DoubleJump", val);
     }
 
     public void LegSweep()

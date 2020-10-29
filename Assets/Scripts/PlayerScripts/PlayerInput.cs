@@ -25,6 +25,7 @@ public class PlayerInput : MonoBehaviour
     public bool running;
     [SerializeField] private bool jumping;
     [SerializeField] private bool falling;
+    [SerializeField] private bool canDoubleJump;
     
     public bool canJump;
     
@@ -35,6 +36,7 @@ public class PlayerInput : MonoBehaviour
     [SerializeField] animationGroup state;
     private void Awake()
     {
+        canDoubleJump = false;
         attackManager = GetComponent<AttackManager>();
         checker = GetComponent<Checker>();
         armourCheck = GetComponent<ArmourCheck>();
@@ -64,6 +66,7 @@ public class PlayerInput : MonoBehaviour
         if (player.grounded == true)
         {
             animationScript.Jump(false);
+            animationScript.DoubleJump(false);
             state = animationGroup.idle;
 
             if (Input.GetKeyDown(controls.jabKey))
@@ -117,6 +120,7 @@ public class PlayerInput : MonoBehaviour
 
         DestroyArmourKnockBack();
         AeiralAttackCheck();
+        DoubleJumpCheck();
         switch (state)
         {
             case animationGroup.idle: IdleStateCheck(); break;
@@ -155,8 +159,24 @@ public class PlayerInput : MonoBehaviour
     void JumpStateCheck()
     {
         animationScript.Jump(true);
-    }
+        canDoubleJump = true;
 
+    }
+    void DoubleJumpCheck()
+    {
+        if(canDoubleJump == true)
+        {
+            if (falling = true || jumping == true)
+            {
+                if (Input.GetKeyDown(controls.jumpKey))
+                {
+                    animationScript.DoubleJump(true);
+                }
+            }
+        }
+        canDoubleJump = false;
+
+    }
     void CrouchStateCheck()
     {
         animationScript.Crouching(true);
