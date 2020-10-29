@@ -30,6 +30,8 @@ public class Hitbox : MonoBehaviour
     public GameObject tipHitBox, midHitBox;
     public GameObject rightHand, leftHand,rightElbow, leftElbow, rightFoot, leftFoot, rightKnee, leftKnee, waist;
 
+    public ParticleSystem punchParticle;
+
     Vector3 hitDirection;
 
     private void Awake()
@@ -202,12 +204,14 @@ public class Hitbox : MonoBehaviour
                     {
                         //Player just punch sound
                         FindObjectOfType<AudioManager>().Play("Punch");
+                        Instantiate(punchParticle, transform.position, transform.rotation);
                         return;
                     }
                     else if(tempArmour.ChestArmourType == ArmourCheck.Armour.armour)
                     {
                         //Player Armour break sound
                         FindObjectOfType<AudioManager>().Play("ArmourBreak");
+                        Instantiate(punchParticle, transform.position, transform.rotation);
                         tempArmour.RemoveChestArmour();
                     }
                 }
@@ -218,12 +222,14 @@ public class Hitbox : MonoBehaviour
                     {
                         //Player just punch sound
                         FindObjectOfType<AudioManager>().Play("Punch");
+                        Instantiate(punchParticle, transform.position, transform.rotation);
                         return;
                     }
                     else if (tempArmour.LegArmourType == ArmourCheck.Armour.armour)
                     {
                         //Player Armour break sound
                         FindObjectOfType<AudioManager>().Play("ArmourBreak");
+                        Instantiate(punchParticle, transform.position, transform.rotation);
                         tempArmour.RemoveLegArmour();
                     }
                 }

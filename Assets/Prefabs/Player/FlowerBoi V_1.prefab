@@ -2986,6 +2986,8 @@ MonoBehaviour:
   rightKnee: {fileID: 1731010413788307550}
   leftKnee: {fileID: 6393536016154677478}
   waist: {fileID: 1404100621713365524}
+  punchParticle: {fileID: 3583048005112685821, guid: 7f6b353b6dfaf224baecf0565c7b4338,
+    type: 3}
 --- !u!1 &3086570786081295763
 GameObject:
   m_ObjectHideFlags: 0
@@ -3550,15 +3552,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43a183ff1d38f5a43a167d93f2733962, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mask:
+  groundMask:
     serializedVersion: 2
     m_Bits: 4096
+  waterMask:
+    serializedVersion: 2
+    m_Bits: 16
   groundLayer: 12
   distanceToGround: 0
   distanceToCeiling: 0
   distanceToRight: 0
   distanceToLeft: 0
   debugModeOn: 1
+  splashParticle: {fileID: 2710702070542168123, guid: a7093bb54bd6cbb46b34fb6e5268a503,
+    type: 3}
 --- !u!114 &1969411957104296153
 MonoBehaviour:
   m_ObjectHideFlags: 0

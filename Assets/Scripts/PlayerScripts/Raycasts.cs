@@ -20,6 +20,8 @@ public class Raycasts : MonoBehaviour
 
     public bool debugModeOn = true;
 
+    public ParticleSystem splashParticle;
+
     Checker checker;
     Player player;
     PlayerInput playerInput;
@@ -165,7 +167,8 @@ public class Raycasts : MonoBehaviour
         }
         if (Physics.Raycast(rayCastOrigin, Vector3.down, out hit, groundCheckRayLength, waterMask))
         {
-            // play splash particle here maybe?
+            Instantiate(splashParticle, transform.position, transform.rotation);
+            Debug.Log("Splash");
         }
     }
     private void LandOnGround(RaycastHit hit)
