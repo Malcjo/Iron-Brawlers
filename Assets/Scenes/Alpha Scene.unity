@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.196
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.26536912, g: 0.18829885, b: 0.27230635, a: 0.196}
+  m_IndirectSpecularColor: {r: 0.26509532, g: 0.18818516, b: 0.27216256, a: 0.196}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -903,7 +903,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 389179562}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 189.7, y: 21, z: 441.8}
+  m_LocalPosition: {x: 189.7, y: 24, z: 441.8}
   m_LocalScale: {x: 22.452528, y: 22.452528, z: 22.452528}
   m_Children: []
   m_Father: {fileID: 0}
@@ -9359,10 +9359,10 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1180071509711864734}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 0
   serializedVersion: 4
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!4 &1180071509711864730
@@ -9399,7 +9399,7 @@ GameObject:
   - component: {fileID: 1180071509711864731}
   - component: {fileID: 1180071509711864728}
   - component: {fileID: 1180071509711864729}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
