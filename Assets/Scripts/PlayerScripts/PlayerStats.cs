@@ -57,7 +57,7 @@ public class PlayerStats : MonoBehaviour
         {
             return player.SetVelocityY();
         }
-        if (player.jumping == false && player.grounded == true)
+        if (player.jumping == false)
         {
             jumpForceValue = jumpForce - armourCheck.reduceJumpForce;
             return jumpForceValue;

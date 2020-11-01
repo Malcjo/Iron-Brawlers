@@ -82,7 +82,7 @@ public class Player : MonoBehaviour
     }
     private void Update()
     {
-        
+        jumping = checker.jumping;
         hasArmour = armourCheck.HasArmour(); ;
         ReduceCounter();
     }
