@@ -8,7 +8,7 @@ public class HitBoxManager : MonoBehaviour
     public Hitbox hitBox;
     [Range(0,1)]
     private int armIndex;
-    public AnimationManager animationScript;
+    public AnimationManagerNew animationScript;
     public Player player;
     private PlayerInput playerInput;
     public Vector3 blockOffset;
@@ -17,7 +17,7 @@ public class HitBoxManager : MonoBehaviour
     void Start()
     {
         playerInput = GetComponentInParent<PlayerInput>();
-        animationScript = GetComponentInChildren<AnimationManager>();
+        animationScript = GetComponentInChildren<AnimationManagerNew>();
         hitBox.HideHitBoxes();
         blockBox.SetActive(false);
     }

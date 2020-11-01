@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class AttackManager : MonoBehaviour
 {
-    AnimationManager animationManager;
+    AnimationManagerNew animationManager;
     Hitbox hitboxScript;
     Player player;
     private void Awake()
     {
         player = GetComponent<Player>();
         hitboxScript = GetComponentInChildren<Hitbox>();
-        animationManager = GetComponentInChildren<AnimationManager>();
+        animationManager = GetComponentInChildren<AnimationManagerNew>();
     }
     public void Jab()
     {

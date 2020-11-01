@@ -24,13 +24,13 @@ public class Raycasts : MonoBehaviour
 
     Checker checker;
     Player player;
-    PlayerInput playerInput;
+    PlayerInputNew playerInput;
 
     private void Awake()
     {
         checker = GetComponent<Checker>();
         player = GetComponent<Player>();
-        playerInput = GetComponent<PlayerInput>();
+        playerInput = GetComponent<PlayerInputNew>();
     }
     private void FixedUpdate()
     {
@@ -71,7 +71,7 @@ public class Raycasts : MonoBehaviour
             {
                 if (hit.collider.CompareTag("Ground"))
                 {
-                    playerInput.wall = PlayerInput.wallCollision.leftWall;
+                    playerInput.wall = PlayerInputNew.wallCollision.leftWall;
                     HitLeft(hit);
                 }
             }
@@ -84,14 +84,14 @@ public class Raycasts : MonoBehaviour
             {
                 if (hit.collider.CompareTag("Ground"))
                 {
-                    playerInput.wall = PlayerInput.wallCollision.rightWall;
+                    playerInput.wall = PlayerInputNew.wallCollision.rightWall;
                     HitRight(hit);
                 }
             }
         }
         else
         {
-            playerInput.wall = PlayerInput.wallCollision.none;
+            playerInput.wall = PlayerInputNew.wallCollision.none;
         }
     }
     void HitLeft(RaycastHit hit)

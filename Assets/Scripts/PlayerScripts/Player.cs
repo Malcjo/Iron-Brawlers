@@ -37,7 +37,7 @@ public class Player : MonoBehaviour
 
     public Rigidbody rb;
 
-    private PlayerInput playerInput;
+    private PlayerInputNew playerInput;
     private ArmourCheck armourCheck;
     private Checker checker;
     private Raycasts raycasts;
@@ -67,7 +67,7 @@ public class Player : MonoBehaviour
         checker = GetComponent<Checker>();
         raycasts = GetComponent<Raycasts>();
         armourCheck = GetComponent<ArmourCheck>();
-        playerInput = GetComponent<PlayerInput>();
+        playerInput = GetComponent<PlayerInputNew>();
         playerStats = GetComponent<PlayerStats>();
     }
     void Start()

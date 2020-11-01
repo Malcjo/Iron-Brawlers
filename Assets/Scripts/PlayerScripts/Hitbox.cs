@@ -21,7 +21,7 @@ public class Hitbox : MonoBehaviour
     public AnimationManager animantionManager;
     public Animator anim;
     [SerializeField] Player player;
-    PlayerInput playerInput;
+    PlayerInputNew playerInput;
     HitBoxManager hitBoxManager;
 
     [SerializeField] private bool freezeCharacter;
@@ -40,7 +40,7 @@ public class Hitbox : MonoBehaviour
         hitboxCollider = GetComponent<Collider>();
         meshRenderer = GetComponent<MeshRenderer>();
         hitBoxManager = GetComponent<HitBoxManager>();
-        playerInput = GetComponentInParent<PlayerInput>();
+        playerInput = GetComponentInParent<PlayerInputNew>();
         player = GetComponentInParent<Player>();
     }
     private void Start()
