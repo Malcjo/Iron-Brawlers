@@ -30,6 +30,8 @@ public class Player : MonoBehaviour
 
 
     [SerializeField] public bool jumping;
+    public bool falling;
+
     [SerializeField] public int numberOfJumps;
     private int maxJumps = 2;
 
@@ -80,7 +82,7 @@ public class Player : MonoBehaviour
     }
     private void Update()
     {
-        jumping = checker.jumping;
+        
         hasArmour = armourCheck.HasArmour(); ;
         ReduceCounter();
     }
@@ -156,6 +158,9 @@ public class Player : MonoBehaviour
     {
         if (playerInput.numberOfJumps > 0)
         {
+            //rb.velocity = (new Vector3(rb.velocity.x, 0, rb.velocity.z));
+            //animationManager.GravityOff(0.05f);
+
             grounded = false;
             rb.velocity = (new Vector3(rb.velocity.x, playerStats.JumpForceCalculator(), rb.velocity.z));
             numberOfJumps--;

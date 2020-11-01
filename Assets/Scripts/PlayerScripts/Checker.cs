@@ -34,21 +34,24 @@ public class Checker : MonoBehaviour
             if (player.rb.velocity.y > 0.1f)
             {
                 //Debug.Log("Jumping");
-                falling = false;
-                jumping = true;
+                player.falling = false;
+                player.jumping = true;
+                player.grounded = false;
             }
             else if (player.rb.velocity.y < -0.1f)
             {
                 //Debug.Log("Falling");
-                falling = true;
-                jumping = false;
+                player.falling = true;
+                player.jumping = false;
+                player.grounded = false;
             }
         }
         else
         {
             //Debug.Log("Stopped");
-            falling = false;
-            jumping = false;
+            player.falling = false;
+            player.jumping = false;
+            player.grounded = true;
         }
     }
     public void BoundsChecker()

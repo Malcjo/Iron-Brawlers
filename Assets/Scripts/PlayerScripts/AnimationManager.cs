@@ -115,15 +115,15 @@ public class AnimationManager : MonoBehaviour
         anim.Play("Heavy");
     }
 
-    public void GravityOff()
+    public void GravityOff(float pause)
     {
         player.gravityOn = false;
-        StartCoroutine(GravityCountDown());
+        StartCoroutine(GravityCountDown(pause));
 
     }
-    IEnumerator GravityCountDown()
+    IEnumerator GravityCountDown(float pause)
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(pause);
         player.gravityOn = true;
     }
 }
