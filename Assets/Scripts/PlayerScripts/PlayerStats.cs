@@ -57,12 +57,20 @@ public class PlayerStats : MonoBehaviour
         {
             return player.SetVelocityY();
         }
-        if (player.jumping == false)
+        else if(player.numberOfJumps > 0)
         {
-            jumpForceValue = jumpForce - armourCheck.reduceJumpForce;
-            return jumpForceValue;
+            if (player.jumping == false && player.falling == false)
+            {
+                jumpForceValue = jumpForce - armourCheck.reduceJumpForce;
+                return jumpForceValue;
+            }
+            else if (player.jumping == true || player.falling == true)
+            {
+                Debug.Log("Jump in air");
+                jumpForceValue = (jumpForce + 2) - armourCheck.reduceJumpForce;
+                return jumpForceValue;
+            }
         }
-        jumpForceValue = (jumpForce + 1) - armourCheck.reduceJumpForce;
-        return jumpForceValue;
+        return 0;
     }
 }

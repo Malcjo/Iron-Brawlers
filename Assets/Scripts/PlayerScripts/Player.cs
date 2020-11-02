@@ -31,6 +31,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] public bool jumping;
     public bool falling;
+    public bool canTurn;
 
     [SerializeField] public int numberOfJumps;
     private int maxJumps = 2;
@@ -64,7 +65,6 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 
         animationManager = GetComponentInChildren<AnimationManager>();
-        checker = GetComponent<Checker>();
         raycasts = GetComponent<Raycasts>();
         armourCheck = GetComponent<ArmourCheck>();
         playerInput = GetComponent<PlayerInput>();
@@ -77,12 +77,10 @@ public class Player : MonoBehaviour
         blocking = false;
         lives = maxLives;
         canHitBox = true;
-        inAnimation = false;
         armourCheck.SetAllArmourOn();
     }
     private void Update()
     {
-        jumping = checker.jumping;
         hasArmour = armourCheck.HasArmour(); ;
         ReduceCounter();
     }

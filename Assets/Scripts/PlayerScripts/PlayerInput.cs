@@ -26,7 +26,7 @@ public class PlayerInput : MonoBehaviour
     [SerializeField] private bool jumping;
     [SerializeField] private bool falling;
     [SerializeField] private bool canDoubleJump;
-    
+
     public bool canJump;
     
     public enum wallCollision {leftWall, rightWall, none}
@@ -58,13 +58,16 @@ public class PlayerInput : MonoBehaviour
     }
     void States()
     {
-        falling = checker.falling;
-        jumping = checker.jumping;
+        falling = player.falling;
+        jumping = player.jumping;
     }
     void CheckState()
     {
         if (player.grounded == true)
         {
+            canDoubleJump = true;
+            player.numberOfJumps = 2;
+            player.canTurn = true;
             animationScript.Jump(false);
             animationScript.DoubleJump(false);
             state = animationGroup.idle;
@@ -108,6 +111,7 @@ public class PlayerInput : MonoBehaviour
         }
         else if (player.grounded == false)
         {
+            player.canTurn = false;
             if (Input.GetKey(controls.jumpKey))
             {
                 state = animationGroup.jumping;
@@ -170,6 +174,7 @@ public class PlayerInput : MonoBehaviour
             {
                 if (Input.GetKeyDown(controls.jumpKey))
                 {
+                    player.canTurn = true;
                     animationScript.DoubleJump(true);
                 }
             }
@@ -205,16 +210,24 @@ public class PlayerInput : MonoBehaviour
         if (horizontalInput < 0)
         {
             FacingDirection = -1;
-            transform.rotation = Quaternion.Euler(0, 0, 0);
             running = true;
             animationScript.Crouching(false);
+            if(player.canTurn == false)
+            {
+                return;
+            }
+            transform.rotation = Quaternion.Euler(0, 0, 0);
         }
         if (horizontalInput > 0)
         {
             FacingDirection = 1;
-            transform.rotation = Quaternion.Euler(0, 180, 0);
             running = true;
             animationScript.Crouching(false);
+            if (player.canTurn == false)
+            {
+                return;
+            }
+            transform.rotation = Quaternion.Euler(0, 180, 0);
         }
         if (horizontalInput == 0)
         {
@@ -256,8 +269,18 @@ public class PlayerInput : MonoBehaviour
             numberOfJumps --;
             if (numberOfJumps < 0)
             {
+                canJump = true;
                 numberOfJumps = 0;
             }
+            //if(numberOfJumps == 1)
+            //{
+            //    canDoubleJump = true;
+            //}
+            //if(numberOfJumps <= 0)
+            //{
+            //    canDoubleJump = false;
+            //    canJump = false;
+            //}
         }
         if (numberOfJumps < maxJumps && player.grounded == true)
         {
@@ -271,9 +294,10 @@ public class PlayerInput : MonoBehaviour
         {
             return;
         }
-        if ((checker.jumping == true || checker.falling) && Input.GetKeyDown(controls.jabKey))
+        if ((player.jumping == true || player.falling) && Input.GetKeyDown(controls.jabKey))
         {
             attackManager.AerialAttack();
+
         }
     }
     public void BlockInput()

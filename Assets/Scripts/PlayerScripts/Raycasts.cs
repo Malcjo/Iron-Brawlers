@@ -67,7 +67,7 @@ public class Raycasts : MonoBehaviour
             Physics.Raycast(rayCastOrigin + new Vector3 (0,0.5f,0), Vector3.left, out hit, sideCheckRayLength, groundMask) || 
             Physics.Raycast(rayCastOrigin + new Vector3(0, -0.7f, 0), Vector3.left, out hit, sideCheckRayLength, groundMask))
         {
-            if (checker.jumping == true || checker.falling == true || player.grounded == true)
+            if (player.jumping == true || player.falling == true || player.grounded == true)
             {
                 if (hit.collider.CompareTag("Ground"))
                 {
@@ -80,7 +80,7 @@ public class Raycasts : MonoBehaviour
             Physics.Raycast(rayCastOrigin + new Vector3(0, 0.5f, 0), Vector3.right, out hit, sideCheckRayLength, groundMask) || 
             Physics.Raycast(rayCastOrigin + new Vector3(0, -0.7f, 0), Vector3.right, out hit, sideCheckRayLength, groundMask))
         {
-            if (checker.jumping == true || checker.falling == true || player.grounded == true)
+            if (player.jumping == true || player.falling == true || player.grounded == true)
             {
                 if (hit.collider.CompareTag("Ground"))
                 {
@@ -126,7 +126,7 @@ public class Raycasts : MonoBehaviour
         Debug.DrawRay(rayCastOrigin, Vector3.up * headCheckRayLength, Color.red);
         if (Physics.Raycast(rayCastOrigin, Vector3.up, out hit, headCheckRayLength, groundMask))
         {
-            if(checker.jumping == true)
+            if(player.jumping == true)
             {
                 if (hit.collider.CompareTag("Ground"))
                 {
@@ -153,7 +153,7 @@ public class Raycasts : MonoBehaviour
         Debug.DrawRay(rayCastOrigin, Vector3.down * groundCheckRayLength, Color.red);
         if (Physics.Raycast(rayCastOrigin, Vector3.down, out hit, groundCheckRayLength, groundMask))
         {
-            if (checker.falling == true)
+            if (player.falling == true)
             {
                 if (hit.collider.CompareTag("Ground") || (hit.collider.CompareTag("Platform")))
                 {
@@ -179,7 +179,8 @@ public class Raycasts : MonoBehaviour
         distanceToGround = hit.distance;
 
         player.grounded = true;
-        checker.falling = false;
-        checker.jumping = false;
+        //player.falling = false;
+        //player.jumping = false;
+        player.numberOfJumps = 2;
     }
 }

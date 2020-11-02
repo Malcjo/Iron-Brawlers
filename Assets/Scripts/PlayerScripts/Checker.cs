@@ -5,8 +5,6 @@ using UnityEngine;
 public class Checker : MonoBehaviour
 {
     public float previousVelocity;
-    public bool falling;
-    public bool jumping;
     float boundsLeft, boundsRight;
     float boundsUp, boundsDown;
 
@@ -34,21 +32,23 @@ public class Checker : MonoBehaviour
             if (player.rb.velocity.y > 0.1f)
             {
                 //Debug.Log("Jumping");
-                falling = false;
-                jumping = true;
+                player.jumping = true;
+                player.falling = false;
+                player.grounded = false;
             }
             else if (player.rb.velocity.y < -0.1f)
             {
                 //Debug.Log("Falling");
-                falling = true;
-                jumping = false;
+                player.jumping = false;
+                player.falling = true;
+                player.grounded = false;
             }
         }
         else
         {
             //Debug.Log("Stopped");
-            falling = false;
-            jumping = false;
+            player.jumping = false;
+            player.falling = false;
         }
     }
     public void BoundsChecker()

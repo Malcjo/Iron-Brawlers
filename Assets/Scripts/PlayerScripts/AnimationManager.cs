@@ -16,7 +16,8 @@ public class AnimationManager : MonoBehaviour
     private void Start()
     {
         player = GetComponentInParent<Player>();
-       
+
+        OutAnimation();
     }
     private void Update()
     {
