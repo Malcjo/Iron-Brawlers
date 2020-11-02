@@ -22,9 +22,6 @@ public class PlayerInputNew : MonoBehaviour
     AttackManager attackManager;
     [Range(-1, 1)] public int FacingDirection;
 
-    public bool running;
-    [SerializeField] private bool jumping;
-    [SerializeField] private bool falling;
     [SerializeField] private bool canDoubleJump;
     
     public bool canJump;
@@ -48,7 +45,6 @@ public class PlayerInputNew : MonoBehaviour
     }
     private void Update()
     {
-        States();
         //Escape();
         HorizontalInput();
         //AeiralAttackCheck();
@@ -56,66 +52,9 @@ public class PlayerInputNew : MonoBehaviour
         JumpInput();
         CheckState(); 
     }
-    void States()
-    {
-        falling = checker.falling;
-        jumping = checker.jumping;
-    }
+
     void CheckState()
     {
-        if (player.grounded == true)
-        {
-            state = animationGroup.idle;
-
-            if (Input.GetKeyDown(controls.jabKey))
-            {
-                if (player.blocking == true)
-                {
-                    return;
-                }
-                attackManager.Jab();
-            }
-
-
-            if (Input.GetKey(controls.crouchKey))
-            {
-                if (player.blocking == true)
-                {
-                    return;
-                }
-                state = animationGroup.crouching;
-                if (Input.GetKeyDown(controls.jabKey))
-                {
-                    if (player.blocking == true)
-                    {
-                        return;
-                    }
-                    attackManager.LegSweep();
-                }
-            }
-            if (horizontalInput > 0 || horizontalInput < 0)
-            {
-                state = animationGroup.running;
-                Slide();
-
-                if (Input.GetKeyDown(controls.jabKey))
-                {
-                    attackManager.Heavy();
-                }
-            }
-        }
-        else
-        {
-            if (Input.GetKeyDown(controls.jumpKey))
-            {
-                state = animationGroup.jumping;
-                if (player.blocking == true)
-                {
-                    return;
-                }
-            }
-        }
-
         DestroyArmourKnockBack();
         //AeiralAttackCheck();
         //DoubleJumpCheck();
@@ -137,47 +76,119 @@ public class PlayerInputNew : MonoBehaviour
 
     void IdleStateCheck()
     {
-        animationScript.Idle();
-    }
-
-    void RunningStateCheck()
-    {
-        if (player.grounded == true)
+        state = animationGroup.idle;
+        if (!player.grounded)
         {
-            animationScript.Running();
-            if (Input.GetKey(controls.crouchKey))
+            state = animationGroup.jumping;
+            return;
+        }
+        if (Input.GetKeyDown(controls.jumpKey))
+        {
+            state = animationGroup.jumping;
+            if (player.blocking == true)
             {
-                animationScript.Crouching();
+                return;
             }
         }
+        if (Input.GetKey(controls.crouchKey))
+        {
+            if (player.blocking == true)
+            {
+                return;
+            }
+            state = animationGroup.crouching;
+        }
+        if (Input.GetKeyDown(controls.jabKey))
+        {
+            if (player.blocking == true)
+            {
+                return;
+            }
+            attackManager.Jab();
+        }
+        // transitions to other states
+        if (horizontalInput != 0)
+        {
+            state = animationGroup.running;
+        }
+        animationScript.Idle();
     }
 
     void JumpStateCheck()
     {
         animationScript.Jump();
         canDoubleJump = true;
-        
+        DoubleJumpCheck();
     }
+
+    void RunningStateCheck()
+    {
+        if (!player.grounded)
+        {
+            state = animationGroup.jumping;
+            return;
+        }
+        if (Input.GetKeyDown(controls.jumpKey))
+        {
+            state = animationGroup.jumping;
+            if (player.blocking == true)
+            {
+                return;
+            }
+        }
+        if (Input.GetKey(controls.crouchKey))
+        {
+            if (player.blocking == true)
+            {
+                return;
+            }
+            state = animationGroup.crouching;
+        }
+        Slide();
+        if (Input.GetKeyDown(controls.jabKey))
+        {
+            attackManager.Heavy();
+        }
+        animationScript.Running();
+        if (Input.GetKey(controls.crouchKey))
+        {
+            animationScript.Crouching();
+        }
+    }
+
+    void CrouchStateCheck()
+    {
+        if (!player.grounded)
+        {
+            state = animationGroup.jumping;
+            return;
+        }
+        if (Input.GetKeyDown(controls.jabKey))
+        {
+            if (player.blocking == true)
+            {
+                return;
+            }
+            attackManager.LegSweep();
+        }
+        animationScript.Crouching();
+    }
+
     void DoubleJumpCheck()
     {
         if(canDoubleJump == true)
         {
-            if (falling = true || jumping == true)
+            if (state == animationGroup.jumping)
             {
                 if (Input.GetKeyDown(controls.jumpKey))
                 {
                     animationScript.DoubleJump();
+                    canDoubleJump = false;
                 }
             }
         }
-        canDoubleJump = false;
+    }
 
-    }
-    void CrouchStateCheck()
-    {
-        animationScript.Crouching();
-    }
-    
     public void HorizontalInput()
     {
         if (player.blocking == true)
@@ -202,22 +213,15 @@ public class PlayerInputNew : MonoBehaviour
         {
             FacingDirection = -1;
             transform.rotation = Quaternion.Euler(0, 0, 0);
-            running = true;
-           
         }
         if (horizontalInput > 0)
         {
             FacingDirection = 1;
             transform.rotation = Quaternion.Euler(0, 180, 0);
-            running = true;
            
-        }
-        if (horizontalInput == 0)
-        {
-           
-            running = false;
         }
     }
+
     void WallCheck()
     {
         switch (wall)
@@ -238,6 +242,7 @@ public class PlayerInputNew : MonoBehaviour
                 break;
         }
     }
+
     public void JumpInput()
     {
         if (player.blocking == true)
@@ -272,6 +277,7 @@ public class PlayerInputNew : MonoBehaviour
             attackManager.AerialAttack();
         }
     }
+
     public void BlockInput()
     {
         if (Input.GetKey(controls.blockKey))
@@ -285,6 +291,7 @@ public class PlayerInputNew : MonoBehaviour
             player.blocking = false;
         }
     }
+
     void DestroyArmourKnockBack()
     {
         if (player.blocking == true)
