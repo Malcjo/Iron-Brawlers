@@ -3364,6 +3364,8 @@ MonoBehaviour:
   reduceCounterValue: 0
   reduceCounterMax: 0
   jumping: 0
+  falling: 0
+  canTurn: 0
   numberOfJumps: 0
   rb: {fileID: 3086570786498850748}
   playerStats: {fileID: 4442168709701513427}
@@ -3493,6 +3495,7 @@ MonoBehaviour:
   running: 0
   jumping: 0
   falling: 0
+  canDoubleJump: 0
   canJump: 0
   wall: 0
   state: 0
@@ -3540,8 +3543,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   previousVelocity: 0
-  falling: 0
-  jumping: 0
 --- !u!114 &7520256822799522842
 MonoBehaviour:
   m_ObjectHideFlags: 0

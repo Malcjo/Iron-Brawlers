@@ -181,6 +181,5 @@ public class Raycasts : MonoBehaviour
         player.grounded = true;
         //player.falling = false;
         //player.jumping = false;
-        player.numberOfJumps = 2;
     }
 }
