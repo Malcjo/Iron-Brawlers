@@ -13,13 +13,13 @@ public class HurtBoxManager : MonoBehaviour
 
     public GameObject[] locator;
     public GameObject hurtbox;
-    private PlayerControls playerControls;
+    private PlayerSetup playerControls;
     private Player player;
 
     private void Awake()
     {
         player = GetComponent<Player>();
-        playerControls = GetComponentInParent<PlayerControls>();
+        playerControls = GetComponentInParent<PlayerSetup>();
     }
     private void Start()
     {
@@ -33,7 +33,7 @@ public class HurtBoxManager : MonoBehaviour
 
             HurtBox tempHurtBoxScript = tempHurtBox.GetComponent<HurtBox>();
             tempHurtBoxScript.location = locatorScript.location;
-            tempHurtBoxScript.SetLayers(playerControls.playersLayer, playerControls.opponentLayer);
+            tempHurtBoxScript.SetLayers(playerControls.selfLayer, playerControls.enemyLayer);
             tempHurtBoxScript.SetRadius(radius);
             tempHurtBox.transform.localScale = Vector3.one * (radius);
             if(viewHurtBoxes == true)

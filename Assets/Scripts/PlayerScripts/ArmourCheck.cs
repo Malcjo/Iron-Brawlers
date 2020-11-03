@@ -154,12 +154,10 @@ public class ArmourCheck : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            LegArmourType = Armour.none;
             SetAllArmourOff();
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            //LegArmourType = Armour.armour;
             SetAllArmourOn();
         }
     }

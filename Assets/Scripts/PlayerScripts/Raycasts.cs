@@ -13,22 +13,22 @@ public class Raycasts : MonoBehaviour
     [SerializeField] private LayerMask waterMask = 1<<4;
     [SerializeField] private int groundLayer = 12;
 
-    public float distanceToGround;
-    public float distanceToCeiling;
-    public float distanceToRight;
-    public float distanceToLeft;
+    private float distanceToGround;
+    private float distanceToCeiling;
+    private float distanceToRight;
+    private float distanceToLeft;
 
     public bool debugModeOn = true;
 
     public ParticleSystem splashParticle;
 
-    Checker checker;
     Player player;
     PlayerInput playerInput;
 
+
+
     private void Awake()
     {
-        checker = GetComponent<Checker>();
         player = GetComponent<Player>();
         playerInput = GetComponent<PlayerInput>();
     }
@@ -71,7 +71,7 @@ public class Raycasts : MonoBehaviour
             {
                 if (hit.collider.CompareTag("Ground"))
                 {
-                    playerInput.wall = PlayerInput.wallCollision.leftWall;
+                    playerInput.CurrentWall = PlayerInput.Wall.leftWall;
                     HitLeft(hit);
                 }
             }
@@ -84,14 +84,14 @@ public class Raycasts : MonoBehaviour
             {
                 if (hit.collider.CompareTag("Ground"))
                 {
-                    playerInput.wall = PlayerInput.wallCollision.rightWall;
+                    playerInput.CurrentWall = PlayerInput.Wall.rightWall;
                     HitRight(hit);
                 }
             }
         }
         else
         {
-            playerInput.wall = PlayerInput.wallCollision.none;
+            playerInput.CurrentWall = PlayerInput.Wall.none;
         }
     }
     void HitLeft(RaycastHit hit)
@@ -179,7 +179,5 @@ public class Raycasts : MonoBehaviour
         distanceToGround = hit.distance;
 
         player.grounded = true;
-        //player.falling = false;
-        //player.jumping = false;
     }
 }

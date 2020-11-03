@@ -3293,7 +3293,6 @@ GameObject:
   - component: {fileID: 3086570786498850750}
   - component: {fileID: 3086570786498850751}
   - component: {fileID: 3086570786498850736}
-  - component: {fileID: 857986220967978360}
   - component: {fileID: 7520256822799522842}
   - component: {fileID: 1969411957104296153}
   - component: {fileID: 447692950426583210}
@@ -3511,14 +3510,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e386846e6080adf4db4a3539dd571c33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerOneLayer: 8
+  playerTwoLayer: 9
   horizontalKeys: 
   jumpKey: 0
   jabKey: 0
   crouchKey: 0
   blockKey: 0
   armourKey: 0
-  playersLayer: 0
-  opponentLayer: 0
+  selfLayer: 0
+  enemyLayer: 0
   tipHitBox: {fileID: 3086570786038054706}
   midHitBox: {fileID: 0}
   chestArmour:
@@ -3530,19 +3531,6 @@ MonoBehaviour:
   - {fileID: 3086570786131312370}
   - {fileID: 8324168641846363669}
   - {fileID: 5272509670398646966}
---- !u!114 &857986220967978360
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3086570786498850738}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6ce8ec463a7ece40bdd3485c36b8ecf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  previousVelocity: 0
 --- !u!114 &7520256822799522842
 MonoBehaviour:
   m_ObjectHideFlags: 0

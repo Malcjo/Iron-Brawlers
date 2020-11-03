@@ -53,11 +53,11 @@ public class PlayerStats : MonoBehaviour
     public float JumpForceCalculator()
     {
         float jumpForceValue;
-        if (player.numberOfJumps == 0)
+        if (player.currentJumpIndex == 0)
         {
             return player.SetVelocityY();
         }
-        else if(player.numberOfJumps > 0)
+        else if(player.currentJumpIndex > 0)
         {
             if (player.jumping == false && player.falling == false)
             {

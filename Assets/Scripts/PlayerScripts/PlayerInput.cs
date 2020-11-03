@@ -1,253 +1,64 @@
-﻿using JetBrains.Annotations;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SocialPlatforms;
+﻿using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
-    public float horizontal; // Being checked in Player script: MoveCall()
-    public int numberOfJumps; //Being checked in Player script: JumpMove()
+    [SerializeField]
+    private PlayerSetup controls;
 
-    float horizontalInput;
-    public int maxJumps;
+    [SerializeField]
+    private bool JumpInputQueued;
+    [SerializeField]
+    private bool BlockInputQueued;
+    [SerializeField]
+    private bool AttackInputQueued;
+    [SerializeField]
+    private bool ArmourBreakQueued;
+    [SerializeField]
+    private bool CrouchInputQueued;
+    [SerializeField]
+    private bool ArmourBreakInputQueued;
+    private float HorizontalValue;
+    private float horizontalInput;
 
-    AnimationManager animationScript;
-    Player player;
-    PlayerControls controls;
-    ArmourCheck armourCheck;
-    Hitbox hitboxScript;
-    HitBoxManager hitBoxManager;
-    Checker checker;
-    AttackManager attackManager;
-    [Range(-1, 1)] public int FacingDirection;
-
-    public bool running;
-    [SerializeField] private bool jumping;
-    [SerializeField] private bool falling;
-    [SerializeField] private bool canDoubleJump;
-
-    public bool canJump;
-    
-    public enum wallCollision {leftWall, rightWall, none}
-    public wallCollision wall;
-
-    public enum animationGroup { idle, crouching, jumping, attack, running }
-    [SerializeField] animationGroup state;
-    private void Awake()
+    private enum Wall
     {
-        canDoubleJump = false;
-        attackManager = GetComponent<AttackManager>();
-        checker = GetComponent<Checker>();
-        armourCheck = GetComponent<ArmourCheck>();
-        hitBoxManager = GetComponentInChildren<HitBoxManager>();
-        hitboxScript = GetComponentInChildren<Hitbox>();
-        player = GetComponent<Player>();
-        controls = GetComponent<PlayerControls>();
-        animationScript = GetComponentInChildren<AnimationManager>();
+        leftWall,
+        rightWall,
+        none
     }
+
+    private Wall CurrentWall;
+
     private void Update()
     {
-        States();
-        //Escape();
         HorizontalInput();
-        //AeiralAttackCheck();
         BlockInput();
         JumpInput();
-        CheckState(); 
-    }
-    void States()
-    {
-        falling = player.falling;
-        jumping = player.jumping;
-    }
-    void CheckState()
-    {
-        if (player.grounded == true)
-        {
-            canDoubleJump = true;
-            player.numberOfJumps = 2;
-            player.canTurn = true;
-            animationScript.Jump(false);
-            animationScript.DoubleJump(false);
-            state = animationGroup.idle;
-
-            if (Input.GetKeyDown(controls.jabKey))
-            {
-                if (player.blocking == true)
-                {
-                    return;
-                }
-                attackManager.Jab();
-            }
-
-
-            if (Input.GetKey(controls.crouchKey))
-            {
-                if (player.blocking == true)
-                {
-                    return;
-                }
-                state = animationGroup.crouching;
-                if (Input.GetKeyDown(controls.jabKey))
-                {
-                    if (player.blocking == true)
-                    {
-                        return;
-                    }
-                    attackManager.LegSweep();
-                }
-            }
-            if (horizontalInput > 0 || horizontalInput < 0)
-            {
-                state = animationGroup.running;
-                Slide();
-
-                if (Input.GetKeyDown(controls.jabKey))
-                {
-                    attackManager.Heavy();
-                }
-            }
-        }
-        else if (player.grounded == false)
-        {
-            player.canTurn = false;
-            if (Input.GetKey(controls.jumpKey))
-            {
-                state = animationGroup.jumping;
-                if (player.blocking == true)
-                {
-                    return;
-                }
-            }
-        }
-
-        DestroyArmourKnockBack();
-        AeiralAttackCheck();
-        DoubleJumpCheck();
-        switch (state)
-        {
-            case animationGroup.idle: IdleStateCheck(); break;
-            case animationGroup.jumping: JumpStateCheck(); break;
-            case animationGroup.running: RunningStateCheck(); break;
-            case animationGroup.crouching: CrouchStateCheck(); break;
-        }
-    }
-    void Slide()
-    {
-        if (Input.GetKeyDown(controls.crouchKey))
-        {
-            Debug.Log("Slide");
-        }
-    }
-
-    void IdleStateCheck()
-    {
-        animationScript.Crouching(false);
-        animationScript.Jump(false);
-        animationScript.Running(false);
-    }
-
-    void RunningStateCheck()
-    {
-        if (player.grounded == true)
-        {
-            animationScript.Running(true);
-            if (Input.GetKey(controls.crouchKey))
-            {
-                animationScript.Crouching(false);
-            }
-        }
-    }
-
-    void JumpStateCheck()
-    {
-        animationScript.Jump(true);
-        canDoubleJump = true;
-
-    }
-    void DoubleJumpCheck()
-    {
-        if(canDoubleJump == true)
-        {
-            if (falling = true || jumping == true)
-            {
-                if (Input.GetKeyDown(controls.jumpKey))
-                {
-                    player.canTurn = true;
-                    animationScript.DoubleJump(true);
-                }
-            }
-        }
-        canDoubleJump = false;
-
-    }
-    void CrouchStateCheck()
-    {
-        animationScript.Crouching(true);
+        CrouchInput();
+        AttackInput();
+        ArmourBreakInput();
     }
     
     public void HorizontalInput()
     {
-        if (player.blocking == true)
-        {
-            horizontalInput = 0;
-            horizontal = 0;
-            return;
-        }
         horizontalInput = Input.GetAxisRaw(controls.horizontalKeys);
-
+        HorizontalValue = horizontalInput;
         WallCheck();
-
-
-        horizontal = (horizontalInput);
-        if (player.inAnimation == true)
-        {
-            return;
-        }
-
-
-        if (horizontalInput < 0)
-        {
-            FacingDirection = -1;
-            running = true;
-            animationScript.Crouching(false);
-            if(player.canTurn == false)
-            {
-                return;
-            }
-            transform.rotation = Quaternion.Euler(0, 0, 0);
-        }
-        if (horizontalInput > 0)
-        {
-            FacingDirection = 1;
-            running = true;
-            animationScript.Crouching(false);
-            if (player.canTurn == false)
-            {
-                return;
-            }
-            transform.rotation = Quaternion.Euler(0, 180, 0);
-        }
-        if (horizontalInput == 0)
-        {
-            animationScript.Idle();
-            running = false;
-        }
     }
+
     void WallCheck()
     {
-        switch (wall)
+        switch (CurrentWall)
         {
-            case wallCollision.none:
+            case Wall.none:
                 break;
-            case wallCollision.leftWall:
+            case Wall.leftWall:
                 if (horizontalInput < 0)
                 {
                     horizontalInput = 0;
                 }
                 break;
-            case wallCollision.rightWall:
+            case Wall.rightWall:
                 if (horizontalInput > 0)
                 {
                     horizontalInput = 0;
@@ -255,32 +66,27 @@ public class PlayerInput : MonoBehaviour
                 break;
         }
     }
+    private void CrouchInput()
+    {
+        CrouchInputQueued = false;
+        if (Input.GetKey(controls.crouchKey))
+        {
+            CrouchInputQueued = true;
+        }
+    }
     public void JumpInput()
     {
-        if (player.blocking == true)
-        {
-            return;
-        }
+        JumpInputQueued = false;
         if (Input.GetKeyDown(controls.jumpKey))
         {
         animationScript.Jump(true);
-        player.inAnimation = false;
-            player.Jump();
+            JumpInputQueued = true;
             numberOfJumps --;
             if (numberOfJumps < 0)
             {
                 canJump = true;
                 numberOfJumps = 0;
             }
-            //if(numberOfJumps == 1)
-            //{
-            //    canDoubleJump = true;
-            //}
-            //if(numberOfJumps <= 0)
-            //{
-            //    canDoubleJump = false;
-            //    canJump = false;
-            //}
         }
         if (numberOfJumps < maxJumps && player.grounded == true)
         {
@@ -290,81 +96,67 @@ public class PlayerInput : MonoBehaviour
 
     public void AeiralAttackCheck()
     {
-        if (player.blocking == true)
+        if (CurrentState == State.busy)
         {
             return;
         }
-        if ((player.jumping == true || player.falling) && Input.GetKeyDown(controls.jabKey))
-        {
-            attackManager.AerialAttack();
 
+    }
+    private void AttackInput()
+    {
+        AttackInputQueued = false;
+        if (Input.GetKeyDown(controls.attackKey))
+        {
+            AttackInputQueued = true;
         }
     }
     public void BlockInput()
     {
+        BlockInputQueued = false;
         if (Input.GetKey(controls.blockKey))
         {
-            hitBoxManager.Block();
-            player.blocking = true;
+            BlockInputQueued = true;
         }
-        if (Input.GetKeyUp(controls.blockKey))
+        else
         {
-            hitBoxManager.StopBlock();
-            player.blocking = false;
+            BlockInputQueued = false;
         }
     }
-    void DestroyArmourKnockBack()
+    void ArmourBreakInput()
     {
-        if (player.blocking == true)
-        {
-            return;
-        }
+        ArmourBreakInputQueued = false;
         if (Input.GetKey(controls.armourKey) && Input.GetKey(controls.crouchKey))
-            
         {
-            if(player.hasArmour == false)
-            {
-                return;
-            }
-            else if(player.hasArmour == true)
-            {
-                attackManager.ArmourBreak();
-                armourCheck.SetAllArmourOff();
-                hitboxScript._attackDir = Attackdirection.Down;
-                hitboxScript._attackType = AttackType.Shine;
-                hitBoxManager.ShineAttack();
-            }
+            ArmourBreakInputQueued = true;
         }
     }
-    private void OnCollisionExit(Collision collision)
+
+    public float GetHorizontal()
     {
-        if (collision.gameObject.tag == "Ground")
-
-        {
-            if (!Input.GetKeyDown(controls.jumpKey))
-            {
-                numberOfJumps++;
-            }
-            numberOfJumps--;
-        }
+        return HorizontalValue;
     }
 
-    //resetting number of jumps to max jumps
-    private void OnCollisionEnter(Collision collision)
+    public bool ShouldJump()
     {
-
-        if (collision.gameObject.tag == "Ground")
-        {
-            animationScript.JumpLanding(false);
-            numberOfJumps = maxJumps;
-        }
+        return JumpInputQueued;
     }
-    //void Escape()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.Escape))
-    //    {
-    //        Application.Quit();
-    //    }
-    //}
- }   
+
+    public bool ShouldAttack()
+    {
+        return AttackInputQueued;
+    }
+    public bool ShouldBlock()
+    {
+        return BlockInputQueued;
+    }
+
+    public bool ShouldCrouch()
+    {
+        return CrouchInputQueued;
+    }
+    public bool ShouldArmourBreak()
+    {
+        return ArmourBreakInputQueued;
+    }
+}   
 

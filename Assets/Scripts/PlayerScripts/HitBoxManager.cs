@@ -8,7 +8,7 @@ public class HitBoxManager : MonoBehaviour
     public Hitbox hitBox;
     [Range(0,1)]
     private int armIndex;
-    public AnimationManager animationScript;
+    public PlayerActions animationScript;
     public Player player;
     private PlayerInput playerInput;
     public Vector3 blockOffset;
@@ -17,7 +17,7 @@ public class HitBoxManager : MonoBehaviour
     void Start()
     {
         playerInput = GetComponentInParent<PlayerInput>();
-        animationScript = GetComponentInChildren<AnimationManager>();
+        animationScript = GetComponentInChildren<PlayerActions>();
         hitBox.HideHitBoxes();
         blockBox.SetActive(false);
     }
@@ -66,10 +66,10 @@ public class HitBoxManager : MonoBehaviour
         StartCoroutine(SpawnHitBox(0.3f));
         StopCoroutine(SpawnHitBox(0));
     }
-    public void ShineAttack()
+    public void ArmourBreak()
     {
         hitBox.FollowCenter();//to snap into place before hitbox is played
-        hitBox._hitBoxScale = HitBoxScale.Shine;
+        hitBox._hitBoxScale = HitBoxScale.ArmourBreak;
         StartCoroutine(FreezeFrames(0.1f, 0.1f));
         StartCoroutine(SpawnHitBox(0.25f));
         StopCoroutine(FreezeFrames(0, 0));

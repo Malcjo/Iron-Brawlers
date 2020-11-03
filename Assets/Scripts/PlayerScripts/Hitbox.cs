@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum AttackType { Jab, LegSweep, Aerial, Shine, HeavyJab };
+public enum AttackType { Jab, LegSweep, Aerial, ArmourBreak, HeavyJab };
 public enum Attackdirection { Forward, Low, Aerial, Down };
-public enum HitBoxScale { Jab, Shine, Aerial };
+public enum HitBoxScale { Jab, ArmourBreak, Aerial };
 public class Hitbox : MonoBehaviour
 {
     public bool viewHitBox;
@@ -18,7 +18,7 @@ public class Hitbox : MonoBehaviour
     [SerializeField] private float freezeCounter;
     [SerializeField] private float freezeStep;
     [SerializeField] private float freezeMaxValue;
-    public AnimationManager animantionManager;
+    public PlayerActions animantionManager;
     public Animator anim;
     [SerializeField] Player player;
     PlayerInput playerInput;
@@ -78,7 +78,7 @@ public class Hitbox : MonoBehaviour
             case AttackType.Aerial:
                 FollowRightElbow();
                 break;
-            case AttackType.Shine:
+            case AttackType.ArmourBreak:
                 FollowCenter();
                 break;
             case AttackType.HeavyJab:
@@ -93,7 +93,7 @@ public class Hitbox : MonoBehaviour
             case HitBoxScale.Jab:
                 transform.localScale = new Vector3(0.4f,0.4f,0.4f);
                 break;
-            case HitBoxScale.Shine:
+            case HitBoxScale.ArmourBreak:
                 transform.localScale = new Vector3(1.5f,1.5f,1.5f);
                 break;
             case HitBoxScale.Aerial:
@@ -140,16 +140,16 @@ public class Hitbox : MonoBehaviour
         switch (_attackDir)
         {
             case Attackdirection.Forward:
-                return new Vector3(playerInput.FacingDirection, 0.3f, 0);
+                return new Vector3(player.FacingDirection(), 0.3f, 0);
             case Attackdirection.Low:
-                return new Vector3(playerInput.FacingDirection * 0.1f, 1f,0);
+                return new Vector3(player.FacingDirection() * 0.1f, 1f,0);
             case Attackdirection.Aerial:
-                return new Vector3(playerInput.FacingDirection, 0.5f, 0);
+                return new Vector3(player.FacingDirection(), 0.5f, 0);
             case Attackdirection.Down:
-                return new Vector3(playerInput.FacingDirection, -0.5f, 0);
+                return new Vector3(player.FacingDirection(), -0.5f, 0);
             default:
                 hitDirection.x = 1; hitDirection.y = 0.5f; hitDirection.z = 0; ;
-                return new Vector3(playerInput.FacingDirection, 0.3f, 0);
+                return new Vector3(player.FacingDirection(), 0.3f, 0);
         }
     }
     public float HitStrength()
@@ -162,7 +162,7 @@ public class Hitbox : MonoBehaviour
                 return 14;
             case AttackType.Aerial:
                 return 25;
-            case AttackType.Shine:
+            case AttackType.ArmourBreak:
                 return 10;
             case AttackType.HeavyJab:
                 return 25;
@@ -194,7 +194,6 @@ public class Hitbox : MonoBehaviour
         {
             var tempPlayer = other.GetComponentInParent<Player>();
             var tempArmour = other.GetComponentInParent<ArmourCheck>();
-            var tempAnimationManager = other.GetComponentInChildren<AnimationManager>();
             HurtBox tempHurtBox = other.GetComponent<HurtBox>();
 
             if (tempPlayer.blocking == true)
@@ -253,21 +252,4 @@ public class Hitbox : MonoBehaviour
         player.Damage(HitDirection(), HitStrength());
         HideHitBoxes();
     }
-    void FreezeCharacter()
-    {
-        if(freezeCharacter == true)
-        {
-            return;
-        }
-        else
-        {
-            player.enabled = false;
-            playerInput.enabled = false;
-            anim.enabled = false;
-            freezeCounter = freezeMaxValue;
-            freezeCharacter = true;
-        }
-
-    }
-
 }

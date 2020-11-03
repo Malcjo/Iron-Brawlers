@@ -12,10 +12,6 @@ public class HurtBox : MonoBehaviour
     [SerializeField] private int opponentLayer;
     [SerializeField] private int activeLayer;
     private float newRadius;
-    private void Awake()
-    {
-
-    }
     private void Start()
     {
         manager = GetComponentInParent<HurtBoxManager>();
@@ -33,10 +29,7 @@ public class HurtBox : MonoBehaviour
             hitBoxMesh.enabled = true;
         }
     }
-    private void FixedUpdate()
-    {
 
-    }
     private void Update()
     {
         transform.localPosition = Vector3.zero;

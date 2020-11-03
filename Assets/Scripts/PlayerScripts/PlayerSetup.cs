@@ -1,15 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public enum PlayerIndex { Player1, Player2 };
-public class PlayerControls : MonoBehaviour
+public class PlayerSetup : MonoBehaviour
 {
-    public string horizontalKeys;
-    public KeyCode jumpKey, jabKey, crouchKey, blockKey, armourKey;
+    public int playerOneLayer;
+    public int playerTwoLayer;
 
-    public int playersLayer, opponentLayer;
-    //player 1 = layer 8
-    //player 2 = layer 9
+    public string horizontalKeys;
+    public KeyCode jumpKey, attackKey, crouchKey, blockKey, armourKey;
+
+    public int selfLayer, enemyLayer;
 
     public GameObject tipHitBox,midHitBox;
     public GameObject[] chestArmour;
@@ -17,20 +17,21 @@ public class PlayerControls : MonoBehaviour
 
     Player player;
 
-    private PlayerIndex playerNumber;
+    private Player.PlayerIndex playerNumber;
 
 
     void Awake()
     {
         player = GetComponent<Player>();
     }
+
     private void Start()
     {
         playerNumber = player.playerNumber;
-        CheckControl();
+        SetupControls();
     }
 
-    void CheckControl()
+    void SetupControls()
     {
         switch(playerNumber)
         {
@@ -38,35 +39,36 @@ public class PlayerControls : MonoBehaviour
                 horizontalKeys = "P1Horizontal";
 
                 jumpKey = KeyCode.Y;
-                jabKey = KeyCode.G;
+                attackKey = KeyCode.G;
                 crouchKey = KeyCode.S;
                 blockKey = KeyCode.J;
                 armourKey = KeyCode.H;
 
-
-                tipHitBox.layer = 8;
-                playersLayer = 8;
-                opponentLayer = 9;
-                ChangeArmourLayer(8);
-
+                SetupLayers(playerOneLayer, playerTwoLayer);
                 break;
             case PlayerIndex.Player2:
                 horizontalKeys = "P2Horizontal";
 
                 jumpKey = KeyCode.Keypad5;
-                jabKey = KeyCode.Keypad1;
+                attackKey = KeyCode.Keypad1;
                 crouchKey = KeyCode.DownArrow;
                 blockKey = KeyCode.Keypad3;
                 armourKey = KeyCode.Keypad2;
 
-                tipHitBox.layer = 9;
-                playersLayer = 9;
-                opponentLayer = 8;
-                ChangeArmourLayer(9);
+                SetupLayers(playerTwoLayer, playerOneLayer);
                 break;
         }
 
     }
+
+    private void SetupLayers(int self, int other)
+    {
+        tipHitBox.layer = self;
+        selfLayer = self;
+        enemyLayer = other;
+        ChangeArmourLayer(self);
+    }
+
     void ChangeArmourLayer(int layer)
     {
         for (int i = 0; i < chestArmour.Length; i++)

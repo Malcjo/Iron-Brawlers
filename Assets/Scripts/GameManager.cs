@@ -8,9 +8,9 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    [SerializeField]
+    private float boundsUp, boundsDown, boundsLeft, boundsRight;
     public Player[] playersInScene;
-    public TMP_Text player1Lives, player2Lives;
-    public Image player1Image, player2Image;
     MainMenu mainMenu;
     public int player1CharacterIndex, player2CharacterIndex;
 
@@ -50,7 +50,6 @@ public class GameManager : MonoBehaviour
         {
             mainMenu.GoToCharacterSelect();
         }
-        player1Lives.text = ("P1: " + playersInScene[0].lives);
         player2Lives.text = ("P2: " + playersInScene[1].lives);
         if(playersInScene[0].characterType == 1)
         {
@@ -94,4 +93,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public static bool CheckIsInBounds(Vector3 position)
+    {
+        return position.x > instance.boundsRight || position.x < instance.boundsLeft || position.y > instance.boundsUp || position.y < instance.boundsDown;
+    }
+
+    public static Sprite GetSprite(Player.PlayerIndex playerIndex)
+    {
+        switch (playerIndex)
+        {
+            case Player.PlayerIndex.Player1: return instance.flowerBoi1;
+            case Player.PlayerIndex.Player2: return instance.flowerBoi2;
+        }
+        return null;
+    }
 }
