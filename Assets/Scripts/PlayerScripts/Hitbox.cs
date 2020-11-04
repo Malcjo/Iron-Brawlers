@@ -196,12 +196,12 @@ public class Hitbox : MonoBehaviour
             var tempArmour = other.GetComponentInParent<ArmourCheck>();
             HurtBox tempHurtBox = other.GetComponent<HurtBox>();
 
-            if (tempPlayer.blocking == true)
+            if (tempPlayer.GetBlocking() == true)
             {
                 HideHitBoxes();
                 return;
             }
-            else if (tempPlayer.blocking == false)
+            else if (tempPlayer.GetBlocking() == false)
             {
 
                 DamagePlayer(tempPlayer);

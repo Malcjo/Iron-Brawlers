@@ -4,6 +4,8 @@ public class PlayerInput : MonoBehaviour
 {
     [SerializeField]
     private PlayerSetup controls;
+    [SerializeField]
+    private Player player;
 
     [SerializeField]
     private bool JumpInputQueued;
@@ -17,17 +19,10 @@ public class PlayerInput : MonoBehaviour
     private bool CrouchInputQueued;
     [SerializeField]
     private bool ArmourBreakInputQueued;
+    [SerializeField]
     private float HorizontalValue;
+    [SerializeField]
     private float horizontalInput;
-
-    private enum Wall
-    {
-        leftWall,
-        rightWall,
-        none
-    }
-
-    private Wall CurrentWall;
 
     private void Update()
     {
@@ -48,17 +43,17 @@ public class PlayerInput : MonoBehaviour
 
     void WallCheck()
     {
-        switch (CurrentWall)
+        switch (player.GetCurrentWall())
         {
-            case Wall.none:
+            case Player.Wall.none:
                 break;
-            case Wall.leftWall:
+            case Player.Wall.leftWall:
                 if (horizontalInput < 0)
                 {
                     horizontalInput = 0;
                 }
                 break;
-            case Wall.rightWall:
+            case Player.Wall.rightWall:
                 if (horizontalInput > 0)
                 {
                     horizontalInput = 0;

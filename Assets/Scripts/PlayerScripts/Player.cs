@@ -57,6 +57,7 @@ public class Player : MonoBehaviour
     private bool canJump;
     private bool canAirMove;
     private bool reduceAddForce;
+    [SerializeField]
     private bool gravityOn;
     private bool canTurn;
     private bool falling;
@@ -82,6 +83,13 @@ public class Player : MonoBehaviour
     public int lives;
     public int characterType;
     public PlayerIndex playerNumber;
+    private Wall currentWall;
+    public enum Wall
+    {
+        leftWall,
+        rightWall,
+        none
+    }
 
     public enum State
     {
@@ -128,7 +136,10 @@ public class Player : MonoBehaviour
             }
         }
     }
-
+    public PlayerIndex PlayerNumber()
+    {
+        return playerNumber;
+    }
     void CheckState()
     {
         if (grounded == true)
@@ -178,6 +189,10 @@ public class Player : MonoBehaviour
                 playerActions.AerialAttack();
             }
         }
+    }
+    public bool GetBlocking()
+    {
+        return blocking;
     }
     void Slide()
     {
@@ -463,6 +478,112 @@ public class Player : MonoBehaviour
         hitStunTimer = 1.1f;
         hitDirection = Hit;
         addForceValue = AddForce(Power - (armourCheck.knockBackResistance + knockbackResistance));
+    }
+
+    private void LandOnGround(RaycastHit hit)
+    {
+        distanceToGround = hit.distance;
+        rb.velocity = new Vector3(rb.velocity.x, 0, 0);
+        if (distanceToGround >= 0 && distanceToGround <= 0.37f)
+        {
+            transform.position = new Vector3(hit.point.x, hit.point.y + 0.85f, 0);
+        }
+        distanceToGround = hit.distance;
+
+        grounded = true;
+    }
+    public void PlayerGroundedFalse()
+    {
+        grounded = false;
+    }
+    public void RaycastGroundCheck(RaycastHit hit)
+    {
+        if (falling == true)
+        {
+            if (hit.collider.CompareTag("Ground") || (hit.collider.CompareTag("Platform")))
+            {
+                LandOnGround(hit);
+            }
+        }
+    }
+    public void RayCasterLeftWallCheck(RaycastHit hit)
+    {
+        if (jumping == true || falling == true || grounded == true)
+        {
+            if (hit.collider.CompareTag("Ground"))
+            {
+                currentWall = Wall.leftWall;
+                HitLeft(hit);
+            }
+        }
+    }
+    public void RayCasterRightWallCheck(RaycastHit hit)
+    {
+        if (jumping == true || falling == true || grounded == true)
+        {
+            if (hit.collider.CompareTag("Ground"))
+            {
+                currentWall = Wall.rightWall;
+                HitRight(hit);
+            }
+        }
+    }
+    public void RayCastCeilingCheck(RaycastHit hit)
+    {
+        if (jumping == true)
+        {
+            if (hit.collider.CompareTag("Ground"))
+            {
+                HitCeiling(hit);
+            }
+        }
+    }
+
+    private float distanceToGround;
+    private float distanceToCeiling;
+    private float distanceToRight;
+    private float distanceToLeft;
+    public void HitLeft(RaycastHit hit)
+    {
+        distanceToLeft = hit.distance;
+        if (distanceToLeft >= 0 && distanceToLeft <= 0.2f)
+        {
+            if (rb.velocity.x > 0)
+            {
+                rb.velocity = new Vector3(0, rb.velocity.y, 0);
+            }
+        }
+        distanceToLeft = hit.distance;
+    }
+    public void HitRight(RaycastHit hit)
+    {
+        distanceToRight = hit.distance;
+        if (distanceToRight >= 0 && distanceToRight <= 0.2f)
+        {
+            if (rb.velocity.x > 0)
+            {
+                rb.velocity = new Vector3(0, rb.velocity.y, 0);
+            }
+        }
+        distanceToRight = hit.distance;
+    }
+    public void HitCeiling(RaycastHit hit)
+    {
+        distanceToCeiling = hit.distance;
+        rb.velocity = new Vector3(rb.velocity.x, 0, 0);
+        if (distanceToCeiling >= 0 && distanceToCeiling <= 0.37f)
+        {
+            transform.position = new Vector3(hit.point.x, hit.point.y + 0.9f, 0);
+        }
+        distanceToCeiling = hit.distance;
+    }
+    public Wall GetCurrentWall()
+    {
+        return currentWall;
+    }
+    public Wall SetCurrentWallNone()
+    {
+        return Wall.none;
     }
 }
 

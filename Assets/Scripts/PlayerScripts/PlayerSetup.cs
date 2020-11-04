@@ -61,7 +61,7 @@ public class PlayerSetup : MonoBehaviour
 
     void SetupControls()
     {
-        switch(playerNumber)
+        switch(player.PlayerNumber())
         {
             case Player.PlayerIndex.Player1:
                 horizontalKeys = "P1Horizontal";

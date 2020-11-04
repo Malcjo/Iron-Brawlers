@@ -16,17 +16,11 @@ public class ArmourCheck : MonoBehaviour
     float chestArmourReduceSpeed, legsArmourReduceSpeed;
     float chestReduceJump, legsReduceJump;
 
-    [SerializeField] private ArmourStats stats;
+    [SerializeField] private ArmourStats armourStats;
+
     public GameObject[] ChestArmourMesh;
     public GameObject[] LegArmourMesh;
 
-    private void Awake()
-    {
-        stats = GetComponent<ArmourStats>();
-    }
-    private void Start()
-    {
-    }
     private void Update()
     {
         ArmourStatsCheck();
@@ -49,10 +43,10 @@ public class ArmourCheck : MonoBehaviour
         switch (ChestArmourType)
         {
             case Armour.armour:
-                chestWeight = stats.weightChest;
-                chestArmourReduceSpeed = stats.reduceSpeedChest;
-                chestReduceJump = stats.reduceJumpChest;
-                chestKnockBackResistance = stats.knockBackResistanceChest;
+                chestWeight = armourStats.weightChest;
+                chestArmourReduceSpeed = armourStats.reduceSpeedChest;
+                chestReduceJump = armourStats.reduceJumpChest;
+                chestKnockBackResistance = armourStats.knockBackResistanceChest;
                 break;
 
             case Armour.none:
@@ -65,10 +59,10 @@ public class ArmourCheck : MonoBehaviour
         switch (LegArmourType)
         {
             case Armour.armour:
-                legsWeight = stats.weightLegs;
-                legsArmourReduceSpeed = stats.reduceSpeedLegs;
-                legsReduceJump = stats.reduceJumpLegs;
-                legsKnockBackResistance = stats.knockBackRsistanceLegs;
+                legsWeight = armourStats.weightLegs;
+                legsArmourReduceSpeed = armourStats.reduceSpeedLegs;
+                legsReduceJump = armourStats.reduceJumpLegs;
+                legsKnockBackResistance = armourStats.knockBackRsistanceLegs;
                 break;
             case Armour.none:
                 legsWeight = 0;
