@@ -7,6 +7,10 @@ public class PlayerActions : MonoBehaviour
     public List<string> animlist = new List<string>();
     public Animator anim;
     [SerializeField] ActionManager attackManager;
+    [SerializeField] Player player;
+    [SerializeField] Hitbox hitboxScript;
+    [SerializeField] HitBoxManager hitboxManager;
+    [SerializeField] ArmourCheck armourCheck;
 
     public int comboStep;
     public float comboTimer;
@@ -87,15 +91,15 @@ public class PlayerActions : MonoBehaviour
         hitboxScript._attackDir = Attackdirection.Down;
         hitboxScript._attackType = AttackType.ArmourBreak;
         armourCheck.SetAllArmourOff();
-        hitBoxManager.ArmourBreak();
+        hitboxManager.ArmourBreak();
     }
     public void Block()
     {
-        hitBoxManager.Block();
+        hitboxManager.Block();
     }
     public void StopBlock()
     {
-        hitBoxManager.StopBlock();
+        hitboxManager.StopBlock();
     }
     public void HitStun()
     {

@@ -23,14 +23,12 @@ public class HitBoxManager : MonoBehaviour
     }
     public void Block()
     {
-        blockBox.transform.position = transform.position + new Vector3(playerInput.FacingDirection * blockOffset.x, blockOffset.y, 0);
+        blockBox.transform.position = transform.position + new Vector3(player.FacingDirection() * blockOffset.x, blockOffset.y, 0);
         blockBox.SetActive(true);
-        player.blocking = true;
     }
     public void StopBlock()
     {
         blockBox.SetActive(false);
-        player.blocking = false;
     }
     public void SwapHands(int _armIndex)
     {
@@ -85,8 +83,7 @@ public class HitBoxManager : MonoBehaviour
     public IEnumerator FreezeFrames(float delayTime, float AnimationTime)
     {
         yield return new WaitForSeconds(delayTime);
-        player.inAnimation = true;
+
         yield return new WaitForSeconds(AnimationTime);
-        player.inAnimation = false;
     }
 }

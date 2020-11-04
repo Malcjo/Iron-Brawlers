@@ -36,6 +36,10 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        boundsUp = 20;
+        boundsDown = -20;
+        boundsLeft = -20;
+        boundsRight = 20;
 
         mainMenu = GetComponentInChildren<MainMenu>();
     }
@@ -50,23 +54,6 @@ public class GameManager : MonoBehaviour
         {
             mainMenu.GoToCharacterSelect();
         }
-        player2Lives.text = ("P2: " + playersInScene[1].lives);
-        if(playersInScene[0].characterType == 1)
-        {
-            player1Image.sprite = flowerBoi1;
-        }
-        else if (playersInScene[0].characterType == 2)
-        {
-            player1Image.sprite = flowerBoi2;
-        }
-        if(playersInScene[1].characterType == 1)
-        {
-            player2Image.sprite = flowerBoi1;
-        }
-        else if (playersInScene[1].characterType == 2)
-        {
-            player2Image.sprite = flowerBoi2;
-        }
     }
 
     public void FindPlayers()
@@ -79,16 +66,16 @@ public class GameManager : MonoBehaviour
             PlayerNumberDetermine(i);
         }
     }
-    void PlayerNumberDetermine(int i)
+    private void PlayerNumberDetermine(int i)
     {
         if (i == 0)
         {
-            playersInScene[i].playerNumber = PlayerIndex.Player1;
+            playersInScene[i].playerNumber = Player.PlayerIndex.Player1;
             playersInScene[i].characterType = player1CharacterIndex;
         }
         else if (i == 1)
         {
-            playersInScene[i].playerNumber = PlayerIndex.Player2;
+            playersInScene[i].playerNumber = Player.PlayerIndex.Player2;
             playersInScene[i].characterType = player2CharacterIndex;
         }
     }

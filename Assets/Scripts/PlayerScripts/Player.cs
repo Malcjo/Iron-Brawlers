@@ -13,10 +13,14 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int maxLives = 3;
 
+
+    [SerializeField] private float speed = 6.5f;
+
+    [SerializeField] private float weight = 22;
+    [SerializeField] private float knockbackResistance = 3;
+
     [SerializeField]
     private Rigidbody rb;
-    [SerializeField]
-    private PlayerStats playerStats;
 
     [SerializeField] 
     private PlayerInput playerInput;
@@ -41,8 +45,8 @@ public class Player : MonoBehaviour
 
     public bool DebugModeOn;
 
-    private PlayerIndex playerNumber;
-    private int characterType;
+
+
 
     private bool canHitBox;
     private bool inAnimation;
@@ -58,6 +62,10 @@ public class Player : MonoBehaviour
     private bool falling;
     private bool jumping;
     private bool running;
+    private bool crouching;
+    private bool canDoubleJump;
+
+    [SerializeField] private float jumpForce = 9;
     private float hitStunTimer;
 
     private int currentJumpIndex;
@@ -70,7 +78,10 @@ public class Player : MonoBehaviour
     private Transform[] characterJoints;
 
     private string PlayerTextStart;
-    private int lives;
+
+    public int lives;
+    public int characterType;
+    public PlayerIndex playerNumber;
 
     public enum State
     {
@@ -78,6 +89,7 @@ public class Player : MonoBehaviour
         crouching,
         jumping,
         running,
+        attacking,
         busy
     }
 
@@ -116,6 +128,7 @@ public class Player : MonoBehaviour
             }
         }
     }
+
     void CheckState()
     {
         if (grounded == true)
@@ -125,60 +138,12 @@ public class Player : MonoBehaviour
             playerActions.Jump(false);
             playerActions.DoubleJump(false);
             CurrentState = State.idle;
-
-            if (Input.GetKeyDown(controls.jabKey))
-            {
-                if (blocking == true)
-                {
-                    return;
-                }
-                attackManager.Jab();
-            }
-
-
-            if (Input.GetKey(controls.crouchKey))
-            {
-                if (blocking == true)
-                {
-                    return;
-                }
-                CurrentState = State.crouching;
-                if (Input.GetKeyDown(controls.jabKey))
-                {
-                    if (blocking == true)
-                    {
-                        return;
-                    }
-                    attackManager.LegSweep();
-                }
-            }
-            if (playerInput.GetHorizontal() > 0 || playerInput.GetHorizontal() < 0)
-            {
-                CurrentState = State.running;
-                Slide();
-
-                if (Input.GetKeyDown(controls.jabKey))
-                {
-                    attackManager.Heavy();
-                }
-            }
         }
         else if (grounded == false)
         {
             canTurn = false;
-            if (Input.GetKey(controls.jumpKey))
-            {
-                CurrentState = State.jumping;
-                if (blocking == true)
-                {
-                    return;
-                }
-            }
-        }
 
-        DestroyArmourKnockBack();
-        AeiralAttackCheck();
-        DoubleJumpCheck();
+        }
         switch (CurrentState)
         {
             case State.idle: IdleStateCheck(); break;
@@ -190,18 +155,32 @@ public class Player : MonoBehaviour
 
     private void Attack()
     {
-        BusyCheck();
-        if (jumping || falling)
+        if (playerInput.ShouldAttack())
         {
-            playerActions.AerialAttack();
+            BusyCheck();
+            if (grounded)
+            {
+                if (crouching)
+                {
+                    playerActions.LegSweep();
+                }
+                else
+                {
+                    if (running)
+                    {
+                        playerActions.Heavy();
+                    }
+                    playerActions.JabCombo();
+                }
+            }
+            else
+            {
+                playerActions.AerialAttack();
+            }
         }
     }
     void Slide()
     {
-        if (Input.GetKeyDown(controls.crouchKey))
-        {
-            Debug.Log("Slide");
-        }
     }
 
     void IdleStateCheck()
@@ -213,21 +192,26 @@ public class Player : MonoBehaviour
 
     void RunningStateCheck()
     {
-        if (grounded == true)
+    }
+    public void Jump()
+    {
+        if (playerInput.ShouldJump())
         {
-            playerActions.Running(true);
-            if (Input.GetKey(controls.crouchKey))
+            if (currentJumpIndex < maxJumps)
             {
-                playerActions.Crouching(false);
+                DoubleJumpCheck();
+                CurrentState = State.jumping;
+                grounded = false;
+                rb.velocity = (new Vector3(rb.velocity.x, JumpForceCalculator(), rb.velocity.z));
+                currentJumpIndex++;
+                playerActions.Jump(true);
             }
         }
     }
-
     void JumpStateCheck()
     {
         playerActions.Jump(true);
         canDoubleJump = true;
-
     }
     void DoubleJumpCheck()
     {
@@ -235,18 +219,39 @@ public class Player : MonoBehaviour
         {
             if (falling = true || jumping == true)
             {
-                if (Input.GetKeyDown(controls.jumpKey))
-                {
-                    canTurn = true;
-                    playerActions.DoubleJump(true);
-                }
+                canTurn = true;
+                playerActions.DoubleJump(true);
             }
         }
         canDoubleJump = false;
+    }
 
+    public float JumpForceCalculator()
+    {
+        float jumpForceValue;
+        if (currentJumpIndex == 0)
+        {
+            return SetVelocityY();
+        }
+        else if (currentJumpIndex > 0)
+        {
+            if (jumping == false && falling == false)
+            {
+                jumpForceValue = jumpForce - armourCheck.reduceJumpForce;
+                return jumpForceValue;
+            }
+            else if (jumping == true || falling == true)
+            {
+                Debug.Log("Jump in air");
+                jumpForceValue = (jumpForce + 2) - armourCheck.reduceJumpForce;
+                return jumpForceValue;
+            }
+        }
+        return 0;
     }
     void CrouchStateCheck()
     {
+        crouching = true;
         playerActions.Crouching(true);
     }
 
@@ -277,7 +282,7 @@ public class Player : MonoBehaviour
 
         if(rb.velocity.y < -20)
         {
-            rb.velocity = new Vector3(playerInput.GetHorizontal() * playerStats.CharacterSpeed(), -20, 0) + addForceValue;
+            rb.velocity = new Vector3(playerInput.GetHorizontal() * CharacterSpeed(), -20, 0) + addForceValue;
         }
     }
 
@@ -285,11 +290,12 @@ public class Player : MonoBehaviour
     {
         if(CurrentState == State.busy)
         {
+            rb.velocity = new Vector3(playerInput.GetHorizontal() * CharacterSpeed(), rb.velocity.y, 0) + addForceValue;
             return;
         }
-        if (inAnimation == true)
+        else
         {
-            if(grounded == true)
+            if (grounded == true)
             {
                 rb.velocity = new Vector3(Mathf.Lerp(rb.velocity.x, 0, friction), rb.velocity.y, 0);
                 return;
@@ -303,14 +309,19 @@ public class Player : MonoBehaviour
                 }
                 else if (canAirMove == true)
                 {
-                    rb.velocity = new Vector3(playerInput.GetHorizontal() * playerStats.CharacterSpeed(), rb.velocity.y, 0) + addForceValue;
+                    rb.velocity = new Vector3(playerInput.GetHorizontal() * CharacterSpeed(), rb.velocity.y, 0) + addForceValue;
                 }
             }
         }
-        else
+    }
+    public float CharacterSpeed()
+    {
+        float characterSpeed = speed - armourCheck.armourReduceSpeed;
+        if (hitStun == true)
         {
-            rb.velocity = new Vector3(playerInput.GetHorizontal() * playerStats.CharacterSpeed(), rb.velocity.y, 0) + addForceValue;
+            characterSpeed *= 0 + (5 * Time.deltaTime);
         }
+        return characterSpeed;
     }
     private void CheckDirection()
     {
@@ -322,9 +333,14 @@ public class Player : MonoBehaviour
             {
                 return;
             }
-            running = true;
+            CurrentState = State.running;
             transform.rotation = Quaternion.Euler(0, 180, 0);
             facingDirection = 1;
+            if(facingDirection > 0.5f)
+            {
+                running = true;
+
+            }
         }
         else if (facingDirection < 0)
         {
@@ -332,9 +348,18 @@ public class Player : MonoBehaviour
             {
                 return;
             }
-            running = true;
+            CurrentState = State.running;
             transform.rotation = Quaternion.Euler(0, 0, 0);
             facingDirection = -1;
+            if(facingDirection < -0.5f)
+            {
+                running = true;
+            }
+        }
+        else if(facingDirection == 0)
+        {
+            CurrentState = State.idle;
+            running = false;
         }
     }
     public int FacingDirection()
@@ -346,7 +371,7 @@ public class Player : MonoBehaviour
     {
         if (grounded == false)
         {
-            rb.AddForce(Vector3.down * gravity * ((playerStats.weight + armourCheck.armourWeight) / 10));
+            rb.AddForce(Vector3.down * gravity * ((weight + armourCheck.armourWeight) / 10));
         }
         else if(grounded == true)
         {
@@ -354,25 +379,14 @@ public class Player : MonoBehaviour
             gravity = 0;
         }
     }
-    public void Jump()
-    {
-        if (playerInput.ShouldJump())
-        {
-            if (currentJumpIndex < maxJumps)
-            {
-                grounded = false;
-                rb.velocity = (new Vector3(rb.velocity.x, playerStats.JumpForceCalculator(), rb.velocity.z));
-                currentJumpIndex++;
-                playerActions.Jump(true);
-            }
-        }
-    }
+
 
     private void ArmourBreak()
     {
         BusyCheck();
         if (hasArmour)
         {
+            CurrentState = State.busy;
             playerActions.ArmourBreak();
         }
     }
@@ -381,6 +395,7 @@ public class Player : MonoBehaviour
         BusyCheck();
         if (playerInput.ShouldBlock())
         {
+            CurrentState = State.busy;
             playerActions.Block();
         }
         else
@@ -388,7 +403,6 @@ public class Player : MonoBehaviour
             playerActions.StopBlock();
         }
     }
-
 
     private void BusyCheck()
     {
@@ -448,7 +462,7 @@ public class Player : MonoBehaviour
         hitStun = true;
         hitStunTimer = 1.1f;
         hitDirection = Hit;
-        addForceValue = AddForce(Power - (armourCheck.knockBackResistance + playerStats.knockbackResistance));
+        addForceValue = AddForce(Power - (armourCheck.knockBackResistance + knockbackResistance));
     }
 }
 

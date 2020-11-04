@@ -79,29 +79,10 @@ public class PlayerInput : MonoBehaviour
         JumpInputQueued = false;
         if (Input.GetKeyDown(controls.jumpKey))
         {
-        animationScript.Jump(true);
             JumpInputQueued = true;
-            numberOfJumps --;
-            if (numberOfJumps < 0)
-            {
-                canJump = true;
-                numberOfJumps = 0;
-            }
-        }
-        if (numberOfJumps < maxJumps && player.grounded == true)
-        {
-            numberOfJumps = maxJumps;
         }
     }
 
-    public void AeiralAttackCheck()
-    {
-        if (CurrentState == State.busy)
-        {
-            return;
-        }
-
-    }
     private void AttackInput()
     {
         AttackInputQueued = false;

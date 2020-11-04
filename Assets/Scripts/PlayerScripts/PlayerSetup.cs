@@ -15,6 +15,12 @@ public class PlayerSetup : MonoBehaviour
     public GameObject[] chestArmour;
     public GameObject[] legArmour;
 
+
+    public GameObject[] meshRendering;
+
+    public Material flowerBoiSkin1, flowerBoiSkin2;
+    private int characterType;
+
     Player player;
 
     private Player.PlayerIndex playerNumber;
@@ -27,15 +33,37 @@ public class PlayerSetup : MonoBehaviour
 
     private void Start()
     {
+        characterType = player.characterType;
         playerNumber = player.playerNumber;
+
+        SetupSkin();
         SetupControls();
+    }
+
+    void SetupSkin()
+    {
+        switch (characterType)
+        {
+            case 1:
+                foreach (GameObject mesh in meshRendering)
+                {
+                    mesh.GetComponent<SkinnedMeshRenderer>().material = flowerBoiSkin1;
+                }
+                break;
+            case 2:
+                foreach (GameObject mesh in meshRendering)
+                {
+                    mesh.GetComponent<SkinnedMeshRenderer>().material = flowerBoiSkin2;
+                }
+                break;
+        }
     }
 
     void SetupControls()
     {
         switch(playerNumber)
         {
-            case PlayerIndex.Player1:
+            case Player.PlayerIndex.Player1:
                 horizontalKeys = "P1Horizontal";
 
                 jumpKey = KeyCode.Y;
@@ -46,7 +74,7 @@ public class PlayerSetup : MonoBehaviour
 
                 SetupLayers(playerOneLayer, playerTwoLayer);
                 break;
-            case PlayerIndex.Player2:
+            case Player.PlayerIndex.Player2:
                 horizontalKeys = "P2Horizontal";
 
                 jumpKey = KeyCode.Keypad5;
