@@ -30,6 +30,8 @@ public class Player : MonoBehaviour
     private Raycasts raycasts;
     [SerializeField] 
     private PlayerActions playerActions;
+    [SerializeField]
+    private PlayerSetup playerSetup;
 
     [Header("UI")]
     [SerializeField]
@@ -44,7 +46,6 @@ public class Player : MonoBehaviour
     private float YVelocity;
 
     public bool DebugModeOn;
-
 
 
 
@@ -68,6 +69,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] private float jumpForce = 9;
     private float hitStunTimer;
+    private float previousVelocity;
 
     private int currentJumpIndex;
     private int maxJumps = 2;
@@ -77,8 +79,8 @@ public class Player : MonoBehaviour
     private Vector3 hitDirection;
 
     private Transform[] characterJoints;
-
-    private string PlayerTextStart;
+    [SerializeField] float playerVerticalInput;
+    [SerializeField] float playerMovementSpeed;
 
     public int lives;
     public int characterType;
@@ -111,19 +113,22 @@ public class Player : MonoBehaviour
         blocking = false;
         lives = maxLives;
         canHitBox = true;
-        switch (playerNumber)
-        {
-            case PlayerIndex.Player1: PlayerTextStart = "P1: "; break;
-            case PlayerIndex.Player2: PlayerTextStart = "P2: "; break;
-        }
+
         armourCheck.SetAllArmourOn();
     }
     private void Update()
     {
+        playerMovementSpeed = playerInput.GetHorizontal() * CharacterSpeed();
+        playerVerticalInput = playerInput.GetHorizontal();
+        CheckState();
+        Attack();
+        CheckDirection();
         hasArmour = armourCheck.HasArmour();
-        playerLives.text = (PlayerTextStart + lives);
-        playerImage.sprite = GameManager.GetSprite(playerNumber);
         ReduceCounter();
+
+
+        playerLives.text = (playerSetup.GetPlayerText() + lives);
+
         if (GameManager.CheckIsInBounds(transform.position))
         {
             lives--;
@@ -272,19 +277,21 @@ public class Player : MonoBehaviour
 
     private void Die()
     {
-        Debug.Log("Im ded fxi tithis");
+        Debug.Log("Player Dead");
     }
 
     private void Respawn()
     {
-        Debug.Log("I'm currently here " + transform.position + " Do something becaus i'm ded");
+        Debug.Log("Player current position " + transform.position + "Respawn character");
         transform.position = new Vector3(0, 10, 0);
     }
 
     private void FixedUpdate()
     {
+        previousVelocity = rb.velocity.y;
         CurrentVelocity = rb.velocity.magnitude;
         YVelocity = rb.velocity.y;
+        VerticalState();
         Move();
         if(gravityOn == false)
         {
@@ -301,11 +308,34 @@ public class Player : MonoBehaviour
         }
     }
 
+    void VerticalState()
+    {
+        if(rb.velocity.y != 0)
+        {
+            if(rb.velocity.y > 0.1f)
+            {
+                jumping = true;
+                falling = false;
+                grounded = false;
+            }
+            else if(rb.velocity.y < -0.1f)
+            {
+                jumping = false;
+                falling = true;
+                grounded = false;
+            }
+            else
+            {
+                jumping = false;
+                falling = true;
+            }
+        }
+    }
+
     void Move()
     {
         if(CurrentState == State.busy)
         {
-            rb.velocity = new Vector3(playerInput.GetHorizontal() * CharacterSpeed(), rb.velocity.y, 0) + addForceValue;
             return;
         }
         else
@@ -479,7 +509,17 @@ public class Player : MonoBehaviour
         hitDirection = Hit;
         addForceValue = AddForce(Power - (armourCheck.knockBackResistance + knockbackResistance));
     }
-
+    public void RaycastGroundCheck(RaycastHit hit)
+    {
+        if (falling == true)
+        {
+            if (hit.collider.CompareTag("Ground") || (hit.collider.CompareTag("Platform")))
+            {
+                Debug.Log("Hit Ground");
+                LandOnGround(hit);
+            }
+        }
+    }
     private void LandOnGround(RaycastHit hit)
     {
         distanceToGround = hit.distance;
@@ -492,20 +532,11 @@ public class Player : MonoBehaviour
 
         grounded = true;
     }
-    public void PlayerGroundedFalse()
+    public void PlayerGroundedIsFalse()
     {
         grounded = false;
     }
-    public void RaycastGroundCheck(RaycastHit hit)
-    {
-        if (falling == true)
-        {
-            if (hit.collider.CompareTag("Ground") || (hit.collider.CompareTag("Platform")))
-            {
-                LandOnGround(hit);
-            }
-        }
-    }
+
     public void RayCasterLeftWallCheck(RaycastHit hit)
     {
         if (jumping == true || falling == true || grounded == true)

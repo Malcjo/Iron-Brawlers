@@ -50,9 +50,12 @@ public class GameManager : MonoBehaviour
         {
             return;
         }
-        if(playersInScene[0].lives == 0 || playersInScene[1].lives == 0)
+        for(int i = 0; i < playersInScene.Length; i++)
         {
-            mainMenu.GoToCharacterSelect();
+            if (playersInScene[i].lives == 0)
+            {
+                mainMenu.GoToCharacterSelect();
+            }
         }
     }
 

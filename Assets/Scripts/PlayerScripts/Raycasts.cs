@@ -70,7 +70,7 @@ public class Raycasts : MonoBehaviour
             player.SetCurrentWallNone();
         }
     }
-    
+
 
 
     //--------------------------------------------------------------------------------
@@ -97,9 +97,10 @@ public class Raycasts : MonoBehaviour
         }
         else if (!Physics.Raycast(rayCastOrigin - new Vector3(0, 0.75f, 0), Vector3.down, out hit, 0.15f))
         {
-            player.PlayerGroundedFalse();
+            player.PlayerGroundedIsFalse();
         }
 
     }
+
 
 }
