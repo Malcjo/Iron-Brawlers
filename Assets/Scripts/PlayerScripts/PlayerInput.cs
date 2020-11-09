@@ -24,8 +24,11 @@ public class PlayerInput : MonoBehaviour
     [SerializeField]
     private float horizontalInput;
 
+    [SerializeField] Player.Wall currentWall;
+
     private void Update()
     {
+        currentWall = player.GetCurrentWall();
         HorizontalInput();
         BlockInput();
         JumpInput();
@@ -48,15 +51,15 @@ public class PlayerInput : MonoBehaviour
             case Player.Wall.none:
                 break;
             case Player.Wall.leftWall:
-                if (horizontalInput < 0)
+                if (HorizontalValue < 0)
                 {
-                    horizontalInput = 0;
+                    HorizontalValue = 0;
                 }
                 break;
             case Player.Wall.rightWall:
-                if (horizontalInput > 0)
+                if (HorizontalValue > 0)
                 {
-                    horizontalInput = 0;
+                    HorizontalValue = 0;
                 }
                 break;
         }
@@ -93,10 +96,6 @@ public class PlayerInput : MonoBehaviour
         {
             BlockInputQueued = true;
         }
-        else
-        {
-            BlockInputQueued = false;
-        }
     }
     void ArmourBreakInput()
     {
@@ -125,7 +124,6 @@ public class PlayerInput : MonoBehaviour
     {
         return BlockInputQueued;
     }
-
     public bool ShouldCrouch()
     {
         return CrouchInputQueued;

@@ -99,7 +99,6 @@ public class Raycasts : MonoBehaviour
         {
             player.PlayerGroundedIsFalse();
         }
-
     }
 
 

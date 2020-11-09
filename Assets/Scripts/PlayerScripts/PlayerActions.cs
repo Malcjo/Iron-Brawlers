@@ -6,7 +6,6 @@ public class PlayerActions : MonoBehaviour
 {
     public List<string> animlist = new List<string>();
     public Animator anim;
-    [SerializeField] ActionManager attackManager;
     [SerializeField] Player player;
     [SerializeField] Hitbox hitboxScript;
     [SerializeField] HitBoxManager hitboxManager;
@@ -39,31 +38,41 @@ public class PlayerActions : MonoBehaviour
         }
     }
 
-    public void JumpLanding(bool val)
+    public void JumpLanding()
     {
-        anim.SetBool("Jumping", val);
-        
+        anim.Play("Jumping");
     }
     
     public void Running(bool val)
     {
-        anim.SetBool("Running", val);
+        if (val == true)
+        {
+            anim.Play("Fast Run");
+        }
     }
 
-    public void Idle()
+    public void Idle(bool val)
     {
-        anim.SetBool("Running", false);
+        if (val == true)
+        {
+            anim.Play("Idle");
+        }
     }
-   
 
     public void Crouching(bool val)
     {
-        anim.SetBool("isCrouching", val);
+        if(val == true)
+        {
+            anim.Play("isCrouching");
+        }
     }
 
     public void Jump(bool val)
     {
-        anim.SetBool("Jumping", val);     
+        if(val == true)
+        {
+            anim.Play("Jumping");
+        }
     }
 
     public void DoubleJump(bool val)

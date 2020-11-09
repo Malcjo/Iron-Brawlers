@@ -51,6 +51,7 @@ public class Player : MonoBehaviour
 
     private bool canHitBox;
     private bool inAnimation;
+    [SerializeField]
     private bool grounded;
     private bool hasArmour;
     private bool hitStun;
@@ -61,9 +62,13 @@ public class Player : MonoBehaviour
     [SerializeField]
     private bool gravityOn;
     private bool canTurn;
+    [SerializeField]
     private bool falling;
+    [SerializeField]
     private bool jumping;
+    [SerializeField]
     private bool running;
+    [SerializeField]
     private bool crouching;
     private bool canDoubleJump;
 
@@ -122,6 +127,8 @@ public class Player : MonoBehaviour
         playerVerticalInput = playerInput.GetHorizontal();
         CheckState();
         Attack();
+        Block();
+        ArmourBreak();
         CheckDirection();
         hasArmour = armourCheck.HasArmour();
         ReduceCounter();
@@ -153,25 +160,16 @@ public class Player : MonoBehaviour
             canTurn = true;
             playerActions.Jump(false);
             playerActions.DoubleJump(false);
-            CurrentState = State.idle;
         }
         else if (grounded == false)
         {
             canTurn = false;
 
         }
-        switch (CurrentState)
-        {
-            case State.idle: IdleStateCheck(); break;
-            case State.jumping: JumpStateCheck(); break;
-            case State.running: RunningStateCheck(); break;
-            case State.crouching: CrouchStateCheck(); break;
-        }
     }
-
     private void Attack()
     {
-        if (playerInput.ShouldAttack())
+        if (playerInput.ShouldAttack() == true)
         {
             BusyCheck();
             if (grounded)
@@ -179,19 +177,23 @@ public class Player : MonoBehaviour
                 if (crouching)
                 {
                     playerActions.LegSweep();
+                    Debug.Log("Leg Sweep");
                 }
                 else
                 {
                     if (running)
                     {
                         playerActions.Heavy();
+                        Debug.Log("Heavy");
                     }
-                    playerActions.JabCombo();
                 }
+                playerActions.JabCombo();
+                Debug.Log("Jab");
             }
             else
             {
                 playerActions.AerialAttack();
+                Debug.Log("Aerial");
             }
         }
     }
@@ -199,20 +201,7 @@ public class Player : MonoBehaviour
     {
         return blocking;
     }
-    void Slide()
-    {
-    }
 
-    void IdleStateCheck()
-    {
-        playerActions.Crouching(false);
-        playerActions.Jump(false);
-        playerActions.Running(false);
-    }
-
-    void RunningStateCheck()
-    {
-    }
     public void Jump()
     {
         if (playerInput.ShouldJump())
@@ -228,11 +217,7 @@ public class Player : MonoBehaviour
             }
         }
     }
-    void JumpStateCheck()
-    {
-        playerActions.Jump(true);
-        canDoubleJump = true;
-    }
+
     void DoubleJumpCheck()
     {
         if (canDoubleJump == true)
@@ -269,11 +254,7 @@ public class Player : MonoBehaviour
         }
         return 0;
     }
-    void CrouchStateCheck()
-    {
-        crouching = true;
-        playerActions.Crouching(true);
-    }
+
 
     private void Die()
     {
@@ -288,11 +269,13 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        previousVelocity = rb.velocity.y;
-        CurrentVelocity = rb.velocity.magnitude;
-        YVelocity = rb.velocity.y;
         VerticalState();
         Move();
+
+        CurrentVelocity = rb.velocity.magnitude;
+        YVelocity = rb.velocity.y;
+
+
         if(gravityOn == false)
         {
             return;
@@ -310,6 +293,7 @@ public class Player : MonoBehaviour
 
     void VerticalState()
     {
+        previousVelocity = rb.velocity.y;
         if(rb.velocity.y != 0)
         {
             if(rb.velocity.y > 0.1f)
@@ -324,26 +308,30 @@ public class Player : MonoBehaviour
                 falling = true;
                 grounded = false;
             }
-            else
+            else if (rb.velocity.y > -0.1f && rb.velocity.y < 0.1f)
             {
                 jumping = false;
-                falling = true;
+                falling = false;
             }
         }
     }
 
     void Move()
     {
-        if(CurrentState == State.busy)
+        if(CurrentState == State.idle)
         {
+            rb.velocity = new Vector3(Mathf.Lerp(rb.velocity.x, 0, friction), rb.velocity.y, 0);
+            playerActions.Running(false);
+            playerActions.Idle(true);
             return;
         }
-        else
+        else if (CurrentState == State.running)
         {
             if (grounded == true)
             {
-                rb.velocity = new Vector3(Mathf.Lerp(rb.velocity.x, 0, friction), rb.velocity.y, 0);
-                return;
+                playerActions.Running(true);
+                playerActions.Idle(false);
+                rb.velocity = new Vector3(playerInput.GetHorizontal() * CharacterSpeed(), rb.velocity.y, 0) + addForceValue;
             }
             else if (grounded == false)
             {
@@ -425,14 +413,15 @@ public class Player : MonoBehaviour
         }
     }
 
-
     private void ArmourBreak()
     {
         BusyCheck();
-        if (hasArmour)
+        if (playerInput.ShouldArmourBreak())
         {
-            CurrentState = State.busy;
-            playerActions.ArmourBreak();
+            if (hasArmour)
+            {
+                playerActions.ArmourBreak();
+            }
         }
     }
     private void Block()
@@ -509,6 +498,12 @@ public class Player : MonoBehaviour
         hitDirection = Hit;
         addForceValue = AddForce(Power - (armourCheck.knockBackResistance + knockbackResistance));
     }
+
+    #region Raycast Checker
+    private float distanceToGround;
+    private float distanceToCeiling;
+    private float distanceToRight;
+    private float distanceToLeft;
     public void RaycastGroundCheck(RaycastHit hit)
     {
         if (falling == true)
@@ -531,7 +526,10 @@ public class Player : MonoBehaviour
         distanceToGround = hit.distance;
 
         grounded = true;
+        falling = false;
+        jumping = false;
     }
+
     public void PlayerGroundedIsFalse()
     {
         grounded = false;
@@ -570,10 +568,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private float distanceToGround;
-    private float distanceToCeiling;
-    private float distanceToRight;
-    private float distanceToLeft;
+
     public void HitLeft(RaycastHit hit)
     {
         distanceToLeft = hit.distance;
@@ -585,6 +580,7 @@ public class Player : MonoBehaviour
             }
         }
         distanceToLeft = hit.distance;
+        currentWall = Wall.leftWall;
     }
     public void HitRight(RaycastHit hit)
     {
@@ -597,6 +593,7 @@ public class Player : MonoBehaviour
             }
         }
         distanceToRight = hit.distance;
+        currentWall = Wall.rightWall;
     }
     public void HitCeiling(RaycastHit hit)
     {
@@ -612,9 +609,11 @@ public class Player : MonoBehaviour
     {
         return currentWall;
     }
-    public Wall SetCurrentWallNone()
+    public void SetCurrentWallNone()
     {
-        return Wall.none;
+        currentWall = Wall.none;
     }
+    #endregion
+
 }
 
