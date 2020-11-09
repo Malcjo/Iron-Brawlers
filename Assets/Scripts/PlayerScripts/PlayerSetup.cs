@@ -68,7 +68,7 @@ public class PlayerSetup : MonoBehaviour
     }
     void SetupControls()
     {
-        switch(player.PlayerNumber())
+        switch(player.playerNumber)
         {
             case Player.PlayerIndex.Player1:
                 PlayerTextStart = "P1: ";

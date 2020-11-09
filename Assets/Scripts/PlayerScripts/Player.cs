@@ -6,12 +6,19 @@ public class Player : MonoBehaviour
 {
     public enum PlayerIndex { Player1, Player2 };
 
+    public PlayerIndex playerNumber;
+
+    public State CurrentState;
+    public VState currentVerticalState;
+
+
     [SerializeField]
     public float gravity = -10f;
     [SerializeField]
     private float friction = 0.25f;
     [SerializeField]
     private int maxLives = 3;
+
 
 
     [SerializeField] private float speed = 6.5f;
@@ -44,52 +51,37 @@ public class Player : MonoBehaviour
     private float CurrentVelocity;
     [SerializeField]
     private float YVelocity;
+    private float previousVelocity;
 
     public bool DebugModeOn;
 
 
 
     private bool canHitBox;
-    private bool inAnimation;
-    [SerializeField]
-    private bool grounded;
     private bool hasArmour;
     private bool hitStun;
     private bool blocking;
-    private bool canJump;
+    [SerializeField] private bool canJump;
     private bool canAirMove;
     private bool reduceAddForce;
     [SerializeField]
     private bool gravityOn;
     private bool canTurn;
-    [SerializeField]
-    private bool falling;
-    [SerializeField]
-    private bool jumping;
-    [SerializeField]
-    private bool running;
-    [SerializeField]
-    private bool crouching;
     private bool canDoubleJump;
 
     [SerializeField] private float jumpForce = 9;
     private float hitStunTimer;
-    private float previousVelocity;
 
-    private int currentJumpIndex;
-    private int maxJumps = 2;
+
+    [SerializeField] private int currentJumpIndex;
+    [SerializeField] private int maxJumps = 2;
     private int facingDirection;
 
     private Vector3 addForceValue;
     private Vector3 hitDirection;
-
-    private Transform[] characterJoints;
-    [SerializeField] float playerVerticalInput;
-    [SerializeField] float playerMovementSpeed;
-
     public int lives;
     public int characterType;
-    public PlayerIndex playerNumber;
+
     private Wall currentWall;
     public enum Wall
     {
@@ -97,19 +89,20 @@ public class Player : MonoBehaviour
         rightWall,
         none
     }
-
+    public enum VState
+    {
+        grounded,
+        jumping,
+        falling
+    }
     public enum State
     {
         idle,
         crouching,
-        jumping,
-        running,
-        attacking,
+        moving,
         busy
     }
 
-    [SerializeField]
-    private State CurrentState;
 
     void Start()
     {
@@ -123,10 +116,7 @@ public class Player : MonoBehaviour
     }
     private void Update()
     {
-        playerMovementSpeed = playerInput.GetHorizontal() * CharacterSpeed();
-        playerVerticalInput = playerInput.GetHorizontal();
         CheckState();
-        Attack();
         Block();
         ArmourBreak();
         CheckDirection();
@@ -148,50 +138,73 @@ public class Player : MonoBehaviour
             }
         }
     }
-    public PlayerIndex PlayerNumber()
+    private void FixedUpdate()
     {
-        return playerNumber;
+        VerticalState();
+        Move();
+
+        CurrentVelocity = rb.velocity.magnitude;
+        YVelocity = rb.velocity.y;
+
+
+        if (gravityOn == false)
+        {
+            return;
+        }
+        else if (gravityOn == true)
+        {
+            Gravity();
+        }
+
+        if (rb.velocity.y < -20)
+        {
+            rb.velocity = new Vector3(playerInput.GetHorizontal() * CharacterSpeed(), -20, 0) + addForceValue;
+        }
     }
     void CheckState()
     {
-        if (grounded == true)
+        if (currentVerticalState == VState.grounded)
         {
             currentJumpIndex = 2;
             canTurn = true;
             playerActions.Jump(false);
             playerActions.DoubleJump(false);
-        }
-        else if (grounded == false)
-        {
-            canTurn = false;
-
-        }
-    }
-    private void Attack()
-    {
-        if (playerInput.ShouldAttack() == true)
-        {
-            BusyCheck();
-            if (grounded)
+            CurrentState = State.idle;
+            if (playerInput.ShouldAttack() == true)
             {
-                if (crouching)
+                if (CurrentState == State.idle)
                 {
-                    playerActions.LegSweep();
-                    Debug.Log("Leg Sweep");
+                    CurrentState = State.busy;
+                    playerActions.JabCombo();
+                    Debug.Log("Jab");
                 }
                 else
                 {
-                    if (running)
+                    if (CurrentState == State.crouching)
                     {
-                        playerActions.Heavy();
-                        Debug.Log("Heavy");
+                        CurrentState = State.busy;
+                        playerActions.LegSweep();
+                        Debug.Log("Leg Sweep");
+                    }
+                    else
+                    {
+                        if (CurrentState == State.moving)
+                        {
+                            CurrentState = State.busy;
+                            playerActions.Heavy();
+                            Debug.Log("Heavy");
+                        }
                     }
                 }
-                playerActions.JabCombo();
-                Debug.Log("Jab");
             }
-            else
+
+        }
+        else if (currentVerticalState == VState.jumping || currentVerticalState == VState.falling)
+        {
+            canTurn = false;
+            if (playerInput.ShouldAttack() == true)
             {
+                CurrentState = State.busy;
                 playerActions.AerialAttack();
                 Debug.Log("Aerial");
             }
@@ -209,8 +222,7 @@ public class Player : MonoBehaviour
             if (currentJumpIndex < maxJumps)
             {
                 DoubleJumpCheck();
-                CurrentState = State.jumping;
-                grounded = false;
+                currentVerticalState = VState.jumping;
                 rb.velocity = (new Vector3(rb.velocity.x, JumpForceCalculator(), rb.velocity.z));
                 currentJumpIndex++;
                 playerActions.Jump(true);
@@ -222,7 +234,7 @@ public class Player : MonoBehaviour
     {
         if (canDoubleJump == true)
         {
-            if (falling = true || jumping == true)
+            if (currentVerticalState == VState.falling || currentVerticalState == VState.jumping)
             {
                 canTurn = true;
                 playerActions.DoubleJump(true);
@@ -240,12 +252,12 @@ public class Player : MonoBehaviour
         }
         else if (currentJumpIndex > 0)
         {
-            if (jumping == false && falling == false)
+            if (currentVerticalState == VState.grounded)
             {
                 jumpForceValue = jumpForce - armourCheck.reduceJumpForce;
                 return jumpForceValue;
             }
-            else if (jumping == true || falling == true)
+            else if (currentVerticalState == VState.jumping || currentVerticalState == VState.falling)
             {
                 Debug.Log("Jump in air");
                 jumpForceValue = (jumpForce + 2) - armourCheck.reduceJumpForce;
@@ -254,42 +266,17 @@ public class Player : MonoBehaviour
         }
         return 0;
     }
-
-
     private void Die()
     {
         Debug.Log("Player Dead");
     }
-
     private void Respawn()
     {
         Debug.Log("Player current position " + transform.position + "Respawn character");
         transform.position = new Vector3(0, 10, 0);
     }
 
-    private void FixedUpdate()
-    {
-        VerticalState();
-        Move();
 
-        CurrentVelocity = rb.velocity.magnitude;
-        YVelocity = rb.velocity.y;
-
-
-        if(gravityOn == false)
-        {
-            return;
-        }
-        else if(gravityOn == true)
-        {
-            Gravity();
-        }
-
-        if(rb.velocity.y < -20)
-        {
-            rb.velocity = new Vector3(playerInput.GetHorizontal() * CharacterSpeed(), -20, 0) + addForceValue;
-        }
-    }
 
     void VerticalState()
     {
@@ -298,26 +285,25 @@ public class Player : MonoBehaviour
         {
             if(rb.velocity.y > 0.1f)
             {
-                jumping = true;
-                falling = false;
-                grounded = false;
+                currentVerticalState = VState.jumping;
             }
             else if(rb.velocity.y < -0.1f)
             {
-                jumping = false;
-                falling = true;
-                grounded = false;
+                currentVerticalState = VState.falling;
             }
             else if (rb.velocity.y > -0.1f && rb.velocity.y < 0.1f)
             {
-                jumping = false;
-                falling = false;
+                currentVerticalState = VState.grounded;
             }
         }
     }
 
     void Move()
     {
+        if(CurrentState == State.busy)
+        {
+            return;
+        }
         if(CurrentState == State.idle)
         {
             rb.velocity = new Vector3(Mathf.Lerp(rb.velocity.x, 0, friction), rb.velocity.y, 0);
@@ -325,15 +311,15 @@ public class Player : MonoBehaviour
             playerActions.Idle(true);
             return;
         }
-        else if (CurrentState == State.running)
+        else if (CurrentState == State.moving)
         {
-            if (grounded == true)
+            if (currentVerticalState == VState.grounded)
             {
                 playerActions.Running(true);
                 playerActions.Idle(false);
                 rb.velocity = new Vector3(playerInput.GetHorizontal() * CharacterSpeed(), rb.velocity.y, 0) + addForceValue;
             }
-            else if (grounded == false)
+            else if (currentVerticalState == VState.jumping || currentVerticalState == VState.falling)
             {
                 if (canAirMove == false)
                 {
@@ -366,12 +352,12 @@ public class Player : MonoBehaviour
             {
                 return;
             }
-            CurrentState = State.running;
+            CurrentState = State.moving;
             transform.rotation = Quaternion.Euler(0, 180, 0);
             facingDirection = 1;
             if(facingDirection > 0.5f)
             {
-                running = true;
+                CurrentState = State.moving;
 
             }
         }
@@ -381,18 +367,17 @@ public class Player : MonoBehaviour
             {
                 return;
             }
-            CurrentState = State.running;
+            CurrentState = State.moving;
             transform.rotation = Quaternion.Euler(0, 0, 0);
             facingDirection = -1;
             if(facingDirection < -0.5f)
             {
-                running = true;
+                CurrentState = State.moving;
             }
         }
         else if(facingDirection == 0)
         {
             CurrentState = State.idle;
-            running = false;
         }
     }
     public int FacingDirection()
@@ -402,11 +387,12 @@ public class Player : MonoBehaviour
     }
     void Gravity()
     {
-        if (grounded == false)
+        if (currentVerticalState == VState.falling || currentVerticalState == VState.jumping)
         {
+            gravity = 10;
             rb.AddForce(Vector3.down * gravity * ((weight + armourCheck.armourWeight) / 10));
         }
-        else if(grounded == true)
+        else if(currentVerticalState == VState.grounded)
         {
             rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, 0);
             gravity = 0;
@@ -506,7 +492,7 @@ public class Player : MonoBehaviour
     private float distanceToLeft;
     public void RaycastGroundCheck(RaycastHit hit)
     {
-        if (falling == true)
+        if (currentVerticalState == VState.falling)
         {
             if (hit.collider.CompareTag("Ground") || (hit.collider.CompareTag("Platform")))
             {
@@ -525,19 +511,17 @@ public class Player : MonoBehaviour
         }
         distanceToGround = hit.distance;
 
-        grounded = true;
-        falling = false;
-        jumping = false;
+        currentVerticalState = VState.grounded;
     }
 
     public void PlayerGroundedIsFalse()
     {
-        grounded = false;
+        currentVerticalState = VState.falling;
     }
 
     public void RayCasterLeftWallCheck(RaycastHit hit)
     {
-        if (jumping == true || falling == true || grounded == true)
+        if (currentVerticalState == VState.jumping || currentVerticalState == VState.falling || currentVerticalState == VState.grounded)
         {
             if (hit.collider.CompareTag("Ground"))
             {
@@ -548,7 +532,7 @@ public class Player : MonoBehaviour
     }
     public void RayCasterRightWallCheck(RaycastHit hit)
     {
-        if (jumping == true || falling == true || grounded == true)
+        if (currentVerticalState == VState.jumping || currentVerticalState == VState.falling || currentVerticalState == VState.grounded)
         {
             if (hit.collider.CompareTag("Ground"))
             {
@@ -559,7 +543,7 @@ public class Player : MonoBehaviour
     }
     public void RayCastCeilingCheck(RaycastHit hit)
     {
-        if (jumping == true)
+        if (currentVerticalState == VState.jumping)
         {
             if (hit.collider.CompareTag("Ground"))
             {

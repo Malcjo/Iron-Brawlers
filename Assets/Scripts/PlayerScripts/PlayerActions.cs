@@ -35,6 +35,10 @@ public class PlayerActions : MonoBehaviour
             comboTimer = 1;
             hitboxScript._attackDir = Attackdirection.Forward;
             hitboxScript._attackType = AttackType.Jab;
+            if (anim.GetCurrentAnimatorStateInfo(0).IsName(animlist[comboStep]))
+            {
+                player.CurrentState = Player.State.busy;
+            }
         }
     }
 
