@@ -55,7 +55,10 @@ public class Player : MonoBehaviour
 
     public bool DebugModeOn;
 
-
+    private float distanceToGround;
+    private float distanceToCeiling;
+    private float distanceToRight;
+    private float distanceToLeft;
 
     private bool canHitBox;
     private bool hasArmour;
@@ -106,205 +109,36 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        gravityOn = true;
-        currentJumpIndex = maxJumps;
-        blocking = false;
-        lives = maxLives;
-        canHitBox = true;
 
-        armourCheck.SetAllArmourOn();
     }
     private void Update()
     {
-        CheckState();
-        Block();
-        ArmourBreak();
-        CheckDirection();
-        hasArmour = armourCheck.HasArmour();
-        ReduceCounter();
 
-
-        playerLives.text = (playerSetup.GetPlayerText() + lives);
-
-        if (GameManager.CheckIsInBounds(transform.position))
-        {
-            lives--;
-            if (lives < 0)
-            {
-                Die();
-            } else
-            {
-                Respawn();
-            }
-        }
     }
     private void FixedUpdate()
     {
-        VerticalState();
-        Move();
 
-        CurrentVelocity = rb.velocity.magnitude;
-        YVelocity = rb.velocity.y;
-
-
-        if (gravityOn == false)
-        {
-            return;
-        }
-        else if (gravityOn == true)
-        {
-            Gravity();
-        }
-
-        if (rb.velocity.y < -20)
-        {
-            rb.velocity = new Vector3(playerInput.GetHorizontal() * CharacterSpeed(), -20, 0) + addForceValue;
-        }
     }
-    void CheckState()
+    void Gravity()
     {
-        if (currentVerticalState == VState.grounded)
+        if (currentVerticalState == VState.falling || currentVerticalState == VState.jumping)
         {
-            currentJumpIndex = 2;
-            canTurn = true;
-            playerActions.Jump(false);
-            playerActions.DoubleJump(false);
-            CurrentState = State.idle;
-            if (playerInput.ShouldAttack() == true)
-            {
-                if (CurrentState == State.idle)
-                {
-                    CurrentState = State.busy;
-                    playerActions.JabCombo();
-                    Debug.Log("Jab");
-                }
-                else
-                {
-                    if (CurrentState == State.crouching)
-                    {
-                        CurrentState = State.busy;
-                        playerActions.LegSweep();
-                        Debug.Log("Leg Sweep");
-                    }
-                    else
-                    {
-                        if (CurrentState == State.moving)
-                        {
-                            CurrentState = State.busy;
-                            playerActions.Heavy();
-                            Debug.Log("Heavy");
-                        }
-                    }
-                }
-            }
-
+            gravity = 10;
+            rb.AddForce(Vector3.down * gravity * ((weight + armourCheck.armourWeight) / 10));
         }
-        else if (currentVerticalState == VState.jumping || currentVerticalState == VState.falling)
+        else if (currentVerticalState == VState.grounded)
         {
-            canTurn = false;
-            if (playerInput.ShouldAttack() == true)
-            {
-                CurrentState = State.busy;
-                playerActions.AerialAttack();
-                Debug.Log("Aerial");
-            }
+            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, 0);
+            gravity = 0;
         }
     }
-    public bool GetBlocking()
-    {
-        return blocking;
-    }
-
-    public void Jump()
-    {
-        if (playerInput.ShouldJump())
-        {
-            if (currentJumpIndex < maxJumps)
-            {
-                DoubleJumpCheck();
-                currentVerticalState = VState.jumping;
-                rb.velocity = (new Vector3(rb.velocity.x, JumpForceCalculator(), rb.velocity.z));
-                currentJumpIndex++;
-                playerActions.Jump(true);
-            }
-        }
-    }
-
-    void DoubleJumpCheck()
-    {
-        if (canDoubleJump == true)
-        {
-            if (currentVerticalState == VState.falling || currentVerticalState == VState.jumping)
-            {
-                canTurn = true;
-                playerActions.DoubleJump(true);
-            }
-        }
-        canDoubleJump = false;
-    }
-
-    public float JumpForceCalculator()
-    {
-        float jumpForceValue;
-        if (currentJumpIndex == 0)
-        {
-            return SetVelocityY();
-        }
-        else if (currentJumpIndex > 0)
-        {
-            if (currentVerticalState == VState.grounded)
-            {
-                jumpForceValue = jumpForce - armourCheck.reduceJumpForce;
-                return jumpForceValue;
-            }
-            else if (currentVerticalState == VState.jumping || currentVerticalState == VState.falling)
-            {
-                Debug.Log("Jump in air");
-                jumpForceValue = (jumpForce + 2) - armourCheck.reduceJumpForce;
-                return jumpForceValue;
-            }
-        }
-        return 0;
-    }
-    private void Die()
-    {
-        Debug.Log("Player Dead");
-    }
-    private void Respawn()
-    {
-        Debug.Log("Player current position " + transform.position + "Respawn character");
-        transform.position = new Vector3(0, 10, 0);
-    }
-
-
-
-    void VerticalState()
-    {
-        previousVelocity = rb.velocity.y;
-        if(rb.velocity.y != 0)
-        {
-            if(rb.velocity.y > 0.1f)
-            {
-                currentVerticalState = VState.jumping;
-            }
-            else if(rb.velocity.y < -0.1f)
-            {
-                currentVerticalState = VState.falling;
-            }
-            else if (rb.velocity.y > -0.1f && rb.velocity.y < 0.1f)
-            {
-                currentVerticalState = VState.grounded;
-            }
-        }
-    }
-
     void Move()
     {
-        if(CurrentState == State.busy)
+        if (CurrentState == State.busy)
         {
             return;
         }
-        if(CurrentState == State.idle)
+        if (CurrentState == State.idle)
         {
             rb.velocity = new Vector3(Mathf.Lerp(rb.velocity.x, 0, friction), rb.velocity.y, 0);
             playerActions.Running(false);
@@ -315,9 +149,9 @@ public class Player : MonoBehaviour
         {
             if (currentVerticalState == VState.grounded)
             {
+                rb.velocity = new Vector3(playerInput.GetHorizontal() * CharacterSpeed(), rb.velocity.y, 0) + addForceValue;
                 playerActions.Running(true);
                 playerActions.Idle(false);
-                rb.velocity = new Vector3(playerInput.GetHorizontal() * CharacterSpeed(), rb.velocity.y, 0) + addForceValue;
             }
             else if (currentVerticalState == VState.jumping || currentVerticalState == VState.falling)
             {
@@ -333,144 +167,15 @@ public class Player : MonoBehaviour
             }
         }
     }
-    public float CharacterSpeed()
+    public Wall GetCurrentWall()
     {
-        float characterSpeed = speed - armourCheck.armourReduceSpeed;
-        if (hitStun == true)
-        {
-            characterSpeed *= 0 + (5 * Time.deltaTime);
-        }
-        return characterSpeed;
+        return currentWall;
     }
-    private void CheckDirection()
+    public void SetCurrentWallNone()
     {
-        var facingDirection = playerInput.GetHorizontal();
-
-        if (facingDirection > 0)
-        {
-            if (canTurn == false)
-            {
-                return;
-            }
-            CurrentState = State.moving;
-            transform.rotation = Quaternion.Euler(0, 180, 0);
-            facingDirection = 1;
-            if(facingDirection > 0.5f)
-            {
-                CurrentState = State.moving;
-
-            }
-        }
-        else if (facingDirection < 0)
-        {
-            if (canTurn == false)
-            {
-                return;
-            }
-            CurrentState = State.moving;
-            transform.rotation = Quaternion.Euler(0, 0, 0);
-            facingDirection = -1;
-            if(facingDirection < -0.5f)
-            {
-                CurrentState = State.moving;
-            }
-        }
-        else if(facingDirection == 0)
-        {
-            CurrentState = State.idle;
-        }
+        currentWall = Wall.none;
     }
-    public int FacingDirection()
-    {
-        var _facingDirection = facingDirection;
-        return _facingDirection;
-    }
-    void Gravity()
-    {
-        if (currentVerticalState == VState.falling || currentVerticalState == VState.jumping)
-        {
-            gravity = 10;
-            rb.AddForce(Vector3.down * gravity * ((weight + armourCheck.armourWeight) / 10));
-        }
-        else if(currentVerticalState == VState.grounded)
-        {
-            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, 0);
-            gravity = 0;
-        }
-    }
-
-    private void ArmourBreak()
-    {
-        BusyCheck();
-        if (playerInput.ShouldArmourBreak())
-        {
-            if (hasArmour)
-            {
-                playerActions.ArmourBreak();
-            }
-        }
-    }
-    private void Block()
-    {
-        BusyCheck();
-        if (playerInput.ShouldBlock())
-        {
-            CurrentState = State.busy;
-            playerActions.Block();
-        }
-        else
-        {
-            playerActions.StopBlock();
-        }
-    }
-
-    private void BusyCheck()
-    {
-        if (CurrentState == State.busy)
-        {
-            return;
-        }
-    }
-    public float SetVelocityY()
-    {
-        return rb.velocity.y;
-    }
-    public void HitStun()
-    {
-        playerActions.HitStun();
-    }
-
-    #region ReduceValues
-    void ReduceCounter()
-    {
-        ReduceHit();
-        ReduceHitStun();
-    }
-
-    void ReduceHit()
-    {
-        addForceValue.x = Mathf.Lerp(addForceValue.x, 0, 7f * Time.deltaTime);
-        addForceValue.y = Mathf.Lerp(addForceValue.y, 0, 27f * Time.deltaTime);
-
-        //reducing to zero if small value
-        if (addForceValue.magnitude < 0.05f && addForceValue.magnitude > -0.05f)
-        {
-            addForceValue = Vector3.zero;
-        }
-    }
-    void ReduceHitStun()
-    {
-        if (hitStun == true)
-        {
-            hitStunTimer -= 1 * Time.deltaTime;
-            if (hitStunTimer < 0.001f)
-            {
-                hitStunTimer = 0;
-                hitStun = false;
-            }
-        }
-    }
-    #endregion
+    #region Damaging
     private Vector3 AddForce(float hitStrength)
     {
         Vector3 addForceValue = ((hitDirection) * (hitStrength));
@@ -484,12 +189,47 @@ public class Player : MonoBehaviour
         hitDirection = Hit;
         addForceValue = AddForce(Power - (armourCheck.knockBackResistance + knockbackResistance));
     }
+    #endregion
+    public float CharacterSpeed()
+    {
+        float characterSpeed = speed - armourCheck.armourReduceSpeed;
+        if (hitStun == true)
+        {
+            characterSpeed *= 0 + (5 * Time.deltaTime);
+        }
+        return characterSpeed;
+    }
+    public int FacingDirection()
+    {
+        var _facingDirection = facingDirection;
+        return _facingDirection;
+    }
+    void VerticalState()
+    {
+        previousVelocity = rb.velocity.y;
+        if (rb.velocity.y != 0)
+        {
+            if (rb.velocity.y > 0.1f)
+            {
+                currentVerticalState = VState.jumping;
+            }
+            else if (rb.velocity.y < -0.1f)
+            {
+                currentVerticalState = VState.falling;
+            }
+            else if (rb.velocity.y > -0.1f && rb.velocity.y < 0.1f)
+            {
+                currentVerticalState = VState.grounded;
+            }
+        }
+    }
+
+    public bool GetBlocking()
+    {
+        return blocking;
+    }
 
     #region Raycast Checker
-    private float distanceToGround;
-    private float distanceToCeiling;
-    private float distanceToRight;
-    private float distanceToLeft;
     public void RaycastGroundCheck(RaycastHit hit)
     {
         if (currentVerticalState == VState.falling)
@@ -513,12 +253,10 @@ public class Player : MonoBehaviour
 
         currentVerticalState = VState.grounded;
     }
-
     public void PlayerGroundedIsFalse()
     {
         currentVerticalState = VState.falling;
     }
-
     public void RayCasterLeftWallCheck(RaycastHit hit)
     {
         if (currentVerticalState == VState.jumping || currentVerticalState == VState.falling || currentVerticalState == VState.grounded)
@@ -551,8 +289,6 @@ public class Player : MonoBehaviour
             }
         }
     }
-
-
     public void HitLeft(RaycastHit hit)
     {
         distanceToLeft = hit.distance;
@@ -589,15 +325,6 @@ public class Player : MonoBehaviour
         }
         distanceToCeiling = hit.distance;
     }
-    public Wall GetCurrentWall()
-    {
-        return currentWall;
-    }
-    public void SetCurrentWallNone()
-    {
-        currentWall = Wall.none;
-    }
     #endregion
-
 }
 
