@@ -156,7 +156,6 @@ public class PlayerOld : MonoBehaviour
         {
             Gravity();
         }
-
         if (rb.velocity.y < -20)
         {
             rb.velocity = new Vector3(playerInput.GetHorizontal() * CharacterSpeed(), -20, 0) + addForceValue;

@@ -11,9 +11,11 @@ public class Player : MonoBehaviour
     public State CurrentState;
     public VState currentVerticalState;
 
+    [SerializeField]
+    private string CurrentStateName;
 
     [SerializeField]
-    public float gravity = -10f;
+    public float gravityValue = -10f;
     [SerializeField]
     private float friction = 0.25f;
     [SerializeField]
@@ -52,6 +54,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float YVelocity;
     private float previousVelocity;
+    [SerializeField]
+    private Vector3 V3Velocity;
 
     public bool DebugModeOn;
 
@@ -86,6 +90,9 @@ public class Player : MonoBehaviour
     public int characterType;
 
     private Wall currentWall;
+
+    private PlayerState MyState;
+
     public enum Wall
     {
         leftWall,
@@ -103,79 +110,180 @@ public class Player : MonoBehaviour
         idle,
         crouching,
         moving,
+        jumping,
         busy
     }
 
 
     void Start()
     {
-
+        MyState = new IdleState();
+        gravityOn = true;
     }
     private void Update()
     {
+        CharacterStates();
+
 
     }
     private void FixedUpdate()
     {
+        Observation();
+        GravityCheck();
 
+    }
+    #region State Machine
+    void CharacterStates()
+    {
+        VerticalState();
+        CurrentStateName = MyState.GiveName();
+        MyState.RunState(this, playerInput.GetHorizontal(), playerInput.ShouldAttack(), playerInput.ShouldCrouch(), playerInput.ShouldBlock());
+    }
+
+    public void SetState(PlayerState state)
+    {
+        MyState = state;
+    }
+
+    void GetState()
+    {
+        if (playerInput.ShouldJump())
+        {
+            CurrentState = State.jumping;
+        }
+        if (playerInput.ShouldCrouch())
+        {
+            CurrentState = State.crouching;
+        }
+        if (playerInput.ShouldBlock() || playerInput.ShouldAttack() || playerInput.ShouldAttack())
+        {
+            CurrentState = State.busy;
+        }
+    }
+    void RunCurrentState()
+    {
+        switch (CurrentState)
+        {
+            case State.idle:
+                RunIdleState();
+                break;
+            case State.jumping:
+                RunJumpingState();
+                break;
+            case State.crouching:
+                RunCrouchingState();
+                break;
+            case State.moving:
+                //RunMovingState();
+                break;
+            case State.busy:
+                RunBusyState();
+                break;
+        }
+    }
+
+    void RunIdleState()
+    {
+        rb.velocity = new Vector3(Mathf.Lerp(rb.velocity.x, 0, friction), rb.velocity.y, 0);
+        playerActions.Running(false);
+        playerActions.Idle(true);
+    }
+
+    void RunJumpingState()
+    {
+    }
+
+    void RunCrouchingState()
+    {
+
+    }
+    public void Move()
+    {
+        if (currentVerticalState == VState.grounded)
+        {
+            rb.velocity = new Vector3(playerInput.GetHorizontal() * CharacterSpeed(), rb.velocity.y, 0) + addForceValue;
+            playerActions.Running(true);
+            playerActions.Idle(false);
+        }
+        else if (currentVerticalState == VState.jumping || currentVerticalState == VState.falling)
+        {
+            if (canAirMove == false)
+            {
+                rb.velocity = new Vector3(Mathf.Lerp(rb.velocity.x, 0, friction), rb.velocity.y, 0);
+                return;
+            }
+            else if (canAirMove == true)
+            {
+                rb.velocity = new Vector3(playerInput.GetHorizontal() * CharacterSpeed(), rb.velocity.y, 0) + addForceValue;
+            }
+        }
+    }
+
+    void RunBusyState()
+    {
+
+    }
+
+    void VerticalState()
+    {
+        if (rb.velocity.y != 0)
+        {
+            if (rb.velocity.y > 0.1f)
+            {
+                currentVerticalState = VState.jumping;
+            }
+            else if (rb.velocity.y < -0.1f)
+            {
+                currentVerticalState = VState.falling;
+            }
+            else if (rb.velocity.y > -0.1f && rb.velocity.y < 0.1f)
+            {
+                currentVerticalState = VState.grounded;
+            }
+        }
+    }
+    #endregion
+
+
+    void TerminalVelocity()
+    {
+        if (rb.velocity.y < -20)
+        {
+            rb.velocity = new Vector3(playerInput.GetHorizontal() * CharacterSpeed(), -20, 0) + addForceValue;
+        }
+    }
+    void GravityCheck()
+    {
+        if (gravityOn == false)
+        {
+            return;
+        }
+        else if (gravityOn == true)
+        {
+            Gravity();
+        }
     }
     void Gravity()
     {
+        TerminalVelocity();
         if (currentVerticalState == VState.falling || currentVerticalState == VState.jumping)
         {
-            gravity = 10;
-            rb.AddForce(Vector3.down * gravity * ((weight + armourCheck.armourWeight) / 10));
+            gravityValue = 10;
+            rb.AddForce(Vector3.down * gravityValue * ((weight + armourCheck.armourWeight) / 10));
         }
         else if (currentVerticalState == VState.grounded)
         {
             rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, 0);
-            gravity = 0;
+            gravityValue = 0;
         }
     }
-    void Move()
-    {
-        if (CurrentState == State.busy)
-        {
-            return;
-        }
-        if (CurrentState == State.idle)
-        {
-            rb.velocity = new Vector3(Mathf.Lerp(rb.velocity.x, 0, friction), rb.velocity.y, 0);
-            playerActions.Running(false);
-            playerActions.Idle(true);
-            return;
-        }
-        else if (CurrentState == State.moving)
-        {
-            if (currentVerticalState == VState.grounded)
-            {
-                rb.velocity = new Vector3(playerInput.GetHorizontal() * CharacterSpeed(), rb.velocity.y, 0) + addForceValue;
-                playerActions.Running(true);
-                playerActions.Idle(false);
-            }
-            else if (currentVerticalState == VState.jumping || currentVerticalState == VState.falling)
-            {
-                if (canAirMove == false)
-                {
-                    rb.velocity = new Vector3(Mathf.Lerp(rb.velocity.x, 0, friction), rb.velocity.y, 0);
-                    return;
-                }
-                else if (canAirMove == true)
-                {
-                    rb.velocity = new Vector3(playerInput.GetHorizontal() * CharacterSpeed(), rb.velocity.y, 0) + addForceValue;
-                }
-            }
-        }
-    }
-    public Wall GetCurrentWall()
-    {
-        return currentWall;
-    }
-    public void SetCurrentWallNone()
-    {
-        currentWall = Wall.none;
-    }
+    
+
     #region Damaging
+    public void HitStun()
+    {
+        playerActions.HitStun();
+    }
     private Vector3 AddForce(float hitStrength)
     {
         Vector3 addForceValue = ((hitDirection) * (hitStrength));
@@ -204,25 +312,7 @@ public class Player : MonoBehaviour
         var _facingDirection = facingDirection;
         return _facingDirection;
     }
-    void VerticalState()
-    {
-        previousVelocity = rb.velocity.y;
-        if (rb.velocity.y != 0)
-        {
-            if (rb.velocity.y > 0.1f)
-            {
-                currentVerticalState = VState.jumping;
-            }
-            else if (rb.velocity.y < -0.1f)
-            {
-                currentVerticalState = VState.falling;
-            }
-            else if (rb.velocity.y > -0.1f && rb.velocity.y < 0.1f)
-            {
-                currentVerticalState = VState.grounded;
-            }
-        }
-    }
+
 
     public bool GetBlocking()
     {
@@ -230,6 +320,16 @@ public class Player : MonoBehaviour
     }
 
     #region Raycast Checker
+
+    public Wall GetCurrentWall()
+    {
+        return currentWall;
+    }
+    public void SetCurrentWallNone()
+    {
+        currentWall = Wall.none;
+    }
+
     public void RaycastGroundCheck(RaycastHit hit)
     {
         if (currentVerticalState == VState.falling)
@@ -268,6 +368,19 @@ public class Player : MonoBehaviour
             }
         }
     }
+    public void HitLeft(RaycastHit hit)
+    {
+        distanceToLeft = hit.distance;
+        if (distanceToLeft >= 0 && distanceToLeft <= 0.2f)
+        {
+            if (rb.velocity.x < 0)
+            {
+                rb.velocity = new Vector3(0, rb.velocity.y, 0);
+            }
+        }
+        distanceToLeft = hit.distance;
+        currentWall = Wall.leftWall;
+    }
     public void RayCasterRightWallCheck(RaycastHit hit)
     {
         if (currentVerticalState == VState.jumping || currentVerticalState == VState.falling || currentVerticalState == VState.grounded)
@@ -278,29 +391,6 @@ public class Player : MonoBehaviour
                 HitRight(hit);
             }
         }
-    }
-    public void RayCastCeilingCheck(RaycastHit hit)
-    {
-        if (currentVerticalState == VState.jumping)
-        {
-            if (hit.collider.CompareTag("Ground"))
-            {
-                HitCeiling(hit);
-            }
-        }
-    }
-    public void HitLeft(RaycastHit hit)
-    {
-        distanceToLeft = hit.distance;
-        if (distanceToLeft >= 0 && distanceToLeft <= 0.2f)
-        {
-            if (rb.velocity.x > 0)
-            {
-                rb.velocity = new Vector3(0, rb.velocity.y, 0);
-            }
-        }
-        distanceToLeft = hit.distance;
-        currentWall = Wall.leftWall;
     }
     public void HitRight(RaycastHit hit)
     {
@@ -315,6 +405,18 @@ public class Player : MonoBehaviour
         distanceToRight = hit.distance;
         currentWall = Wall.rightWall;
     }
+
+    public void RayCastCeilingCheck(RaycastHit hit)
+    {
+        if (currentVerticalState == VState.jumping)
+        {
+            if (hit.collider.CompareTag("Ground"))
+            {
+                HitCeiling(hit);
+            }
+        }
+    }
+
     public void HitCeiling(RaycastHit hit)
     {
         distanceToCeiling = hit.distance;
@@ -326,5 +428,11 @@ public class Player : MonoBehaviour
         distanceToCeiling = hit.distance;
     }
     #endregion
+
+    void Observation()
+    {
+        V3Velocity = rb.velocity;
+        previousVelocity = rb.velocity.y;
+    }
 }
 
