@@ -19,6 +19,10 @@ public class MovingState : PlayerState
         {
             self.SetState(new CrouchingState());
         }
+        if (JumpingCheck(jumpInput))
+        {
+            self.SetState(new JumpingState());
+        }
     }
 }
 

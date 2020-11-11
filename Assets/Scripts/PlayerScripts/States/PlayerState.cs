@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public abstract class PlayerState
 {
     public abstract string GiveName();
-    public abstract void RunState(Player self, float horizontalInput, bool attackInput, bool crouchInput, bool jumpInput);
+    public abstract void RunState(Player self, float horizontalInput, bool attackInput, bool jumpInput, bool crouchInput);
 
     protected bool MovementCheck(float horizontalInput)
     {
@@ -14,6 +14,10 @@ public abstract class PlayerState
     protected bool CrouchingCheck(bool crouchInput)
     {
         return crouchInput;
+    }
+    protected bool JumpingCheck(bool jumpInput)
+    {
+        return jumpInput;
     }
 }
 

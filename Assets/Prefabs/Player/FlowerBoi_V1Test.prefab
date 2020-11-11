@@ -327,7 +327,7 @@ Animator:
   m_GameObject: {fileID: 249673930676304109}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f0560004b3c85304c8e6c070dc0c0c14, type: 2}
+  m_Controller: {fileID: 9100000, guid: 7dc94f3da8a138f45a96a92896633a81, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -368,7 +368,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animlist: []
   anim: {fileID: 1132211979850400138}
-  attackManager: {fileID: 5126396697292557695}
   player: {fileID: 7766364346109190760}
   hitboxScript: {fileID: 6428243154165078377}
   hitboxManager: {fileID: 249673930676304107}
@@ -6411,7 +6410,6 @@ GameObject:
   - component: {fileID: 7766364346109190762}
   - component: {fileID: 2976678431227908559}
   - component: {fileID: 6505125593550392588}
-  - component: {fileID: 5126396697292557695}
   - component: {fileID: 8693312162419385527}
   m_Layer: 10
   m_Name: FlowerBoi_Controller
@@ -6464,7 +6462,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea4812bdfe261fb45917e38f9f2a98d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravity: 10
+  playerNumber: 0
+  currentVerticalState: 0
+  CurrentStateName: 
+  gravityValue: -10
   friction: 0.25
   maxLives: 3
   speed: 6.5
@@ -6480,13 +6481,16 @@ MonoBehaviour:
   playerImage: {fileID: 5755921226309273099}
   CurrentVelocity: 0
   YVelocity: 0
+  V3Velocity: {x: 0, y: 0, z: 0}
   DebugModeOn: 0
+  canJump: 0
   gravityOn: 0
   jumpForce: 9
+  currentJumpIndex: 0
+  maxJumps: 2
+  facingDirection: 0
   lives: 0
   characterType: 0
-  playerNumber: 0
-  CurrentState: 0
 --- !u!114 &3622762927981945000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6587,6 +6591,7 @@ MonoBehaviour:
   ArmourBreakInputQueued: 0
   HorizontalValue: 0
   horizontalInput: 0
+  currentWall: 0
 --- !u!114 &2976678431227908559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6664,19 +6669,6 @@ MonoBehaviour:
   - {fileID: 4074159397040435764}
   - {fileID: 5975278729910690676}
   hurtbox: {fileID: 1288164786145783548, guid: e039712a67a047e4b81ee7e73f64b9b7, type: 3}
---- !u!114 &5126396697292557695
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7766364346109190759}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1094a52ef9098de4c91a24cd0f0ec1ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerActions: {fileID: 249673930676304106}
 --- !u!65 &8693312162419385527
 BoxCollider:
   m_ObjectHideFlags: 0

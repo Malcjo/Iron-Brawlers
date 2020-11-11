@@ -103,7 +103,6 @@ public class Player : MonoBehaviour
         jumping,
         falling
     }
-
     void Start()
     {
         MyState = new IdleState();
@@ -114,21 +113,24 @@ public class Player : MonoBehaviour
     {
         CheckDirection();
         CharacterStates();
+        if(currentVerticalState == VState.grounded)
+        {
 
+        }
 
     }
     private void FixedUpdate()
     {
         Observation();
         GravityCheck();
-
     }
+
     #region State Machine
     void CharacterStates()
     {
         VerticalState();
         CurrentStateName = MyState.GiveName();
-        MyState.RunState(this, playerInput.GetHorizontal(), playerInput.ShouldAttack(), playerInput.ShouldCrouch(), playerInput.ShouldBlock());
+        MyState.RunState(this, playerInput.GetHorizontal(), playerInput.ShouldAttack(), playerInput.ShouldJump(), playerInput.ShouldCrouch());
     }
 
     public void SetState(PlayerState state)
@@ -142,12 +144,29 @@ public class Player : MonoBehaviour
         playerActions.Idle();
     }
 
-    void RunJumpingState()
+    public void RunJumpingState()
     {
+        if (currentJumpIndex < maxJumps)
+        {
+            rb.velocity = (new Vector3(rb.velocity.x, JumpForceCalculator(), rb.velocity.z));
+            playerActions.Jump(true);
+        }
     }
-
-    void RunCrouchingState()
+    void DoubleJumpCheck()
     {
+        if (canDoubleJump == true)
+        {
+            if (currentVerticalState == VState.falling || currentVerticalState == VState.jumping)
+            {
+                canTurn = true;
+                playerActions.DoubleJump(true);
+            }
+        }
+        canDoubleJump = false;
+    }
+    public void RunCrouchingState()
+    {
+        rb.velocity = new Vector3(Mathf.Lerp(rb.velocity.x, 0, friction), rb.velocity.y, 0);
         playerActions.Crouching();
     }
     public void RunMoveState()
@@ -260,6 +279,30 @@ public class Player : MonoBehaviour
         }
         return characterSpeed;
     }
+    
+    public float JumpForceCalculator()
+    {
+        float jumpForceValue;
+        if (currentJumpIndex == maxJumps)
+        {
+            return rb.velocity.y;
+        }
+        else if (currentJumpIndex < maxJumps)
+        {
+            if (currentVerticalState == VState.grounded)
+            {
+                jumpForceValue = jumpForce - armourCheck.reduceJumpForce;
+                return jumpForceValue;
+            }
+            else if (currentVerticalState == VState.jumping || currentVerticalState == VState.falling)
+            {
+                Debug.Log("Jump in air");
+                jumpForceValue = (jumpForce + 2) - armourCheck.reduceJumpForce;
+                return jumpForceValue;
+            }
+        }
+        return 0;
+    }
     public int FacingDirection()
     {
         var _facingDirection = facingDirection;
@@ -318,6 +361,11 @@ public class Player : MonoBehaviour
                 Debug.Log("Hit Ground");
                 LandOnGround(hit);
             }
+            else
+            {
+                Debug.Log("Not on ground!");
+                currentJumpIndex++;
+            }
         }
     }
     private void LandOnGround(RaycastHit hit)
@@ -331,6 +379,8 @@ public class Player : MonoBehaviour
         distanceToGround = hit.distance;
 
         currentVerticalState = VState.grounded;
+        canDoubleJump = true;
+        currentJumpIndex = 0;
     }
     public void PlayerGroundedIsFalse()
     {

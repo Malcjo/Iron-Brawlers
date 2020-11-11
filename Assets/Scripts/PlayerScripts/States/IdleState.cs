@@ -8,7 +8,7 @@ public class IdleState : PlayerState
     {
         return "Idle";
     }
-    public override void RunState(Player self, float horizontalInput, bool attackInput, bool crouchInput, bool jumpInput)
+    public override void RunState(Player self, float horizontalInput, bool attackInput, bool jumpInput, bool crouchInput)
     {
         self.RunIdleState();
         if (MovementCheck(horizontalInput))
@@ -18,6 +18,10 @@ public class IdleState : PlayerState
         if (CrouchingCheck(crouchInput))
         {
             self.SetState(new CrouchingState());
+        }
+        if (JumpingCheck(jumpInput))
+        {
+            self.SetState(new JumpingState());
         }
 
     }

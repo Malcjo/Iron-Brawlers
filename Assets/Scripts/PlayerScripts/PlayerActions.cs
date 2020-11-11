@@ -59,15 +59,11 @@ public class PlayerActions : MonoBehaviour
 
     public void Crouching()
     {
-        anim.Play("isCrouching");
+        anim.Play("Crouch Idle");
     }
-
     public void Jump(bool val)
     {
-        if(val == true)
-        {
-            anim.Play("Jumping");
-        }
+        anim.Play("Jumping");
     }
 
     public void DoubleJump(bool val)

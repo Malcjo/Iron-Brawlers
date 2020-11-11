@@ -8,7 +8,7 @@ public class NullState : PlayerState
     {
         return "Null";
     }
-    public override void RunState(Player self, float horizontalInput, bool attackInput, bool crouchInput, bool jumpInput)
+    public override void RunState(Player self, float horizontalInput, bool attackInput, bool jumpInput, bool crouchInput)
     {
 
     }
