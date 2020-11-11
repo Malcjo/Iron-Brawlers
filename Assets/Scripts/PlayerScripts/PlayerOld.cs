@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class PlayerOld : MonoBehaviour
 {
+    /*
     public enum PlayerIndex { Player1, Player2 };
 
     public PlayerIndex playerNumber;
@@ -598,6 +599,6 @@ public class PlayerOld : MonoBehaviour
         currentWall = Wall.none;
     }
     #endregion
-
+    */
 }
 

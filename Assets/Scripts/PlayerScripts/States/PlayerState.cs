@@ -11,5 +11,9 @@ public abstract class PlayerState
     {
         return horizontalInput != 0;
     }
+    protected bool CrouchingCheck(bool crouchInput)
+    {
+        return crouchInput;
+    }
 }
 

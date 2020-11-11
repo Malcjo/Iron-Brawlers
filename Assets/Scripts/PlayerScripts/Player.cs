@@ -7,8 +7,6 @@ public class Player : MonoBehaviour
     public enum PlayerIndex { Player1, Player2 };
 
     public PlayerIndex playerNumber;
-
-    public State CurrentState;
     public VState currentVerticalState;
 
     [SerializeField]
@@ -82,7 +80,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] private int currentJumpIndex;
     [SerializeField] private int maxJumps = 2;
-    private int facingDirection;
+    [SerializeField] private int facingDirection;
 
     private Vector3 addForceValue;
     private Vector3 hitDirection;
@@ -105,23 +103,16 @@ public class Player : MonoBehaviour
         jumping,
         falling
     }
-    public enum State
-    {
-        idle,
-        crouching,
-        moving,
-        jumping,
-        busy
-    }
-
 
     void Start()
     {
         MyState = new IdleState();
         gravityOn = true;
+        canTurn = true;
     }
     private void Update()
     {
+        CheckDirection();
         CharacterStates();
 
 
@@ -145,48 +136,10 @@ public class Player : MonoBehaviour
         MyState = state;
     }
 
-    void GetState()
-    {
-        if (playerInput.ShouldJump())
-        {
-            CurrentState = State.jumping;
-        }
-        if (playerInput.ShouldCrouch())
-        {
-            CurrentState = State.crouching;
-        }
-        if (playerInput.ShouldBlock() || playerInput.ShouldAttack() || playerInput.ShouldAttack())
-        {
-            CurrentState = State.busy;
-        }
-    }
-    void RunCurrentState()
-    {
-        switch (CurrentState)
-        {
-            case State.idle:
-                RunIdleState();
-                break;
-            case State.jumping:
-                RunJumpingState();
-                break;
-            case State.crouching:
-                RunCrouchingState();
-                break;
-            case State.moving:
-                //RunMovingState();
-                break;
-            case State.busy:
-                RunBusyState();
-                break;
-        }
-    }
-
-    void RunIdleState()
+    public void RunIdleState()
     {
         rb.velocity = new Vector3(Mathf.Lerp(rb.velocity.x, 0, friction), rb.velocity.y, 0);
-        playerActions.Running(false);
-        playerActions.Idle(true);
+        playerActions.Idle();
     }
 
     void RunJumpingState()
@@ -195,15 +148,14 @@ public class Player : MonoBehaviour
 
     void RunCrouchingState()
     {
-
+        playerActions.Crouching();
     }
-    public void Move()
+    public void RunMoveState()
     {
         if (currentVerticalState == VState.grounded)
         {
             rb.velocity = new Vector3(playerInput.GetHorizontal() * CharacterSpeed(), rb.velocity.y, 0) + addForceValue;
-            playerActions.Running(true);
-            playerActions.Idle(false);
+            playerActions.Running();
         }
         else if (currentVerticalState == VState.jumping || currentVerticalState == VState.falling)
         {
@@ -244,7 +196,7 @@ public class Player : MonoBehaviour
     }
     #endregion
 
-
+    #region Gravity Group
     void TerminalVelocity()
     {
         if (rb.velocity.y < -20)
@@ -277,7 +229,8 @@ public class Player : MonoBehaviour
             gravityValue = 0;
         }
     }
-    
+
+    #endregion
 
     #region Damaging
     public void HitStun()
@@ -318,7 +271,33 @@ public class Player : MonoBehaviour
     {
         return blocking;
     }
+    private void CheckDirection()
+    {
+        var _facingDirection = playerInput.GetHorizontal();
 
+        if (_facingDirection > 0)
+        {
+            if (canTurn == false)
+            {
+                return;
+            }
+            transform.rotation = Quaternion.Euler(0, 180, 0);
+            Debug.Log("Right");
+            _facingDirection = 1;
+            facingDirection = (int)_facingDirection;
+        }
+        else if (_facingDirection < 0)
+        {
+            if (canTurn == false)
+            {
+                return;
+            }
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+            Debug.Log("Left");
+            _facingDirection = -1;
+            facingDirection = (int)_facingDirection;
+        }
+    }
     #region Raycast Checker
 
     public Wall GetCurrentWall()

@@ -37,7 +37,7 @@ public class PlayerActions : MonoBehaviour
             hitboxScript._attackType = AttackType.Jab;
             if (anim.GetCurrentAnimatorStateInfo(0).IsName(animlist[comboStep]))
             {
-                player.CurrentState = Player.State.busy;
+                //player.CurrentState = Player.State.busy;
             }
         }
     }
@@ -47,28 +47,19 @@ public class PlayerActions : MonoBehaviour
         anim.Play("Jumping");
     }
     
-    public void Running(bool val)
+    public void Running()
     {
-        if (val == true)
-        {
-            anim.Play("Fast Run");
-        }
+        anim.Play("Fast Run");
     }
 
-    public void Idle(bool val)
+    public void Idle()
     {
-        if (val == true)
-        {
-            anim.Play("Idle");
-        }
+        anim.Play("Idle");
     }
 
-    public void Crouching(bool val)
+    public void Crouching()
     {
-        if(val == true)
-        {
-            anim.Play("isCrouching");
-        }
+        anim.Play("isCrouching");
     }
 
     public void Jump(bool val)

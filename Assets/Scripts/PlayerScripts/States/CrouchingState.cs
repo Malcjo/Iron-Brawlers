@@ -2,24 +2,23 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class IdleState : PlayerState
+public class CrouchingState : PlayerState
 {
     public override string GiveName()
     {
-        return "Idle";
+        return "Crouching";
     }
     public override void RunState(Player self, float horizontalInput, bool attackInput, bool crouchInput, bool jumpInput)
     {
-        self.RunIdleState();
-        if (MovementCheck(horizontalInput))
+        self.RunMoveState();
+        if (!MovementCheck(horizontalInput))
         {
-            self.SetState(new MovingState());
+            self.SetState(new IdleState());
         }
-        if (CrouchingCheck(crouchInput))
+        if (!CrouchingCheck(crouchInput))
         {
-            self.SetState(new CrouchingState());
+            self.SetState(new IdleState());
         }
-
     }
 }
 
