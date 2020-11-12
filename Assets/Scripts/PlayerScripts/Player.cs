@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
     public enum PlayerIndex { Player1, Player2 };
 
     public PlayerIndex playerNumber;
-    public VState currentVerticalState;
+    [SerializeField] private VState currentVerticalState;
 
     [SerializeField]
     private string CurrentStateName;
@@ -67,11 +67,11 @@ public class Player : MonoBehaviour
     private bool hitStun;
     private bool blocking;
     [SerializeField] private bool canJump;
-    private bool canAirMove;
+    [SerializeField] private bool canAirMove;
     private bool reduceAddForce;
     [SerializeField]
     private bool gravityOn;
-    private bool canTurn;
+    [SerializeField] private bool canTurn;
     private bool canDoubleJump;
 
     [SerializeField] private float jumpForce = 9;
@@ -80,7 +80,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] private int currentJumpIndex;
     [SerializeField] private int maxJumps = 2;
-    [SerializeField] private int facingDirection;
+    public int facingDirection;
 
     private Vector3 addForceValue;
     private Vector3 hitDirection;
@@ -108,16 +108,12 @@ public class Player : MonoBehaviour
         MyState = new IdleState();
         gravityOn = true;
         canTurn = true;
+        canAirMove = true;
     }
     private void Update()
     {
         CheckDirection();
         CharacterStates();
-        if(currentVerticalState == VState.grounded)
-        {
-
-        }
-
     }
     private void FixedUpdate()
     {
@@ -148,8 +144,7 @@ public class Player : MonoBehaviour
     {
         if (currentJumpIndex < maxJumps)
         {
-            rb.velocity = (new Vector3(rb.velocity.x, JumpForceCalculator(), rb.velocity.z));
-            playerActions.Jump(true);
+            rb.velocity = (new Vector3(rb.velocity.x, JumpForceCalculator(), rb.velocity.z)) + addForceValue;
         }
     }
     void DoubleJumpCheck()
@@ -171,23 +166,25 @@ public class Player : MonoBehaviour
     }
     public void RunMoveState()
     {
-        if (currentVerticalState == VState.grounded)
+        rb.velocity = new Vector3(playerInput.GetHorizontal() * CharacterSpeed(), rb.velocity.y, 0) + addForceValue;
+        playerActions.Running();
+    }
+    public void RunAirborneMoveState()
+    {
+        if (canAirMove == false)
+        {
+            rb.velocity = new Vector3(Mathf.Lerp(rb.velocity.x, 0, friction), rb.velocity.y, 0);
+            return;
+        }
+        else if (canAirMove == true)
         {
             rb.velocity = new Vector3(playerInput.GetHorizontal() * CharacterSpeed(), rb.velocity.y, 0) + addForceValue;
-            playerActions.Running();
         }
-        else if (currentVerticalState == VState.jumping || currentVerticalState == VState.falling)
-        {
-            if (canAirMove == false)
-            {
-                rb.velocity = new Vector3(Mathf.Lerp(rb.velocity.x, 0, friction), rb.velocity.y, 0);
-                return;
-            }
-            else if (canAirMove == true)
-            {
-                rb.velocity = new Vector3(playerInput.GetHorizontal() * CharacterSpeed(), rb.velocity.y, 0) + addForceValue;
-            }
-        }
+    }
+    public void RunJabState()
+    {
+        playerActions.JabCombo();
+        Debug.Log("Jab");
     }
 
     void RunBusyState()
@@ -195,8 +192,12 @@ public class Player : MonoBehaviour
 
     }
 
+
+
+
     void VerticalState()
     {
+        playerActions.VerticalAnim();
         if (rb.velocity.y != 0)
         {
             if (rb.velocity.y > 0.1f)
@@ -206,10 +207,6 @@ public class Player : MonoBehaviour
             else if (rb.velocity.y < -0.1f)
             {
                 currentVerticalState = VState.falling;
-            }
-            else if (rb.velocity.y > -0.1f && rb.velocity.y < 0.1f)
-            {
-                currentVerticalState = VState.grounded;
             }
         }
     }
@@ -309,7 +306,10 @@ public class Player : MonoBehaviour
         return _facingDirection;
     }
 
-
+    public VState GetVerticalState()
+    {
+        return currentVerticalState;
+    }
     public bool GetBlocking()
     {
         return blocking;

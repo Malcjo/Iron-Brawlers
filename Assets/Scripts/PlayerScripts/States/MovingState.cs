@@ -8,7 +8,7 @@ public class MovingState : PlayerState
     {
         return "Moving";
     }
-    public override void RunState(Player self, float horizontalInput, bool attackInput, bool crouchInput, bool jumpInput)
+    public override void RunState(Player self, float horizontalInput, bool attackInput, bool jumpInput, bool crouchInput)
     {
         self.RunMoveState();
         if (!MovementCheck(horizontalInput))
@@ -22,6 +22,7 @@ public class MovingState : PlayerState
         if (JumpingCheck(jumpInput))
         {
             self.SetState(new JumpingState());
+            Debug.Log("Jump While moving");
         }
     }
 }

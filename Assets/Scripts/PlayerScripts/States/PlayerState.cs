@@ -19,5 +19,9 @@ public abstract class PlayerState
     {
         return jumpInput;
     }
+    protected bool AttackCheck(bool attackInput)
+    {
+        return attackInput;
+    }
 }
 

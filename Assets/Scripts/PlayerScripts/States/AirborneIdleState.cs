@@ -12,13 +12,13 @@ public class AirborneIdleState : PlayerState
     {
         if (MovementCheck(horizontalInput))
         {
-            self.SetState(new MovingState());
+            self.SetState(new AirborneMovingState());
         }
         if (JumpingCheck(jumpInput))
         {
             self.SetState(new JumpingState());
         }
-        if (self.currentVerticalState == Player.VState.grounded)
+        if (self.GetVerticalState() == Player.VState.grounded)
         {
             self.SetState(new IdleState());
         }

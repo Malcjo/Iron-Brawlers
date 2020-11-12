@@ -10,6 +10,7 @@ public class PlayerActions : MonoBehaviour
     [SerializeField] Hitbox hitboxScript;
     [SerializeField] HitBoxManager hitboxManager;
     [SerializeField] ArmourCheck armourCheck;
+    private Player.VState verticalState;
 
     public int comboStep;
     public float comboTimer;
@@ -61,9 +62,20 @@ public class PlayerActions : MonoBehaviour
     {
         anim.Play("Crouch Idle");
     }
-    public void Jump(bool val)
+
+    public void VerticalAnim()
     {
-        anim.Play("Jumping");
+        verticalState = player.GetVerticalState();
+        switch (verticalState)
+        {
+            case Player.VState.jumping:
+                anim.Play("Jump");
+                break;
+            case Player.VState.falling:
+                anim.Play("Falling");
+                break;
+        }
+
     }
 
     public void DoubleJump(bool val)

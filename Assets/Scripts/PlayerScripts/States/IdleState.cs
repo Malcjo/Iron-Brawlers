@@ -23,7 +23,10 @@ public class IdleState : PlayerState
         {
             self.SetState(new JumpingState());
         }
-
+        if (AttackCheck(attackInput))
+        {
+            self.SetState(new JabState());
+        }
     }
 }
 
