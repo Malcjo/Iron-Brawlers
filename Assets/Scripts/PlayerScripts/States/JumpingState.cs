@@ -8,13 +8,13 @@ public class JumpingState : PlayerState
     {
         return "Jumping";
     }
-    public override void RunState(Player self, float horizontalInput, bool attackInput, bool jumpInput, bool crouchInput)
+    public override void RunState(Player self, float horizontalInput, bool attackInput, bool jumpInput, bool crouchInput, bool armourBreakInput, bool blockInput)
     {
         self.RunJumpingState();
-        self.SetState(new AirborneIdleState());
+        self.SetState(new AerialIdleState());
         if (MovementCheck(horizontalInput))
         {
-            self.SetState(new AirborneMovingState());
+            self.SetState(new AerialMovingState());
         }
     }
 }

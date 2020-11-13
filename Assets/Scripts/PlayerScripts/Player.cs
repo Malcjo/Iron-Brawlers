@@ -86,7 +86,6 @@ public class Player : MonoBehaviour
     private Vector3 hitDirection;
     public int lives;
     public int characterType;
-
     private Wall currentWall;
 
     private PlayerState MyState;
@@ -122,11 +121,21 @@ public class Player : MonoBehaviour
     }
 
     #region State Machine
+    #region Movement
     void CharacterStates()
     {
         VerticalState();
         CurrentStateName = MyState.GiveName();
-        MyState.RunState(this, playerInput.GetHorizontal(), playerInput.ShouldAttack(), playerInput.ShouldJump(), playerInput.ShouldCrouch());
+        MyState.RunState
+            (
+            this, 
+            playerInput.GetHorizontal(), 
+            playerInput.ShouldAttack(), 
+            playerInput.ShouldJump(), 
+            playerInput.ShouldCrouch(), 
+            playerInput.ShouldArmourBreak(), 
+            playerInput.ShouldBlock()
+            );
     }
 
     public void SetState(PlayerState state)
@@ -145,19 +154,17 @@ public class Player : MonoBehaviour
         if (currentJumpIndex < maxJumps)
         {
             rb.velocity = (new Vector3(rb.velocity.x, JumpForceCalculator(), rb.velocity.z)) + addForceValue;
+            currentJumpIndex++;
         }
     }
     void DoubleJumpCheck()
     {
         if (canDoubleJump == true)
         {
-            if (currentVerticalState == VState.falling || currentVerticalState == VState.jumping)
-            {
-                canTurn = true;
-                playerActions.DoubleJump(true);
-            }
+            canTurn = true;
+            playerActions.DoubleJump(true);
+            canDoubleJump = false;
         }
-        canDoubleJump = false;
     }
     public void RunCrouchingState()
     {
@@ -181,20 +188,41 @@ public class Player : MonoBehaviour
             rb.velocity = new Vector3(playerInput.GetHorizontal() * CharacterSpeed(), rb.velocity.y, 0) + addForceValue;
         }
     }
+    #endregion
+    #region Attacks
+    public void RunBlock()
+    {
+        Debug.Log("Block");
+    }
     public void RunJabState()
     {
         playerActions.JabCombo();
         Debug.Log("Jab");
     }
-
-    void RunBusyState()
+    public void RunNeutralAirState()
     {
-
+        Debug.Log("Aerial Attack");
+    }
+    public void RunLowAttackState()
+    {
+        Debug.Log("Low Attack");
+    }
+    public void RunArmourBreakState()
+    {
+        if (armourCheck.GetLegArmour() == ArmourCheck.Armour.armour || armourCheck.GetChestArmour() == ArmourCheck.Armour.armour)
+        {
+            Debug.Log("Armour Break");
+        }
+        else
+        {
+            Debug.Log("Cannot Armour Break, no armour");
+        }
     }
 
-
-
-
+    #endregion
+    public void BusyState()
+    {
+    }
     void VerticalState()
     {
         playerActions.VerticalAnim();
@@ -211,7 +239,13 @@ public class Player : MonoBehaviour
         }
     }
     #endregion
-
+    void MinusJumpIndexWhenNotOnGround()
+    {
+        if(currentJumpIndex == 0)
+        {
+            currentJumpIndex = 1;
+        }
+    }
     #region Gravity Group
     void TerminalVelocity()
     {
@@ -293,7 +327,6 @@ public class Player : MonoBehaviour
             }
             else if (currentVerticalState == VState.jumping || currentVerticalState == VState.falling)
             {
-                Debug.Log("Jump in air");
                 jumpForceValue = (jumpForce + 2) - armourCheck.reduceJumpForce;
                 return jumpForceValue;
             }
@@ -325,7 +358,6 @@ public class Player : MonoBehaviour
                 return;
             }
             transform.rotation = Quaternion.Euler(0, 180, 0);
-            Debug.Log("Right");
             _facingDirection = 1;
             facingDirection = (int)_facingDirection;
         }
@@ -336,7 +368,6 @@ public class Player : MonoBehaviour
                 return;
             }
             transform.rotation = Quaternion.Euler(0, 0, 0);
-            Debug.Log("Left");
             _facingDirection = -1;
             facingDirection = (int)_facingDirection;
         }
@@ -358,13 +389,7 @@ public class Player : MonoBehaviour
         {
             if (hit.collider.CompareTag("Ground") || (hit.collider.CompareTag("Platform")))
             {
-                Debug.Log("Hit Ground");
                 LandOnGround(hit);
-            }
-            else
-            {
-                Debug.Log("Not on ground!");
-                currentJumpIndex++;
             }
         }
     }

@@ -8,7 +8,7 @@ public class IdleState : PlayerState
     {
         return "Idle";
     }
-    public override void RunState(Player self, float horizontalInput, bool attackInput, bool jumpInput, bool crouchInput)
+    public override void RunState(Player self, float horizontalInput, bool attackInput, bool jumpInput, bool crouchInput, bool armourBreakInput, bool blockInput)
     {
         self.RunIdleState();
         if (MovementCheck(horizontalInput))
@@ -26,6 +26,10 @@ public class IdleState : PlayerState
         if (AttackCheck(attackInput))
         {
             self.SetState(new JabState());
+        }
+        if (BlockCheck(blockInput))
+        {
+            self.SetState(new BlockState());
         }
     }
 }

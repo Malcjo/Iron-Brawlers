@@ -133,6 +133,14 @@ public class ArmourCheck : MonoBehaviour
                 break;
         }
     }
+    public Armour GetChestArmour()
+    {
+        return ChestArmourType;
+    }
+    public Armour GetLegArmour()
+    {
+        return LegArmourType;
+    }
 
     public void RemoveLegArmour()
     {

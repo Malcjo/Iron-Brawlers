@@ -8,7 +8,7 @@ public class MovingState : PlayerState
     {
         return "Moving";
     }
-    public override void RunState(Player self, float horizontalInput, bool attackInput, bool jumpInput, bool crouchInput)
+    public override void RunState(Player self, float horizontalInput, bool attackInput, bool jumpInput, bool crouchInput, bool armourBreakInput, bool blockInput)
     {
         self.RunMoveState();
         if (!MovementCheck(horizontalInput))

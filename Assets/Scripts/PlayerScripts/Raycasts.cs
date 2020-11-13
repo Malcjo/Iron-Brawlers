@@ -93,7 +93,6 @@ public class Raycasts : MonoBehaviour
         Debug.DrawRay(rayCastOrigin, Vector3.down * groundCheckRayLength, Color.red);
         if (Physics.Raycast(rayCastOrigin, Vector3.down, out hit, groundCheckRayLength, groundMask))
         {
-            Debug.Log("Hit Ground with raycast");
             player.RaycastGroundCheck(hit);
         }
         else if (!Physics.Raycast(rayCastOrigin - new Vector3(0, 0.75f, 0), Vector3.down, out hit, 0.15f))

@@ -31,14 +31,15 @@ public class PlayerActions : MonoBehaviour
     {
         if (comboStep < animlist.Count)
         {
-            anim.Play(animlist[comboStep]);
+            //anim.Play(animlist[comboStep]);
+            anim.Play("Punch Combo1");
             comboStep++;
             comboTimer = 1;
             hitboxScript._attackDir = Attackdirection.Forward;
             hitboxScript._attackType = AttackType.Jab;
-            if (anim.GetCurrentAnimatorStateInfo(0).IsName(animlist[comboStep]))
+            if (anim.GetCurrentAnimatorStateInfo(0).IsName("Punch Combo1"))
             {
-                //player.CurrentState = Player.State.busy;
+                Debug.Log("Jab Animation");
             }
         }
     }
