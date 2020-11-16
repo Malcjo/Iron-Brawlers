@@ -39,6 +39,7 @@ public class PlayerActions : MonoBehaviour
             hitboxScript._attackType = AttackType.Jab;
             if (anim.GetCurrentAnimatorStateInfo(0).IsName("Punch Combo1"))
             {
+                //normalizedtime >= 1 
                 Debug.Log("Jab Animation");
             }
         }

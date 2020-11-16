@@ -8,10 +8,10 @@ public class LowAttackState : PlayerState
     {
         return "LowAttackState";
     }
-    public override void RunState(Player self, float horizontalInput, bool attackInput, bool jumpInput, bool crouchInput, bool armourBreakInput, bool blockInput)
+    public override void RunState(Player self, Rigidbody body, PlayerActions actions, InputState input, Calculating calculate)
     {
         self.RunLowAttackState();
-        if (!AttackCheck(attackInput))
+        if (!AttackCheck(input.attackInput))
         {
             self.SetState(new IdleState());
         }

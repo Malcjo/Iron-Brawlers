@@ -4,8 +4,24 @@ using UnityEngine.UI;
 
 public abstract class PlayerState
 {
+    public struct InputState
+    {
+        public float horizontalInput;
+        public bool attackInput;
+        public bool jumpInput;
+        public bool crouchInput;
+        public bool armourBreakInput;
+        public bool blockInput;
+    }
+    public struct Calculating
+    {
+        public float jumpForce;
+        public float friction;
+        public float characterSpeed;
+        public Vector3 addForce;
+    }
     public abstract string GiveName();
-    public abstract void RunState(Player self, float horizontalInput, bool attackInput, bool jumpInput, bool crouchInput, bool armourBreakInput, bool blockInput);
+    public abstract void RunState(Player self, Rigidbody body, PlayerActions actions, InputState input, Calculating calculate);
 
     protected bool MovementCheck(float horizontalInput)
     {

@@ -8,18 +8,19 @@ public class CrouchingState : PlayerState
     {
         return "Crouching";
     }
-    public override void RunState(Player self, float horizontalInput, bool attackInput, bool jumpInput, bool crouchInput, bool armourBreakInput, bool blockInput)
+    public override void RunState(Player self, Rigidbody body, PlayerActions actions, InputState input, Calculating calculate)
     {
-        self.RunCrouchingState();
-        if (!CrouchingCheck(crouchInput))
+        body.velocity = new Vector3(Mathf.Lerp(body.velocity.x, 0, calculate.friction), body.velocity.y, 0);
+        actions.Crouching();
+        if (!CrouchingCheck(input.crouchInput))
         {
             self.SetState(new IdleState());
         }
-        if (AttackCheck(attackInput))
+        if (AttackCheck(input.attackInput))
         {
             self.SetState(new LowAttackState());
         }
-        if (ArmourBreakCheck(armourBreakInput))
+        if (ArmourBreakCheck(input.armourBreakInput))
         {
             self.SetState(new ArmourBreakState());
         }

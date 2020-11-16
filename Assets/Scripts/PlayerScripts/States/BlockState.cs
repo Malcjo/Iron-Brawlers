@@ -8,10 +8,10 @@ public class BlockState : PlayerState
     {
         return "BlockState";
     }
-    public override void RunState(Player self, float horizontalInput, bool attackInput, bool jumpInput, bool crouchInput, bool armourBreakInput, bool blockInput)
+    public override void RunState(Player self, Rigidbody body, PlayerActions actions, InputState input, Calculating calculate)
     {
         self.RunBlock();
-        if (!BlockCheck(blockInput))
+        if (!BlockCheck(input.blockInput))
         {
             self.SetState(new IdleState());
         }

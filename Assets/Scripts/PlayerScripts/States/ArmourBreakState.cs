@@ -8,10 +8,10 @@ public class ArmourBreakState : PlayerState
     {
         return "ArmourBreakState";
     }
-    public override void RunState(Player self, float horizontalInput, bool attackInput, bool jumpInput, bool crouchInput, bool armourBreakInput, bool blockInput)
+    public override void RunState(Player self, Rigidbody body, PlayerActions actions, InputState input, Calculating calculate)
     {
         self.RunArmourBreakState();
-        if (!AttackCheck(attackInput))
+        if (!AttackCheck(input.attackInput))
         {
             self.SetState(new IdleState());
         }

@@ -122,19 +122,32 @@ public class Player : MonoBehaviour
 
     #region State Machine
     #region Movement
+    public 
     void CharacterStates()
     {
         VerticalState();
         CurrentStateName = MyState.GiveName();
         MyState.RunState
             (
-            this, 
-            playerInput.GetHorizontal(), 
-            playerInput.ShouldAttack(), 
-            playerInput.ShouldJump(), 
-            playerInput.ShouldCrouch(), 
-            playerInput.ShouldArmourBreak(), 
-            playerInput.ShouldBlock()
+            this,
+            rb,
+            playerActions,
+            new PlayerState.InputState()
+            {
+                horizontalInput = playerInput.GetHorizontal(),
+                attackInput = playerInput.ShouldAttack(),
+                jumpInput = playerInput.ShouldJump(),
+                crouchInput = playerInput.ShouldCrouch(),
+                armourBreakInput = playerInput.ShouldArmourBreak(),
+                blockInput = playerInput.ShouldBlock()
+            },
+            new PlayerState.Calculating()
+            {
+                jumpForce = JumpForceCalculator(),
+                friction = friction,
+                characterSpeed = CharacterSpeed(),
+                addForce = addForceValue
+            }
             );
     }
 
@@ -142,13 +155,6 @@ public class Player : MonoBehaviour
     {
         MyState = state;
     }
-
-    public void RunIdleState()
-    {
-        rb.velocity = new Vector3(Mathf.Lerp(rb.velocity.x, 0, friction), rb.velocity.y, 0);
-        playerActions.Idle();
-    }
-
     public void RunJumpingState()
     {
         if (currentJumpIndex < maxJumps)
@@ -166,16 +172,7 @@ public class Player : MonoBehaviour
             canDoubleJump = false;
         }
     }
-    public void RunCrouchingState()
-    {
-        rb.velocity = new Vector3(Mathf.Lerp(rb.velocity.x, 0, friction), rb.velocity.y, 0);
-        playerActions.Crouching();
-    }
-    public void RunMoveState()
-    {
-        rb.velocity = new Vector3(playerInput.GetHorizontal() * CharacterSpeed(), rb.velocity.y, 0) + addForceValue;
-        playerActions.Running();
-    }
+
     public void RunAirborneMoveState()
     {
         if (canAirMove == false)

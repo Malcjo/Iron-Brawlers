@@ -8,14 +8,14 @@ public class AerialMovingState : PlayerState
     {
         return "AerialMovingState";
     }
-    public override void RunState(Player self, float horizontalInput, bool attackInput, bool jumpInput, bool crouchInput, bool armourBreakInput, bool blockInput)
+    public override void RunState(Player self, Rigidbody body, PlayerActions actions, InputState input, Calculating calculate)
     {
         self.RunAirborneMoveState();
-        if (!MovementCheck(horizontalInput))
+        if (!MovementCheck(input.horizontalInput))
         {
             self.SetState(new AerialIdleState());
         }
-        if (JumpingCheck(jumpInput) && MovementCheck(horizontalInput))
+        if (JumpingCheck(input.jumpInput) && MovementCheck(input.horizontalInput))
         {
             self.SetState(new JumpingState());
         }
@@ -23,18 +23,18 @@ public class AerialMovingState : PlayerState
         {
             self.SetState(new MovingState());
         }
-        if(MovementCheck(horizontalInput))
+        if(MovementCheck(input.horizontalInput))
         {
-            if(horizontalInput == self.facingDirection * -1)
+            if(input.horizontalInput == self.facingDirection * -1)
             {
                 Debug.Log("Back air");
             }
-            if(horizontalInput == self.facingDirection)
+            if(input.horizontalInput == self.facingDirection)
             {
                 Debug.Log("Forward air");
             }
         }
-        if (AttackCheck(attackInput))
+        if (AttackCheck(input.attackInput))
         {
             self.SetState(new AerialAttackState());
         }
