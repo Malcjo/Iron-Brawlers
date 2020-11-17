@@ -36,13 +36,10 @@ public class PlayerActions : MonoBehaviour
             comboTimer = 1;
             hitboxScript._attackDir = Attackdirection.Forward;
             hitboxScript._attackType = AttackType.Jab;
-            while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime< 0.9f)
+            if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f)
             {
-                if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f)
-                {
-                    Debug.Log("Set to idle State");
-                    player.SetState(new IdleState());
-                }
+                Debug.Log("Set to idle State");
+                player.SetState(new IdleState());
             }
         }
     }
