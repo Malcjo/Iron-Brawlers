@@ -10,7 +10,11 @@ public class JumpingState : PlayerState
     }
     public override void RunState(Player self, Rigidbody body, PlayerActions actions, InputState input, Calculating calculate)
     {
-        self.RunJumpingState();
+        if (self.GetCurrentJumpIndex() < self.GetMaxJumps())
+        {
+            body.velocity = (new Vector3(body.velocity.x, calculate.jumpForce, body.velocity.z)) + calculate.addForce;
+            self.AddOneToJumpIndex();
+        }
         self.SetState(new AerialIdleState());
         if (MovementCheck(input.horizontalInput))
         {

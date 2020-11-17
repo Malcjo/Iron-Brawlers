@@ -29,16 +29,15 @@ public class Player : MonoBehaviour
     [SerializeField]
     private Rigidbody rb;
 
-    [SerializeField] 
-    private PlayerInput playerInput;
-    [SerializeField] 
-    private ArmourCheck armourCheck;
-    [SerializeField] 
-    private Raycasts raycasts;
-    [SerializeField] 
-    private PlayerActions playerActions;
     [SerializeField]
-    private PlayerSetup playerSetup;
+    private PlayerInput playerInput;
+    [SerializeField]
+    private ArmourCheck armourCheck;
+    [SerializeField]
+    private Raycasts raycasts;
+    [SerializeField]
+    private PlayerActions playerActions;
+    [SerializeField] private PlayerSetup playerSetup;
 
     [Header("UI")]
     [SerializeField]
@@ -47,48 +46,56 @@ public class Player : MonoBehaviour
     public Image playerImage;
 
     [Header("Observation Values")]
-    [SerializeField]
-    private float CurrentVelocity;
-    [SerializeField]
-    private float YVelocity;
+    [SerializeField] private float CurrentVelocity;
+    [SerializeField] private float YVelocity;
     private float previousVelocity;
-    [SerializeField]
-    private Vector3 V3Velocity;
-
+    [SerializeField] private Vector3 V3Velocity;
     public bool DebugModeOn;
 
     private float distanceToGround;
     private float distanceToCeiling;
     private float distanceToRight;
     private float distanceToLeft;
+    [SerializeField] private float jumpForce = 9;
+    private float hitStunTimer;
 
     private bool canHitBox;
     private bool hasArmour;
     private bool hitStun;
-    private bool blocking;
+
+    private bool _blocking;
+    [SerializeField] private bool _canTurn;
+
+
+
     [SerializeField] private bool canJump;
     [SerializeField] private bool canAirMove;
     private bool reduceAddForce;
     [SerializeField]
     private bool gravityOn;
-    [SerializeField] private bool canTurn;
+
     private bool canDoubleJump;
 
-    [SerializeField] private float jumpForce = 9;
-    private float hitStunTimer;
 
 
     [SerializeField] private int currentJumpIndex;
     [SerializeField] private int maxJumps = 2;
-    public int facingDirection;
 
     private Vector3 addForceValue;
     private Vector3 hitDirection;
+
+    private Wall currentWall;
+    private PlayerState MyState;
+
+    public int facingDirection;
     public int lives;
     public int characterType;
-    private Wall currentWall;
 
-    private PlayerState MyState;
+    public bool CanTurn { get { return _canTurn; } set { _canTurn = value; } }
+    public bool GetCanAirMove() { return canAirMove; }
+    public bool GetBlocking() { return _blocking; }
+    public int GetCurrentJumpIndex() { return currentJumpIndex; }
+    public int GetMaxJumps() { return maxJumps; }
 
     public enum Wall
     {
@@ -106,7 +113,7 @@ public class Player : MonoBehaviour
     {
         MyState = new IdleState();
         gravityOn = true;
-        canTurn = true;
+        _canTurn = true;
         canAirMove = true;
     }
     private void Update()
@@ -155,35 +162,20 @@ public class Player : MonoBehaviour
     {
         MyState = state;
     }
-    public void RunJumpingState()
-    {
-        if (currentJumpIndex < maxJumps)
-        {
-            rb.velocity = (new Vector3(rb.velocity.x, JumpForceCalculator(), rb.velocity.z)) + addForceValue;
-            currentJumpIndex++;
-        }
-    }
+
     void DoubleJumpCheck()
     {
         if (canDoubleJump == true)
         {
-            canTurn = true;
+            _canTurn = true;
             playerActions.DoubleJump(true);
             canDoubleJump = false;
         }
     }
 
-    public void RunAirborneMoveState()
+    public void AddOneToJumpIndex()
     {
-        if (canAirMove == false)
-        {
-            rb.velocity = new Vector3(Mathf.Lerp(rb.velocity.x, 0, friction), rb.velocity.y, 0);
-            return;
-        }
-        else if (canAirMove == true)
-        {
-            rb.velocity = new Vector3(playerInput.GetHorizontal() * CharacterSpeed(), rb.velocity.y, 0) + addForceValue;
-        }
+        currentJumpIndex++;
     }
     #endregion
     #region Attacks
@@ -191,11 +183,7 @@ public class Player : MonoBehaviour
     {
         Debug.Log("Block");
     }
-    public void RunJabState()
-    {
-        playerActions.JabCombo();
-        Debug.Log("Jab");
-    }
+
     public void RunNeutralAirState()
     {
         Debug.Log("Aerial Attack");
@@ -340,17 +328,14 @@ public class Player : MonoBehaviour
     {
         return currentVerticalState;
     }
-    public bool GetBlocking()
-    {
-        return blocking;
-    }
+
     private void CheckDirection()
     {
         var _facingDirection = playerInput.GetHorizontal();
 
         if (_facingDirection > 0)
         {
-            if (canTurn == false)
+            if (_canTurn == false)
             {
                 return;
             }
@@ -360,7 +345,7 @@ public class Player : MonoBehaviour
         }
         else if (_facingDirection < 0)
         {
-            if (canTurn == false)
+            if (_canTurn == false)
             {
                 return;
             }

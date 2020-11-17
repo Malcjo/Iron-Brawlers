@@ -26,6 +26,16 @@ public class PlayerInput : MonoBehaviour
 
     [SerializeField] Player.Wall currentWall;
 
+    public float GetHorizontal(){
+    return HorizontalValue;}
+
+    public bool ShouldJump(){return JumpInputQueued;}
+    public bool ShouldAttack(){return AttackInputQueued;}
+    public bool ShouldBlock(){return BlockInputQueued;}
+    public bool ShouldCrouch(){return CrouchInputQueued;}
+    public bool ShouldArmourBreak(){return ArmourBreakInputQueued;}
+
+
     private void Update()
     {
         currentWall = player.GetCurrentWall();
@@ -106,31 +116,6 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
-    public float GetHorizontal()
-    {
-        return HorizontalValue;
-    }
 
-    public bool ShouldJump()
-    {
-        return JumpInputQueued;
-    }
-
-    public bool ShouldAttack()
-    {
-        return AttackInputQueued;
-    }
-    public bool ShouldBlock()
-    {
-        return BlockInputQueued;
-    }
-    public bool ShouldCrouch()
-    {
-        return CrouchInputQueued;
-    }
-    public bool ShouldArmourBreak()
-    {
-        return ArmourBreakInputQueued;
-    }
 }   
 

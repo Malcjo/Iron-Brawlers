@@ -29,21 +29,24 @@ public class PlayerActions : MonoBehaviour
 
     public void JabCombo()
     {
-        if (comboStep < animlist.Count)
+        while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
         {
-            //anim.Play(animlist[comboStep]);
-            anim.Play("Punch Combo1");
-            comboStep++;
-            comboTimer = 1;
-            hitboxScript._attackDir = Attackdirection.Forward;
-            hitboxScript._attackType = AttackType.Jab;
-            if (anim.GetCurrentAnimatorStateInfo(0).IsName("Punch Combo1"))
+            if (comboStep < animlist.Count)
             {
-                //normalizedtime >= 1 
-                Debug.Log("Jab Animation");
+                anim.Play("Punch Combo1");
+                comboStep++;
+                comboTimer = 1;
+                hitboxScript._attackDir = Attackdirection.Forward;
+                hitboxScript._attackType = AttackType.Jab;
+                if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime == 1f)
+                {
+                    Debug.Log("Set to idle State");
+                    player.SetState(new IdleState());
+                }
             }
         }
     }
+    
 
     public void JumpLanding()
     {

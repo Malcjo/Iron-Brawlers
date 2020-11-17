@@ -10,11 +10,9 @@ public class JabState : PlayerState
     }
     public override void RunState(Player self, Rigidbody body, PlayerActions actions, InputState input, Calculating calculate)
     {
-        self.RunJabState();
-        if (!AttackCheck(input.attackInput))
-        {
-            self.SetState(new IdleState());
-        }
+        actions.JabCombo();
+        self.SetState(new BusyState());
+        Debug.Log("Jab");
     }
 }
 

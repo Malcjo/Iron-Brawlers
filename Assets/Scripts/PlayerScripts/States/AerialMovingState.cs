@@ -10,7 +10,17 @@ public class AerialMovingState : PlayerState
     }
     public override void RunState(Player self, Rigidbody body, PlayerActions actions, InputState input, Calculating calculate)
     {
-        self.RunAirborneMoveState();
+        if (self.GetCanAirMove() == false)
+        {
+            body.velocity = new Vector3(Mathf.Lerp(body.velocity.x, 0,calculate.friction), body.velocity.y, 0);
+            return;
+        }
+        else if (self.GetCanAirMove() == true)
+        {
+            body.velocity = new Vector3(input.horizontalInput * calculate.characterSpeed, body.velocity.y, 0) + calculate.addForce;
+        }
+
+
         if (!MovementCheck(input.horizontalInput))
         {
             self.SetState(new AerialIdleState());
