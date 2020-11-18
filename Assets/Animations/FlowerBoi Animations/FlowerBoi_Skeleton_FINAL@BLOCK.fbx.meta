@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 03000919d5c91de4580286b7ec73ef91
+guid: 7bae8aca6cb1bca42b8bc7e752c24389
 ModelImporter:
   serializedVersion: 20101
   internalIDToNameTable:
   - first:
       74: 1827226128182048838
-    second: RUN 1
+    second: BLOCK
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -35,11 +35,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: RUN 1
+      name: BLOCK
       takeName: Take 001
       internalID: 0
-      firstFrame: 5
-      lastFrame: 21
+      firstFrame: 0
+      lastFrame: 25
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -62,7 +62,7 @@ ModelImporter:
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 5
+      additiveReferencePoseFrame: 0
     isReadable: 0
   meshes:
     lODScreenPercentages: []
