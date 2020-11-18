@@ -29,30 +29,43 @@ public class PlayerActions : MonoBehaviour
 
     public void JabCombo()
     {
-        if (comboStep < animlist.Count)
-        {
-            anim.Play("Punch Combo1");
-            comboStep++;
-            comboTimer = 1;
-            hitboxScript._attackDir = Attackdirection.Forward;
-            hitboxScript._attackType = AttackType.Jab;
-            if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f)
-            {
-                Debug.Log("Set to idle State");
-                player.SetState(new IdleState());
-            }
-        }
+        StartCoroutine(Jab());
     }
     
+    private IEnumerator Jab()
+    {
+        if (comboStep >= (animlist.Count))
+        {
+            yield return null;
+            player.SetState(new IdleState());
+        }
+        else if (comboStep < (animlist.Count))
+        {
+            anim.Play("Jab");
+            comboStep++;
+            comboTimer = 1;
+            yield return null;
+
+            hitboxScript._attackDir = Attackdirection.Forward;
+            hitboxScript._attackType = AttackType.Jab;
+            while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
+            {
+                yield return null;
+            }
+            player.SetState(new IdleState());
+        }
+
+    }
 
     public void JumpLanding()
     {
         anim.Play("Jumping");
     }
+
     
     public void Running()
     {
-        anim.Play("Fast Run");
+        anim.Play("Run");
     }
 
     public void Idle()
@@ -62,24 +75,16 @@ public class PlayerActions : MonoBehaviour
 
     public void Crouching()
     {
-        anim.Play("Crouch Idle");
+        anim.Play("Crouch");
     }
-
-    public void VerticalAnim()
+    public void Falling()
     {
-        verticalState = player.GetVerticalState();
-        switch (verticalState)
-        {
-            case Player.VState.jumping:
-                anim.Play("Jump");
-                break;
-            case Player.VState.falling:
-                anim.Play("Falling");
-                break;
-        }
-
+        anim.Play("Falling");
     }
-
+    public void Jumping()
+    {
+        anim.Play("Jumping");
+    }
     public void DoubleJump(bool val)
     {
         anim.SetBool("DoubleJump", val);
@@ -87,16 +92,35 @@ public class PlayerActions : MonoBehaviour
 
     public void LegSweep()
     {
+        StartCoroutine(_LegSweep());
+    }
+    private IEnumerator _LegSweep()
+    {
         anim.Play("Leg Sweep");
+        yield return null;
         hitboxScript._attackDir = Attackdirection.Low;
         hitboxScript._attackType = AttackType.LegSweep;
+        while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
+        {
+            yield return null;
+        }
+        player.SetState(new IdleState());
     }
-
     public void AerialAttack()
     {
+        StartCoroutine(_AerialAttack());
+    }
+    private IEnumerator _AerialAttack()
+    {
         anim.Play("Aerial Attack");
+        yield return null;
         hitboxScript._attackType = AttackType.Aerial;
         hitboxScript._attackDir = Attackdirection.Aerial;
+        while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
+        {
+            yield return null;
+        }
+        player.SetState(new IdleState());
     }
 
     public void ArmourBreak()

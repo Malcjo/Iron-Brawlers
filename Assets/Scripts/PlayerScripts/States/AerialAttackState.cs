@@ -10,11 +10,8 @@ public class AerialAttackState : PlayerState
     }
     public override void RunState(Player self, Rigidbody body, PlayerActions actions, InputState input, Calculating calculate)
     {
-        self.RunNeutralAirState();
-        if (!AttackCheck(input.attackInput))
-        {
-            self.SetState(new AerialIdleState());
-        }
+        actions.AerialAttack();
+        self.SetState(new BusyState());
     }
 }
 

@@ -76,8 +76,6 @@ public class Player : MonoBehaviour
 
     private bool canDoubleJump;
 
-
-
     [SerializeField] private int currentJumpIndex;
     [SerializeField] private int maxJumps = 2;
 
@@ -208,9 +206,20 @@ public class Player : MonoBehaviour
     public void BusyState()
     {
     }
+    public void AerialActions()
+    {
+        switch (currentVerticalState)
+        {
+            case Player.VState.jumping:
+                playerActions.Jumping();
+                break;
+            case Player.VState.falling:
+                playerActions.Falling();
+                break;
+        }
+    }
     void VerticalState()
     {
-        playerActions.VerticalAnim();
         if (rb.velocity.y != 0)
         {
             if (rb.velocity.y > 0.1f)

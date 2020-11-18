@@ -4,12 +4,15 @@ using UnityEngine.UI;
 
 public class AerialIdleState : PlayerState
 {
+
     public override string GiveName()
     {
         return "AerialIdleState";
     }
     public override void RunState(Player self, Rigidbody body, PlayerActions actions, InputState input, Calculating calculate)
     {
+        self.AerialActions();
+
         if (MovementCheck(input.horizontalInput))
         {
             self.SetState(new AerialMovingState());

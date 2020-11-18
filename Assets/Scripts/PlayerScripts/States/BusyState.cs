@@ -10,7 +10,6 @@ public class BusyState : PlayerState
     }
     public override void RunState(Player self, Rigidbody body, PlayerActions actions, InputState input, Calculating calculate)
     {
-
     }
 }
 
