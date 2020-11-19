@@ -163,8 +163,6 @@ Shader "IronBrawlersWaterShader"
 				float __wavesFrequency = ( _WavesFrequency );
 				float __wavesHeight = ( _WavesHeight );
 				float __wavesSpeed = ( _WavesSpeed );
-				float4 __wavesSinOffsets1 = ( float4(1,2.2,0.6,1.3) );
-				float4 __wavesPhaseOffsets1 = ( float4(1,1.3,2.2,0.4) );
 
 				float3 worldPos = mul(unity_ObjectToWorld, input.vertex).xyz;
 				
@@ -173,11 +171,8 @@ Shader "IronBrawlersWaterShader"
 				float _waveHeight = __wavesHeight;
 				float3 _vertexWavePos = worldPos.xyz * _waveFrequency;
 				float _phase = _Time.y * __wavesSpeed;
-				half4 vsw_offsets_x = __wavesSinOffsets1;
-				half4 vsw_ph_offsets_x = __wavesPhaseOffsets1;
-				half4 waveXZ = sin((_vertexWavePos.xxzz * vsw_offsets_x) + (_phase.xxxx * vsw_ph_offsets_x));
-				float waveFactorX = dot(waveXZ.xy, 1) * _waveHeight / 2;
-				float waveFactorZ = dot(waveXZ.zw, 1) * _waveHeight / 2;
+				float waveFactorX = sin(_vertexWavePos.x + _phase) * _waveHeight;
+				float waveFactorZ = sin(_vertexWavePos.z + _phase) * _waveHeight;
 				input.vertex.y += (waveFactorX + waveFactorZ);
 				VertexPositionInputs vertexInput = GetVertexPositionInputs(input.vertex.xyz);
 			#if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
@@ -400,8 +395,6 @@ Shader "IronBrawlersWaterShader"
 				float __wavesFrequency = ( _WavesFrequency );
 				float __wavesHeight = ( _WavesHeight );
 				float __wavesSpeed = ( _WavesSpeed );
-				float4 __wavesSinOffsets1 = ( float4(1,2.2,0.6,1.3) );
-				float4 __wavesPhaseOffsets1 = ( float4(1,1.3,2.2,0.4) );
 
 				float3 worldPos = mul(unity_ObjectToWorld, input.vertex).xyz;
 				
@@ -410,11 +403,8 @@ Shader "IronBrawlersWaterShader"
 				float _waveHeight = __wavesHeight;
 				float3 _vertexWavePos = worldPos.xyz * _waveFrequency;
 				float _phase = _Time.y * __wavesSpeed;
-				half4 vsw_offsets_x = __wavesSinOffsets1;
-				half4 vsw_ph_offsets_x = __wavesPhaseOffsets1;
-				half4 waveXZ = sin((_vertexWavePos.xxzz * vsw_offsets_x) + (_phase.xxxx * vsw_ph_offsets_x));
-				float waveFactorX = dot(waveXZ.xy, 1) * _waveHeight / 2;
-				float waveFactorZ = dot(waveXZ.zw, 1) * _waveHeight / 2;
+				float waveFactorX = sin(_vertexWavePos.x + _phase) * _waveHeight;
+				float waveFactorZ = sin(_vertexWavePos.z + _phase) * _waveHeight;
 				input.vertex.y += (waveFactorX + waveFactorZ);
 				VertexPositionInputs vertexInput = GetVertexPositionInputs(input.vertex.xyz);
 
@@ -458,11 +448,49 @@ Shader "IronBrawlersWaterShader"
 		#endif
 		ENDHLSL
 
+		Pass
+		{
+			Name "ShadowCaster"
+			Tags
+			{
+				"LightMode" = "ShadowCaster"
+			}
+
+			ZWrite On
+			ZTest LEqual
+
+			HLSLPROGRAM
+			// Required to compile gles 2.0 with standard srp library
+			#pragma prefer_hlslcc gles
+			#pragma exclude_renderers d3d11_9x
+			#pragma target 2.0
+
+			// using simple #define doesn't work, we have to use this instead
+			#pragma multi_compile SHADOW_CASTER_PASS
+
+			// -------------------------------------
+			// Material Keywords
+			//#pragma shader_feature _ALPHATEST_ON
+			//#pragma shader_feature _GLOSSINESS_FROM_BASE_ALPHA
+
+			//--------------------------------------
+			// GPU Instancing
+			#pragma multi_compile_instancing
+
+			#pragma vertex ShadowDepthPassVertex
+			#pragma fragment ShadowDepthPassFragment
+			
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Shadows.hlsl"
+
+			ENDHLSL
+		}
+
 	}
 
 	FallBack "Hidden/InternalErrorShader"
 	CustomEditor "ToonyColorsPro.ShaderGenerator.MaterialInspector_SG2"
 }
 
-/* TCP_DATA u config(unity:"2020.1.3f1";ver:"2.6.0";tmplt:"SG2_Template_URP";features:list["UNITY_5_4","UNITY_5_5","UNITY_5_6","UNITY_2017_1","UNITY_2018_1","UNITY_2018_2","UNITY_2018_3","UNITY_2019_1","UNITY_2019_2","UNITY_2019_3","VERTEX_SIN_WAVES","DISABLE_SHADOW_CASTING","VSW_WORLDPOS","VSW_2","FOAM_ANIM","SMOOTH_FOAM","DEPTH_BUFFER_COLOR","NO_FOAM_BACKFACE","TEMPLATE_LWRP"];flags:list[];flags_extra:dict[];keywords:dict[RENDER_TYPE="Opaque",RampTextureDrawer="[TCP2Gradient]",RampTextureLabel="Ramp Texture",SHADER_TARGET="3.0"];shaderProperties:list[sp(name:"Albedo";imps:list[imp_mp_texture(uto:True;tov:"";tov_lbl:"";gto:True;sbt:False;scr:False;scv:"";scv_lbl:"";gsc:False;roff:False;goff:False;sin_anm:True;notile:False;triplanar_local:False;def:"white";locked_uv:False;uv:5;cc:4;chan:"RGBA";mip:-1;mipprop:False;ssuv_vert:False;ssuv_obj:False;uv_type:WorldPosition;uv_chan:"XZ";uv_shaderproperty:__NULL__;prop:"_BaseMap";md:"";custom:False;refs:"";guid:"b4e4af98-ed0d-4be0-9428-48def6f4ede5";op:Multiply;lbl:"Albedo";gpu_inst:False;locked:False;impl_index:0)]),,,,,,,,,sp(name:"Waves Height";imps:list[imp_mp_float(def:1;prop:"_WavesHeight";md:"";custom:False;refs:"";guid:"a30d9cb8-ec6c-4a5f-8a70-a22c4d698035";op:Multiply;lbl:"Height";gpu_inst:False;locked:False;impl_index:-1)]),sp(name:"Waves Frequency";imps:list[imp_mp_range(def:1;min:0;max:10000;prop:"_WavesFrequency";md:"";custom:False;refs:"";guid:"b68e87ee-aaf7-4657-a061-58b2206ecd7a";op:Multiply;lbl:"Frequency";gpu_inst:False;locked:False;impl_index:-1)])];customTextures:list[];codeInjection:codeInjection(injectedFiles:list[];mark:False)) */
-/* TCP_HASH 51ffd1fc6186c939caeca35102fe33b5 */
+/* TCP_DATA u config(unity:"2020.1.3f1";ver:"2.6.0";tmplt:"SG2_Template_URP";features:list["UNITY_5_4","UNITY_5_5","UNITY_5_6","UNITY_2017_1","UNITY_2018_1","UNITY_2018_2","UNITY_2018_3","UNITY_2019_1","UNITY_2019_2","UNITY_2019_3","VSW_WORLDPOS","FOAM_ANIM","SMOOTH_FOAM","NO_FOAM_BACKFACE","DEPTH_BUFFER_COLOR","TEMPLATE_LWRP","VERTEX_SIN_WAVES"];flags:list[];flags_extra:dict[];keywords:dict[RENDER_TYPE="Opaque",RampTextureDrawer="[TCP2Gradient]",RampTextureLabel="Ramp Texture",SHADER_TARGET="3.0"];shaderProperties:list[sp(name:"Albedo";imps:list[imp_mp_texture(uto:True;tov:"";tov_lbl:"";gto:True;sbt:False;scr:False;scv:"";scv_lbl:"";gsc:False;roff:False;goff:False;sin_anm:True;notile:False;triplanar_local:False;def:"white";locked_uv:False;uv:5;cc:4;chan:"RGBA";mip:-1;mipprop:False;ssuv_vert:False;ssuv_obj:False;uv_type:WorldPosition;uv_chan:"XZ";uv_shaderproperty:__NULL__;prop:"_BaseMap";md:"";custom:False;refs:"";guid:"b4e4af98-ed0d-4be0-9428-48def6f4ede5";op:Multiply;lbl:"Albedo";gpu_inst:False;locked:False;impl_index:0)]),,,,,,,,,,,,,,,,,,,,,,sp(name:"Waves Height";imps:list[imp_mp_float(def:1;prop:"_WavesHeight";md:"";custom:False;refs:"";guid:"a30d9cb8-ec6c-4a5f-8a70-a22c4d698035";op:Multiply;lbl:"Height";gpu_inst:False;locked:False;impl_index:-1)]),sp(name:"Waves Frequency";imps:list[imp_mp_range(def:1;min:0;max:10000;prop:"_WavesFrequency";md:"";custom:False;refs:"";guid:"b68e87ee-aaf7-4657-a061-58b2206ecd7a";op:Multiply;lbl:"Frequency";gpu_inst:False;locked:False;impl_index:-1)])];customTextures:list[];codeInjection:codeInjection(injectedFiles:list[];mark:False)) */
+/* TCP_HASH 2350a2babfba5c3ae0dc505b18c75710 */
