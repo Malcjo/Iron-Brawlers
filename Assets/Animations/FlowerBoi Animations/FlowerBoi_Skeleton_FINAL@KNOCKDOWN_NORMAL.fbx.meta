@@ -1,11 +1,14 @@
 fileFormatVersion: 2
-guid: 39464424abe6ab946ba01b44ab576585
+guid: 39d9bb59965642440a01566d88981f23
 ModelImporter:
   serializedVersion: 20101
   internalIDToNameTable:
   - first:
       74: 1827226128182048838
-    second: ARMOUR_BREAK 1
+    second: KNOCKDOWN_NORMAL
+  - first:
+      74: 4753329580055947404
+    second: GETTING_UP_NORMAL
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -35,11 +38,40 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: ARMOUR_BREAK 1
+      name: KNOCKDOWN_NORMAL
       takeName: Take 001
       internalID: 0
       firstFrame: 0
-      lastFrame: 36
+      lastFrame: 41
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: GETTING_UP_NORMAL
+      takeName: Take 001
+      internalID: 0
+      firstFrame: 41
+      lastFrame: 78
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
