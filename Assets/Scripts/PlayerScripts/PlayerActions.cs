@@ -125,11 +125,29 @@ public class PlayerActions : MonoBehaviour
 
     public void ArmourBreak()
     {
+        StartCoroutine(_ArmourBreak());
+    }
+    private IEnumerator _ArmourBreak()
+    {
         anim.Play("Armour Break");
+        yield return null;
         hitboxScript._attackDir = Attackdirection.Down;
         hitboxScript._attackType = AttackType.ArmourBreak;
         armourCheck.SetAllArmourOff();
         hitboxManager.ArmourBreak();
+        while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
+        {
+            yield return null;
+        }
+        if(player.GetVerticalState() == Player.VState.grounded)
+        {
+            player.SetState(new IdleState());
+        }
+        else
+        {
+            player.SetState(new AerialIdleState());
+        }
+
     }
     public void Block()
     {

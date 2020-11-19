@@ -32,6 +32,7 @@ public class IdleState : PlayerState
         {
             self.SetState(new BlockState());
         }
+
     }
 }
 

@@ -49,6 +49,10 @@ public class AerialMovingState : PlayerState
         {
             self.SetState(new AerialAttackState());
         }
+        if (ArmourBreakCheck(input.armourBreakInput) && CrouchingCheck(input.crouchInput))
+        {
+            self.SetState(new ArmourBreakState());
+        }
     }
 }
 
