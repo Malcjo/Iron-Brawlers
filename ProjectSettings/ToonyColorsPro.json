@@ -3,11 +3,10 @@
     "SubFolders": true,
     "OverwriteConfig": false,
     "LoadAllShaders": false,
-    "CustomOutputPath": "Shaders",
+    "CustomOutputPath": "Materials/Materials",
     "LastImplementationExportImportPath": "D:/Git/Iron-Brawlers/Assets",
     "OpenedFoldouts": [
-        "OPTIONS",
-        "SPECIAL EFFECTS"
+        "SHADER STATES"
     ],
     "UseCustomFont": true,
     "CustomFont": {
