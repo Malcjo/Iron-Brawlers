@@ -6,7 +6,7 @@ public class PlayerActions : MonoBehaviour
 {
     public List<string> animlist = new List<string>();
     public Animator anim;
-    [SerializeField] Player player;
+    [SerializeField] Player self;
     [SerializeField] Hitbox hitboxScript;
     [SerializeField] HitBoxManager hitboxManager;
     [SerializeField] ArmourCheck armourCheck;
@@ -37,7 +37,7 @@ public class PlayerActions : MonoBehaviour
         if (comboStep >= (animlist.Count))
         {
             yield return null;
-            player.SetState(new IdleState());
+            self.SetState(new IdleState());
         }
         else if (comboStep < (animlist.Count))
         {
@@ -52,7 +52,7 @@ public class PlayerActions : MonoBehaviour
             {
                 yield return null;
             }
-            player.SetState(new IdleState());
+            self.SetState(new IdleState());
         }
 
     }
@@ -97,6 +97,7 @@ public class PlayerActions : MonoBehaviour
     private IEnumerator _LegSweep()
     {
         anim.Play("Leg Sweep");
+        self.CanTurn = false;
         yield return null;
         hitboxScript._attackDir = Attackdirection.Low;
         hitboxScript._attackType = AttackType.LegSweep;
@@ -104,7 +105,7 @@ public class PlayerActions : MonoBehaviour
         {
             yield return null;
         }
-        player.SetState(new IdleState());
+        self.SetState(new IdleState());
     }
     public void AerialAttack()
     {
@@ -113,6 +114,7 @@ public class PlayerActions : MonoBehaviour
     private IEnumerator _AerialAttack()
     {
         anim.Play("Aerial Attack");
+        self.CanTurn = false;
         yield return null;
         hitboxScript._attackType = AttackType.Aerial;
         hitboxScript._attackDir = Attackdirection.Aerial;
@@ -120,7 +122,7 @@ public class PlayerActions : MonoBehaviour
         {
             yield return null;
         }
-        player.SetState(new IdleState());
+        self.SetState(new IdleState());
     }
 
     public void ArmourBreak()
@@ -130,6 +132,7 @@ public class PlayerActions : MonoBehaviour
     private IEnumerator _ArmourBreak()
     {
         anim.Play("Armour Break");
+        self.CanTurn = false;
         yield return null;
         hitboxScript._attackDir = Attackdirection.Down;
         hitboxScript._attackType = AttackType.ArmourBreak;
@@ -139,13 +142,13 @@ public class PlayerActions : MonoBehaviour
         {
             yield return null;
         }
-        if(player.GetVerticalState() == Player.VState.grounded)
+        if(self.GetVerticalState() == Player.VState.grounded)
         {
-            player.SetState(new IdleState());
+            self.SetState(new IdleState());
         }
         else
         {
-            player.SetState(new AerialIdleState());
+            self.SetState(new AerialIdleState());
         }
 
     }
@@ -164,8 +167,18 @@ public class PlayerActions : MonoBehaviour
 
     public void Heavy()
     {
+        StartCoroutine(_Heavy());
+    }
+    private IEnumerator _Heavy()
+    {
         anim.Play("Heavy");
+        yield return null;
         hitboxScript._attackDir = Attackdirection.Forward;
         hitboxScript._attackType = AttackType.HeavyJab;
+        while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
+        {
+            yield return null;
+        }
+        self.SetState(new IdleState());
     }
 }

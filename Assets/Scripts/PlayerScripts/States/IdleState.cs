@@ -10,6 +10,7 @@ public class IdleState : PlayerState
     }
     public override void RunState(Player self, Rigidbody body, PlayerActions actions, InputState input, Calculating calculate)
     {
+        self.CanTurn = true;
         body.velocity = new Vector3(Mathf.Lerp(body.velocity.x, 0, calculate.friction), body.velocity.y, 0);
         actions.Idle();
         if (MovementCheck(input.horizontalInput))

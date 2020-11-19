@@ -24,6 +24,11 @@ public class MovingState : PlayerState
         {
             self.SetState(new JumpingState());
         }
+        if (AttackCheck(input.attackInput) && MovementCheck(input.horizontalInput))
+        {
+            self.StopMovingCharacter();
+            self.SetState(new HeavyState());
+        }
     }
 }
 

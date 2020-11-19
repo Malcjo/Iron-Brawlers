@@ -2,17 +2,18 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AerialAttackState : PlayerState
+public class HeavyState : PlayerState
 {
     public override string GiveName()
     {
-        return "AerialAttackState";
+        return "HeavyState";
     }
     public override void RunState(Player self, Rigidbody body, PlayerActions actions, InputState input, Calculating calculate)
     {
-        actions.AerialAttack();
+        actions.Heavy();
         self.CanTurn = false;
         self.SetState(new BusyState());
+        Debug.Log("Heavy");
     }
 }
 

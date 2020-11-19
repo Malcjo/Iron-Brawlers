@@ -787,6 +787,11 @@ PrefabInstance:
       propertyPath: animlist.Array.data[2]
       value: Punch Combo3
       objectReference: {fileID: 0}
+    - target: {fileID: 249673930676304106, guid: 590656536554766488000c7b5f8e65ba,
+        type: 3}
+      propertyPath: self
+      value: 
+      objectReference: {fileID: 1397769451}
     - target: {fileID: 4688837647506539797, guid: 590656536554766488000c7b5f8e65ba,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -847,6 +852,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FlowerBoi_V1Test
       objectReference: {fileID: 0}
+    - target: {fileID: 7766364346109190762, guid: 590656536554766488000c7b5f8e65ba,
+        type: 3}
+      propertyPath: self
+      value: 
+      objectReference: {fileID: 1397769451}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 590656536554766488000c7b5f8e65ba, type: 3}
 --- !u!1 &669353114
@@ -1070,7 +1080,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 5.87e-43, y: 9.4e-44, z: 0, w: -5.29475}
+  m_BoundingSphereOverride: {x: 0, y: 2.3368e-41, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -2020,6 +2030,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 514069578}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1397769451 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7766364346109190760, guid: 590656536554766488000c7b5f8e65ba,
+    type: 3}
+  m_PrefabInstance: {fileID: 514069578}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1397769447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea4812bdfe261fb45917e38f9f2a98d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1630072807
 GameObject:
   m_ObjectHideFlags: 0

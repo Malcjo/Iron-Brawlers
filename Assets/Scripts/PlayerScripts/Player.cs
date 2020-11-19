@@ -218,6 +218,11 @@ public class Player : MonoBehaviour
                 break;
         }
     }
+
+    public void StopMovingCharacter()
+    {
+        rb.velocity = new Vector3(0, rb.velocity.y, 0);
+    }
     void VerticalState()
     {
         if (rb.velocity.y != 0)
@@ -262,9 +267,21 @@ public class Player : MonoBehaviour
     void Gravity()
     {
         TerminalVelocity();
-        if (currentVerticalState == VState.falling || currentVerticalState == VState.jumping)
+
+        if (currentVerticalState != VState.grounded)
         {
-            gravityValue = 10;
+            if (currentVerticalState == VState.falling) 
+            {
+                gravityValue = 10;
+            }
+            else if (currentVerticalState == VState.jumping)
+            {
+                if(gravityValue == 12)
+                {
+                    gravityValue = 10;
+                }
+                gravityValue = 10;
+            }
             rb.AddForce(Vector3.down * gravityValue * ((weight + armourCheck.armourWeight) / 10));
         }
         else if (currentVerticalState == VState.grounded)

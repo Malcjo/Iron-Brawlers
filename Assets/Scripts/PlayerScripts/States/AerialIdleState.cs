@@ -12,7 +12,7 @@ public class AerialIdleState : PlayerState
     public override void RunState(Player self, Rigidbody body, PlayerActions actions, InputState input, Calculating calculate)
     {
         self.AerialActions();
-
+        self.CanTurn = false;
         if (MovementCheck(input.horizontalInput))
         {
             self.SetState(new AerialMovingState());

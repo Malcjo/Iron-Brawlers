@@ -5,7 +5,7 @@ public class PlayerInput : MonoBehaviour
     [SerializeField]
     private PlayerSetup controls;
     [SerializeField]
-    private Player player;
+    private Player self;
 
     [SerializeField]
     private bool JumpInputQueued;
@@ -25,10 +25,7 @@ public class PlayerInput : MonoBehaviour
     private float horizontalInput;
 
     [SerializeField] Player.Wall currentWall;
-
-    public float GetHorizontal(){
-    return HorizontalValue;}
-
+    public float GetHorizontal(){return HorizontalValue;}
     public bool ShouldJump(){return JumpInputQueued;}
     public bool ShouldAttack(){return AttackInputQueued;}
     public bool ShouldBlock(){return BlockInputQueued;}
@@ -38,7 +35,7 @@ public class PlayerInput : MonoBehaviour
 
     private void Update()
     {
-        currentWall = player.GetCurrentWall();
+        currentWall = self.GetCurrentWall();
         HorizontalInput();
         BlockInput();
         JumpInput();
@@ -56,7 +53,7 @@ public class PlayerInput : MonoBehaviour
 
     void WallCheck()
     {
-        switch (player.GetCurrentWall())
+        switch (self.GetCurrentWall())
         {
             case Player.Wall.none:
                 break;
