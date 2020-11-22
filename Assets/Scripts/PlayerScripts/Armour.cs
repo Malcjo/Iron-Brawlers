@@ -12,18 +12,18 @@ public class Armour : MonoBehaviour
     {
         transform.SetParent(location);
         //transform.rotation = Quaternion.Euler(location.rotation.x, location.rotation.y, location.rotation.z);
-        transform.rotation = location.transform.rotation;
-        transform.position = location.transform.position;
+        //transform.rotation = location.transform.rotation;
+        //transform.position = location.transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        armourTransform = transform.position;
-        armourRotation = transform.rotation;
-        locationTransform = location.transform.position;
-        locationRotation = location.transform.rotation;
+        //armourTransform = transform.position;
+        //armourRotation = transform.rotation;
+        //locationTransform = location.transform.position;
+        //locationRotation = location.transform.rotation;
 
-        transform.position = location.transform.position;
+        //transform.position = location.transform.position;
     }
 }

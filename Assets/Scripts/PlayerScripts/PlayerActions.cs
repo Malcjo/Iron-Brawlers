@@ -41,7 +41,7 @@ public class PlayerActions : MonoBehaviour
         }
         else if (comboStep < (animlist.Count))
         {
-            anim.Play("Jab");
+            anim.Play("JAB");
             comboStep++;
             comboTimer = 1;
             yield return null;
@@ -59,35 +59,35 @@ public class PlayerActions : MonoBehaviour
 
     public void JumpLanding()
     {
-        anim.Play("Jumping");
+        anim.Play("LANDING");
     }
 
     
     public void Running()
     {
-        anim.Play("Run");
+        anim.Play("RUN");
     }
 
     public void Idle()
     {
-        anim.Play("Idle");
+        anim.Play("IDLE");
     }
 
     public void Crouching()
     {
-        anim.Play("Crouch");
+        anim.Play("CROUCH_IDLE");
     }
     public void Falling()
     {
-        anim.Play("Falling");
+        anim.Play("FALLING");
     }
     public void Jumping()
     {
-        anim.Play("Jumping");
+        anim.Play("JUMP");
     }
     public void DoubleJump(bool val)
     {
-        anim.SetBool("DoubleJump", val);
+        anim.SetBool("DOUBLE_JUMP", val);
     }
 
     public void LegSweep()
@@ -96,7 +96,7 @@ public class PlayerActions : MonoBehaviour
     }
     private IEnumerator _LegSweep()
     {
-        anim.Play("Leg Sweep");
+        anim.Play("SWEEP");
         self.CanTurn = false;
         yield return null;
         hitboxScript._attackDir = Attackdirection.Low;
@@ -113,7 +113,7 @@ public class PlayerActions : MonoBehaviour
     }
     private IEnumerator _AerialAttack()
     {
-        anim.Play("Aerial Attack");
+        anim.Play("AERIAL");
         self.CanTurn = false;
         yield return null;
         hitboxScript._attackType = AttackType.Aerial;
@@ -131,7 +131,7 @@ public class PlayerActions : MonoBehaviour
     }
     private IEnumerator _ArmourBreak()
     {
-        anim.Play("Armour Break");
+        anim.Play("ARMOUR_BREAK");
         self.CanTurn = false;
         yield return null;
         hitboxScript._attackDir = Attackdirection.Down;
@@ -162,7 +162,7 @@ public class PlayerActions : MonoBehaviour
     }
     public void HitStun()
     {
-        anim.Play("HitStun");
+        anim.Play("HITSTUN_NORMAL_HIT");
     }
 
     public void Heavy()
@@ -171,7 +171,7 @@ public class PlayerActions : MonoBehaviour
     }
     private IEnumerator _Heavy()
     {
-        anim.Play("Heavy");
+        anim.Play("HEAVY");
         yield return null;
         hitboxScript._attackDir = Attackdirection.Forward;
         hitboxScript._attackType = AttackType.HeavyJab;
