@@ -198,7 +198,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            Debug.Log("Cannot Armour Break, no armour");
+
         }
     }
 

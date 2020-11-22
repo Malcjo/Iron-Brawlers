@@ -87,7 +87,7 @@ public class PlayerActions : MonoBehaviour
     }
     public void DoubleJump(bool val)
     {
-        anim.SetBool("DOUBLE_JUMP", val);
+        anim.Play("DOUBLE_JUMP");
     }
 
     public void LegSweep()
@@ -131,18 +131,30 @@ public class PlayerActions : MonoBehaviour
     }
     private IEnumerator _ArmourBreak()
     {
-        anim.Play("ARMOUR_BREAK");
-        self.CanTurn = false;
-        yield return null;
-        hitboxScript._attackDir = Attackdirection.Down;
-        hitboxScript._attackType = AttackType.ArmourBreak;
-        armourCheck.SetAllArmourOff();
-        hitboxManager.ArmourBreak();
-        while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
+        if (armourCheck.GetLegArmour() == ArmourCheck.Armour.armour || armourCheck.GetChestArmour() == ArmourCheck.Armour.armour)
         {
+            anim.Play("ARMOUR_BREAK");
+            self.CanTurn = false;
             yield return null;
+            hitboxScript._attackDir = Attackdirection.Down;
+            hitboxScript._attackType = AttackType.ArmourBreak;
+            armourCheck.SetAllArmourOff();
+            hitboxManager.ArmourBreak();
+            while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
+            {
+                yield return null;
+            }
+            RevertBackToIdleState();
         }
-        if(self.GetVerticalState() == Player.VState.grounded)
+        else
+        {
+            Debug.Log("Cannot Armour Break, no armour");
+            RevertBackToIdleState();
+        }
+    }
+    private void RevertBackToIdleState()
+    {
+        if (self.GetVerticalState() == Player.VState.grounded)
         {
             self.SetState(new IdleState());
         }
@@ -150,7 +162,6 @@ public class PlayerActions : MonoBehaviour
         {
             self.SetState(new AerialIdleState());
         }
-
     }
     public void Block()
     {

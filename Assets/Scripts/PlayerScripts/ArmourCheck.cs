@@ -20,7 +20,10 @@ public class ArmourCheck : MonoBehaviour
 
     public GameObject[] ChestArmourMesh;
     public GameObject[] LegArmourMesh;
-
+    private void Start()
+    {
+        SetAllArmourOn();
+    }
     private void Update()
     {
         ArmourStatsCheck();

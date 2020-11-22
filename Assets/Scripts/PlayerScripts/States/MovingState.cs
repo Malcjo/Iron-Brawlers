@@ -10,6 +10,7 @@ public class MovingState : PlayerState
     }
     public override void RunState(Player self, Rigidbody body, PlayerActions actions, InputState input, Calculating calculate)
     {
+        self.CanTurn = true;
         body.velocity = new Vector3(input.horizontalInput * calculate.characterSpeed, body.velocity.y, 0) + calculate.addForce;
         actions.Running();
         if (!MovementCheck(input.horizontalInput))
