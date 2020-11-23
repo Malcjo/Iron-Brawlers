@@ -10,7 +10,6 @@ public class BlockState : PlayerState
     }
     public override void RunState(Player self, Rigidbody body, PlayerActions actions, InputState input, Calculating calculate)
     {
-        self.RunBlock();
         if (!BlockCheck(input.blockInput))
         {
             self.SetState(new IdleState());

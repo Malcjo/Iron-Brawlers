@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
     public enum PlayerIndex { Player1, Player2 };
 
     public PlayerIndex playerNumber;
-    [SerializeField] private VState currentVerticalState;
+    [SerializeField] private VState _currentVerticalState;
 
     [SerializeField]
     private string CurrentStateName;
@@ -26,17 +26,12 @@ public class Player : MonoBehaviour
     [SerializeField] private float weight = 22;
     [SerializeField] private float knockbackResistance = 3;
 
-    [SerializeField]
-    private Rigidbody rb;
+    [SerializeField] private Rigidbody rb;
 
-    [SerializeField]
-    private PlayerInput playerInput;
-    [SerializeField]
-    private ArmourCheck armourCheck;
-    [SerializeField]
-    private Raycasts raycasts;
-    [SerializeField]
-    private PlayerActions playerActions;
+    [SerializeField] private PlayerInput playerInput;
+    [SerializeField] private ArmourCheck armourCheck;
+    [SerializeField] private Raycasts raycasts;
+    [SerializeField] private PlayerActions playerActions;
     [SerializeField] private PlayerSetup playerSetup;
 
     [Header("UI")]
@@ -64,26 +59,27 @@ public class Player : MonoBehaviour
     private bool hitStun;
 
     private bool _blocking;
-    [SerializeField] private bool _canTurn;
-    [SerializeField] private bool _canMove;
+    private bool _canTurn;
+    private bool _canMove;
 
 
-    [SerializeField] private bool canJump;
-    [SerializeField] private bool canAirMove;
+    private bool canJump;
+    private bool canAirMove;
     private bool reduceAddForce;
-    [SerializeField]
-    private bool gravityOn;
+
+    [SerializeField] private bool gravityOn;
 
     private bool canDoubleJump;
 
-    [SerializeField] private int currentJumpIndex;
-    [SerializeField] private int maxJumps = 2;
+    private int _currentJumpIndex;
+    private int maxJumps = 2;
 
     private Vector3 addForceValue;
     private Vector3 hitDirection;
 
     private Wall currentWall;
     private PlayerState MyState;
+    [SerializeField] private VState previousVerticalState;
 
     public int facingDirection;
     public int lives;
@@ -91,10 +87,11 @@ public class Player : MonoBehaviour
 
     public bool CanTurn { get { return _canTurn; } set { _canTurn = value; } }
     public bool CanMove { get { return _canMove; } set { _canMove = value; } }
+    public int CanJumpIndex { get { return _currentJumpIndex; } set { _currentJumpIndex = value; } }
     public bool GetCanAirMove() { return canAirMove; }
     public bool GetBlocking() { return _blocking; }
-    public int GetCurrentJumpIndex() { return currentJumpIndex; }
     public int GetMaxJumps() { return maxJumps; }
+    public VState VerticalState { get { return _currentVerticalState; } set { _currentVerticalState = value; } }
 
     public enum Wall
     {
@@ -126,13 +123,16 @@ public class Player : MonoBehaviour
         Observation();
         GravityCheck();
     }
-
+    public void MoveCharacterWhileInAttack(float MovementStrength)
+    {
+        rb.AddForce((new Vector3 (facingDirection,0,0)) * MovementStrength);
+    }
     #region State Machine
     #region Movement
-    public 
-    void CharacterStates()
+
+    private void CharacterStates()
     {
-        VerticalState();
+        VerticalStateTracker();
         CurrentStateName = MyState.GiveName();
         MyState.RunState
             (
@@ -175,48 +175,23 @@ public class Player : MonoBehaviour
 
     public void AddOneToJumpIndex()
     {
-        currentJumpIndex++;
+        _currentJumpIndex++;
     }
     #endregion
-    #region Attacks
-    public void RunBlock()
-    {
-        Debug.Log("Block");
-    }
 
-    public void RunNeutralAirState()
+    public void VertcialStateActions()
     {
-        Debug.Log("Aerial Attack");
-    }
-    public void RunLowAttackState()
-    {
-        Debug.Log("Low Attack");
-    }
-    public void RunArmourBreakState()
-    {
-        if (armourCheck.GetLegArmour() == ArmourCheck.Armour.armour || armourCheck.GetChestArmour() == ArmourCheck.Armour.armour)
-        {
-            Debug.Log("Armour Break");
-        }
-        else
-        {
-
-        }
-    }
-
-    #endregion
-    public void BusyState()
-    {
-    }
-    public void AerialActions()
-    {
-        switch (currentVerticalState)
+        switch (_currentVerticalState)
         {
             case Player.VState.jumping:
                 playerActions.Jumping();
                 break;
             case Player.VState.falling:
                 playerActions.Falling();
+                break;
+            case Player.VState.grounded:
+                canDoubleJump = true;
+                _currentJumpIndex = 0;
                 break;
         }
     }
@@ -225,26 +200,14 @@ public class Player : MonoBehaviour
     {
         rb.velocity = new Vector3(0, rb.velocity.y, 0);
     }
-    void VerticalState()
-    {
-        if (rb.velocity.y != 0)
-        {
-            if (rb.velocity.y > 0.1f)
-            {
-                currentVerticalState = VState.jumping;
-            }
-            else if (rb.velocity.y < -0.1f)
-            {
-                currentVerticalState = VState.falling;
-            }
-        }
-    }
+
+
     #endregion
     void MinusJumpIndexWhenNotOnGround()
     {
-        if(currentJumpIndex == 0)
+        if(_currentJumpIndex == 0)
         {
-            currentJumpIndex = 1;
+            _currentJumpIndex = 1;
         }
     }
     #region Gravity Group
@@ -270,13 +233,13 @@ public class Player : MonoBehaviour
     {
         TerminalVelocity();
 
-        if (currentVerticalState != VState.grounded)
+        if (_currentVerticalState != VState.grounded)
         {
-            if (currentVerticalState == VState.falling) 
+            if (_currentVerticalState == VState.falling) 
             {
                 gravityValue = 10;
             }
-            else if (currentVerticalState == VState.jumping)
+            else if (_currentVerticalState == VState.jumping)
             {
                 if(gravityValue == 12)
                 {
@@ -286,7 +249,7 @@ public class Player : MonoBehaviour
             }
             rb.AddForce(Vector3.down * gravityValue * ((weight + armourCheck.armourWeight) / 10));
         }
-        else if (currentVerticalState == VState.grounded)
+        else if (_currentVerticalState == VState.grounded)
         {
             rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, 0);
             gravityValue = 0;
@@ -327,18 +290,18 @@ public class Player : MonoBehaviour
     public float JumpForceCalculator()
     {
         float jumpForceValue;
-        if (currentJumpIndex == maxJumps)
+        if (_currentJumpIndex == maxJumps)
         {
             return rb.velocity.y;
         }
-        else if (currentJumpIndex < maxJumps)
+        else if (_currentJumpIndex < maxJumps)
         {
-            if (currentVerticalState == VState.grounded)
+            if (_currentVerticalState == VState.grounded)
             {
                 jumpForceValue = jumpForce - armourCheck.reduceJumpForce;
                 return jumpForceValue;
             }
-            else if (currentVerticalState == VState.jumping || currentVerticalState == VState.falling)
+            else if (_currentVerticalState == VState.jumping || _currentVerticalState == VState.falling)
             {
                 jumpForceValue = (jumpForce + 2) - armourCheck.reduceJumpForce;
                 return jumpForceValue;
@@ -352,10 +315,7 @@ public class Player : MonoBehaviour
         return _facingDirection;
     }
 
-    public VState GetVerticalState()
-    {
-        return currentVerticalState;
-    }
+
 
     private void CheckDirection()
     {
@@ -382,6 +342,20 @@ public class Player : MonoBehaviour
             facingDirection = (int)_facingDirection;
         }
     }
+    void VerticalStateTracker()
+    {
+        if (rb.velocity.y != 0)
+        {
+            if (rb.velocity.y > 0.1f)
+            {
+                _currentVerticalState = VState.jumping;
+            }
+            else if (rb.velocity.y < -0.1f)
+            {
+                _currentVerticalState = VState.falling;
+            }
+        }
+    }
     #region Raycast Checker
 
     public Wall GetCurrentWall()
@@ -395,7 +369,7 @@ public class Player : MonoBehaviour
 
     public void RaycastGroundCheck(RaycastHit hit)
     {
-        if (currentVerticalState == VState.falling)
+        if (_currentVerticalState == VState.falling)
         {
             if (hit.collider.CompareTag("Ground") || (hit.collider.CompareTag("Platform")))
             {
@@ -413,17 +387,15 @@ public class Player : MonoBehaviour
         }
         distanceToGround = hit.distance;
 
-        currentVerticalState = VState.grounded;
-        canDoubleJump = true;
-        currentJumpIndex = 0;
+        _currentVerticalState = VState.grounded;
     }
     public void PlayerGroundedIsFalse()
     {
-        currentVerticalState = VState.falling;
+        _currentVerticalState = VState.falling;
     }
     public void RayCasterLeftWallCheck(RaycastHit hit)
     {
-        if (currentVerticalState == VState.jumping || currentVerticalState == VState.falling || currentVerticalState == VState.grounded)
+        if (_currentVerticalState == VState.jumping || _currentVerticalState == VState.falling || _currentVerticalState == VState.grounded)
         {
             if (hit.collider.CompareTag("Ground"))
             {
@@ -447,7 +419,7 @@ public class Player : MonoBehaviour
     }
     public void RayCasterRightWallCheck(RaycastHit hit)
     {
-        if (currentVerticalState == VState.jumping || currentVerticalState == VState.falling || currentVerticalState == VState.grounded)
+        if (_currentVerticalState == VState.jumping || _currentVerticalState == VState.falling || _currentVerticalState == VState.grounded)
         {
             if (hit.collider.CompareTag("Ground"))
             {
@@ -472,7 +444,7 @@ public class Player : MonoBehaviour
 
     public void RayCastCeilingCheck(RaycastHit hit)
     {
-        if (currentVerticalState == VState.jumping)
+        if (_currentVerticalState == VState.jumping)
         {
             if (hit.collider.CompareTag("Ground"))
             {

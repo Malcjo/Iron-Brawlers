@@ -11,7 +11,7 @@ public class AerialIdleState : PlayerState
     }
     public override void RunState(Player self, Rigidbody body, PlayerActions actions, InputState input, Calculating calculate)
     {
-        self.AerialActions();
+        self.VertcialStateActions();
         self.CanTurn = false;
         if (MovementCheck(input.horizontalInput))
         {
@@ -21,7 +21,7 @@ public class AerialIdleState : PlayerState
         {
             self.SetState(new JumpingState());
         }
-        if (self.GetVerticalState() == Player.VState.grounded)
+        if (self.VerticalState == Player.VState.grounded)
         {
             self.SetState(new IdleState());
         }

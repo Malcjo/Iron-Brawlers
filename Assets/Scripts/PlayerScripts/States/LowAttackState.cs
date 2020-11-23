@@ -10,6 +10,8 @@ public class LowAttackState : PlayerState
     }
     public override void RunState(Player self, Rigidbody body, PlayerActions actions, InputState input, Calculating calculate)
     {
+        self.CanMove = false;
+        self.CanTurn = false;
         actions.LegSweep();
         self.SetState(new BusyState());
     }

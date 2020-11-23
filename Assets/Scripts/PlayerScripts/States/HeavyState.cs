@@ -10,6 +10,7 @@ public class HeavyState : PlayerState
     }
     public override void RunState(Player self, Rigidbody body, PlayerActions actions, InputState input, Calculating calculate)
     {
+        self.CanMove = false;
         actions.Heavy();
         self.CanTurn = false;
         self.SetState(new BusyState());

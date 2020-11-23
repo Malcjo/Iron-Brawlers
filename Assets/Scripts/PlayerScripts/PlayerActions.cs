@@ -10,7 +10,6 @@ public class PlayerActions : MonoBehaviour
     [SerializeField] Hitbox hitboxScript;
     [SerializeField] HitBoxManager hitboxManager;
     [SerializeField] ArmourCheck armourCheck;
-    private Player.VState verticalState;
 
     public int comboStep;
     public float comboTimer;
@@ -54,14 +53,12 @@ public class PlayerActions : MonoBehaviour
             }
             self.SetState(new IdleState());
         }
-
     }
 
     public void JumpLanding()
     {
         anim.Play("LANDING");
     }
-
     
     public void Running()
     {
@@ -154,7 +151,7 @@ public class PlayerActions : MonoBehaviour
     }
     private void RevertBackToIdleState()
     {
-        if (self.GetVerticalState() == Player.VState.grounded)
+        if (self.VerticalState == Player.VState.grounded)
         {
             self.SetState(new IdleState());
         }
