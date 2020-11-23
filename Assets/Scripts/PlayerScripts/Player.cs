@@ -65,7 +65,7 @@ public class Player : MonoBehaviour
 
     private bool _blocking;
     [SerializeField] private bool _canTurn;
-
+    [SerializeField] private bool _canMove;
 
 
     [SerializeField] private bool canJump;
@@ -90,6 +90,7 @@ public class Player : MonoBehaviour
     public int characterType;
 
     public bool CanTurn { get { return _canTurn; } set { _canTurn = value; } }
+    public bool CanMove { get { return _canMove; } set { _canMove = value; } }
     public bool GetCanAirMove() { return canAirMove; }
     public bool GetBlocking() { return _blocking; }
     public int GetCurrentJumpIndex() { return currentJumpIndex; }
@@ -113,6 +114,7 @@ public class Player : MonoBehaviour
         gravityOn = true;
         _canTurn = true;
         canAirMove = true;
+        _canMove = true;
     }
     private void Update()
     {
