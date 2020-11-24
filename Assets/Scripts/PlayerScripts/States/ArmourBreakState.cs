@@ -11,7 +11,6 @@ public class ArmourBreakState : PlayerState
     public override void RunState(Player self, Rigidbody body, PlayerActions actions, InputState input, Calculating calculate)
     {
         actions.ArmourBreak();
-        self.SetState(new BusyState());
     }
 }
 

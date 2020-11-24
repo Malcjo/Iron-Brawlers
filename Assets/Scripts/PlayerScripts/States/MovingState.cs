@@ -28,7 +28,7 @@ public class MovingState : PlayerState
         }
         if (AttackCheck(input.attackInput) && MovementCheck(input.horizontalInput))
         {
-            self.StopMovingCharacter();
+            self.StopMovingCharacterOnXAxis();
             self.SetState(new HeavyState());
         }
     }

@@ -122,11 +122,18 @@ public class PlayerActions : MonoBehaviour
     {
         anim.Play("AERIAL");
         self.CanTurn = false;
+        self.UseGravity = false;
+        self.StopMovingCharacterOnYAxis();
         yield return null;
         hitboxScript._attackType = AttackType.Aerial;
         hitboxScript._attackDir = Attackdirection.Aerial;
         while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
         {
+            while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.5f)
+            {
+                yield return null;
+            }
+            self.UseGravity = true;
             yield return null;
         }
         self.SetState(new IdleState());
@@ -140,6 +147,7 @@ public class PlayerActions : MonoBehaviour
     {
         if (armourCheck.GetLegArmour() == ArmourCheck.Armour.armour || armourCheck.GetChestArmour() == ArmourCheck.Armour.armour)
         {
+            self.SetState(new BusyState());
             anim.Play("ARMOUR_BREAK");
             self.CanTurn = false;
             yield return null;
@@ -156,7 +164,15 @@ public class PlayerActions : MonoBehaviour
         else
         {
             Debug.Log("Cannot Armour Break, no armour");
-            RevertBackToIdleState();
+            if(self.VerticalState == Player.VState.grounded)
+            {
+                self.SetState(new CrouchingState());
+            }
+            else
+            {
+                self.SetState(new AerialIdleState());
+            }
+
         }
     }
     private void RevertBackToIdleState()

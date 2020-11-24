@@ -68,7 +68,7 @@ public class Player : MonoBehaviour
     private bool canAirMove;
     private bool reduceAddForce;
 
-    [SerializeField] private bool gravityOn;
+    [SerializeField] private bool _gravityOn;
 
     private bool canDoubleJump;
 
@@ -86,6 +86,7 @@ public class Player : MonoBehaviour
     public int lives;
     public int characterType;
     private bool _inAir;
+    public bool UseGravity { get { return _gravityOn; } set { _gravityOn = value; } }
     public bool InAir { get { return _inAir; } set { _inAir = value; } }
     public bool CanTurn { get { return _canTurn; } set { _canTurn = value; } }
     public bool CanMove { get { return _canMove; } set { _canMove = value; } }
@@ -111,7 +112,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         MyState = new IdleState();
-        gravityOn = true;
+        _gravityOn = true;
         _canTurn = true;
         canAirMove = true;
         _canMove = true;
@@ -182,11 +183,14 @@ public class Player : MonoBehaviour
     }
     #endregion
 
-    public void StopMovingCharacter()
+    public void StopMovingCharacterOnXAxis()
     {
         rb.velocity = new Vector3(0, rb.velocity.y, 0);
     }
-
+    public void StopMovingCharacterOnYAxis()
+    {
+        rb.velocity = new Vector3(rb.velocity.x, 0, 0);
+    }
     #endregion
     void MinusJumpIndexWhenNotOnGround()
     {
@@ -205,11 +209,11 @@ public class Player : MonoBehaviour
     }
     void GravityCheck()
     {
-        if (gravityOn == false)
+        if (_gravityOn == false)
         {
             return;
         }
-        else if (gravityOn == true)
+        else if (_gravityOn == true)
         {
             Gravity();
         }
