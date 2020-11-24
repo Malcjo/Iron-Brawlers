@@ -57,7 +57,17 @@ public class PlayerActions : MonoBehaviour
 
     public void JumpLanding()
     {
+        StartCoroutine(_Jumplanding());
+    }
+    private IEnumerator _Jumplanding()
+    {
         anim.Play("LANDING");
+        yield return null;
+        while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.80f)
+        {
+            yield return null;
+        }
+        self.SetState(new IdleState());
     }
     
     public void Running()

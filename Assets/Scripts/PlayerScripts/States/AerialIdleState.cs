@@ -11,8 +11,11 @@ public class AerialIdleState : PlayerState
     }
     public override void RunState(Player self, Rigidbody body, PlayerActions actions, InputState input, Calculating calculate)
     {
-        self.VertcialStateActions();
         self.CanTurn = false;
+        self.InAir = true;
+
+        self.CheckVerticalState();
+
         if (MovementCheck(input.horizontalInput))
         {
             self.SetState(new AerialMovingState());
@@ -33,6 +36,7 @@ public class AerialIdleState : PlayerState
         {
             self.SetState(new ArmourBreakState());
         }
+
     }
 }
 

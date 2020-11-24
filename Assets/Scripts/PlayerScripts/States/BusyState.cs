@@ -10,8 +10,7 @@ public class BusyState : PlayerState
     }
     public override void RunState(Player self, Rigidbody body, PlayerActions actions, InputState input, Calculating calculate)
     {
-
-        if(self.CanMove == true)
+        if (self.CanMove == true)
         {
             if(self.VerticalState == Player.VState.grounded)
             {
@@ -26,7 +25,10 @@ public class BusyState : PlayerState
         {
             body.velocity = new Vector3(Mathf.Lerp(body.velocity.x, 0, calculate.friction), body.velocity.y, 0);
         }
-
+        if (self.VerticalState == Player.VState.grounded && (self.InAir == true))
+        {
+            self.SetState(new LandingState());
+        }
     }
 }
 

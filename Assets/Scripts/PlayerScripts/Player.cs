@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
 
     public PlayerIndex playerNumber;
     [SerializeField] private VState _currentVerticalState;
+    [SerializeField] private VState _previousVerticalState;
 
     [SerializeField]
     private string CurrentStateName;
@@ -79,12 +80,13 @@ public class Player : MonoBehaviour
 
     private Wall currentWall;
     private PlayerState MyState;
-    [SerializeField] private VState previousVerticalState;
+
 
     public int facingDirection;
     public int lives;
     public int characterType;
-
+    private bool _inAir;
+    public bool InAir { get { return _inAir; } set { _inAir = value; } }
     public bool CanTurn { get { return _canTurn; } set { _canTurn = value; } }
     public bool CanMove { get { return _canMove; } set { _canMove = value; } }
     public int CanJumpIndex { get { return _currentJumpIndex; } set { _currentJumpIndex = value; } }
@@ -92,6 +94,7 @@ public class Player : MonoBehaviour
     public bool GetBlocking() { return _blocking; }
     public int GetMaxJumps() { return maxJumps; }
     public VState VerticalState { get { return _currentVerticalState; } set { _currentVerticalState = value; } }
+    public VState PreviousVerticalState { get { return _previousVerticalState; } set { _previousVerticalState = value; } }
 
     public enum Wall
     {
@@ -179,28 +182,10 @@ public class Player : MonoBehaviour
     }
     #endregion
 
-    public void VertcialStateActions()
-    {
-        switch (_currentVerticalState)
-        {
-            case Player.VState.jumping:
-                playerActions.Jumping();
-                break;
-            case Player.VState.falling:
-                playerActions.Falling();
-                break;
-            case Player.VState.grounded:
-                canDoubleJump = true;
-                _currentJumpIndex = 0;
-                break;
-        }
-    }
-
     public void StopMovingCharacter()
     {
         rb.velocity = new Vector3(0, rb.velocity.y, 0);
     }
-
 
     #endregion
     void MinusJumpIndexWhenNotOnGround()
@@ -255,7 +240,6 @@ public class Player : MonoBehaviour
             gravityValue = 0;
         }
     }
-
     #endregion
 
     #region Damaging
@@ -286,7 +270,6 @@ public class Player : MonoBehaviour
         }
         return characterSpeed;
     }
-    
     public float JumpForceCalculator()
     {
         float jumpForceValue;
@@ -314,9 +297,6 @@ public class Player : MonoBehaviour
         var _facingDirection = facingDirection;
         return _facingDirection;
     }
-
-
-
     private void CheckDirection()
     {
         var _facingDirection = playerInput.GetHorizontal();
@@ -340,6 +320,19 @@ public class Player : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, 0, 0);
             _facingDirection = -1;
             facingDirection = (int)_facingDirection;
+        }
+    }
+
+    public void CheckVerticalState()
+    {
+        switch (_currentVerticalState)
+        {
+            case VState.falling:
+                playerActions.Falling();
+                break;
+            case VState.jumping:
+                playerActions.Jumping();
+                break;
         }
     }
     void VerticalStateTracker()
@@ -377,6 +370,7 @@ public class Player : MonoBehaviour
             }
         }
     }
+    private bool _grounded;
     private void LandOnGround(RaycastHit hit)
     {
         distanceToGround = hit.distance;
@@ -386,8 +380,10 @@ public class Player : MonoBehaviour
             transform.position = new Vector3(hit.point.x, hit.point.y + 0.85f, 0);
         }
         distanceToGround = hit.distance;
-
         _currentVerticalState = VState.grounded;
+
+        canDoubleJump = true;
+        _currentJumpIndex = 0;
     }
     public void PlayerGroundedIsFalse()
     {
@@ -441,7 +437,6 @@ public class Player : MonoBehaviour
         distanceToRight = hit.distance;
         currentWall = Wall.rightWall;
     }
-
     public void RayCastCeilingCheck(RaycastHit hit)
     {
         if (_currentVerticalState == VState.jumping)
@@ -452,7 +447,6 @@ public class Player : MonoBehaviour
             }
         }
     }
-
     public void HitCeiling(RaycastHit hit)
     {
         distanceToCeiling = hit.distance;
@@ -464,7 +458,6 @@ public class Player : MonoBehaviour
         distanceToCeiling = hit.distance;
     }
     #endregion
-
     void Observation()
     {
         V3Velocity = rb.velocity;
