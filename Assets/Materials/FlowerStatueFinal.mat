@@ -89,6 +89,8 @@ Material:
     - Vector1_C7F48FDC: 0.219
     - Vector1_E655FDE2: 0.06
     - _AlphaClip: 0
+    - _BandsCount: 4
+    - _BandsSmoothing: 0.1
     - _Blend: 0
     - _BlendOp: 0
     - _BumpScale: 1
@@ -115,8 +117,8 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _QueueOffset: 0
-    - _RampSmoothing: 0.083
-    - _RampThreshold: 0.299
+    - _RampSmoothing: 1
+    - _RampThreshold: 0.079
     - _ReceiveShadows: 1
     - _ReceiveShadowsOff: 1
     - _Smoothness: 0
@@ -143,6 +145,8 @@ Material:
     - _Color: {r: 0.9245283, g: 0.9245283, b: 0.9245283, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _HColor: {r: 1, g: 1, b: 1, a: 1}
+    - _RampSmoothingRGB: {r: 0.1, g: 0.1, b: 0.1, a: 1}
+    - _RampThresholdRGB: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _SColor: {r: 0.20754719, g: 0.15566039, b: 0.15566039, a: 1}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}

@@ -6,8 +6,9 @@
     "CustomOutputPath": "Materials/Materials",
     "LastImplementationExportImportPath": "D:/Git/Iron-Brawlers/Assets",
     "OpenedFoldouts": [
+        "SPECIAL EFFECTS",
         "SURFACE",
-        "LIGHTING"
+        "STYLIZATION"
     ],
     "UseCustomFont": true,
     "CustomFont": {
