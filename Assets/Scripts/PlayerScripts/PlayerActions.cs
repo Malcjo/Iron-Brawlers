@@ -11,11 +11,14 @@ public class PlayerActions : MonoBehaviour
     [SerializeField] HitBoxManager hitboxManager;
     [SerializeField] ArmourCheck armourCheck;
 
+    [SerializeField] AnimationCurve jabMovement;
+
     public int comboStep;
     public float comboTimer;
 
     private void Update()
     {
+
         if (comboTimer > 0)
         {
             comboTimer -= Time.deltaTime;
@@ -40,15 +43,30 @@ public class PlayerActions : MonoBehaviour
         }
         else if (comboStep < (animlist.Count))
         {
+            bool canMove = true;
+            //anim.Play(animlist[comboStep]);
             anim.Play("JAB");
             comboStep++;
             comboTimer = 1;
+
             yield return null;
 
             hitboxScript._attackDir = Attackdirection.Forward;
             hitboxScript._attackType = AttackType.Jab;
-            while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
+            while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.75f)
             {
+                while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.35f)
+                {
+
+                    yield return null;
+                }
+                if (canMove == true)
+                {
+                    Debug.Log("Move Character");
+                    self.MoveCharacterWithAttacks(500);
+                }
+                canMove = false;
+
                 yield return null;
             }
             self.SetState(new IdleState());

@@ -121,15 +121,12 @@ public class Player : MonoBehaviour
     {
         CheckDirection();
         CharacterStates();
+        currentPushPower = _currentPushPower;
     }
     private void FixedUpdate()
     {
         Observation();
         GravityCheck();
-    }
-    public void MoveCharacterWhileInAttack(float MovementStrength)
-    {
-        rb.AddForce((new Vector3 (facingDirection,0,0)) * MovementStrength);
     }
     #region State Machine
     #region Movement
@@ -217,6 +214,12 @@ public class Player : MonoBehaviour
         {
             Gravity();
         }
+    }
+    [SerializeField] private float currentPushPower;
+    [SerializeField] private float _currentPushPower;
+    public void MoveCharacterWithAttacks(float MoveStrength)
+    {
+        rb.AddForce(new Vector3(facingDirection * (MoveStrength), rb.velocity.y, 0));
     }
     void Gravity()
     {

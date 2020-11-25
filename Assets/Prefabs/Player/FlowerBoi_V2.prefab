@@ -6136,7 +6136,6 @@ Transform:
   m_Children:
   - {fileID: 7506525171726540144}
   - {fileID: 6740710133385251597}
-  - {fileID: 6808055612251557241}
   m_Father: {fileID: 7766364347159678621}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6202,8 +6201,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7201784739291712193}
-  m_Father: {fileID: 615893860973431842}
-  m_RootOrder: 2
+  m_Father: {fileID: 7766364347159678621}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &4220984027415991496
 Animator:
@@ -6255,6 +6254,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animlist:
+  - JAB
   - JAB
   anim: {fileID: 4220984027415991496}
   self: {fileID: 7766364346109190760}
@@ -7348,7 +7348,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNumber: 0
-  currentVerticalState: 0
+  _currentVerticalState: 0
+  _previousVerticalState: 0
   CurrentStateName: 
   gravityValue: -10
   friction: 0.25
@@ -7369,12 +7370,7 @@ MonoBehaviour:
   V3Velocity: {x: 0, y: 0, z: 0}
   DebugModeOn: 0
   jumpForce: 9
-  _canTurn: 0
-  canJump: 0
-  canAirMove: 0
-  gravityOn: 0
-  currentJumpIndex: 0
-  maxJumps: 2
+  _gravityOn: 0
   facingDirection: 0
   lives: 0
   characterType: 0
@@ -7758,6 +7754,7 @@ Transform:
   - {fileID: 7766364347221390592}
   - {fileID: 6575649135267532941}
   - {fileID: 615893860973431842}
+  - {fileID: 6808055612251557241}
   m_Father: {fileID: 7766364346109190766}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
