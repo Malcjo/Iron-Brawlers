@@ -15,6 +15,7 @@ Shader "IronBrawlersEnvironmental"
 		[TCP2Header(Ramp Shading)]
 		
 		_RampThreshold ("Threshold", Range(0.01,1)) = 0.5
+		_RampSmoothing ("Smoothing", Range(0.001,1)) = 0.5
 		[TCP2Separator]
 		
 		[TCP2HeaderHelp(Normal Mapping)]
@@ -56,6 +57,7 @@ Shader "IronBrawlersEnvironmental"
 			float4 _BaseMap_ST;
 			fixed4 _BaseColor;
 			float _RampThreshold;
+			float _RampSmoothing;
 			fixed4 _SColor;
 			fixed4 _HColor;
 		CBUFFER_END
@@ -189,7 +191,7 @@ Shader "IronBrawlersEnvironmental"
 				float __alpha = ( __albedo.a * __mainColor.a );
 				float __ambientIntensity = ( 1.0 );
 				float __rampThreshold = ( _RampThreshold );
-				float __rampCrispSmoothing = ( 1.0 );
+				float __rampSmoothing = ( _RampSmoothing );
 				float3 __shadowColor = ( _SColor.rgb );
 				float3 __highlightColor = ( _HColor.rgb );
 
@@ -232,10 +234,9 @@ Shader "IronBrawlersEnvironmental"
 				half3 ramp;
 				
 				half rampThreshold = __rampThreshold;
+				half rampSmooth = __rampSmoothing * 0.5;
 				ndl = saturate(ndl);
-				float gradientLength = fwidth(ndl);
-				float thresholdWidth = __rampCrispSmoothing * gradientLength;
-				ramp = smoothstep(rampThreshold - thresholdWidth, rampThreshold + thresholdWidth, ndl);
+				ramp = smoothstep(rampThreshold - rampSmooth, rampThreshold + rampSmooth, ndl);
 
 				// apply attenuation
 				ramp *= atten;
@@ -258,9 +259,7 @@ Shader "IronBrawlersEnvironmental"
 					half3 ramp;
 					
 					ndl = saturate(ndl);
-					float gradientLength = fwidth(ndl);
-					float thresholdWidth = __rampCrispSmoothing * gradientLength;
-					ramp = smoothstep(rampThreshold - thresholdWidth, rampThreshold + thresholdWidth, ndl);
+					ramp = smoothstep(rampThreshold - rampSmooth, rampThreshold + rampSmooth, ndl);
 
 					// apply attenuation (shadowmaps & point/spot lights attenuation)
 					ramp *= atten;
@@ -457,5 +456,5 @@ Shader "IronBrawlersEnvironmental"
 	CustomEditor "ToonyColorsPro.ShaderGenerator.MaterialInspector_SG2"
 }
 
-/* TCP_DATA u config(unity:"2020.1.3f1";ver:"2.6.0";tmplt:"SG2_Template_URP";features:list["UNITY_5_4","UNITY_5_5","UNITY_5_6","UNITY_2017_1","UNITY_2018_1","UNITY_2018_2","UNITY_2018_3","UNITY_2019_1","UNITY_2019_2","UNITY_2019_3","BUMP","TEMPLATE_LWRP","CRISP_RAMP"];flags:list[];flags_extra:dict[];keywords:dict[RENDER_TYPE="Opaque",RampTextureDrawer="[TCP2Gradient]",RampTextureLabel="Ramp Texture",SHADER_TARGET="3.0"];shaderProperties:list[];customTextures:list[];codeInjection:codeInjection(injectedFiles:list[];mark:False)) */
-/* TCP_HASH bb36f4edc68f562e239a85e69e8bd994 */
+/* TCP_DATA u config(unity:"2020.1.3f1";ver:"2.6.0";tmplt:"SG2_Template_URP";features:list["UNITY_5_4","UNITY_5_5","UNITY_5_6","UNITY_2017_1","UNITY_2018_1","UNITY_2018_2","UNITY_2018_3","UNITY_2019_1","UNITY_2019_2","UNITY_2019_3","BUMP","TEMPLATE_LWRP"];flags:list[];flags_extra:dict[];keywords:dict[RENDER_TYPE="Opaque",RampTextureDrawer="[TCP2Gradient]",RampTextureLabel="Ramp Texture",SHADER_TARGET="3.0"];shaderProperties:list[];customTextures:list[];codeInjection:codeInjection(injectedFiles:list[];mark:False)) */
+/* TCP_HASH 884d4d56a4e5ec397bbb51d71b56bf4a */
