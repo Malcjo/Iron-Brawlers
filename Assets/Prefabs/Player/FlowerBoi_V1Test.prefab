@@ -937,6 +937,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerNumber: 0
   _currentVerticalState: 0
+  _previousVerticalState: 0
   CurrentStateName: 
   gravityValue: -10
   friction: 0.25
@@ -957,11 +958,12 @@ MonoBehaviour:
   V3Velocity: {x: 0, y: 0, z: 0}
   DebugModeOn: 0
   jumpForce: 9
-  gravityOn: 0
-  previousVerticalState: 0
+  _gravityOn: 0
   facingDirection: 0
   lives: 0
   characterType: 0
+  currentPushPower: 0
+  _currentPushPower: 0
 --- !u!114 &5960387603786025886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4174,6 +4176,12 @@ MonoBehaviour:
   hitboxScript: {fileID: 4162621646555263583}
   hitboxManager: {fileID: 2276566860994049645}
   armourCheck: {fileID: 807978850910161245}
+  jabMovement:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   comboStep: 0
   comboTimer: 0
 --- !u!1 &3911696044370538191
