@@ -5,6 +5,13 @@ Shader "IronBrawlersEnvironmental"
 {
 	Properties
 	{
+		[Enum(Front, 2, Back, 1, Both, 0)] _Cull ("Render Face", Float) = 2.0
+		[TCP2ToggleNoKeyword] _ZWrite ("Depth Write", Float) = 1.0
+		[HideInInspector] _RenderingMode ("rendering mode", Float) = 0.0
+		[HideInInspector] _SrcBlend ("blending source", Float) = 1.0
+		[HideInInspector] _DstBlend ("blending destination", Float) = 0.0
+		[TCP2Separator]
+
 		[TCP2HeaderHelp(Base)]
 		_BaseColor ("Color", Color) = (1,1,1,1)
 		[TCP2ColorNoAlpha] _HColor ("Highlight Color", Color) = (0.75,0.75,0.75,1)
@@ -75,6 +82,9 @@ Shader "IronBrawlersEnvironmental"
 			{
 				"LightMode"="UniversalForward"
 			}
+		Blend [_SrcBlend] [_DstBlend]
+		Cull [_Cull]
+		ZWrite [_ZWrite]
 
 			HLSLPROGRAM
 			// Required to compile gles 2.0 with standard SRP library
@@ -105,6 +115,10 @@ Shader "IronBrawlersEnvironmental"
 
 			#pragma vertex Vertex
 			#pragma fragment Fragment
+
+			//--------------------------------------
+			// Toony Colors Pro 2 keywords
+		#pragma shader_feature _ _ALPHAPREMULTIPLY_ON
 
 			// vertex input
 			struct Attributes
@@ -281,6 +295,11 @@ Shader "IronBrawlersEnvironmental"
 				// apply ambient
 				color += indirectDiffuse;
 
+				// Premultiply blending
+				#if defined(_ALPHAPREMULTIPLY_ON)
+					color.rgb *= alpha;
+				#endif
+
 				color += emission;
 
 				return half4(color, alpha);
@@ -456,5 +475,5 @@ Shader "IronBrawlersEnvironmental"
 	CustomEditor "ToonyColorsPro.ShaderGenerator.MaterialInspector_SG2"
 }
 
-/* TCP_DATA u config(unity:"2020.1.3f1";ver:"2.6.0";tmplt:"SG2_Template_URP";features:list["UNITY_5_4","UNITY_5_5","UNITY_5_6","UNITY_2017_1","UNITY_2018_1","UNITY_2018_2","UNITY_2018_3","UNITY_2019_1","UNITY_2019_2","UNITY_2019_3","BUMP","TEMPLATE_LWRP"];flags:list[];flags_extra:dict[];keywords:dict[RENDER_TYPE="Opaque",RampTextureDrawer="[TCP2Gradient]",RampTextureLabel="Ramp Texture",SHADER_TARGET="3.0"];shaderProperties:list[];customTextures:list[];codeInjection:codeInjection(injectedFiles:list[];mark:False)) */
-/* TCP_HASH 884d4d56a4e5ec397bbb51d71b56bf4a */
+/* TCP_DATA u config(unity:"2020.1.3f1";ver:"2.6.0";tmplt:"SG2_Template_URP";features:list["UNITY_5_4","UNITY_5_5","UNITY_5_6","UNITY_2017_1","UNITY_2018_1","UNITY_2018_2","UNITY_2018_3","UNITY_2019_1","UNITY_2019_2","UNITY_2019_3","BUMP","TEMPLATE_LWRP","AUTO_TRANSPARENT_BLENDING"];flags:list[];flags_extra:dict[];keywords:dict[RENDER_TYPE="Opaque",RampTextureDrawer="[TCP2Gradient]",RampTextureLabel="Ramp Texture",SHADER_TARGET="3.0"];shaderProperties:list[];customTextures:list[];codeInjection:codeInjection(injectedFiles:list[];mark:False)) */
+/* TCP_HASH 33449074e1421f385c04591e1274747c */
