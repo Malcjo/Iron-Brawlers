@@ -12,6 +12,7 @@ public class AerialAttackState : PlayerState
     {
         actions.AerialAttack();
         self.CanTurn = false;
+        self.WasAttacking = true;
         self.SetState(new BusyState());
     }
 }

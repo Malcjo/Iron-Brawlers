@@ -5,13 +5,14 @@ using UnityEngine;
 public enum AttackType { Jab, LegSweep, Aerial, ArmourBreak, HeavyJab };
 public enum Attackdirection { Forward, Low, Aerial, Down };
 public enum HitBoxScale { Jab, ArmourBreak, Aerial };
+public enum FollowDes { Centre, RightHand, RightElbow, LeftHand, LeftElbow , RightFoot, LeftFoot}
 public class Hitbox : MonoBehaviour
 {
     public bool viewHitBox;
     public HitBoxScale _hitBoxScale;
     public Attackdirection _attackDir;
     public AttackType _attackType;
-
+    private FollowDes _followDes;
     MeshRenderer meshRenderer;
     Collider hitboxCollider;
 
@@ -45,7 +46,6 @@ public class Hitbox : MonoBehaviour
     }
     private void Start()
     {
-        //ShowHitBoxes();
         HideHitBoxes();
     }
     private void Update()
@@ -98,6 +98,26 @@ public class Hitbox : MonoBehaviour
                 break;
             case HitBoxScale.Aerial:
                 transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+                break;
+        }
+    }
+    void HitboxPosition()
+    {
+        switch(_followDes)
+        {
+            case FollowDes.Centre:
+                break;
+            case FollowDes.RightHand:
+                break;
+            case FollowDes.RightElbow:
+                break;
+            case FollowDes.RightFoot:
+                break;
+            case FollowDes.LeftHand:
+                break;
+            case FollowDes.LeftElbow:
+                break;
+            case FollowDes.LeftFoot:
                 break;
         }
     }

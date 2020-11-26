@@ -55,7 +55,7 @@ public class PlayerActions : MonoBehaviour
             hitboxScript._attackType = AttackType.Jab;
             while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.75f)
             {
-                while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.35f)
+                while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.25f)
                 {
 
                     yield return null;
@@ -63,7 +63,7 @@ public class PlayerActions : MonoBehaviour
                 if (canMove == true)
                 {
                     Debug.Log("Move Character");
-                    self.MoveCharacterWithAttacks(500);
+                    self.MoveCharacterWithAttacks(450);
                 }
                 canMove = false;
 
@@ -92,6 +92,7 @@ public class PlayerActions : MonoBehaviour
     {
         anim.Play("RUN");
     }
+  
 
     public void Idle()
     {
@@ -147,14 +148,14 @@ public class PlayerActions : MonoBehaviour
         hitboxScript._attackDir = Attackdirection.Aerial;
         while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
         {
-            while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.5f)
+            while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.4f)
             {
                 yield return null;
             }
             self.UseGravity = true;
             yield return null;
         }
-        self.SetState(new IdleState());
+        self.SetState(new AerialIdleState());
     }
 
     public void ArmourBreak()
@@ -223,12 +224,23 @@ public class PlayerActions : MonoBehaviour
     }
     private IEnumerator _Heavy()
     {
+        bool canMove = true;
         anim.Play("HEAVY");
         yield return null;
         hitboxScript._attackDir = Attackdirection.Forward;
         hitboxScript._attackType = AttackType.HeavyJab;
         while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
         {
+            while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.25f)
+            {
+                yield return null;
+            }
+            if (canMove == true)
+            {
+                Debug.Log("Move Character");
+                self.MoveCharacterWithAttacks(600);
+                canMove = false;
+            }
             yield return null;
         }
         self.SetState(new IdleState());

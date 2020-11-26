@@ -81,11 +81,12 @@ public class Player : MonoBehaviour
     private Wall currentWall;
     private PlayerState MyState;
 
-
+    private bool _wasAttacking;
     public int facingDirection;
     public int lives;
     public int characterType;
     private bool _inAir;
+    public bool WasAttacking { get { return _wasAttacking; } set { _wasAttacking = value; } }
     public bool UseGravity { get { return _gravityOn; } set { _gravityOn = value; } }
     public bool InAir { get { return _inAir; } set { _inAir = value; } }
     public bool CanTurn { get { return _canTurn; } set { _canTurn = value; } }
