@@ -25,10 +25,6 @@ public class BusyState : PlayerState
         {
             body.velocity = new Vector3(Mathf.Lerp(body.velocity.x, 0, calculate.friction), body.velocity.y, 0);
         }
-        if (self.VerticalState == Player.VState.grounded && (self.InAir == true))
-        {
-            self.SetState(new LandingState());
-        }
     }
 }
 

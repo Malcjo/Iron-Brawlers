@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -785,22 +785,22 @@ PrefabInstance:
     - target: {fileID: 4688837647506539797, guid: 590656536554766488000c7b5f8e65ba,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4688837647506539797, guid: 590656536554766488000c7b5f8e65ba,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4688837647506539797, guid: 590656536554766488000c7b5f8e65ba,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4688837647506539797, guid: 590656536554766488000c7b5f8e65ba,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.0000007003545
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4688837647506539797, guid: 590656536554766488000c7b5f8e65ba,
         type: 3}
@@ -826,186 +826,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: FlowerBoi_V1Test
-      objectReference: {fileID: 0}
-    - target: {fileID: 7292203985485110867, guid: 590656536554766488000c7b5f8e65ba,
-        type: 3}
-      propertyPath: animlist.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7292203985485110867, guid: 590656536554766488000c7b5f8e65ba,
-        type: 3}
-      propertyPath: jabMovement.m_Curve.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7292203985485110867, guid: 590656536554766488000c7b5f8e65ba,
-        type: 3}
-      propertyPath: animlist.Array.data[2]
-      value: JAB
-      objectReference: {fileID: 0}
-    - target: {fileID: 7292203985485110867, guid: 590656536554766488000c7b5f8e65ba,
-        type: 3}
-      propertyPath: jabMovement.m_Curve.Array.data[0].value
-      value: 0.0047187805
-      objectReference: {fileID: 0}
-    - target: {fileID: 7292203985485110867, guid: 590656536554766488000c7b5f8e65ba,
-        type: 3}
-      propertyPath: jabMovement.m_Curve.Array.data[0].tangentMode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7292203985485110867, guid: 590656536554766488000c7b5f8e65ba,
-        type: 3}
-      propertyPath: jabMovement.m_Curve.Array.data[1].time
-      value: 0.42141965
-      objectReference: {fileID: 0}
-    - target: {fileID: 7292203985485110867, guid: 590656536554766488000c7b5f8e65ba,
-        type: 3}
-      propertyPath: jabMovement.m_Curve.Array.data[1].value
-      value: 0.3775438
-      objectReference: {fileID: 0}
-    - target: {fileID: 7292203985485110867, guid: 590656536554766488000c7b5f8e65ba,
-        type: 3}
-      propertyPath: jabMovement.m_Curve.Array.data[1].tangentMode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7292203985485110867, guid: 590656536554766488000c7b5f8e65ba,
-        type: 3}
-      propertyPath: jabMovement.m_Curve.Array.data[0].inSlope
-      value: -0.000008636714
-      objectReference: {fileID: 0}
-    - target: {fileID: 7292203985485110867, guid: 590656536554766488000c7b5f8e65ba,
-        type: 3}
-      propertyPath: jabMovement.m_Curve.Array.data[0].outSlope
-      value: -0.000008636714
-      objectReference: {fileID: 0}
-    - target: {fileID: 7292203985485110867, guid: 590656536554766488000c7b5f8e65ba,
-        type: 3}
-      propertyPath: jabMovement.m_Curve.Array.data[0].outWeight
-      value: 0.58342355
-      objectReference: {fileID: 0}
-    - target: {fileID: 7292203985485110867, guid: 590656536554766488000c7b5f8e65ba,
-        type: 3}
-      propertyPath: jabMovement.m_Curve.Array.data[1].inSlope
-      value: 2.7948017
-      objectReference: {fileID: 0}
-    - target: {fileID: 7292203985485110867, guid: 590656536554766488000c7b5f8e65ba,
-        type: 3}
-      propertyPath: jabMovement.m_Curve.Array.data[1].outSlope
-      value: 2.7948017
-      objectReference: {fileID: 0}
-    - target: {fileID: 7292203985485110867, guid: 590656536554766488000c7b5f8e65ba,
-        type: 3}
-      propertyPath: jabMovement.m_Curve.Array.data[1].inWeight
-      value: 0.5682666
-      objectReference: {fileID: 0}
-    - target: {fileID: 7292203985485110867, guid: 590656536554766488000c7b5f8e65ba,
-        type: 3}
-      propertyPath: jabMovement.m_Curve.Array.data[0].time
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7292203985485110867, guid: 590656536554766488000c7b5f8e65ba,
-        type: 3}
-      propertyPath: jabMovement.m_Curve.Array.data[1].outWeight
-      value: 0.50933087
-      objectReference: {fileID: 0}
-    - target: {fileID: 7292203985485110867, guid: 590656536554766488000c7b5f8e65ba,
-        type: 3}
-      propertyPath: jabMovement.m_Curve.Array.data[2].time
-      value: 0.4911152
-      objectReference: {fileID: 0}
-    - target: {fileID: 7292203985485110867, guid: 590656536554766488000c7b5f8e65ba,
-        type: 3}
-      propertyPath: jabMovement.m_Curve.Array.data[2].value
-      value: 0.99952847
-      objectReference: {fileID: 0}
-    - target: {fileID: 7292203985485110867, guid: 590656536554766488000c7b5f8e65ba,
-        type: 3}
-      propertyPath: jabMovement.m_Curve.Array.data[2].inSlope
-      value: -0.012135192
-      objectReference: {fileID: 0}
-    - target: {fileID: 7292203985485110867, guid: 590656536554766488000c7b5f8e65ba,
-        type: 3}
-      propertyPath: jabMovement.m_Curve.Array.data[2].outSlope
-      value: -0.012135192
-      objectReference: {fileID: 0}
-    - target: {fileID: 7292203985485110867, guid: 590656536554766488000c7b5f8e65ba,
-        type: 3}
-      propertyPath: jabMovement.m_Curve.Array.data[2].tangentMode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7292203985485110867, guid: 590656536554766488000c7b5f8e65ba,
-        type: 3}
-      propertyPath: jabMovement.m_Curve.Array.data[2].inWeight
-      value: 0.33333334
-      objectReference: {fileID: 0}
-    - target: {fileID: 7292203985485110867, guid: 590656536554766488000c7b5f8e65ba,
-        type: 3}
-      propertyPath: jabMovement.m_Curve.Array.data[2].outWeight
-      value: 0.39551982
-      objectReference: {fileID: 0}
-    - target: {fileID: 7292203985485110867, guid: 590656536554766488000c7b5f8e65ba,
-        type: 3}
-      propertyPath: jabMovement.m_Curve.Array.data[3].time
-      value: 0.5169676
-      objectReference: {fileID: 0}
-    - target: {fileID: 7292203985485110867, guid: 590656536554766488000c7b5f8e65ba,
-        type: 3}
-      propertyPath: jabMovement.m_Curve.Array.data[3].value
-      value: 0.0069544725
-      objectReference: {fileID: 0}
-    - target: {fileID: 7292203985485110867, guid: 590656536554766488000c7b5f8e65ba,
-        type: 3}
-      propertyPath: jabMovement.m_Curve.Array.data[3].inSlope
-      value: -0.012350286
-      objectReference: {fileID: 0}
-    - target: {fileID: 7292203985485110867, guid: 590656536554766488000c7b5f8e65ba,
-        type: 3}
-      propertyPath: jabMovement.m_Curve.Array.data[3].outSlope
-      value: -0.012350286
-      objectReference: {fileID: 0}
-    - target: {fileID: 7292203985485110867, guid: 590656536554766488000c7b5f8e65ba,
-        type: 3}
-      propertyPath: jabMovement.m_Curve.Array.data[3].tangentMode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7292203985485110867, guid: 590656536554766488000c7b5f8e65ba,
-        type: 3}
-      propertyPath: jabMovement.m_Curve.Array.data[3].inWeight
-      value: 0.33333334
-      objectReference: {fileID: 0}
-    - target: {fileID: 7292203985485110867, guid: 590656536554766488000c7b5f8e65ba,
-        type: 3}
-      propertyPath: jabMovement.m_Curve.Array.data[3].outWeight
-      value: 0.44208983
-      objectReference: {fileID: 0}
-    - target: {fileID: 7292203985485110867, guid: 590656536554766488000c7b5f8e65ba,
-        type: 3}
-      propertyPath: jabMovement.m_Curve.Array.data[4].time
-      value: 1.0041809
-      objectReference: {fileID: 0}
-    - target: {fileID: 7292203985485110867, guid: 590656536554766488000c7b5f8e65ba,
-        type: 3}
-      propertyPath: jabMovement.m_Curve.Array.data[4].value
-      value: 0.0070762634
-      objectReference: {fileID: 0}
-    - target: {fileID: 7292203985485110867, guid: 590656536554766488000c7b5f8e65ba,
-        type: 3}
-      propertyPath: jabMovement.m_Curve.Array.data[4].inSlope
-      value: 0.022321617
-      objectReference: {fileID: 0}
-    - target: {fileID: 7292203985485110867, guid: 590656536554766488000c7b5f8e65ba,
-        type: 3}
-      propertyPath: jabMovement.m_Curve.Array.data[4].outSlope
-      value: 0.022321617
-      objectReference: {fileID: 0}
-    - target: {fileID: 7292203985485110867, guid: 590656536554766488000c7b5f8e65ba,
-        type: 3}
-      propertyPath: jabMovement.m_Curve.Array.data[4].tangentMode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7292203985485110867, guid: 590656536554766488000c7b5f8e65ba,
-        type: 3}
-      propertyPath: jabMovement.m_Curve.Array.data[4].inWeight
-      value: 0.50022936
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 590656536554766488000c7b5f8e65ba, type: 3}
@@ -1230,7 +1050,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 2.3368e-41, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: 2.5201e-41, z: 0, w: -1.6538879e+30}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -1638,8 +1458,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.53, z: -10}
+  m_LocalRotation: {x: -0, y: 0.000000014901159, z: -0, w: 1}
+  m_LocalPosition: {x: -0, y: 2.53, z: -10.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1659,7 +1479,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   focusLevel: {fileID: 1837554095}
   Players:
-  - {fileID: 1397769447}
+  - {fileID: 0}
   depthUpdateSpeed: 5
   angleUpdateSpeed: 7
   positionUpdateSpeed: 5
@@ -2174,12 +1994,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1397769447 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7766364346109190759, guid: 590656536554766488000c7b5f8e65ba,
-    type: 3}
-  m_PrefabInstance: {fileID: 514069578}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1630072807
 GameObject:
   m_ObjectHideFlags: 0
@@ -2539,6 +2353,80 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   punchingBag: {fileID: 1310802344}
+--- !u!1001 &1922179188
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4424117348666937894, guid: 590656536554766488000c7b5f8e65ba,
+        type: 3}
+      propertyPath: playerNumber
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4688837647506539797, guid: 590656536554766488000c7b5f8e65ba,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 4688837647506539797, guid: 590656536554766488000c7b5f8e65ba,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.11
+      objectReference: {fileID: 0}
+    - target: {fileID: 4688837647506539797, guid: 590656536554766488000c7b5f8e65ba,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4688837647506539797, guid: 590656536554766488000c7b5f8e65ba,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4688837647506539797, guid: 590656536554766488000c7b5f8e65ba,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4688837647506539797, guid: 590656536554766488000c7b5f8e65ba,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4688837647506539797, guid: 590656536554766488000c7b5f8e65ba,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4688837647506539797, guid: 590656536554766488000c7b5f8e65ba,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 4688837647506539797, guid: 590656536554766488000c7b5f8e65ba,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4688837647506539797, guid: 590656536554766488000c7b5f8e65ba,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4688837647506539797, guid: 590656536554766488000c7b5f8e65ba,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4688837647506539818, guid: 590656536554766488000c7b5f8e65ba,
+        type: 3}
+      propertyPath: m_Name
+      value: FlowerBoi_V1Test (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 590656536554766488000c7b5f8e65ba, type: 3}
 --- !u!1 &1993728666
 GameObject:
   m_ObjectHideFlags: 0

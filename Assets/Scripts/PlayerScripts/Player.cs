@@ -75,7 +75,7 @@ public class Player : MonoBehaviour
     private int _currentJumpIndex;
     private int maxJumps = 2;
 
-    private Vector3 addForceValue;
+    [SerializeField] private Vector3 addForceValue;
     private Vector3 hitDirection;
 
     private Wall currentWall;
@@ -122,6 +122,7 @@ public class Player : MonoBehaviour
     {
         CheckDirection();
         CharacterStates();
+        ReduceCounter();
         currentPushPower = _currentPushPower;
     }
     private void FixedUpdate()
@@ -249,24 +250,52 @@ public class Player : MonoBehaviour
         }
     }
     #endregion
+    #region ReduceValues
+    void ReduceCounter()
+    {
+        ReduceHitForce();
+        ReduceHitStun();
+    }
 
+    void ReduceHitForce()
+    {
+        addForceValue.x = Mathf.Lerp(addForceValue.x, 0, 7f * Time.deltaTime);
+        addForceValue.y = Mathf.Lerp(addForceValue.y, 0, 27f * Time.deltaTime);
+
+        //reducing to zero if small value
+        if (addForceValue.magnitude < 0.05f && addForceValue.magnitude > -0.05f)
+        {
+            addForceValue = Vector3.zero;
+        }
+    }
+    void ReduceHitStun()
+    {
+        if (hitStun == true)
+        {
+            hitStunTimer -= 1 * Time.deltaTime;
+            if (hitStunTimer < 0.001f)
+            {
+                hitStunTimer = 0;
+                hitStun = false;
+            }
+        }
+    }
+    #endregion
     #region Damaging
     public void HitStun()
     {
         playerActions.HitStun();
     }
-    private Vector3 AddForce(float hitStrength)
-    {
-        Vector3 addForceValue = ((hitDirection) * (hitStrength));
-        return addForceValue;
-    }
     public void Damage(Vector3 Hit, float Power)
     {
-        Debug.Log("Jab");
         hitStun = true;
         hitStunTimer = 1.1f;
-        hitDirection = Hit;
-        addForceValue = AddForce(Power - (armourCheck.knockBackResistance + knockbackResistance));
+        addForceValue = AddForce(Hit, Power /*- (armourCheck.knockBackResistance + knockbackResistance)*/);
+    }
+    private Vector3 AddForce(Vector3 HitDirection, float hitStrength)
+    {
+        Vector3 addForceValue = ((HitDirection) * (hitStrength));
+        return addForceValue;
     }
     #endregion
     public float CharacterSpeed()
@@ -316,7 +345,6 @@ public class Player : MonoBehaviour
                 return;
             }
             transform.rotation = Quaternion.Euler(0, 180, 0);
-            _facingDirection = 1;
             facingDirection = (int)_facingDirection;
         }
         else if (_facingDirection < 0)
@@ -326,7 +354,6 @@ public class Player : MonoBehaviour
                 return;
             }
             transform.rotation = Quaternion.Euler(0, 0, 0);
-            _facingDirection = -1;
             facingDirection = (int)_facingDirection;
         }
     }
@@ -378,7 +405,6 @@ public class Player : MonoBehaviour
             }
         }
     }
-    private bool _grounded;
     private void LandOnGround(RaycastHit hit)
     {
         distanceToGround = hit.distance;

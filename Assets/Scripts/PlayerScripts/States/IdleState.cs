@@ -12,7 +12,7 @@ public class IdleState : PlayerState
     {
         self.CanMove = true;
         self.CanTurn = true;
-        body.velocity = new Vector3(Mathf.Lerp(body.velocity.x, 0, calculate.friction), body.velocity.y, 0);
+        body.velocity = new Vector3(Mathf.Lerp(body.velocity.x, 0, calculate.friction), body.velocity.y, 0) + calculate.addForce;
         actions.Idle();
         if (MovementCheck(input.horizontalInput))
         {

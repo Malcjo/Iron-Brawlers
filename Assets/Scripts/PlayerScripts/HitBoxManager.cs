@@ -46,15 +46,14 @@ public class HitBoxManager : MonoBehaviour
     }
     public void JabAttack(float spawnTime)
     {
-
         StartCoroutine(SpawnHitBox(spawnTime));
         StopCoroutine(SpawnHitBox(0));
     }
-    public void LegSweep()
+    public void LegSweep(float spawnTime)
     {
-        hitBox.FollowHand();//to snap into place before hitbox is played
-        hitBox._hitBoxScale = HitBoxScale.Aerial;
-        StartCoroutine(SpawnHitBox(0.15f));
+        //hitBox.FollowHand();//to snap into place before hitbox is played
+        hitBox._hitBoxScale = HitBoxScale.Jab;
+        StartCoroutine(SpawnHitBox(spawnTime));
         StopCoroutine(SpawnHitBox(0));
     }
     public void AeiralAttack()

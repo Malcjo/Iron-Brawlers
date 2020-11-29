@@ -49,10 +49,13 @@ public class PlayerActions : MonoBehaviour
             comboStep++;
             comboTimer = 1;
 
-            yield return null;
 
+            yield return null;
+            hitboxManager.SwapHands(0);
             hitboxScript._attackDir = Attackdirection.Forward;
             hitboxScript._attackType = AttackType.Jab;
+            hitboxManager.JabAttack(0.5f);
+
             while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.75f)
             {
                 while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.25f)
@@ -125,8 +128,10 @@ public class PlayerActions : MonoBehaviour
         anim.Play("SWEEP");
         self.CanTurn = false;
         yield return null;
+        hitboxManager.SwapHands(1);
         hitboxScript._attackDir = Attackdirection.Low;
         hitboxScript._attackType = AttackType.LegSweep;
+        hitboxManager.LegSweep(0.5f);
         while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
         {
             yield return null;
@@ -146,6 +151,7 @@ public class PlayerActions : MonoBehaviour
         yield return null;
         hitboxScript._attackType = AttackType.Aerial;
         hitboxScript._attackDir = Attackdirection.Aerial;
+        hitboxManager.AeiralAttack();
         while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
         {
             while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.4f)
@@ -227,8 +233,11 @@ public class PlayerActions : MonoBehaviour
         bool canMove = true;
         anim.Play("HEAVY");
         yield return null;
+        hitboxManager.SwapHands(1);
         hitboxScript._attackDir = Attackdirection.Forward;
         hitboxScript._attackType = AttackType.HeavyJab;
+        hitboxManager.JabAttack(0.5f);
+
         while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
         {
             while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.25f)

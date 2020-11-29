@@ -177,15 +177,15 @@ public class Hitbox : MonoBehaviour
         switch (_attackType)
         {
             case AttackType.Jab:
-                return 15;
+                return 3;
             case AttackType.LegSweep:
-                return 14;
+                return 3;
             case AttackType.Aerial:
-                return 25;
+                return 3;
             case AttackType.ArmourBreak:
-                return 10;
+                return 5;
             case AttackType.HeavyJab:
-                return 25;
+                return 4;
         }
         return 0;
     }
@@ -226,6 +226,7 @@ public class Hitbox : MonoBehaviour
 
                 DamagePlayer(tempPlayer);
 
+
                 if (tempHurtBox.location == LocationTag.Chest)
                 {
                     Debug.Log("Hit Chest");
@@ -262,7 +263,9 @@ public class Hitbox : MonoBehaviour
                         tempArmour.RemoveLegArmour();
                     }
                 }
+                
             }
+
         }
     }
     void DamagePlayer(Player player)
