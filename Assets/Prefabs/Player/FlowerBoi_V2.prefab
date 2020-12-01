@@ -8271,6 +8271,10 @@ MonoBehaviour:
   facingDirection: 0
   lives: 0
   characterType: 0
+  freezeCounter: 0
+  maxFreezeCounter: 1
+  _TempVelocity: {x: 0, y: 0, z: 0}
+  freezePlayer: 0
   currentPushPower: 0
   _currentPushPower: 0
 --- !u!114 &5550772256738941108

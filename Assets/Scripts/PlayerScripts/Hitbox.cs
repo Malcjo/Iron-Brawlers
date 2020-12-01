@@ -52,18 +52,6 @@ public class Hitbox : MonoBehaviour
     {
         AttackTypeCall();
         HitBoxSize();
-        freezeCounter -= freezeStep * Time.deltaTime;
-        if (freezeCounter == 0)
-        {
-            player.enabled = true;
-            playerInput.enabled = true;
-            anim.enabled = true;
-            freezeCharacter = false;
-        }
-        if (freezeCounter < 0)
-        {
-            freezeCounter = 0;
-        }
     }
     void AttackTypeCall()
     {
@@ -226,7 +214,6 @@ public class Hitbox : MonoBehaviour
 
                 DamagePlayer(tempPlayer);
 
-
                 if (tempHurtBox.location == LocationTag.Chest)
                 {
                     Debug.Log("Hit Chest");
@@ -270,6 +257,7 @@ public class Hitbox : MonoBehaviour
     }
     void DamagePlayer(Player player)
     {
+        player.FreezeCharacter();
         player.HitStun();
         Debug.Log("Hit Player");
         player.Damage(HitDirection(), HitStrength());

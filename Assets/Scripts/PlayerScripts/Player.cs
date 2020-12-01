@@ -98,6 +98,11 @@ public class Player : MonoBehaviour
     public VState VerticalState { get { return _currentVerticalState; } set { _currentVerticalState = value; } }
     public VState PreviousVerticalState { get { return _previousVerticalState; } set { _previousVerticalState = value; } }
 
+    [SerializeField] private float freezeCounter;
+    [SerializeField] private float maxFreezeCounter;
+    [SerializeField] private Vector3 _TempVelocity;
+    [SerializeField] private bool freezePlayer;
+
     public enum Wall
     {
         leftWall,
@@ -124,6 +129,17 @@ public class Player : MonoBehaviour
         CharacterStates();
         ReduceCounter();
         currentPushPower = _currentPushPower;
+        freezeCounter -= 0.9f * Time.deltaTime;
+        if (freezeCounter <= 0.001f)
+        {
+            if(freezePlayer == true)
+            {
+                rb.velocity = _TempVelocity;
+                freezeCounter = 0;
+                UseGravity = true;
+                freezePlayer = false;
+            }
+        }
     }
     private void FixedUpdate()
     {
@@ -191,6 +207,15 @@ public class Player : MonoBehaviour
         rb.velocity = new Vector3(rb.velocity.x, 0, 0);
     }
     #endregion
+
+    public void FreezeCharacter()
+    {
+        freezePlayer = true;
+        _TempVelocity = rb.velocity;
+        rb.velocity = Vector3.zero;
+        UseGravity = false;
+        freezeCounter = maxFreezeCounter;
+    }
     void MinusJumpIndexWhenNotOnGround()
     {
         if(_currentJumpIndex == 0)
