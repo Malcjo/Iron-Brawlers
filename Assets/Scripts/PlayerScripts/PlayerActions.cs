@@ -142,6 +142,15 @@ public class PlayerActions : MonoBehaviour
     {
         StartCoroutine(_AerialAttack());
     }
+    public void PauseCurrentAnimation()
+    {
+        anim.speed = 0;
+    }
+    public void ResumeCurrentAnimation()
+    {
+        anim.speed = 1;
+    }
+
     private IEnumerator _AerialAttack()
     {
         anim.Play("AERIAL");

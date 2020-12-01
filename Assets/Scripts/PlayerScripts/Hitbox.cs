@@ -200,19 +200,20 @@ public class Hitbox : MonoBehaviour
 
         if (other.gameObject.CompareTag("Hurtbox"))
         {
-            var tempPlayer = other.GetComponentInParent<Player>();
+            var tempAttackedPlayer = other.GetComponentInParent<Player>();
+            var tempAttackingPlayer = GetComponentInParent<Player>();
             var tempArmour = other.GetComponentInParent<ArmourCheck>();
             HurtBox tempHurtBox = other.GetComponent<HurtBox>();
 
-            if (tempPlayer.GetBlocking() == true)
+            if (tempAttackedPlayer.GetBlocking() == true)
             {
                 HideHitBoxes();
                 return;
             }
-            else if (tempPlayer.GetBlocking() == false)
+            else if (tempAttackedPlayer.GetBlocking() == false)
             {
 
-                DamagePlayer(tempPlayer);
+                DamagePlayer(tempAttackedPlayer, tempAttackingPlayer);
 
                 if (tempHurtBox.location == LocationTag.Chest)
                 {
@@ -255,12 +256,13 @@ public class Hitbox : MonoBehaviour
 
         }
     }
-    void DamagePlayer(Player player)
+    void DamagePlayer(Player attackedPlayer, Player attackingPlayer)
     {
-        player.FreezeCharacter();
-        player.HitStun();
+        attackedPlayer.FreezeCharacterBeingAttacked(HitDirection(), HitStrength());
+        attackingPlayer.FreezeCharacterAttacking();
+        attackedPlayer.HitStun();
         Debug.Log("Hit Player");
-        player.Damage(HitDirection(), HitStrength());
+        //player.Damage(HitDirection(), HitStrength());
         HideHitBoxes();
     }
 }

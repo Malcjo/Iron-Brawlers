@@ -103,6 +103,9 @@ public class Player : MonoBehaviour
     [SerializeField] private Vector3 _TempVelocity;
     [SerializeField] private bool freezePlayer;
 
+    private Vector3 _TempDirection;
+    private float _tempPower;
+
     public enum Wall
     {
         leftWall,
@@ -129,7 +132,7 @@ public class Player : MonoBehaviour
         CharacterStates();
         ReduceCounter();
         currentPushPower = _currentPushPower;
-        freezeCounter -= 0.9f * Time.deltaTime;
+        freezeCounter -= 8f * Time.deltaTime;
         if (freezeCounter <= 0.001f)
         {
             if(freezePlayer == true)
@@ -138,6 +141,8 @@ public class Player : MonoBehaviour
                 freezeCounter = 0;
                 UseGravity = true;
                 freezePlayer = false;
+                playerActions.ResumeCurrentAnimation();
+                Damage(_TempDirection, _tempPower);
             }
         }
     }
@@ -208,14 +213,27 @@ public class Player : MonoBehaviour
     }
     #endregion
 
-    public void FreezeCharacter()
+    public void FreezeCharacterBeingAttacked(Vector3 Direction, float Power)
     {
+        playerActions.PauseCurrentAnimation();
+        freezePlayer = true;
+        _TempVelocity = rb.velocity;
+        rb.velocity = Vector3.zero;
+        UseGravity = false;
+        freezeCounter = maxFreezeCounter;
+        _tempPower = Power;
+        _TempDirection = Direction;
+    }
+    public void FreezeCharacterAttacking()
+    {
+        playerActions.PauseCurrentAnimation();
         freezePlayer = true;
         _TempVelocity = rb.velocity;
         rb.velocity = Vector3.zero;
         UseGravity = false;
         freezeCounter = maxFreezeCounter;
     }
+
     void MinusJumpIndexWhenNotOnGround()
     {
         if(_currentJumpIndex == 0)
@@ -281,7 +299,6 @@ public class Player : MonoBehaviour
         ReduceHitForce();
         ReduceHitStun();
     }
-
     void ReduceHitForce()
     {
         addForceValue.x = Mathf.Lerp(addForceValue.x, 0, 7f * Time.deltaTime);
