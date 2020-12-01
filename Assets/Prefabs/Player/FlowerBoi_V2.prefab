@@ -8266,15 +8266,19 @@ MonoBehaviour:
   V3Velocity: {x: 0, y: 0, z: 0}
   DebugModeOn: 0
   jumpForce: 9
+  hitStun: 0
   _gravityOn: 0
   addForceValue: {x: 0, y: 0, z: 0}
   facingDirection: 0
   lives: 0
   characterType: 0
-  freezeCounter: 0
-  maxFreezeCounter: 1
-  _TempVelocity: {x: 0, y: 0, z: 0}
-  freezePlayer: 0
+  attackedFreezeCounter: 0
+  MaxFreezeCounter: 1
+  _TempAttackedVelocity: {x: 0, y: 0, z: 0}
+  freezeAttackedPlayer: 0
+  attackingFreezeCounter: 0
+  _TempAttackingVelocity: {x: 0, y: 0, z: 0}
+  freezeAttackingPlayer: 0
   currentPushPower: 0
   _currentPushPower: 0
 --- !u!114 &5550772256738941108

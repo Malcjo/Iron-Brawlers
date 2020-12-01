@@ -98,10 +98,14 @@ public class Player : MonoBehaviour
     public VState VerticalState { get { return _currentVerticalState; } set { _currentVerticalState = value; } }
     public VState PreviousVerticalState { get { return _previousVerticalState; } set { _previousVerticalState = value; } }
 
-    [SerializeField] private float freezeCounter;
-    [SerializeField] private float maxFreezeCounter;
-    [SerializeField] private Vector3 _TempVelocity;
-    [SerializeField] private bool freezePlayer;
+    [SerializeField] private float attackedFreezeCounter;
+    [SerializeField] private float MaxFreezeCounter;
+    [SerializeField] private Vector3 _TempAttackedVelocity;
+    [SerializeField] private bool freezeAttackedPlayer;
+
+    [SerializeField] private float attackingFreezeCounter;
+    [SerializeField] private Vector3 _TempAttackingVelocity;
+    [SerializeField] private bool freezeAttackingPlayer;
 
     private Vector3 _TempDirection;
     private float _tempPower;
@@ -204,22 +208,22 @@ public class Player : MonoBehaviour
     public void FreezeCharacterBeingAttacked(Vector3 Direction, float Power)
     {
         playerActions.PauseCurrentAnimation();
-        freezePlayer = true;
-        _TempVelocity = rb.velocity;
+        freezeAttackedPlayer = true;
+        _TempAttackedVelocity = rb.velocity;
         rb.velocity = Vector3.zero;
         UseGravity = false;
-        freezeCounter = maxFreezeCounter;
+        attackedFreezeCounter = MaxFreezeCounter;
         _tempPower = Power;
         _TempDirection = Direction;
     }
     public void FreezeCharacterAttacking()
     {
         playerActions.PauseCurrentAnimation();
-        freezePlayer = true;
-        _TempVelocity = rb.velocity;
+        freezeAttackingPlayer = true;
+        _TempAttackingVelocity = rb.velocity;
         rb.velocity = Vector3.zero;
         UseGravity = false;
-        freezeCounter = maxFreezeCounter;
+        attackingFreezeCounter = MaxFreezeCounter;
     }
 
     void MinusJumpIndexWhenNotOnGround()
@@ -286,21 +290,37 @@ public class Player : MonoBehaviour
     {
         ReduceHitForce();
         ReduceHitStun();
-        ReduceFreezeFrameCounter();
+        ReduceAttackedFreezeFrameCounter();
+        ReduceAttackingFreezeFrameCounter();
     }
-    void ReduceFreezeFrameCounter()
+    void ReduceAttackedFreezeFrameCounter()
     {
-        freezeCounter -= 8f * Time.deltaTime;
-        if (freezeCounter <= 0.001f)
+        attackedFreezeCounter -= 8f * Time.deltaTime;
+        if (attackedFreezeCounter <= 0.001f)
         {
-            freezeCounter = 0;
-            if (freezePlayer == true)
+            attackedFreezeCounter = 0;
+            if (freezeAttackedPlayer == true)
             {
-                rb.velocity = _TempVelocity;
+                rb.velocity = _TempAttackedVelocity;
                 UseGravity = true;
-                freezePlayer = false;
+                freezeAttackedPlayer = false;
                 playerActions.ResumeCurrentAnimation();
                 Damage(_TempDirection, _tempPower);
+            }
+        }
+    }
+    void ReduceAttackingFreezeFrameCounter()
+    {
+        attackingFreezeCounter -= 8f * Time.deltaTime;
+        if(attackingFreezeCounter <= 0.001f)
+        {
+            attackingFreezeCounter = 0;
+            if(freezeAttackingPlayer == true)
+            {
+                rb.velocity = _TempAttackedVelocity;
+                UseGravity = true;
+                freezeAttackingPlayer = false;
+                playerActions.ResumeCurrentAnimation();
             }
         }
     }

@@ -14,6 +14,19 @@ public class HitBoxManager : MonoBehaviour
     public Vector3 blockOffset;
 
 
+    private Attackdirection _attackDirection;
+    private FollowDes _hitboxFollow;
+    private HitBoxScale _hitboxScale;
+    private AttackType _attackType;
+    public AttackType GetAttackType() { return _attackType; }
+    public Attackdirection GetAttackDirection() { return _attackDirection; }
+    public FollowDes GetHitboxFollowDestination() { return _hitboxFollow; }
+    public HitBoxScale GetHitboxScale() { return _hitboxScale; }
+    public void SetAttackType(AttackType attackType){ _attackType = attackType; }
+    public void SetAttackDirection(Attackdirection attackDirection) { _attackDirection = attackDirection; }
+    public void SetHitboxFollowDestination(FollowDes followDes) { _hitboxFollow = followDes; }
+    public void SetHitBoxScale(HitBoxScale hitboxScale) { _hitboxScale = hitboxScale; }
+
     void Start()
     {
         playerInput = GetComponentInParent<PlayerInput>();

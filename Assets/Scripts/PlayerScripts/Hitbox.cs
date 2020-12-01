@@ -96,16 +96,26 @@ public class Hitbox : MonoBehaviour
             case FollowDes.Centre:
                 break;
             case FollowDes.RightHand:
+                tipHitBox.gameObject.transform.position = new Vector3(rightHand.transform.position.x, rightHand.transform.position.y, 0);
+                tipHitBox.gameObject.transform.rotation = rightHand.transform.rotation;
                 break;
             case FollowDes.RightElbow:
+                tipHitBox.gameObject.transform.position = new Vector3(rightElbow.transform.position.x, rightElbow.transform.position.y, 0);
+                tipHitBox.gameObject.transform.rotation = rightElbow.transform.rotation;
                 break;
             case FollowDes.RightFoot:
+                tipHitBox.gameObject.transform.position = new Vector3(rightFoot.transform.position.x, rightFoot.transform.position.y, 0);
+                tipHitBox.gameObject.transform.rotation = rightFoot.transform.rotation;
                 break;
             case FollowDes.LeftHand:
+                tipHitBox.gameObject.transform.position = new Vector3(leftHand.transform.position.x, leftHand.transform.position.y, 0);
+                tipHitBox.gameObject.transform.rotation = leftHand.transform.rotation;
                 break;
             case FollowDes.LeftElbow:
                 break;
             case FollowDes.LeftFoot:
+                tipHitBox.gameObject.transform.position = new Vector3(leftFoot.transform.position.x, leftFoot.transform.position.y, 0);
+                tipHitBox.gameObject.transform.rotation = leftFoot.transform.rotation;
                 break;
         }
     }
@@ -177,6 +187,22 @@ public class Hitbox : MonoBehaviour
         }
         return 0;
     }
+    private void PlayHitSound()
+    {
+        switch (_attackType)
+        {
+            case AttackType.Jab:
+                break;
+            case AttackType.LegSweep:
+                break;
+            case AttackType.Aerial:
+                break;
+            case AttackType.ArmourBreak:
+                break;
+            case AttackType.HeavyJab:
+                break;
+        }
+    }
     public void ShowHitBoxes()
     {
         meshRenderer.enabled = true;
@@ -212,7 +238,6 @@ public class Hitbox : MonoBehaviour
             }
             else if (tempAttackedPlayer.GetBlocking() == false)
             {
-
                 DamagePlayer(tempAttackedPlayer, tempAttackingPlayer);
 
                 if (tempHurtBox.location == LocationTag.Chest)
@@ -221,6 +246,7 @@ public class Hitbox : MonoBehaviour
                     if (tempArmour.ChestArmourType == ArmourCheck.Armour.none)
                     {
                         //Player just punch sound
+                        PlayHitSound();
                         FindObjectOfType<AudioManager>().Play("Punch");
                         Instantiate(punchParticle, transform.position, transform.rotation);
                         return;
@@ -228,6 +254,7 @@ public class Hitbox : MonoBehaviour
                     else if(tempArmour.ChestArmourType == ArmourCheck.Armour.armour)
                     {
                         //Player Armour break sound
+                        PlayHitSound();
                         Instantiate(punchParticle, transform.position, transform.rotation);
                         tempArmour.RemoveChestArmour();
                     }
@@ -238,6 +265,7 @@ public class Hitbox : MonoBehaviour
                     if (tempArmour.LegArmourType == ArmourCheck.Armour.none)
                     {
                         //Player just punch sound
+                        PlayHitSound();
                         FindObjectOfType<AudioManager>().Play("Punch");
                         Instantiate(punchParticle, transform.position, transform.rotation);
                         return;
@@ -245,6 +273,7 @@ public class Hitbox : MonoBehaviour
                     else if (tempArmour.LegArmourType == ArmourCheck.Armour.armour)
                     {
                         //Player Armour break sound
+                        PlayHitSound();
                         Instantiate(punchParticle, transform.position, transform.rotation);
                         tempArmour.RemoveLegArmour();
                     }
@@ -252,13 +281,12 @@ public class Hitbox : MonoBehaviour
             }
         }
     }
-    void DamagePlayer(Player attackedPlayer, Player attackingPlayer)
+    void DamagePlayer(Player attackedPlayer, Player attackingplayer)
     {
         attackedPlayer.FreezeCharacterBeingAttacked(HitDirection(), HitStrength());
-        attackingPlayer.FreezeCharacterAttacking();
+        attackingplayer.FreezeCharacterAttacking();
         attackedPlayer.HitStun();
         Debug.Log("Hit Player");
-        //player.Damage(HitDirection(), HitStrength());
         HideHitBoxes();
     }
 }
