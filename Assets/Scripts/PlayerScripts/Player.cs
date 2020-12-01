@@ -57,7 +57,7 @@ public class Player : MonoBehaviour
 
     private bool canHitBox;
     private bool hasArmour;
-    private bool hitStun;
+    [SerializeField] private bool hitStun;
 
     private bool _blocking;
     private bool _canTurn;
@@ -132,19 +132,7 @@ public class Player : MonoBehaviour
         CharacterStates();
         ReduceCounter();
         currentPushPower = _currentPushPower;
-        freezeCounter -= 8f * Time.deltaTime;
-        if (freezeCounter <= 0.001f)
-        {
-            if(freezePlayer == true)
-            {
-                rb.velocity = _TempVelocity;
-                freezeCounter = 0;
-                UseGravity = true;
-                freezePlayer = false;
-                playerActions.ResumeCurrentAnimation();
-                Damage(_TempDirection, _tempPower);
-            }
-        }
+
     }
     private void FixedUpdate()
     {
@@ -298,6 +286,23 @@ public class Player : MonoBehaviour
     {
         ReduceHitForce();
         ReduceHitStun();
+        ReduceFreezeFrameCounter();
+    }
+    void ReduceFreezeFrameCounter()
+    {
+        freezeCounter -= 8f * Time.deltaTime;
+        if (freezeCounter <= 0.001f)
+        {
+            freezeCounter = 0;
+            if (freezePlayer == true)
+            {
+                rb.velocity = _TempVelocity;
+                UseGravity = true;
+                freezePlayer = false;
+                playerActions.ResumeCurrentAnimation();
+                Damage(_TempDirection, _tempPower);
+            }
+        }
     }
     void ReduceHitForce()
     {
@@ -327,6 +332,7 @@ public class Player : MonoBehaviour
     public void HitStun()
     {
         playerActions.HitStun();
+
     }
     public void Damage(Vector3 Hit, float Power)
     {

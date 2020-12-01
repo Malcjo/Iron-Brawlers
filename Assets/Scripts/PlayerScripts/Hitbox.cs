@@ -167,7 +167,7 @@ public class Hitbox : MonoBehaviour
             case AttackType.Jab:
                 return 3;
             case AttackType.LegSweep:
-                return 3;
+                return 7;
             case AttackType.Aerial:
                 return 3;
             case AttackType.ArmourBreak:
@@ -228,7 +228,6 @@ public class Hitbox : MonoBehaviour
                     else if(tempArmour.ChestArmourType == ArmourCheck.Armour.armour)
                     {
                         //Player Armour break sound
-                        FindObjectOfType<AudioManager>().Play("ArmourBreak");
                         Instantiate(punchParticle, transform.position, transform.rotation);
                         tempArmour.RemoveChestArmour();
                     }
@@ -246,14 +245,11 @@ public class Hitbox : MonoBehaviour
                     else if (tempArmour.LegArmourType == ArmourCheck.Armour.armour)
                     {
                         //Player Armour break sound
-                        FindObjectOfType<AudioManager>().Play("ArmourBreak");
                         Instantiate(punchParticle, transform.position, transform.rotation);
                         tempArmour.RemoveLegArmour();
                     }
                 }
-                
             }
-
         }
     }
     void DamagePlayer(Player attackedPlayer, Player attackingPlayer)
