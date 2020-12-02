@@ -57,7 +57,7 @@ public class Player : MonoBehaviour
 
     private bool canHitBox;
     private bool hasArmour;
-    private bool hitStun;
+    [SerializeField] private bool hitStun;
 
     private bool _blocking;
     private bool _canTurn;
@@ -75,17 +75,18 @@ public class Player : MonoBehaviour
     private int _currentJumpIndex;
     private int maxJumps = 2;
 
-    private Vector3 addForceValue;
+    [SerializeField] private Vector3 addForceValue;
     private Vector3 hitDirection;
 
     private Wall currentWall;
     private PlayerState MyState;
 
-
+    private bool _wasAttacking;
     public int facingDirection;
     public int lives;
     public int characterType;
     private bool _inAir;
+    public bool WasAttacking { get { return _wasAttacking; } set { _wasAttacking = value; } }
     public bool UseGravity { get { return _gravityOn; } set { _gravityOn = value; } }
     public bool InAir { get { return _inAir; } set { _inAir = value; } }
     public bool CanTurn { get { return _canTurn; } set { _canTurn = value; } }
@@ -96,6 +97,18 @@ public class Player : MonoBehaviour
     public int GetMaxJumps() { return maxJumps; }
     public VState VerticalState { get { return _currentVerticalState; } set { _currentVerticalState = value; } }
     public VState PreviousVerticalState { get { return _previousVerticalState; } set { _previousVerticalState = value; } }
+
+    [SerializeField] private float attackedFreezeCounter;
+    [SerializeField] private float MaxFreezeCounter;
+    [SerializeField] private Vector3 _TempAttackedVelocity;
+    [SerializeField] private bool freezeAttackedPlayer;
+
+    [SerializeField] private float attackingFreezeCounter;
+    [SerializeField] private Vector3 _TempAttackingVelocity;
+    [SerializeField] private bool freezeAttackingPlayer;
+
+    private Vector3 _TempDirection;
+    private float _tempPower;
 
     public enum Wall
     {
@@ -121,7 +134,9 @@ public class Player : MonoBehaviour
     {
         CheckDirection();
         CharacterStates();
+        ReduceCounter();
         currentPushPower = _currentPushPower;
+
     }
     private void FixedUpdate()
     {
@@ -189,6 +204,28 @@ public class Player : MonoBehaviour
         rb.velocity = new Vector3(rb.velocity.x, 0, 0);
     }
     #endregion
+
+    public void FreezeCharacterBeingAttacked(Vector3 Direction, float Power)
+    {
+        playerActions.PauseCurrentAnimation();
+        freezeAttackedPlayer = true;
+        _TempAttackedVelocity = rb.velocity;
+        rb.velocity = Vector3.zero;
+        UseGravity = false;
+        attackedFreezeCounter = MaxFreezeCounter;
+        _tempPower = Power;
+        _TempDirection = Direction;
+    }
+    public void FreezeCharacterAttacking()
+    {
+        playerActions.PauseCurrentAnimation();
+        freezeAttackingPlayer = true;
+        _TempAttackingVelocity = rb.velocity;
+        rb.velocity = Vector3.zero;
+        UseGravity = false;
+        attackingFreezeCounter = MaxFreezeCounter;
+    }
+
     void MinusJumpIndexWhenNotOnGround()
     {
         if(_currentJumpIndex == 0)
@@ -248,24 +285,85 @@ public class Player : MonoBehaviour
         }
     }
     #endregion
+    #region ReduceValues
+    void ReduceCounter()
+    {
+        ReduceHitForce();
+        ReduceHitStun();
+        ReduceAttackedFreezeFrameCounter();
+        ReduceAttackingFreezeFrameCounter();
+    }
+    void ReduceAttackedFreezeFrameCounter()
+    {
+        attackedFreezeCounter -= 8f * Time.deltaTime;
+        if (attackedFreezeCounter <= 0.001f)
+        {
+            attackedFreezeCounter = 0;
+            if (freezeAttackedPlayer == true)
+            {
+                rb.velocity = _TempAttackedVelocity;
+                UseGravity = true;
+                freezeAttackedPlayer = false;
+                playerActions.ResumeCurrentAnimation();
+                Damage(_TempDirection, _tempPower);
+            }
+        }
+    }
+    void ReduceAttackingFreezeFrameCounter()
+    {
+        attackingFreezeCounter -= 8f * Time.deltaTime;
+        if(attackingFreezeCounter <= 0.001f)
+        {
+            attackingFreezeCounter = 0;
+            if(freezeAttackingPlayer == true)
+            {
+                rb.velocity = _TempAttackedVelocity;
+                UseGravity = true;
+                freezeAttackingPlayer = false;
+                playerActions.ResumeCurrentAnimation();
+            }
+        }
+    }
+    void ReduceHitForce()
+    {
+        addForceValue.x = Mathf.Lerp(addForceValue.x, 0, 7f * Time.deltaTime);
+        addForceValue.y = Mathf.Lerp(addForceValue.y, 0, 27f * Time.deltaTime);
 
+        //reducing to zero if small value
+        if (addForceValue.magnitude < 0.05f && addForceValue.magnitude > -0.05f)
+        {
+            addForceValue = Vector3.zero;
+        }
+    }
+    void ReduceHitStun()
+    {
+        if (hitStun == true)
+        {
+            hitStunTimer -= 1 * Time.deltaTime;
+            if (hitStunTimer < 0.001f)
+            {
+                hitStunTimer = 0;
+                hitStun = false;
+            }
+        }
+    }
+    #endregion
     #region Damaging
     public void HitStun()
     {
         playerActions.HitStun();
-    }
-    private Vector3 AddForce(float hitStrength)
-    {
-        Vector3 addForceValue = ((hitDirection) * (hitStrength));
-        return addForceValue;
+
     }
     public void Damage(Vector3 Hit, float Power)
     {
-        Debug.Log("Jab");
         hitStun = true;
         hitStunTimer = 1.1f;
-        hitDirection = Hit;
-        addForceValue = AddForce(Power - (armourCheck.knockBackResistance + knockbackResistance));
+        addForceValue = AddForce(Hit, Power /*- (armourCheck.knockBackResistance + knockbackResistance)*/);
+    }
+    private Vector3 AddForce(Vector3 HitDirection, float hitStrength)
+    {
+        Vector3 addForceValue = ((HitDirection) * (hitStrength));
+        return addForceValue;
     }
     #endregion
     public float CharacterSpeed()
@@ -315,7 +413,6 @@ public class Player : MonoBehaviour
                 return;
             }
             transform.rotation = Quaternion.Euler(0, 180, 0);
-            _facingDirection = 1;
             facingDirection = (int)_facingDirection;
         }
         else if (_facingDirection < 0)
@@ -325,7 +422,6 @@ public class Player : MonoBehaviour
                 return;
             }
             transform.rotation = Quaternion.Euler(0, 0, 0);
-            _facingDirection = -1;
             facingDirection = (int)_facingDirection;
         }
     }
@@ -377,7 +473,6 @@ public class Player : MonoBehaviour
             }
         }
     }
-    private bool _grounded;
     private void LandOnGround(RaycastHit hit)
     {
         distanceToGround = hit.distance;

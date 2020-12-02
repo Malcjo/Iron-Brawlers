@@ -44,20 +44,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds:
-  - audioMixerGroup: {fileID: -509310492133482182, guid: f545ac14fd68fda4da64ec4d708a85eb,
-      type: 2}
+  - audioMixerGroup: {fileID: 24300002, guid: f545ac14fd68fda4da64ec4d708a85eb, type: 2}
     name: AlphaMusic
     loop: 1
     clip: {fileID: 8300000, guid: 3384425f3d3ca7b44b49e4e403f1ad8d, type: 3}
-    volume: 0.5
+    volume: 0
     pitch: 1
     source: {fileID: 0}
   - audioMixerGroup: {fileID: 8700233496606524339, guid: f545ac14fd68fda4da64ec4d708a85eb,
       type: 2}
     name: ArmourBreak
     loop: 0
-    clip: {fileID: 8300000, guid: 5206d0ea4dcd98b49b5f81dea967a43e, type: 3}
-    volume: 0.5
+    clip: {fileID: 8300000, guid: 7e4b61e63144b8c4dbebdda69c255501, type: 3}
+    volume: 1
     pitch: 1
     source: {fileID: 0}
   - audioMixerGroup: {fileID: 8700233496606524339, guid: f545ac14fd68fda4da64ec4d708a85eb,
@@ -65,7 +64,7 @@ MonoBehaviour:
     name: Punch
     loop: 0
     clip: {fileID: 8300000, guid: be5082eced0cb324db1a21d4cc3df762, type: 3}
-    volume: 0.5
+    volume: 1
     pitch: 1
     source: {fileID: 0}
   - audioMixerGroup: {fileID: 8700233496606524339, guid: f545ac14fd68fda4da64ec4d708a85eb,

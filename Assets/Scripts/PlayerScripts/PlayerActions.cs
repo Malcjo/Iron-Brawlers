@@ -49,13 +49,16 @@ public class PlayerActions : MonoBehaviour
             comboStep++;
             comboTimer = 1;
 
-            yield return null;
 
+            yield return null;
+            hitboxManager.SwapHands(0);
             hitboxScript._attackDir = Attackdirection.Forward;
             hitboxScript._attackType = AttackType.Jab;
+            hitboxManager.JabAttack(0.5f);
+
             while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.75f)
             {
-                while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.35f)
+                while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.25f)
                 {
 
                     yield return null;
@@ -63,7 +66,7 @@ public class PlayerActions : MonoBehaviour
                 if (canMove == true)
                 {
                     Debug.Log("Move Character");
-                    self.MoveCharacterWithAttacks(500);
+                    self.MoveCharacterWithAttacks(450);
                 }
                 canMove = false;
 
@@ -92,6 +95,7 @@ public class PlayerActions : MonoBehaviour
     {
         anim.Play("RUN");
     }
+  
 
     public void Idle()
     {
@@ -124,8 +128,10 @@ public class PlayerActions : MonoBehaviour
         anim.Play("SWEEP");
         self.CanTurn = false;
         yield return null;
+        hitboxManager.SwapHands(1);
         hitboxScript._attackDir = Attackdirection.Low;
         hitboxScript._attackType = AttackType.LegSweep;
+        hitboxManager.LegSweep(0.5f);
         while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
         {
             yield return null;
@@ -136,6 +142,15 @@ public class PlayerActions : MonoBehaviour
     {
         StartCoroutine(_AerialAttack());
     }
+    public void PauseCurrentAnimation()
+    {
+        anim.speed = 0;
+    }
+    public void ResumeCurrentAnimation()
+    {
+        anim.speed = 1;
+    }
+
     private IEnumerator _AerialAttack()
     {
         anim.Play("AERIAL");
@@ -145,16 +160,17 @@ public class PlayerActions : MonoBehaviour
         yield return null;
         hitboxScript._attackType = AttackType.Aerial;
         hitboxScript._attackDir = Attackdirection.Aerial;
+        hitboxManager.AeiralAttack();
         while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
         {
-            while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.5f)
+            while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.4f)
             {
                 yield return null;
             }
             self.UseGravity = true;
             yield return null;
         }
-        self.SetState(new IdleState());
+        self.SetState(new AerialIdleState());
     }
 
     public void ArmourBreak()
@@ -167,6 +183,7 @@ public class PlayerActions : MonoBehaviour
         {
             self.SetState(new BusyState());
             anim.Play("ARMOUR_BREAK");
+            FindObjectOfType<AudioManager>().Play("ArmourBreak");
             self.CanTurn = false;
             yield return null;
             hitboxScript._attackDir = Attackdirection.Down;
@@ -223,12 +240,26 @@ public class PlayerActions : MonoBehaviour
     }
     private IEnumerator _Heavy()
     {
+        bool canMove = true;
         anim.Play("HEAVY");
         yield return null;
+        hitboxManager.SwapHands(1);
         hitboxScript._attackDir = Attackdirection.Forward;
         hitboxScript._attackType = AttackType.HeavyJab;
+        hitboxManager.JabAttack(0.5f);
+
         while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
         {
+            while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.25f)
+            {
+                yield return null;
+            }
+            if (canMove == true)
+            {
+                Debug.Log("Move Character");
+                self.MoveCharacterWithAttacks(600);
+                canMove = false;
+            }
             yield return null;
         }
         self.SetState(new IdleState());

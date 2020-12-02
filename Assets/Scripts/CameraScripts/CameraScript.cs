@@ -56,7 +56,7 @@ public class CameraScript : MonoBehaviour
         Vector3 averageCenter = Vector3.zero;
         Vector3 totalPosition = Vector3.zero;
         Bounds playerBounds = new Bounds();
-
+        
         for (int i = 0; i < Players.Count; i++)
         {
             Vector3 playerPosition = Players[i].transform.position;

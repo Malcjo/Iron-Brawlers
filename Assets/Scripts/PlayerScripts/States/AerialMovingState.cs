@@ -15,7 +15,7 @@ public class AerialMovingState : PlayerState
         self.CheckVerticalState();
         if (self.GetCanAirMove() == false)
         {
-            body.velocity = new Vector3(Mathf.Lerp(body.velocity.x, 0,calculate.friction), body.velocity.y, 0);
+            body.velocity = new Vector3(Mathf.Lerp(body.velocity.x, 0,calculate.friction), body.velocity.y, 0) + calculate.addForce;
             return;
         }
         else if (self.GetCanAirMove() == true)
