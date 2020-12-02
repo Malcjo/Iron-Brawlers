@@ -46,6 +46,7 @@ public class PlayerActions : MonoBehaviour
             bool canMove = true;
             //anim.Play(animlist[comboStep]);
             anim.Play("JAB");
+            FindObjectOfType<AudioManager>().Play("Punch Miss");
             comboStep++;
             comboTimer = 1;
 

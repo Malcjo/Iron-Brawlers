@@ -1137,6 +1137,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 68326453945402993, guid: 1cb0e6c341e659a43884101aadfa6273,
         type: 3}
+      propertyPath: sounds.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 68326453945402993, guid: 1cb0e6c341e659a43884101aadfa6273,
+        type: 3}
       propertyPath: sounds.Array.data[1].clip
       value: 
       objectReference: {fileID: 8300000, guid: 3bf7617fa71f71d489cae11bf580e059, type: 3}
@@ -1154,11 +1159,42 @@ PrefabInstance:
         type: 3}
       propertyPath: sounds.Array.data[2].clip
       value: 
-      objectReference: {fileID: 8300000, guid: 108f98fe9a59eab489a0122388ca0af7, type: 3}
+      objectReference: {fileID: 8300000, guid: 3f8f928173cbec54986cb45d55708bfd, type: 3}
     - target: {fileID: 68326453945402993, guid: 1cb0e6c341e659a43884101aadfa6273,
         type: 3}
       propertyPath: sounds.Array.data[0].volume
       value: 0.005
+      objectReference: {fileID: 0}
+    - target: {fileID: 68326453945402993, guid: 1cb0e6c341e659a43884101aadfa6273,
+        type: 3}
+      propertyPath: sounds.Array.data[2].name
+      value: Punch Hit
+      objectReference: {fileID: 0}
+    - target: {fileID: 68326453945402993, guid: 1cb0e6c341e659a43884101aadfa6273,
+        type: 3}
+      propertyPath: sounds.Array.data[5].audioMixerGroup
+      value: 
+      objectReference: {fileID: 8700233496606524339, guid: f545ac14fd68fda4da64ec4d708a85eb,
+        type: 2}
+    - target: {fileID: 68326453945402993, guid: 1cb0e6c341e659a43884101aadfa6273,
+        type: 3}
+      propertyPath: sounds.Array.data[5].name
+      value: Punch Miss
+      objectReference: {fileID: 0}
+    - target: {fileID: 68326453945402993, guid: 1cb0e6c341e659a43884101aadfa6273,
+        type: 3}
+      propertyPath: sounds.Array.data[5].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 24097c6a0c6fa6b4f8bf0bdcb44ce9e7, type: 3}
+    - target: {fileID: 68326453945402993, guid: 1cb0e6c341e659a43884101aadfa6273,
+        type: 3}
+      propertyPath: sounds.Array.data[5].volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 68326453945402993, guid: 1cb0e6c341e659a43884101aadfa6273,
+        type: 3}
+      propertyPath: sounds.Array.data[5].pitch
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 68326453945402998, guid: 1cb0e6c341e659a43884101aadfa6273,
         type: 3}
