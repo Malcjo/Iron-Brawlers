@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-
+using static UnityEngine.InputSystem.InputAction;
 public class PlayerInput : MonoBehaviour
 {
     [SerializeField]
@@ -26,28 +26,49 @@ public class PlayerInput : MonoBehaviour
 
     [SerializeField] Player.Wall currentWall;
     public float GetHorizontal(){return HorizontalValue;}
-    public bool ShouldJump(){return JumpInputQueued;}
-    public bool ShouldAttack(){return AttackInputQueued;}
-    public bool ShouldBlock(){return BlockInputQueued;}
-    public bool ShouldCrouch(){return CrouchInputQueued;}
-    public bool ShouldArmourBreak(){return ArmourBreakInputQueued;}
+    public bool ShouldJump(){
+        if (JumpInputQueued)
+        {
+            JumpInputQueued = false;
+            return true;
+        }
+        return false;
+    }
+    public bool ShouldAttack(){
+        if (AttackInputQueued)
+        {
+            AttackInputQueued = false;
+            return true;
+        }
+        return false;
+    }
+    public bool ShouldBlock(){
+        return BlockInputQueued;
+    }
+    public bool ShouldCrouch(){
+        return CrouchInputQueued;
+    }
+    public bool ShouldArmourBreak(){
+        return ArmourBreakInputQueued;
+    }
 
 
     private void Update()
     {
         currentWall = self.GetCurrentWall();
-        HorizontalInput();
+        //HorizontalInput();
         BlockInput();
-        JumpInput();
+        //JumpInput();
         CrouchInput();
         AttackInput();
         ArmourBreakInput();
     }
     
-    public void HorizontalInput()
+    public void HorizontalInput(CallbackContext context)
     {
-        horizontalInput = Input.GetAxisRaw(controls.horizontalKeys);
+        horizontalInput = context.ReadValue<float>();
         HorizontalValue = horizontalInput;
+        self.GetPlayerInputFromInputScript(HorizontalValue);
         WallCheck();
     }
 
@@ -79,12 +100,17 @@ public class PlayerInput : MonoBehaviour
             CrouchInputQueued = true;
         }
     }
-    public void JumpInput()
+    [SerializeField] private float viewableContext;
+    public void JumpInput(CallbackContext context)
     {
-        JumpInputQueued = false;
-        if (Input.GetKeyDown(controls.jumpKey))
+        viewableContext = context.started ? 1 : 0;
+        if (context.started)
         {
             JumpInputQueued = true;
+        }
+        if (context.canceled)
+        {
+            Debug.Log("Got it!");
         }
     }
 

@@ -11,7 +11,6 @@ public class PlayerActions : MonoBehaviour
     [SerializeField] HitBoxManager hitboxManager;
     [SerializeField] ArmourCheck armourCheck;
 
-    [SerializeField] AnimationCurve jabMovement;
 
     public int comboStep;
     public float comboTimer;
@@ -46,6 +45,7 @@ public class PlayerActions : MonoBehaviour
             bool canMove = true;
             //anim.Play(animlist[comboStep]);
             anim.Play("JAB");
+            anim.speed = 1;
             FindObjectOfType<AudioManager>().Play("Punch Miss");
             comboStep++;
             comboTimer = 1;
@@ -95,29 +95,35 @@ public class PlayerActions : MonoBehaviour
     public void Running()
     {
         anim.Play("RUN");
+        anim.speed = self.SendAbsPlayerInputValueToActionsScript();
     }
   
 
     public void Idle()
     {
         anim.Play("IDLE");
+        anim.speed = 1;
     }
 
     public void Crouching()
     {
         anim.Play("CROUCH_IDLE");
+        anim.speed = 1;
     }
     public void Falling()
     {
         anim.Play("FALLING");
+        anim.speed = 1;
     }
     public void Jumping()
     {
         anim.Play("JUMP");
+        anim.speed = 1;
     }
     public void DoubleJump(bool val)
     {
         anim.Play("DOUBLE_JUMP");
+        anim.speed = 1;
     }
 
     public void LegSweep()
@@ -127,6 +133,7 @@ public class PlayerActions : MonoBehaviour
     private IEnumerator _LegSweep()
     {
         anim.Play("SWEEP");
+        anim.speed = 1;
         self.CanTurn = false;
         yield return null;
         hitboxManager.SwapHands(1);
@@ -155,6 +162,7 @@ public class PlayerActions : MonoBehaviour
     private IEnumerator _AerialAttack()
     {
         anim.Play("AERIAL");
+        anim.speed = 1;
         self.CanTurn = false;
         self.UseGravity = false;
         self.StopMovingCharacterOnYAxis();
@@ -184,6 +192,7 @@ public class PlayerActions : MonoBehaviour
         {
             self.SetState(new BusyState());
             anim.Play("ARMOUR_BREAK");
+            anim.speed = 1;
             FindObjectOfType<AudioManager>().Play("ArmourBreak");
             self.CanTurn = false;
             yield return null;
@@ -233,6 +242,7 @@ public class PlayerActions : MonoBehaviour
     public void HitStun()
     {
         anim.Play("HITSTUN_NORMAL_HIT");
+        anim.speed = 1;
     }
 
     public void Heavy()
@@ -243,6 +253,7 @@ public class PlayerActions : MonoBehaviour
     {
         bool canMove = true;
         anim.Play("HEAVY");
+        anim.speed = 1;
         yield return null;
         hitboxManager.SwapHands(1);
         hitboxScript._attackDir = Attackdirection.Forward;

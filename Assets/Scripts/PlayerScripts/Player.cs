@@ -366,6 +366,23 @@ public class Player : MonoBehaviour
         return addForceValue;
     }
     #endregion
+
+
+
+
+    public float SendAbsPlayerInputValueToActionsScript()
+    {
+        return Mathf.Abs(_PlayerInput);
+    }
+    private float _PlayerInput;
+    public void GetPlayerInputFromInputScript(float PlayerInput)
+    {
+        _PlayerInput = PlayerInput;
+    }
+
+
+
+
     public float CharacterSpeed()
     {
         float characterSpeed = speed - armourCheck.armourReduceSpeed;

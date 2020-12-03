@@ -205,8 +205,8 @@ public class Hitbox : MonoBehaviour
     }
     public void ShowHitBoxes()
     {
-        meshRenderer.enabled = true;
-        hitboxCollider.enabled = true;
+        //meshRenderer.enabled = true;
+        //hitboxCollider.enabled = true;
     }
     public void HideHitBoxes()
     {
