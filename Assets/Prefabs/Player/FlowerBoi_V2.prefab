@@ -6262,57 +6262,6 @@ MonoBehaviour:
   hitboxScript: {fileID: 6428243154165078377}
   hitboxManager: {fileID: 9180256053976522075}
   armourCheck: {fileID: 9039652906618875872}
-  jabMovement:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0.0047187805
-      inSlope: -0.000008636714
-      outSlope: -0.000008636714
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.58342355
-    - serializedVersion: 3
-      time: 0.42141965
-      value: 0.3775438
-      inSlope: 2.7948017
-      outSlope: 2.7948017
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.5682666
-      outWeight: 0.50933087
-    - serializedVersion: 3
-      time: 0.4911152
-      value: 0.99952847
-      inSlope: -0.012135192
-      outSlope: -0.012135192
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.39551982
-    - serializedVersion: 3
-      time: 0.5169676
-      value: 0.0069544725
-      inSlope: -0.012350286
-      outSlope: -0.012350286
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.44208983
-    - serializedVersion: 3
-      time: 1.0041809
-      value: 0.0070762634
-      inSlope: 0.022321617
-      outSlope: 0.022321617
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.50022936
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
   comboStep: 0
   comboTimer: 0
 --- !u!1 &6206792348194864999
@@ -7380,7 +7329,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7766364346453668583}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -7547,7 +7496,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7766364347221390595}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -8193,6 +8142,7 @@ GameObject:
   - component: {fileID: 9097496010138069132}
   - component: {fileID: 7281464658565612985}
   - component: {fileID: 670437653398453822}
+  - component: {fileID: 1207156875}
   m_Layer: 0
   m_Name: FlowerBoi_Contoller
   m_TagString: Untagged
@@ -8399,6 +8349,7 @@ MonoBehaviour:
   HorizontalValue: 0
   horizontalInput: 0
   currentWall: 0
+  viewableContext: 0
 --- !u!114 &9097496010138069132
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8497,6 +8448,73 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.1, y: 1.7054981, z: 0.1}
   m_Center: {x: 0, y: -0.06725097, z: 0}
+--- !u!114 &1207156875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8164230182899015537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 17f4f692809c356498556b1f4470a42a,
+    type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2387350782928818064}
+        m_TargetAssemblyTypeName: PlayerInput, Assembly-CSharp
+        m_MethodName: HorizontalInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: c92e9921-9258-44bb-9c5e-31f4d2e5ad86
+    m_ActionName: Player/PlayerMovement[/Keyboard/a,/Keyboard/d,/Keyboard/leftArrow,/Keyboard/rightArrow,/DualShock4GamepadHID/leftStick,/DualShock4GamepadHID/leftStick]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2387350782928818064}
+        m_TargetAssemblyTypeName: PlayerInput, Assembly-CSharp
+        m_MethodName: JumpInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 324aa8c8-a35d-460c-86e8-f42d4e05989f
+    m_ActionName: Player/PlayerJump[/Keyboard/y,/Keyboard/numpad5,/DualShock4GamepadHID/buttonNorth,/DualShock4GamepadHID/buttonNorth]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9b058838-79e4-41f6-a9e7-09b80d8dca4b
+    m_ActionName: Player/PlayerAttack[/Keyboard/g,/Keyboard/numpad1,/DualShock4GamepadHID/buttonWest,/DualShock4GamepadHID/buttonWest]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &8416243336169848144
 GameObject:
   m_ObjectHideFlags: 0

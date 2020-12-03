@@ -60,7 +60,7 @@ public class PlayerInput : MonoBehaviour
         BlockInput();
         //JumpInput();
         CrouchInput();
-        AttackInput();
+        //AttackInput();
         ArmourBreakInput();
     }
     
@@ -100,24 +100,19 @@ public class PlayerInput : MonoBehaviour
             CrouchInputQueued = true;
         }
     }
-    [SerializeField] private float viewableContext;
+    //[SerializeField] private float viewableContext;
     public void JumpInput(CallbackContext context)
     {
-        viewableContext = context.started ? 1 : 0;
+        //viewableContext = context.started ? 1 : 0;
         if (context.started)
         {
             JumpInputQueued = true;
         }
-        if (context.canceled)
-        {
-            Debug.Log("Got it!");
-        }
     }
 
-    private void AttackInput()
+    public void AttackInput(CallbackContext context)
     {
-        AttackInputQueued = false;
-        if (Input.GetKeyDown(controls.attackKey))
+        if (context.started)
         {
             AttackInputQueued = true;
         }

@@ -767,6 +767,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1207156875, guid: 590656536554766488000c7b5f8e65ba, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1207156875, guid: 590656536554766488000c7b5f8e65ba, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1207156875, guid: 590656536554766488000c7b5f8e65ba, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1207156875, guid: 590656536554766488000c7b5f8e65ba, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1207156873}
+    - target: {fileID: 1207156875, guid: 590656536554766488000c7b5f8e65ba, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerInput, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1207156875, guid: 590656536554766488000c7b5f8e65ba, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: AttackInput
+      objectReference: {fileID: 0}
+    - target: {fileID: 1207156875, guid: 590656536554766488000c7b5f8e65ba, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 4688837647506539797, guid: 590656536554766488000c7b5f8e65ba,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -826,26 +854,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: FlowerBoi_V1Test
-      objectReference: {fileID: 0}
-    - target: {fileID: 7766364346453668583, guid: 590656536554766488000c7b5f8e65ba,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7766364346453668586, guid: 590656536554766488000c7b5f8e65ba,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7766364347221390595, guid: 590656536554766488000c7b5f8e65ba,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7766364347221390599, guid: 590656536554766488000c7b5f8e65ba,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 590656536554766488000c7b5f8e65ba, type: 3}
@@ -1499,7 +1507,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   focusLevel: {fileID: 1837554095}
   Players:
-  - {fileID: 0}
+  - {fileID: 1207156866}
   depthUpdateSpeed: 5
   angleUpdateSpeed: 7
   positionUpdateSpeed: 5
@@ -1556,73 +1564,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f85bbc7d98f26ff4b88a6dc70f6f78af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1207156875
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1207156866}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 17f4f692809c356498556b1f4470a42a,
-    type: 3}
-  m_NotificationBehavior: 2
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1207156873}
-        m_TargetAssemblyTypeName: PlayerInput, Assembly-CSharp
-        m_MethodName: HorizontalInput
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: c92e9921-9258-44bb-9c5e-31f4d2e5ad86
-    m_ActionName: Player/PlayerMovement[/Keyboard/a,/Keyboard/d,/Keyboard/leftArrow,/Keyboard/rightArrow,/DualShock4GamepadHID/leftStick,/DualShock4GamepadHID/leftStick]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1207156873}
-        m_TargetAssemblyTypeName: PlayerInput, Assembly-CSharp
-        m_MethodName: JumpInput
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 324aa8c8-a35d-460c-86e8-f42d4e05989f
-    m_ActionName: Player/PlayerJump[/Keyboard/y,/Keyboard/numpad5,/DualShock4GamepadHID/buttonNorth,/DualShock4GamepadHID/buttonNorth]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 9b058838-79e4-41f6-a9e7-09b80d8dca4b
-    m_ActionName: Player/PlayerAttack[/Keyboard/g,/Keyboard/numpad1,/DualShock4GamepadHID/buttonWest,/DualShock4GamepadHID/buttonWest]
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!1 &1226519943
 GameObject:
   m_ObjectHideFlags: 0
