@@ -5,8 +5,9 @@ using System.Collections.Generic;
 
 public class AudioManager : MonoBehaviour
 {
-    public const string PUNCHHIT = "Jab Hit";
-    public const string PUNCHMISS = "Jab Miss";
+    public const string JABHITARMOUR = "Jab Hit Armour";
+    public const string JABHITUNARMOURED = "Jab Hit Unarmoured";
+    public const string JABMISS = "Jab Miss";
     public const string ARMOURBREAK = "Armour Break";
     public const string JUMP = "Jump Sounds";
 

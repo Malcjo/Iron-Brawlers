@@ -187,21 +187,45 @@ public class Hitbox : MonoBehaviour
         }
         return 0;
     }
-    private void PlayHitSound()
+    private void PlayHitSound(bool Armour)
     {
-        switch (_attackType)
+        if (Armour)
         {
-            case AttackType.Jab:
-                break;
-            case AttackType.LegSweep:
-                break;
-            case AttackType.Aerial:
-                break;
-            case AttackType.ArmourBreak:
-                break;
-            case AttackType.HeavyJab:
-                break;
+            switch (_attackType)
+            {
+                case AttackType.Jab:
+                    FindObjectOfType<AudioManager>().Play(AudioManager.JABHITARMOUR);
+                    break;
+
+                case AttackType.LegSweep:
+                    break;
+                case AttackType.Aerial:
+                    break;
+                case AttackType.ArmourBreak:
+                    break;
+                case AttackType.HeavyJab:
+                    break;
+            }
         }
+        else
+        {
+            switch (_attackType)
+            {
+                case AttackType.Jab:
+                    FindObjectOfType<AudioManager>().Play(AudioManager.JABHITUNARMOURED);
+                    break;
+
+                case AttackType.LegSweep:
+                    break;
+                case AttackType.Aerial:
+                    break;
+                case AttackType.ArmourBreak:
+                    break;
+                case AttackType.HeavyJab:
+                    break;
+            }
+        }
+
     }
     public void ShowHitBoxes()
     {
@@ -246,15 +270,15 @@ public class Hitbox : MonoBehaviour
                     if (tempArmour.ChestArmourType == ArmourCheck.Armour.none)
                     {
                         //Player just punch sound
-                        PlayHitSound();
-                        FindObjectOfType<AudioManager>().Play(AudioManager.PUNCHHIT);
+                        PlayHitSound(false);
+                        
                         Instantiate(punchParticle, transform.position, transform.rotation);
                         return;
                     }
                     else if(tempArmour.ChestArmourType == ArmourCheck.Armour.armour)
                     {
                         //Player Armour break sound
-                        PlayHitSound();
+                        PlayHitSound(true);
                         Instantiate(punchParticle, transform.position, transform.rotation);
                         tempArmour.RemoveChestArmour();
                     }
@@ -265,7 +289,7 @@ public class Hitbox : MonoBehaviour
                     if (tempArmour.LegArmourType == ArmourCheck.Armour.none)
                     {
                         //Player just punch sound
-                        PlayHitSound();
+                        PlayHitSound(false);
                         FindObjectOfType<AudioManager>().Play(AudioManager.PUNCHHIT);
                         Instantiate(punchParticle, transform.position, transform.rotation);
                         return;
@@ -273,7 +297,7 @@ public class Hitbox : MonoBehaviour
                     else if (tempArmour.LegArmourType == ArmourCheck.Armour.armour)
                     {
                         //Player Armour break sound
-                        PlayHitSound();
+                        PlayHitSound(true);
                         Instantiate(punchParticle, transform.position, transform.rotation);
                         tempArmour.RemoveLegArmour();
                     }
