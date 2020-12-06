@@ -247,7 +247,7 @@ public class Hitbox : MonoBehaviour
                     {
                         //Player just punch sound
                         PlayHitSound();
-                        FindObjectOfType<AudioManager>().Play("Punch Hit");
+                        FindObjectOfType<AudioManager>().Play(AudioManager.PUNCHHIT);
                         Instantiate(punchParticle, transform.position, transform.rotation);
                         return;
                     }
@@ -266,7 +266,7 @@ public class Hitbox : MonoBehaviour
                     {
                         //Player just punch sound
                         PlayHitSound();
-                        FindObjectOfType<AudioManager>().Play("Punch Hit");
+                        FindObjectOfType<AudioManager>().Play(AudioManager.PUNCHHIT);
                         Instantiate(punchParticle, transform.position, transform.rotation);
                         return;
                     }
