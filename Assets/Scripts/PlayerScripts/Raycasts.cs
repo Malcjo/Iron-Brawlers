@@ -9,7 +9,7 @@ public class Raycasts : MonoBehaviour
     [SerializeField] private LayerMask waterMask = 1 << 4;
     [SerializeField] private int groundLayer = 12;
     [SerializeField] Player player;
-    [SerializeField] PlayerInput playerInput;
+    [SerializeField] PlayerInputDetection playerInput;
 
     private float groundCheckRayLength = 0.45f;
     private float headCheckRayLength = 0.5f;

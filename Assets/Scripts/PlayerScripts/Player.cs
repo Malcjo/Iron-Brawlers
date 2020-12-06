@@ -29,7 +29,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] private Rigidbody rb;
 
-    [SerializeField] private PlayerInput playerInput;
+    [SerializeField] private PlayerInputDetection playerInput;
     [SerializeField] private ArmourCheck armourCheck;
     [SerializeField] private Raycasts raycasts;
     [SerializeField] private PlayerActions playerActions;
@@ -110,6 +110,14 @@ public class Player : MonoBehaviour
     private Vector3 _TempDirection;
     private float _tempPower;
 
+    public void SetUpInputDetectionScript(PlayerInputDetection _playerInputDetection) 
+    {
+        playerInput = _playerInputDetection;
+    }
+    public int GetPlayerIndex()
+    {
+        return (int)playerNumber;
+    }
     public enum Wall
     {
         leftWall,
