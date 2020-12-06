@@ -205,7 +205,7 @@ MonoBehaviour:
     name: AlphaMusic
     loop: 0
     clip: {fileID: 8300000, guid: 3384425f3d3ca7b44b49e4e403f1ad8d, type: 3}
-    volume: 0.2
+    volume: 0.05
     pitch: 1
     source: {fileID: 0}
   - audioMixerGroup: {fileID: 8700233496606524339, guid: f545ac14fd68fda4da64ec4d708a85eb,
@@ -244,11 +244,11 @@ MonoBehaviour:
   - name: Jab Miss
     library: {fileID: 7747840052307560124}
   - name: Jab Hit Armour
-    library: {fileID: 7747840052307560124}
+    library: {fileID: 1016125392}
   - name: Jump Sounds
     library: {fileID: 248536118075563399}
   - name: Jab Hit Unarmoured
-    library: {fileID: 248536118075563399}
+    library: {fileID: 2079844408}
 --- !u!1 &135364029214033503
 GameObject:
   m_ObjectHideFlags: 0

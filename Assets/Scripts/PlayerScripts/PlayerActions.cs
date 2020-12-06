@@ -46,7 +46,7 @@ public class PlayerActions : MonoBehaviour
             //anim.Play(animlist[comboStep]);
             anim.Play("JAB");
             anim.speed = 1;
-            FindObjectOfType<AudioManager>().Play(AudioManager.PUNCHMISS);
+            FindObjectOfType<AudioManager>().Play(AudioManager.JABMISS);
             comboStep++;
             comboTimer = 1;
 

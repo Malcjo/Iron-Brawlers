@@ -229,8 +229,8 @@ public class Hitbox : MonoBehaviour
     }
     public void ShowHitBoxes()
     {
-        //meshRenderer.enabled = true;
-        //hitboxCollider.enabled = true;
+        meshRenderer.enabled = true;
+        hitboxCollider.enabled = true;
     }
     public void HideHitBoxes()
     {
@@ -290,7 +290,6 @@ public class Hitbox : MonoBehaviour
                     {
                         //Player just punch sound
                         PlayHitSound(false);
-                        FindObjectOfType<AudioManager>().Play(AudioManager.PUNCHHIT);
                         Instantiate(punchParticle, transform.position, transform.rotation);
                         return;
                     }
