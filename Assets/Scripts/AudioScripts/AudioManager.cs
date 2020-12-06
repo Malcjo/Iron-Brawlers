@@ -5,9 +5,12 @@ using System.Collections.Generic;
 
 public class AudioManager : MonoBehaviour
 {
-    public const string PUNCHHIT = "Punch Hit";
-    public const string PUNCHMISS = "Punch Miss";
+    public const string PUNCHHIT = "Jab Hit";
+    public const string PUNCHMISS = "Jab Miss";
+    public const string ARMOURBREAK = "Armour Break";
+    public const string JUMP = "Jump Sounds";
 
+    public Sound[] sounds;
 
     public LibraryLink[] links;
 
@@ -25,8 +28,16 @@ public class AudioManager : MonoBehaviour
             return;
         }
         DontDestroyOnLoad(gameObject);
-        
 
+        foreach (Sound s in sounds)
+        {
+            s.source = gameObject.AddComponent<AudioSource>();
+            s.source.clip = s.clip;
+            s.source.volume = s.volume;
+            s.source.pitch = s.pitch;
+            s.source.loop = s.loop;
+            s.source.outputAudioMixerGroup = s.audioMixerGroup;
+        }
 
         libraries = new Dictionary<string, AudioLibrary>();
         foreach (LibraryLink l in links) {
@@ -45,9 +56,18 @@ public class AudioManager : MonoBehaviour
         {
             libraries[name].PlaySound();
         }
+        
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+        if (s == null)
+        {
+            Debug.LogWarning("Sound: " + name + "not found!");
+            return;
+        }
+        s.source.Play();
+        //Note: to play a sound from another script, use: FindObjectOfType<AudioManager>().Play(NAMEOFCONSTGOESHERE);
     }
 
-    
+
     [System.Serializable]
     public struct LibraryLink
     {

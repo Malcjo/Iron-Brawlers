@@ -25,20 +25,9 @@ public class AudioLibrary : MonoBehaviour
     }
     public void PlaySound()
     {
-        /*
-        Sound s = Array.Find(sounds, sound => sound.name == name);
-        if (s == null)
-        {
-            Debug.LogWarning("Sound: " + name + "not found!");
-            return;
-        }
-        s.source.Play();
-        //Note: To play any sound stored in the array use: FindObjectOfType<AudioManager>().Play("Name of clip as in the array goes here");
-        */
         var s = ChooseSound();
         s.source.Play();
-        Debug.Log("Got to here!");
-        
+        //Debug.Log("Got to here!");  
     }
 
     private Sound ChooseSound()

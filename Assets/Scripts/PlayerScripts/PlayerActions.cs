@@ -193,7 +193,7 @@ public class PlayerActions : MonoBehaviour
             self.SetState(new BusyState());
             anim.Play("ARMOUR_BREAK");
             anim.speed = 1;
-            FindObjectOfType<AudioManager>().Play("ArmourBreak");
+            FindObjectOfType<AudioManager>().Play(AudioManager.ARMOURBREAK);
             self.CanTurn = false;
             yield return null;
             hitboxScript._attackDir = Attackdirection.Down;
