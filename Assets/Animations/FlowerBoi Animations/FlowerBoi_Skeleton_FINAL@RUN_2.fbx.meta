@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 29bcd7ea56a70294aafa9658741460f0
+guid: 9dd9ddf2505a6ee45b2d60aa58170fb7
 ModelImporter:
   serializedVersion: 20101
   internalIDToNameTable:
   - first:
       74: 1827226128182048838
-    second: RUN2
+    second: RUN_2
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -26,7 +26,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 0
+    animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -35,7 +35,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: RUN2
+      name: RUN_2
       takeName: Take 001
       internalID: 0
       firstFrame: 5
