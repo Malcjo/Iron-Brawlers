@@ -10,11 +10,31 @@ public class PlayerActions : MonoBehaviour
     [SerializeField] Hitbox hitboxScript;
     [SerializeField] HitBoxManager hitboxManager;
     [SerializeField] ArmourCheck armourCheck;
+    [SerializeField] ParticleSystem[] particleTrail;
+
 
 
     public int comboStep;
     public float comboTimer;
+    private void Awake()
+    {
+        SetParticleTrail(false);
+    }
+    private void SetParticleTrail(bool control)
+    {
+        for (int i = 0; i < particleTrail.Length; i++)
+        {
+            if(control == true)
+            {
+                particleTrail[i].Play();
+            }
+            else if(control == false)
+            {
+                particleTrail[i].Stop();
+            }
 
+        }
+    }
     private void Update()
     {
 
@@ -262,18 +282,27 @@ public class PlayerActions : MonoBehaviour
 
         while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
         {
-            while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.25f)
+            while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.65f)
             {
+                SetParticleTrail(true);
                 yield return null;
+                while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.25f)
+                {
+                    yield return null;
+                }
+                SetParticleTrail(false);
+                if (canMove == true)
+                {
+                    Debug.Log("Move Character");
+                    self.MoveCharacterWithAttacks(600);
+                    canMove = false;
+                }
             }
-            if (canMove == true)
-            {
-                Debug.Log("Move Character");
-                self.MoveCharacterWithAttacks(600);
-                canMove = false;
-            }
+
+
             yield return null;
         }
+
         self.SetState(new IdleState());
     }
 }

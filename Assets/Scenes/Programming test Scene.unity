@@ -123,6 +123,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!198 &20408384 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 1127054013482532267, guid: 9884c13c49247e44c916edaafd5f0010,
+    type: 3}
+  m_PrefabInstance: {fileID: 3621217984692765018}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &62742729
 GameObject:
   m_ObjectHideFlags: 0
@@ -2040,7 +2046,7 @@ PrefabInstance:
     - target: {fileID: 4688837647506539797, guid: 590656536554766488000c7b5f8e65ba,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.61
+      value: 2.33
       objectReference: {fileID: 0}
     - target: {fileID: 4688837647506539797, guid: 590656536554766488000c7b5f8e65ba,
         type: 3}
@@ -2299,6 +2305,12 @@ MonoBehaviour:
   focusBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
+--- !u!198 &1855804816 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 1127054013513031089, guid: 9884c13c49247e44c916edaafd5f0010,
+    type: 3}
+  m_PrefabInstance: {fileID: 3621217984692765018}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1884564315
 GameObject:
   m_ObjectHideFlags: 0
@@ -2708,6 +2720,21 @@ PrefabInstance:
       propertyPath: flowerBoiSkin2
       value: 
       objectReference: {fileID: 2100000, guid: ae9fc474293d2044a88d8a6b55315885, type: 2}
+    - target: {fileID: 6301163088502410051, guid: 9884c13c49247e44c916edaafd5f0010,
+        type: 3}
+      propertyPath: particleTrail.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6301163088502410051, guid: 9884c13c49247e44c916edaafd5f0010,
+        type: 3}
+      propertyPath: particleTrail.Array.data[0]
+      value: 
+      objectReference: {fileID: 20408384}
+    - target: {fileID: 6301163088502410051, guid: 9884c13c49247e44c916edaafd5f0010,
+        type: 3}
+      propertyPath: particleTrail.Array.data[1]
+      value: 
+      objectReference: {fileID: 1855804816}
     - target: {fileID: 8310054376448282629, guid: 9884c13c49247e44c916edaafd5f0010,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2716,7 +2743,7 @@ PrefabInstance:
     - target: {fileID: 8310054376448282629, guid: 9884c13c49247e44c916edaafd5f0010,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.61
+      value: 2.33
       objectReference: {fileID: 0}
     - target: {fileID: 8310054376448282629, guid: 9884c13c49247e44c916edaafd5f0010,
         type: 3}
