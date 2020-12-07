@@ -41,10 +41,10 @@ public class PlayerConfigurationManager : MonoBehaviour
     public void HandlePlayerJoin(PlayerInput pi)
     {
         Debug.Log("Player joined " + pi.playerIndex);
-        pi.transform.SetParent(transform);
         if(!playerConfigs.Any(p => p.playerIndex == pi.playerIndex))
         {
-
+            pi.transform.SetParent(transform);
+            playerConfigs.Add(new PlayerConfiguration(pi));
         }
     }
 

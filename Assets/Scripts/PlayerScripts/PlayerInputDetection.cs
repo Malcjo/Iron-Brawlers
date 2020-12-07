@@ -82,9 +82,16 @@ public class PlayerInputDetection : MonoBehaviour
         if(self != null)
         {
             horizontalInput = context.ReadValue<float>();
-            if(horizontalInput <= 0.2f && horizontalInput >= -0.2f)
+            if(horizontalInput <= 0.35f && horizontalInput >= -0.35f)
             {
-                horizontalInput = 0;
+                if(horizontalInput < 0 && horizontalInput >= -0.35f)
+                {
+                    horizontalInput = -0;
+                }
+                else if (horizontalInput > 0 && horizontalInput <= 0.35f)
+                {
+                    horizontalInput = 0;
+                }
             }
             HorizontalValue = horizontalInput;
             self.GetPlayerInputFromInputScript(HorizontalValue);
