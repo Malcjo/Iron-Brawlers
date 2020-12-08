@@ -273,6 +273,7 @@ public class PlayerActions : MonoBehaviour
     {
         bool canMove = true;
         anim.Play("HEAVY");
+        FindObjectOfType<AudioManager>().Play(AudioManager.HEAVYMISS);
         anim.speed = 1;
         yield return null;
         hitboxManager.SwapHands(1);

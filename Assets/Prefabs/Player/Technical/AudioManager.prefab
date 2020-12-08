@@ -1,5 +1,65 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &910931074
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 910931075}
+  - component: {fileID: 910931076}
+  m_Layer: 0
+  m_Name: HeavyMiss
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &910931075
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 910931074}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 68326453945402998}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &910931076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 910931074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b86609c3f8a0ec4b909a9c0127b6588, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - audioMixerGroup: {fileID: 8700233496606524339, guid: f545ac14fd68fda4da64ec4d708a85eb,
+      type: 2}
+    name: Heavy Miss
+    loop: 0
+    clip: {fileID: 8300000, guid: fcbcd1d3c169246478f8f0bc978f149c, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+  - audioMixerGroup: {fileID: 8700233496606524339, guid: f545ac14fd68fda4da64ec4d708a85eb,
+      type: 2}
+    name: Heavy Miss
+    loop: 0
+    clip: {fileID: 8300000, guid: 23e618a9d3669fa4198afd0482b42ab2, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
 --- !u!1 &1016125390
 GameObject:
   m_ObjectHideFlags: 0
@@ -184,6 +244,9 @@ Transform:
   - {fileID: 1016125391}
   - {fileID: 2079844407}
   - {fileID: 3173463037018526756}
+  - {fileID: 910931075}
+  - {fileID: 8560407193187905547}
+  - {fileID: 613086655539373371}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -205,7 +268,7 @@ MonoBehaviour:
     name: AlphaMusic
     loop: 0
     clip: {fileID: 8300000, guid: 3384425f3d3ca7b44b49e4e403f1ad8d, type: 3}
-    volume: 0.05
+    volume: 0
     pitch: 1
     source: {fileID: 0}
   - audioMixerGroup: {fileID: 8700233496606524339, guid: f545ac14fd68fda4da64ec4d708a85eb,
@@ -249,6 +312,12 @@ MonoBehaviour:
     library: {fileID: 248536118075563399}
   - name: Jab Hit Unarmoured
     library: {fileID: 2079844408}
+  - name: Heavy Miss
+    library: {fileID: 910931076}
+  - name: Heavy Hit Armour
+    library: {fileID: 1904002772721734177}
+  - name: Heavy Hit Unarmoured
+    library: {fileID: 6684620259303909686}
 --- !u!1 &135364029214033503
 GameObject:
   m_ObjectHideFlags: 0
@@ -324,6 +393,158 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: a676d192bb948934fa498d8ea5974c8e, type: 3}
     volume: 0.5
     pitch: 1
+    source: {fileID: 0}
+--- !u!1 &344797500371400261
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 613086655539373371}
+  - component: {fileID: 6684620259303909686}
+  m_Layer: 0
+  m_Name: 'HeavyHitUnarmoured '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &613086655539373371
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 344797500371400261}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 68326453945402998}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6684620259303909686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 344797500371400261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b86609c3f8a0ec4b909a9c0127b6588, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - audioMixerGroup: {fileID: 8700233496606524339, guid: f545ac14fd68fda4da64ec4d708a85eb,
+      type: 2}
+    name: Jab Hit
+    loop: 0
+    clip: {fileID: 8300000, guid: bb2a6b75e2545164f8893793178cf140, type: 3}
+    volume: 0.5
+    pitch: 0.9
+    source: {fileID: 0}
+  - audioMixerGroup: {fileID: 8700233496606524339, guid: f545ac14fd68fda4da64ec4d708a85eb,
+      type: 2}
+    name: Jab Hit
+    loop: 0
+    clip: {fileID: 8300000, guid: 4e5480320a242b2408737cff7ba8cb73, type: 3}
+    volume: 0.5
+    pitch: 0.9
+    source: {fileID: 0}
+  - audioMixerGroup: {fileID: 8700233496606524339, guid: f545ac14fd68fda4da64ec4d708a85eb,
+      type: 2}
+    name: Jab Hit
+    loop: 0
+    clip: {fileID: 8300000, guid: 375604a5d4817fe47b96b23eabe7a419, type: 3}
+    volume: 0.5
+    pitch: 0.9
+    source: {fileID: 0}
+  - audioMixerGroup: {fileID: 8700233496606524339, guid: f545ac14fd68fda4da64ec4d708a85eb,
+      type: 2}
+    name: Jab Hit
+    loop: 0
+    clip: {fileID: 8300000, guid: ff180182fc4e33447a3ad2b2bd75f285, type: 3}
+    volume: 0.5
+    pitch: 0.9
+    source: {fileID: 0}
+--- !u!1 &2249541774338320627
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8560407193187905547}
+  - component: {fileID: 1904002772721734177}
+  m_Layer: 0
+  m_Name: 'HeavyHitArmoured '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8560407193187905547
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2249541774338320627}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 68326453945402998}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1904002772721734177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2249541774338320627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b86609c3f8a0ec4b909a9c0127b6588, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - audioMixerGroup: {fileID: 8700233496606524339, guid: f545ac14fd68fda4da64ec4d708a85eb,
+      type: 2}
+    name: Jab Hit
+    loop: 0
+    clip: {fileID: 8300000, guid: 3f8f928173cbec54986cb45d55708bfd, type: 3}
+    volume: 0.5
+    pitch: 0.9
+    source: {fileID: 0}
+  - audioMixerGroup: {fileID: 8700233496606524339, guid: f545ac14fd68fda4da64ec4d708a85eb,
+      type: 2}
+    name: Jab Hit
+    loop: 0
+    clip: {fileID: 8300000, guid: 3e20f280f8d0a3a43a65d41e28bc2c78, type: 3}
+    volume: 0.5
+    pitch: 0.9
+    source: {fileID: 0}
+  - audioMixerGroup: {fileID: 8700233496606524339, guid: f545ac14fd68fda4da64ec4d708a85eb,
+      type: 2}
+    name: Jab Hit
+    loop: 0
+    clip: {fileID: 8300000, guid: 8c3885f719cd46d4f8a7f2ed3ffe685b, type: 3}
+    volume: 0.5
+    pitch: 0.9
+    source: {fileID: 0}
+  - audioMixerGroup: {fileID: 8700233496606524339, guid: f545ac14fd68fda4da64ec4d708a85eb,
+      type: 2}
+    name: Jab Hit
+    loop: 0
+    clip: {fileID: 8300000, guid: a676d192bb948934fa498d8ea5974c8e, type: 3}
+    volume: 0.5
+    pitch: 0.9
     source: {fileID: 0}
 --- !u!1 &5255800595495171584
 GameObject:

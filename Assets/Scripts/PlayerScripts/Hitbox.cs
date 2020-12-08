@@ -204,6 +204,7 @@ public class Hitbox : MonoBehaviour
                 case AttackType.ArmourBreak:
                     break;
                 case AttackType.HeavyJab:
+                    FindObjectOfType<AudioManager>().Play(AudioManager.HEAVYHITARMOUR);
                     break;
             }
         }
@@ -222,6 +223,7 @@ public class Hitbox : MonoBehaviour
                 case AttackType.ArmourBreak:
                     break;
                 case AttackType.HeavyJab:
+                    FindObjectOfType<AudioManager>().Play(AudioManager.HEAVYHITUNARMOURED);
                     break;
             }
         }

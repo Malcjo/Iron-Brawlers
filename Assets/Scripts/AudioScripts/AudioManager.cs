@@ -7,9 +7,12 @@ public class AudioManager : MonoBehaviour
 {
     public const string JABHITARMOUR = "Jab Hit Armour";
     public const string JABHITUNARMOURED = "Jab Hit Unarmoured";
+    public const string HEAVYHITARMOUR = "Heavy Hit Armour";
+    public const string HEAVYHITUNARMOURED = "Heavy Hit Unarmoured";
     public const string JABMISS = "Jab Miss";
     public const string ARMOURBREAK = "Armour Break";
     public const string JUMP = "Jump Sounds";
+    public const string HEAVYMISS = "Heavy Miss";
 
     public Sound[] sounds;
 
