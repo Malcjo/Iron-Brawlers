@@ -13,6 +13,7 @@ public class AudioManager : MonoBehaviour
     public const string ARMOURBREAK = "Armour Break";
     public const string JUMP = "Jump Sounds";
     public const string HEAVYMISS = "Heavy Miss";
+    public const string AERIALMISS = "Aerial Miss";
 
     public Sound[] sounds;
 

@@ -182,6 +182,7 @@ public class PlayerActions : MonoBehaviour
     private IEnumerator _AerialAttack()
     {
         anim.Play("AERIAL");
+        FindObjectOfType<AudioManager>().Play(AudioManager.AERIALMISS);
         anim.speed = 1;
         self.CanTurn = false;
         self.UseGravity = false;
