@@ -5,10 +5,11 @@ using static UnityEngine.InputSystem.InputAction;
 public class PlayerInputDetection : MonoBehaviour
 {
     [SerializeField]
-    private PlayerSetup controls;
+    private PlayerSetup oldControlsSetup;
     [SerializeField]
     private Player self;
     private PlayerInput newInput;
+    private PlayerControls playerControls;
 
     [SerializeField]
     private bool JumpInputQueued;
@@ -26,17 +27,26 @@ public class PlayerInputDetection : MonoBehaviour
     private float HorizontalValue;
     [SerializeField]
     private float horizontalInput;
-
+    [SerializeField] private PlayerConfiguration playerConfig;
     [SerializeField] Player.Wall currentWall;
+    [SerializeField] private bool usingMenu = true;
 
 
     public float GetHorizontal(){return HorizontalValue;}
     private void Awake()
     {
-        newInput = GetComponent<PlayerInput>();
-        var players = FindObjectsOfType<Player>();
-        var index = newInput.playerIndex;
-        self = players.FirstOrDefault(m => m.GetPlayerIndex() == index);
+        if(usingMenu == true)
+        {
+            self = GetComponent<Player>();
+        }
+        else
+        {
+            var _self = FindObjectsOfType<Player>();
+            var index = newInput.playerIndex;
+            self = _self.FirstOrDefault(m => m.GetPlayerIndex() == index);
+
+        }
+        playerControls = new PlayerControls();
         self.SetUpInputDetectionScript(this);
     }
     public bool ShouldJump(){
@@ -69,14 +79,29 @@ public class PlayerInputDetection : MonoBehaviour
     private void Update()
     {
         currentWall = self.GetCurrentWall();
-        //HorizontalInput();
-        //BlockInput();
-        //JumpInput();
-        //CrouchInput();
-        //AttackInput();
-        //ArmourBreakInput();
     }
-    
+
+    public void InitializePlayer(PlayerConfiguration config)
+    {
+        playerConfig = config;
+        config.input.onActionTriggered += Input_OnActionTrigger;
+    }
+    private void Input_OnActionTrigger(CallbackContext context)
+    {
+        if (context.action.name == playerControls.Player.PlayerHorizontalMovement.name)
+        {
+            HorizontalInput(context);
+        }
+        if(context.action.name == playerControls.Player.PlayerJump.name)
+        {
+            JumpInput(context);
+        }
+        if(context.action.name == playerControls.Player.PlayerAttack.name)
+        {
+            AttackInput(context);
+        }
+    }
+
     public void HorizontalInput(CallbackContext context)
     {
         if(self != null)
@@ -122,7 +147,7 @@ public class PlayerInputDetection : MonoBehaviour
     private void CrouchInput()
     {
         CrouchInputQueued = false;
-        if (Input.GetKey(controls.crouchKey))
+        if (Input.GetKey(oldControlsSetup.crouchKey))
         {
             CrouchInputQueued = true;
         }
@@ -147,7 +172,7 @@ public class PlayerInputDetection : MonoBehaviour
     public void BlockInput()
     {
         BlockInputQueued = false;
-        if (Input.GetKey(controls.blockKey))
+        if (Input.GetKey(oldControlsSetup.blockKey))
         {
             BlockInputQueued = true;
         }
@@ -155,7 +180,7 @@ public class PlayerInputDetection : MonoBehaviour
     void ArmourBreakInput()
     {
         ArmourBreakInputQueued = false;
-        if (Input.GetKey(controls.armourKey) && Input.GetKey(controls.crouchKey))
+        if (Input.GetKey(oldControlsSetup.armourKey) && Input.GetKey(oldControlsSetup.crouchKey))
         {
             ArmourBreakInputQueued = true;
         }

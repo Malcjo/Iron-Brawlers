@@ -58,7 +58,13 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    public void StartGame()
+    {
+        for(int i = 0; i< 2; i++)
+        {
 
+        }
+    }
     public void FindPlayers()
     {
         playersInScene = FindObjectsOfType<Player>();
@@ -69,17 +75,28 @@ public class GameManager : MonoBehaviour
             PlayerNumberDetermine(i);
         }
     }
-    private void PlayerNumberDetermine(int i)
+    public GameObject[] playerCharacters;
+    public void SetPlayerCharacter(int index, GameObject character)
     {
-        if (i == 0)
+        switch (index)
         {
-            playersInScene[i].playerNumber = Player.PlayerIndex.Player1;
-            playersInScene[i].characterType = player1CharacterIndex;
+            case 1: playerCharacters[0] = character;
+                break;
+            case 2: playerCharacters[1] = character;
+                break;
         }
-        else if (i == 1)
+    }
+    private void PlayerNumberDetermine(int index)
+    {
+        if (index == 0)
         {
-            playersInScene[i].playerNumber = Player.PlayerIndex.Player2;
-            playersInScene[i].characterType = player2CharacterIndex;
+            playersInScene[index].playerNumber = Player.PlayerIndex.Player1;
+            playersInScene[index].characterType = player1CharacterIndex;
+        }
+        else if (index == 1)
+        {
+            playersInScene[index].playerNumber = Player.PlayerIndex.Player2;
+            playersInScene[index].characterType = player2CharacterIndex;
         }
     }
 

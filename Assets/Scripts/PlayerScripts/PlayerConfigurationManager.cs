@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerConfigurationManager : MonoBehaviour
 {
-    private List<PlayerConfiguration> playerConfigs;
+    [SerializeField] private List<PlayerConfiguration> playerConfigs;
 
     [SerializeField] private int maxPlayers = 2;
 
@@ -25,30 +25,37 @@ public class PlayerConfigurationManager : MonoBehaviour
         }
     }
 
-    public void SetPlayerSkinMaterial(int Index, Material material)
-    {
-        playerConfigs[Index].playerMaterial = material;
-    }
 
-    public void ReadyPlayer(int Index)
-    {
-        playerConfigs[Index].isReady = true;
-        if(playerConfigs.Count == maxPlayers && playerConfigs.All(p => p.isReady == true))
-        {
-            //Load scene
-        }
-    }
+    //public void SetPlayerCharacter(int Index, int characterIndex)
+    //{
+    //    GameManager.instance.SetPlayerCharacter(Index, Characters[characterIndex]);
+    //}
+
+    //public void ReadyPlayer(int Index)
+    //{
+    //    playerConfigs[Index].isReady = true;
+    //    if(playerConfigs.Count == maxPlayers && playerConfigs.All(p => p.isReady == true))
+    //    {
+    //        //Load scene
+    //    }
+    //}
     public void HandlePlayerJoin(PlayerInput pi)
     {
         Debug.Log("Player joined " + pi.playerIndex);
-        if(!playerConfigs.Any(p => p.playerIndex == pi.playerIndex))
+        pi.transform.SetParent(transform);
+
+        if (!playerConfigs.Any(p => p.playerIndex == pi.playerIndex))
         {
-            pi.transform.SetParent(transform);
             playerConfigs.Add(new PlayerConfiguration(pi));
+            Debug.Log("added player to list, list size now " + playerConfigs.Count);
         }
     }
-
+    public List<PlayerConfiguration> GetPlayerConfigs()
+    {
+        return playerConfigs;
+    }
 }
+
 public class PlayerConfiguration
 {
     public PlayerConfiguration(PlayerInput pi)
@@ -59,5 +66,5 @@ public class PlayerConfiguration
     public PlayerInput input { get; set; }
     public int playerIndex { get; set; }
     public bool isReady { get; set; }
-    public Material playerMaterial { get; set; }
+    public GameObject playerCharacter { get; set; }
 }

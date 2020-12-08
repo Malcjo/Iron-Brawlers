@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
     
@@ -22,18 +23,24 @@ public class MainMenu : MonoBehaviour
     private bool isPaused;
     [SerializeField]
     private bool inGame;
-
-    [SerializeField] private bool player1Selected, player2Selected;
+    [SerializeField] private Button PlayButton;
+    [SerializeField] private Button Stage1Button;
+    private bool inTitleScreen;
+    [Range(1,2)]
+    [SerializeField] private int playerSelected;
 
     [SerializeField] private GameManager gamemanager;
+    [SerializeField] private PlayerSetupMenuController menuController;
+
+
     private void Awake()
     {
         gamemanager = GetComponentInParent<GameManager>();
     }
     private void Start()
     {
-        player1Selected = true;
-        player2Selected = false;
+        inTitleScreen = true;
+        playerSelected = 1;
         titleScreen.SetActive(true);
         gameUIGroup.SetActive(false);
         inGame = false;
@@ -41,10 +48,16 @@ public class MainMenu : MonoBehaviour
 
     private void Update()
     {
-        if (Input.anyKey)
+        if(inTitleScreen == true)
         {
-            titleScreen.SetActive(false);
+            if (Input.anyKey)
+            {
+                titleScreen.SetActive(false);
+                menuController.ChangedSelectedButton(PlayButton);
+                inTitleScreen = false;
+            }
         }
+
 
         if(inGame == false)
         {
@@ -130,41 +143,61 @@ public class MainMenu : MonoBehaviour
         mainMenuScreen.SetActive(false);
         characterMenu.SetActive(true);
     }
-    public void SelectCharacter1()
+    public void SelectCharacter(GameObject Character)
     {
-        if (player1Selected == true && player2Selected == false)
+        switch (playerSelected)
         {
-            gamemanager.player1CharacterIndex = 1;
-            player1Selected = false;
-            player2Selected = true;
-        }
-        else if (player1Selected == false && player2Selected == true)
-        {
-            gamemanager.player2CharacterIndex = 1;
-            player1Selected = true;
-            player2Selected = false;
-            GotToStageSelect();
+            case 1:
+                GameManager.instance.SetPlayerCharacter(1, Character);
+                playerSelected++;
+                break;
+            case 2:
+                GameManager.instance.SetPlayerCharacter(2, Character);
+                GotToStageSelect();
+                break;
         }
     }
-    public void SelectCharacter2()
-    {
-        if (player1Selected == true && player2Selected == false)
-        {
-            gamemanager.player1CharacterIndex = 2;
-            player1Selected = false;
-            player2Selected = true;
+    //public void SelectCharacter1()
+    //{
+    //    if (player1Selected == true && player2Selected == false)
+    //    {
+    //        PlayerConfigurationManager.Instance.SetPlayerCharacter(0,0);
+    //        gamemanager.player1CharacterIndex = 1;
+    //        player1Selected = false;
+    //        player2Selected = true;
+    //    }
+    //    else if (player1Selected == false && player2Selected == true)
+    //    {
+    //        PlayerConfigurationManager.Instance.SetPlayerCharacter(0, 1);
+    //        gamemanager.player2CharacterIndex = 1;
+    //        player1Selected = true;
+    //        player2Selected = false;
+    //        GotToStageSelect();
+    //    }
+    //}
 
-        }
-        else if (player1Selected == false && player2Selected == true)
-        {
-            gamemanager.player2CharacterIndex = 2;
-            player1Selected = true;
-            player2Selected = false;
-            GotToStageSelect();
-        }
-    }
+    //public void SelectCharacter2()
+    //{
+    //    if (player1Selected == true && player2Selected == false)
+    //    {
+    //        PlayerConfigurationManager.Instance.SetPlayerCharacter(1, 0);
+    //        gamemanager.player1CharacterIndex = 2;
+    //        player1Selected = false;
+    //        player2Selected = true;
+
+    //    }
+    //    else if (player1Selected == false && player2Selected == true)
+    //    {
+    //        PlayerConfigurationManager.Instance.SetPlayerCharacter(1, 1);
+    //        gamemanager.player2CharacterIndex = 2;
+    //        player1Selected = true;
+    //        player2Selected = false;
+    //        GotToStageSelect();
+    //    }
+    //}
     void GotToStageSelect()
     {
+        menuController.ChangedSelectedButton(Stage1Button);
         characterMenu.SetActive(false);
         stageMenu.SetActive(true);
     }
