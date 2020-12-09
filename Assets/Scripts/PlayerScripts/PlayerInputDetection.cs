@@ -38,16 +38,17 @@ public class PlayerInputDetection : MonoBehaviour
         if(usingMenu == true)
         {
             self = GetComponent<Player>();
+            playerControls = new PlayerControls();
+            self.SetUpInputDetectionScript(this);
         }
         else
         {
+            newInput = GetComponent<PlayerInput>();
             var _self = FindObjectsOfType<Player>();
             var index = newInput.playerIndex;
             self = _self.FirstOrDefault(m => m.GetPlayerIndex() == index);
-
+            self.SetUpInputDetectionScript(this);
         }
-        playerControls = new PlayerControls();
-        self.SetUpInputDetectionScript(this);
     }
     public bool ShouldJump(){
         if (JumpInputQueued)
@@ -80,23 +81,30 @@ public class PlayerInputDetection : MonoBehaviour
     {
         currentWall = self.GetCurrentWall();
     }
-
     public void InitializePlayer(PlayerConfiguration config)
     {
+        if (usingMenu == false)
+        {
+            return;
+        }
         playerConfig = config;
         config.input.onActionTriggered += Input_OnActionTrigger;
     }
     private void Input_OnActionTrigger(CallbackContext context)
     {
+        if (usingMenu == false)
+        {
+            return;
+        }
         if (context.action.name == playerControls.Player.PlayerHorizontalMovement.name)
         {
             HorizontalInput(context);
         }
-        if(context.action.name == playerControls.Player.PlayerJump.name)
+        if (context.action.name == playerControls.Player.PlayerJump.name)
         {
             JumpInput(context);
         }
-        if(context.action.name == playerControls.Player.PlayerAttack.name)
+        if (context.action.name == playerControls.Player.PlayerAttack.name)
         {
             AttackInput(context);
         }

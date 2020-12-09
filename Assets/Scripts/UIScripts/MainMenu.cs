@@ -161,7 +161,7 @@ public class MainMenu : MonoBehaviour
     //{
     //    if (player1Selected == true && player2Selected == false)
     //    {
-    //        PlayerConfigurationManager.Instance.SetPlayerCharacter(0,0);
+    //        PlayerConfigurationManager.Instance.SetPlayerCharacter(0, 0);
     //        gamemanager.player1CharacterIndex = 1;
     //        player1Selected = false;
     //        player2Selected = true;

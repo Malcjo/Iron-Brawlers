@@ -1,4 +1,5 @@
 ﻿using TMPro;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,8 +20,6 @@ public class Player : MonoBehaviour
     private float friction = 0.25f;
     [SerializeField]
     private int maxLives = 3;
-
-
 
     [SerializeField] private float speed = 6.5f;
 
@@ -114,6 +113,7 @@ public class Player : MonoBehaviour
     {
         playerInput = _playerInputDetection;
     }
+
     public int GetPlayerIndex()
     {
         return (int)playerNumber;
@@ -429,8 +429,8 @@ public class Player : MonoBehaviour
     }
     private void CheckDirection()
     {
-        var _facingDirection = playerInput.GetHorizontal();
 
+        var _facingDirection = playerInput.GetHorizontal();
         if (_facingDirection > 0)
         {
             if (_canTurn == false)
