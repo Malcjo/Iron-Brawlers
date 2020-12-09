@@ -146,4 +146,4 @@ MonoBehaviour:
   HorizontalValue: 0
   horizontalInput: 0
   currentWall: 0
-  usingMenu: 0
+  Standalone: 1

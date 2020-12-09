@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     public PlayerIndex playerNumber;
     [SerializeField] private VState _currentVerticalState;
     [SerializeField] private VState _previousVerticalState;
-
+    [SerializeField] private bool standalone;
     [SerializeField]
     private string CurrentStateName;
 
@@ -223,6 +223,10 @@ public class Player : MonoBehaviour
         attackedFreezeCounter = MaxFreezeCounter;
         _tempPower = Power;
         _TempDirection = Direction;
+    }
+    public void Standalone(bool isStandalone)
+    {
+        standalone = isStandalone;
     }
     public void FreezeCharacterAttacking()
     {

@@ -29,17 +29,19 @@ public class PlayerInputDetection : MonoBehaviour
     private float horizontalInput;
     [SerializeField] private PlayerConfiguration playerConfig;
     [SerializeField] Player.Wall currentWall;
-    [SerializeField] private bool usingMenu = true;
+    [SerializeField] private bool Standalone = false;
 
 
     public float GetHorizontal(){return HorizontalValue;}
     private void Awake()
     {
-        if(usingMenu == true)
+        if(Standalone == false)
         {
             self = GetComponent<Player>();
             playerControls = new PlayerControls();
             self.SetUpInputDetectionScript(this);
+            self.Standalone(false);
+            
         }
         else
         {
@@ -48,6 +50,7 @@ public class PlayerInputDetection : MonoBehaviour
             var index = newInput.playerIndex;
             self = _self.FirstOrDefault(m => m.GetPlayerIndex() == index);
             self.SetUpInputDetectionScript(this);
+            self.Standalone(true);
         }
     }
     public bool ShouldJump(){
@@ -83,7 +86,7 @@ public class PlayerInputDetection : MonoBehaviour
     }
     public void InitializePlayer(PlayerConfiguration config)
     {
-        if (usingMenu == false)
+        if (Standalone == false)
         {
             return;
         }
@@ -92,7 +95,7 @@ public class PlayerInputDetection : MonoBehaviour
     }
     private void Input_OnActionTrigger(CallbackContext context)
     {
-        if (usingMenu == false)
+        if (Standalone == false)
         {
             return;
         }

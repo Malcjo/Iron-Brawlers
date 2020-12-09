@@ -8,8 +8,10 @@ public class LevelInitializer : MonoBehaviour
     [SerializeField] private GameObject[] playerPrefab;
     [SerializeField] private Transform[] playerSpawns;
     [SerializeField] private bool usingMenu;
+
     void Start()
     {
+
         if(usingMenu == true)
         {
             for (int i = 0; i < GameManager.instance.playerCharacters.Length; i++)
@@ -32,10 +34,6 @@ public class LevelInitializer : MonoBehaviour
                     break;
             }
         }
-    }
-
-    void Update()
-    {
-        
+        GameManager.instance.StartMatch();
     }
 }

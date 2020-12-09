@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public int player1CharacterIndex, player2CharacterIndex;
 
     public Sprite flowerBoi1, flowerBoi2;
+    private bool ingame = false;
 
     private void Awake()
     {
@@ -50,21 +51,35 @@ public class GameManager : MonoBehaviour
         {
             return;
         }
-        for(int i = 0; i < playersInScene.Length; i++)
+        if(ingame == true)
         {
-            if (playersInScene[i].lives == 0)
+            for (int i = 0; i < playersInScene.Length; i++)
             {
-                mainMenu.GoToCharacterSelect();
+                if (playersInScene[i].lives == 0)
+                {
+                    mainMenu.GoToCharacterSelect();
+                }
             }
         }
     }
-    public void StartGame()
+    public void StartMatch()
     {
-        for(int i = 0; i< 2; i++)
+        FindPlayers();
+        SetPlayersLivesToThree();
+        InGame();
+    }
+    public void SetPlayersLivesToThree()
+    {
+        for (int i = 0; i < playersInScene.Length; i++)
         {
-
+            playersInScene[i].lives = 3;
         }
     }
+    public void InGame()
+    {
+        ingame = true;
+    }
+
     public void FindPlayers()
     {
         playersInScene = FindObjectsOfType<Player>();
