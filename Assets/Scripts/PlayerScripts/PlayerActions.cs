@@ -10,7 +10,7 @@ public class PlayerActions : MonoBehaviour
     [SerializeField] Hitbox hitboxScript;
     [SerializeField] HitBoxManager hitboxManager;
     [SerializeField] ArmourCheck armourCheck;
-    [SerializeField] ParticleSystem[] particleTrail;
+    [SerializeField] ParticleSystem[] ParticleSmearLines;
 
 
 
@@ -22,17 +22,16 @@ public class PlayerActions : MonoBehaviour
     }
     private void SetParticleTrail(bool control)
     {
-        for (int i = 0; i < particleTrail.Length; i++)
+        for (int i = 0; i < ParticleSmearLines.Length; i++)
         {
             if(control == true)
             {
-                particleTrail[i].Play();
+                ParticleSmearLines[i].Play();
             }
             else if(control == false)
             {
-                particleTrail[i].Stop();
+                ParticleSmearLines[i].Stop();
             }
-
         }
     }
     private void Update()

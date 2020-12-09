@@ -5009,6 +5009,7 @@ MonoBehaviour:
   playerNumber: 0
   _currentVerticalState: 0
   _previousVerticalState: 0
+  standalone: 0
   CurrentStateName: 
   gravityValue: -10
   friction: 0.25
@@ -7806,7 +7807,9 @@ MonoBehaviour:
   hitboxScript: {fileID: 7184028327226233935}
   hitboxManager: {fileID: 5035495634276651133}
   armourCheck: {fileID: 5184824909723411142}
-  particleTrail: []
+  ParticleSmearLines:
+  - {fileID: 532059797080958365}
+  - {fileID: 532059797111195015}
   comboStep: 0
   comboTimer: 0
 --- !u!1 &8084274797371534895
@@ -9173,6 +9176,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7464fa863780063418a97b75d7dd0e6d, type: 3}
+--- !u!198 &532059797111195015 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8315210415139953323, guid: 7464fa863780063418a97b75d7dd0e6d,
+    type: 3}
+  m_PrefabInstance: {fileID: 8360878007864254252}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &532059797080958365 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8315210415111486129, guid: 7464fa863780063418a97b75d7dd0e6d,
+    type: 3}
+  m_PrefabInstance: {fileID: 8360878007864254252}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &532059797177552393 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8315210415342031141, guid: 7464fa863780063418a97b75d7dd0e6d,
