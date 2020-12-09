@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 9396a6b72b6b7d74cb3752e38d1c8e22
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Vesper Libre
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 839d080619d0e2546abcd6cfaec7d350, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
