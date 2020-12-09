@@ -71,8 +71,8 @@ Material:
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _QueueOffset: 0
-    - _RampSmoothing: 0.923
-    - _RampThreshold: 0.206
+    - _RampSmoothing: 1
+    - _RampThreshold: 0.321
     - _ReceiveShadows: 1
     - _ReceiveShadowsOff: 0
     - _RenderingMode: 0
@@ -87,7 +87,7 @@ Material:
     - _ZWrite: 1
     - __dummy__: 0
     m_Colors:
-    - _BaseColor: {r: 0.8245126, g: 0.9339623, b: 0.43614274, a: 1}
+    - _BaseColor: {r: 0.9294228, g: 1, b: 0.4292453, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _HColor: {r: 1, g: 1, b: 1, a: 1}
