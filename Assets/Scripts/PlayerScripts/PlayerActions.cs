@@ -34,6 +34,27 @@ public class PlayerActions : MonoBehaviour
             }
         }
     }
+    private void SetParticleEmmisionToZero(bool control)
+    {
+        if (control == true)
+        {
+            for (int i = 0; i < ParticleSmearLines.Length; i++)
+            {
+                var emmision = ParticleSmearLines[i].main;
+                emmision.startLifetime = 0.1f;
+
+            }
+        }
+        else
+        {
+            for (int i = 0; i < ParticleSmearLines.Length; i++)
+            {
+                var emmision = ParticleSmearLines[i].main;
+                emmision.startLifetime = 0;
+            }
+        }
+
+    }
     private void Update()
     {
 
@@ -291,7 +312,7 @@ public class PlayerActions : MonoBehaviour
                 {
                     yield return null;
                 }
-                SetParticleTrail(false);
+                
                 if (canMove == true)
                 {
                     Debug.Log("Move Character");
