@@ -12,7 +12,7 @@ public class AerialMovingState : PlayerState
     {
         self.CanTurn = false;
         self.InAir = true;
-        self.CheckVerticalState();
+        self.JumpingOrFallingAnimations();
         if (self.GetCanAirMove() == false)
         {
             body.velocity = new Vector3(Mathf.Lerp(body.velocity.x, 0,calculate.friction), body.velocity.y, 0) + calculate.addForce;
@@ -36,11 +36,11 @@ public class AerialMovingState : PlayerState
         }
         if(MovementCheck(input.horizontalInput))
         {
-            if(input.horizontalInput == self.facingDirection * -1)
+            if(input.horizontalInput == self.GetFacingDirection() * -1)
             {
                 Debug.Log("Back air");
             }
-            if(input.horizontalInput == self.facingDirection)
+            if(input.horizontalInput == self.GetFacingDirection())
             {
                 Debug.Log("Forward air");
             }

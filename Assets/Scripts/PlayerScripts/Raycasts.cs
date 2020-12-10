@@ -15,16 +15,12 @@ public class Raycasts : MonoBehaviour
     private float headCheckRayLength = 0.5f;
     private float sideCheckRayLength = 0.35f;
 
-
     public bool debugModeOn = true;
 
     public ParticleSystem splashParticle;
 
-
-
     private void FixedUpdate()
     {
-
         PublicRayCasting();
     }
     public void PublicRayCasting()
@@ -32,13 +28,15 @@ public class Raycasts : MonoBehaviour
         DownRays();
         UpRays();
         SideRayCaster();
-        DebugMode();
     }
-    void DebugMode()
+
+    void SideRayCaster()
     {
+        RaycastHit hit;
+        Vector3 rayCastOrigin = transform.position + new Vector3 (0,0.5f,0);
+
         if (debugModeOn == true)
         {
-            Vector3 rayCastOrigin = transform.position;
             Debug.DrawRay(rayCastOrigin, Vector3.left * sideCheckRayLength, Color.red);
             Debug.DrawRay(rayCastOrigin + new Vector3(0, 0.5f, 0), Vector3.left * sideCheckRayLength, Color.red);
             Debug.DrawRay(rayCastOrigin + new Vector3(0, -0.7f, 0), Vector3.left * sideCheckRayLength, Color.red);
@@ -47,15 +45,11 @@ public class Raycasts : MonoBehaviour
             Debug.DrawRay(rayCastOrigin + new Vector3(0, 0.5f, 0), Vector3.right * sideCheckRayLength, Color.red);
             Debug.DrawRay(rayCastOrigin + new Vector3(0, -0.7f, 0), Vector3.right * sideCheckRayLength, Color.red);
         }
-    }
-    void SideRayCaster()
-    {
-        RaycastHit hit;
-        Vector3 rayCastOrigin = transform.position;
 
         if (Physics.Raycast(rayCastOrigin, Vector3.left, out hit, sideCheckRayLength, groundMask) || 
             Physics.Raycast(rayCastOrigin + new Vector3 (0,0.5f,0), Vector3.left, out hit, sideCheckRayLength, groundMask) || 
             Physics.Raycast(rayCastOrigin + new Vector3(0, -0.7f, 0), Vector3.left, out hit, sideCheckRayLength, groundMask))
+
         {
             player.RayCasterLeftWallCheck(hit);
         }
@@ -72,13 +66,17 @@ public class Raycasts : MonoBehaviour
     }
 
 
-
     //--------------------------------------------------------------------------------
     private void UpRays()
     {
         RaycastHit hit;
-        Vector3 rayCastOrigin = transform.position;
-        Debug.DrawRay(rayCastOrigin, Vector3.up * headCheckRayLength, Color.red);
+        Vector3 rayCastOrigin = transform.position + new Vector3(0, 1.5f, 0);
+
+        if(debugModeOn == true)
+        {
+            Debug.DrawRay(rayCastOrigin, Vector3.up * headCheckRayLength, Color.red);
+        }
+
         if (Physics.Raycast(rayCastOrigin, Vector3.up, out hit, headCheckRayLength, groundMask))
         {
             player.RayCastCeilingCheck(hit);
@@ -89,17 +87,20 @@ public class Raycasts : MonoBehaviour
     private void DownRays()
     {
         RaycastHit hit;
-        Vector3 rayCastOrigin = transform.position - new Vector3(0, 0.45f, 0);
-        Debug.DrawRay(rayCastOrigin, Vector3.down * groundCheckRayLength, Color.red);
+        Vector3 rayCastOrigin = transform.position + new Vector3(0, 0.6f, 0);
+        if(debugModeOn == true)
+        {
+            Debug.DrawRay(rayCastOrigin, Vector3.down * groundCheckRayLength, Color.red);
+        }
+
         if (Physics.Raycast(rayCastOrigin, Vector3.down, out hit, groundCheckRayLength, groundMask))
         {
             player.RaycastGroundCheck(hit);
         }
-        else if (!Physics.Raycast(rayCastOrigin - new Vector3(0, 0.75f, 0), Vector3.down, out hit, 0.15f))
+        else
         {
             player.PlayerGroundedIsFalse();
+            Debug.Log("Not on ground");
         }
     }
-
-
 }

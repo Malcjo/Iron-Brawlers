@@ -14,7 +14,7 @@ public class AerialIdleState : PlayerState
         self.CanTurn = false;
         self.InAir = true;
         body.velocity = new Vector3(body.velocity.x, body.velocity.y, 0) + calculate.addForce;
-        self.CheckVerticalState();
+        self.JumpingOrFallingAnimations();
 
         if (MovementCheck(input.horizontalInput))
         {

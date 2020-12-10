@@ -15,8 +15,8 @@ public class Locator : MonoBehaviour
     {
         radius = transform.localScale.x;
         transform.SetParent(Location);
-        transform.position = Location.transform.position;
-        transform.rotation = Location.transform.rotation;
+        //transform.position = Location.transform.position;
+        //transform.rotation = Location.transform.rotation;
     }
 
     // Update is called once per frame

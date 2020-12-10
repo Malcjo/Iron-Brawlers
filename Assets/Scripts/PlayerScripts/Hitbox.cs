@@ -158,16 +158,16 @@ public class Hitbox : MonoBehaviour
         switch (_attackDir)
         {
             case Attackdirection.Forward:
-                return new Vector3(player.FacingDirection(), 0.3f, 0);
+                return new Vector3(player.GetFacingDirection(), 0.3f, 0);
             case Attackdirection.Low:
-                return new Vector3(player.FacingDirection() * 0.1f, 1f,0);
+                return new Vector3(player.GetFacingDirection() * 0.1f, 1f,0);
             case Attackdirection.Aerial:
-                return new Vector3(player.FacingDirection(), 0.5f, 0);
+                return new Vector3(player.GetFacingDirection(), 0.5f, 0);
             case Attackdirection.Down:
-                return new Vector3(player.FacingDirection(), -0.5f, 0);
+                return new Vector3(player.GetFacingDirection(), -0.5f, 0);
             default:
                 hitDirection.x = 1; hitDirection.y = 0.5f; hitDirection.z = 0; ;
-                return new Vector3(player.FacingDirection(), 0.3f, 0);
+                return new Vector3(player.GetFacingDirection(), 0.3f, 0);
         }
     }
     public float HitStrength()

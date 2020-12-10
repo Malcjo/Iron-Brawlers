@@ -36,7 +36,7 @@ public class HitBoxManager : MonoBehaviour
     }
     public void Block()
     {
-        blockBox.transform.position = transform.position + new Vector3(player.FacingDirection() * blockOffset.x, blockOffset.y, 0);
+        blockBox.transform.position = transform.position + new Vector3(player.GetFacingDirection() * blockOffset.x, blockOffset.y, 0);
         blockBox.SetActive(true);
     }
     public void StopBlock()

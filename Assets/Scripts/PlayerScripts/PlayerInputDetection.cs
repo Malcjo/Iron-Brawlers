@@ -5,8 +5,6 @@ using static UnityEngine.InputSystem.InputAction;
 public class PlayerInputDetection : MonoBehaviour
 {
     [SerializeField]
-    private PlayerSetup oldControlsSetup;
-    [SerializeField]
     private Player self;
     private PlayerInput newInput;
     private PlayerControls playerControls;
@@ -157,11 +155,6 @@ public class PlayerInputDetection : MonoBehaviour
     }
     private void CrouchInput()
     {
-        CrouchInputQueued = false;
-        if (Input.GetKey(oldControlsSetup.crouchKey))
-        {
-            CrouchInputQueued = true;
-        }
     }
     //[SerializeField] private float viewableContext;
     public void JumpInput(CallbackContext context)
@@ -182,19 +175,9 @@ public class PlayerInputDetection : MonoBehaviour
     }
     public void BlockInput()
     {
-        BlockInputQueued = false;
-        if (Input.GetKey(oldControlsSetup.blockKey))
-        {
-            BlockInputQueued = true;
-        }
     }
     void ArmourBreakInput()
     {
-        ArmourBreakInputQueued = false;
-        if (Input.GetKey(oldControlsSetup.armourKey) && Input.GetKey(oldControlsSetup.crouchKey))
-        {
-            ArmourBreakInputQueued = true;
-        }
     }
 
 

@@ -32,7 +32,6 @@ public class Player : MonoBehaviour
     [SerializeField] private ArmourCheck armourCheck;
     [SerializeField] private Raycasts raycasts;
     [SerializeField] private PlayerActions playerActions;
-    [SerializeField] private PlayerSetup playerSetup;
 
     [Header("UI")]
     [SerializeField]
@@ -43,7 +42,6 @@ public class Player : MonoBehaviour
     [Header("Observation Values")]
     [SerializeField] private float CurrentVelocity;
     [SerializeField] private float YVelocity;
-    private float previousVelocity;
     [SerializeField] private Vector3 V3Velocity;
     public bool DebugModeOn;
 
@@ -81,7 +79,7 @@ public class Player : MonoBehaviour
     private PlayerState MyState;
 
     private bool _wasAttacking;
-    public int facingDirection;
+    private int facingDirection;
     public int lives;
     public int characterType;
     private bool _inAir;
@@ -105,7 +103,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float attackingFreezeCounter;
     [SerializeField] private Vector3 _TempAttackingVelocity;
     [SerializeField] private bool freezeAttackingPlayer;
-
+    private float _PlayerInput;
     private Vector3 _TempDirection;
     private float _tempPower;
 
@@ -152,11 +150,10 @@ public class Player : MonoBehaviour
         GravityCheck();
     }
     #region State Machine
-    #region Movement
 
     private void CharacterStates()
     {
-        VerticalStateTracker();
+        JumpingOrFallingTracker();
         CurrentStateName = MyState.GiveName();
         MyState.RunState
             (
@@ -176,7 +173,7 @@ public class Player : MonoBehaviour
             {
                 jumpForce = JumpForceCalculator(),
                 friction = friction,
-                characterSpeed = CharacterSpeed(),
+                characterSpeed = SetPlayerSpeed(),
                 addForce = addForceValue
             }
             );
@@ -186,7 +183,24 @@ public class Player : MonoBehaviour
     {
         MyState = state;
     }
+    #endregion
 
+
+    public void StopMovingCharacterOnXAxis()
+    {
+        rb.velocity = new Vector3(0, rb.velocity.y, 0);
+    }
+    public void StopMovingCharacterOnYAxis()
+    {
+        rb.velocity = new Vector3(rb.velocity.x, 0, 0);
+    }
+
+    public void Standalone(bool isStandalone)
+    {
+        standalone = isStandalone;
+    }
+
+    #region Jumping
     void DoubleJumpCheck()
     {
         if (canDoubleJump == true)
@@ -201,43 +215,6 @@ public class Player : MonoBehaviour
     {
         _currentJumpIndex++;
     }
-    #endregion
-
-    public void StopMovingCharacterOnXAxis()
-    {
-        rb.velocity = new Vector3(0, rb.velocity.y, 0);
-    }
-    public void StopMovingCharacterOnYAxis()
-    {
-        rb.velocity = new Vector3(rb.velocity.x, 0, 0);
-    }
-    #endregion
-
-    public void FreezeCharacterBeingAttacked(Vector3 Direction, float Power)
-    {
-        playerActions.PauseCurrentAnimation();
-        freezeAttackedPlayer = true;
-        _TempAttackedVelocity = rb.velocity;
-        rb.velocity = Vector3.zero;
-        UseGravity = false;
-        attackedFreezeCounter = MaxFreezeCounter;
-        _tempPower = Power;
-        _TempDirection = Direction;
-    }
-    public void Standalone(bool isStandalone)
-    {
-        standalone = isStandalone;
-    }
-    public void FreezeCharacterAttacking()
-    {
-        playerActions.PauseCurrentAnimation();
-        freezeAttackingPlayer = true;
-        _TempAttackingVelocity = rb.velocity;
-        rb.velocity = Vector3.zero;
-        UseGravity = false;
-        attackingFreezeCounter = MaxFreezeCounter;
-    }
-
     void MinusJumpIndexWhenNotOnGround()
     {
         if(_currentJumpIndex == 0)
@@ -245,12 +222,13 @@ public class Player : MonoBehaviour
             _currentJumpIndex = 1;
         }
     }
-    #region Gravity Group
+    #endregion
+    #region Gravity methods
     void TerminalVelocity()
     {
         if (rb.velocity.y < -20)
         {
-            rb.velocity = new Vector3(playerInput.GetHorizontal() * CharacterSpeed(), -20, 0) + addForceValue;
+            rb.velocity = new Vector3(playerInput.GetHorizontal() * SetPlayerSpeed(), -20, 0) + addForceValue;
         }
     }
     void GravityCheck()
@@ -282,7 +260,7 @@ public class Player : MonoBehaviour
             }
             else if (_currentVerticalState == VState.jumping)
             {
-                if(gravityValue == 12)
+                if(gravityValue > 10)
                 {
                     gravityValue = 10;
                 }
@@ -360,7 +338,7 @@ public class Player : MonoBehaviour
         }
     }
     #endregion
-    #region Damaging
+    #region Attacking and Damaging
     public void HitStun()
     {
         playerActions.HitStun();
@@ -377,25 +355,39 @@ public class Player : MonoBehaviour
         Vector3 addForceValue = ((HitDirection) * (hitStrength));
         return addForceValue;
     }
+    public void FreezeCharacterAttacking()
+    {
+        playerActions.PauseCurrentAnimation();
+        freezeAttackingPlayer = true;
+        _TempAttackingVelocity = rb.velocity;
+        rb.velocity = Vector3.zero;
+        UseGravity = false;
+        attackingFreezeCounter = MaxFreezeCounter;
+    }
+    public void FreezeCharacterBeingAttacked(Vector3 Direction, float Power)
+    {
+        playerActions.PauseCurrentAnimation();
+        freezeAttackedPlayer = true;
+        _TempAttackedVelocity = rb.velocity;
+        rb.velocity = Vector3.zero;
+        UseGravity = false;
+        attackedFreezeCounter = MaxFreezeCounter;
+        _tempPower = Power;
+        _TempDirection = Direction;
+    }
+
     #endregion
-
-
-
 
     public float SendAbsPlayerInputValueToActionsScript()
     {
         return Mathf.Abs(_PlayerInput);
     }
-    private float _PlayerInput;
+
     public void GetPlayerInputFromInputScript(float PlayerInput)
     {
         _PlayerInput = PlayerInput;
     }
-
-
-
-
-    public float CharacterSpeed()
+    public float SetPlayerSpeed()
     {
         float characterSpeed = speed - armourCheck.armourReduceSpeed;
         if (hitStun == true)
@@ -426,7 +418,9 @@ public class Player : MonoBehaviour
         }
         return 0;
     }
-    public int FacingDirection()
+
+    #region Direction Player is Facing
+    public int GetFacingDirection()
     {
         var _facingDirection = facingDirection;
         return _facingDirection;
@@ -454,8 +448,9 @@ public class Player : MonoBehaviour
             facingDirection = (int)_facingDirection;
         }
     }
-
-    public void CheckVerticalState()
+    #endregion
+    #region Jumping or Falling
+    public void JumpingOrFallingAnimations()
     {
         switch (_currentVerticalState)
         {
@@ -467,7 +462,7 @@ public class Player : MonoBehaviour
                 break;
         }
     }
-    void VerticalStateTracker()
+    void JumpingOrFallingTracker()
     {
         if (rb.velocity.y != 0)
         {
@@ -481,7 +476,8 @@ public class Player : MonoBehaviour
             }
         }
     }
-    #region Raycast Checker
+    #endregion
+    #region Raycasts
 
     public Wall GetCurrentWall()
     {
@@ -508,7 +504,7 @@ public class Player : MonoBehaviour
         rb.velocity = new Vector3(rb.velocity.x, 0, 0);
         if (distanceToGround >= 0 && distanceToGround <= 0.37f)
         {
-            transform.position = new Vector3(hit.point.x, hit.point.y + 0.85f, 0);
+            rb.MovePosition(new Vector3(hit.point.x, hit.point.y, 0));
         }
         distanceToGround = hit.distance;
         _currentVerticalState = VState.grounded;
@@ -592,7 +588,6 @@ public class Player : MonoBehaviour
     void Observation()
     {
         V3Velocity = rb.velocity;
-        previousVelocity = rb.velocity.y;
     }
 }
 
