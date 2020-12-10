@@ -21,5 +21,7 @@ public class JumpingState : PlayerState
             self.SetState(new AerialMovingState());
         }
     }
+
+    public override bool StickToGround() => false;
 }
 

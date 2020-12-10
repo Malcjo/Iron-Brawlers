@@ -47,5 +47,7 @@ public abstract class PlayerState
     {
         return blockInput;
     }
+
+    public virtual bool StickToGround() => true;
 }
 

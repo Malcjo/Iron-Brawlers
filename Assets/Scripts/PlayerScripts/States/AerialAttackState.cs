@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class AerialAttackState : PlayerState
 {
+    //create seperate aerial states
     public override string GiveName()
     {
         return "AerialAttackState";

@@ -59,6 +59,10 @@ public class CameraScript : MonoBehaviour
         
         for (int i = 0; i < Players.Count; i++)
         {
+            if(Players[i] == null)
+            {
+                return;
+            }
             Vector3 playerPosition = Players[i].transform.position;
 
             if (!focusLevel.focusBounds.Contains(playerPosition))

@@ -69,7 +69,7 @@ public class Player : MonoBehaviour
 
     private bool canDoubleJump;
 
-    private int _currentJumpIndex;
+    [SerializeField] private int _currentJumpIndex;
     private int maxJumps = 2;
 
     [SerializeField] private Vector3 addForceValue;
@@ -128,7 +128,7 @@ public class Player : MonoBehaviour
         jumping,
         falling
     }
-    void Start()
+    void Awake()
     {
         MyState = new IdleState();
         _gravityOn = true;
@@ -155,6 +155,10 @@ public class Player : MonoBehaviour
     {
         JumpingOrFallingTracker();
         CurrentStateName = MyState.GiveName();
+        if (playerInput == null)
+        {
+            return;
+        }
         MyState.RunState
             (
             this,
@@ -246,6 +250,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float _currentPushPower;
     public void MoveCharacterWithAttacks(float MoveStrength)
     {
+        rb.velocity = new Vector3(rb.velocity.x + facingDirection * (MoveStrength), rb.velocity.y, 0) * Time.deltaTime;
         rb.AddForce(new Vector3(facingDirection * (MoveStrength), rb.velocity.y, 0));
     }
     void Gravity()
@@ -266,11 +271,11 @@ public class Player : MonoBehaviour
                 }
                 gravityValue = 10;
             }
-            rb.AddForce(Vector3.down * gravityValue * ((weight + armourCheck.armourWeight) / 10));
+            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y + -(gravityValue * ((weight + armourCheck.armourWeight) / 10)) * Time.deltaTime, 0);
         }
-        else if (_currentVerticalState == VState.grounded)
+        else if (_currentVerticalState == VState.grounded && MyState.StickToGround())
         {
-            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, 0);
+            rb.velocity = new Vector3(rb.velocity.x, 0, 0);
             gravityValue = 0;
         }
     }
@@ -427,7 +432,10 @@ public class Player : MonoBehaviour
     }
     private void CheckDirection()
     {
-
+        if (playerInput == null)
+        {
+            return;
+        }
         var _facingDirection = playerInput.GetHorizontal();
         if (_facingDirection > 0)
         {

@@ -304,24 +304,31 @@ public class PlayerActions : MonoBehaviour
 
         while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
         {
-            while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.65f)
+            while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.8f)
             {
-                SetParticleTrail(true);
+                SetParticleTrail(false);
                 yield return null;
-                while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.25f)
+                while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.65f)
                 {
+                    SetParticleTrail(true);
                     yield return null;
-                }
-                
-                if (canMove == true)
-                {
-                    Debug.Log("Move Character");
-                    self.MoveCharacterWithAttacks(600);
-                    canMove = false;
+                    while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.25f)
+                    {
+
+                        yield return null;
+                    }
+
+                    if (canMove == true)
+                    {
+                        Debug.Log("Move Character");
+                        self.MoveCharacterWithAttacks(600);
+                        canMove = false;
+                    }
                 }
             }
 
 
+            SetParticleTrail(false);
             yield return null;
         }
 

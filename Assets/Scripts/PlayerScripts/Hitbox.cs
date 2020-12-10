@@ -266,7 +266,7 @@ public class Hitbox : MonoBehaviour
             {
                 DamagePlayer(tempAttackedPlayer, tempAttackingPlayer);
 
-                if (tempHurtBox.location == LocationTag.Chest)
+                if (tempHurtBox.BodyLocation == LocationTag.Chest)
                 {
                     Debug.Log("Hit Chest");
                     if (tempArmour.ChestArmourType == ArmourCheck.Armour.none)
@@ -285,7 +285,7 @@ public class Hitbox : MonoBehaviour
                         tempArmour.RemoveChestArmour();
                     }
                 }
-                else if (tempHurtBox.location == LocationTag.Legs)
+                else if (tempHurtBox.BodyLocation == LocationTag.Legs)
                 {
                     Debug.Log("Hit Legs");
                     if (tempArmour.LegArmourType == ArmourCheck.Armour.none)

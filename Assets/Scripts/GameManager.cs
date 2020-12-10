@@ -11,7 +11,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private float boundsUp, boundsDown, boundsLeft, boundsRight;
     public Player[] playersInScene;
-    MainMenu mainMenu;
+    [SerializeField]
+    private MainMenu mainMenu;
     public int player1CharacterIndex, player2CharacterIndex;
 
     public Sprite flowerBoi1, flowerBoi2;
@@ -41,8 +42,6 @@ public class GameManager : MonoBehaviour
         boundsDown = -20;
         boundsLeft = -20;
         boundsRight = 20;
-
-        mainMenu = GetComponentInChildren<MainMenu>();
     }
 
     private void Update()

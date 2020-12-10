@@ -9,9 +9,8 @@ public class Raycasts : MonoBehaviour
     [SerializeField] private LayerMask waterMask = 1 << 4;
     [SerializeField] private int groundLayer = 12;
     [SerializeField] Player player;
-    [SerializeField] PlayerInputDetection playerInput;
 
-    private float groundCheckRayLength = 0.45f;
+    private float groundCheckRayLength = 0.5f;
     private float headCheckRayLength = 0.5f;
     private float sideCheckRayLength = 0.35f;
 
@@ -87,7 +86,7 @@ public class Raycasts : MonoBehaviour
     private void DownRays()
     {
         RaycastHit hit;
-        Vector3 rayCastOrigin = transform.position + new Vector3(0, 0.6f, 0);
+        Vector3 rayCastOrigin = transform.position + new Vector3(0, 0.5f, 0);
         if(debugModeOn == true)
         {
             Debug.DrawRay(rayCastOrigin, Vector3.down * groundCheckRayLength, Color.red);

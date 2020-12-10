@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HurtBox : MonoBehaviour
 {
-    public LocationTag location;
+    public LocationTag BodyLocation;
     [SerializeField] private float radius;
     public MeshRenderer hitBoxMesh;
     HurtBoxManager manager;
@@ -17,7 +17,6 @@ public class HurtBox : MonoBehaviour
     {
         self = GetComponentInParent<Player>();
         manager = GetComponentInParent<HurtBoxManager>();
-        radius = (manager.radius);
         transform.localScale = Vector3.one * radius;
         switch (self.playerNumber)
         {
@@ -32,7 +31,6 @@ public class HurtBox : MonoBehaviour
         }
         this.gameObject.layer = playerLayer;
 
-        newRadius = radius * 0.1f;
         if(manager.viewHurtBoxes == false)
         {
             hitBoxMesh.enabled = false;
@@ -56,6 +54,6 @@ public class HurtBox : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, newRadius);
+        Gizmos.DrawWireSphere(transform.position, radius);
     }
 }
