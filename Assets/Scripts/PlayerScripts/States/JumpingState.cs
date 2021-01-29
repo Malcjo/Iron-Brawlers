@@ -10,15 +10,30 @@ public class JumpingState : PlayerState
     }
     public override void RunState(Player self, Rigidbody body, PlayerActions actions, InputState input, Calculating calculate)
     {
-        if (self.CanJumpIndex < self.GetMaxJumps())
+
+        if (self.VerticalState == Player.VState.grounded)
         {
-            body.velocity = (new Vector3(body.velocity.x, calculate.jumpForce, body.velocity.z)) + calculate.addForce;
-            self.AddOneToJumpIndex();
+            self.CanJumpIndex = 0;
+            self.CanMove = true;
+            self.CanTurn = true;
+            body.velocity = new Vector3(Mathf.Lerp(body.velocity.x, 0, calculate.friction), body.velocity.y, 0) + calculate.addForce;
+            if (body.velocity.x < 0.25f && body.velocity.x > -0.25f)
+            {
+                body.velocity = new Vector3(0, body.velocity.y, 0) + calculate.addForce;
+            }
+            if (body.velocity.x == 0)
+            {
+                self.SetState(new IdleState());
+            }
         }
-        self.SetState(new AerialIdleState());
+
         if (MovementCheck(input.horizontalInput))
         {
-            self.SetState(new AerialMovingState());
+            self.CanMove = true;
+            self.CanTurn = true;
+            body.velocity = new Vector3(input.horizontalInput * calculate.characterSpeed, body.velocity.y, 0) + calculate.addForce;
+
+            self.SetState(new MovingState());
         }
     }
 
