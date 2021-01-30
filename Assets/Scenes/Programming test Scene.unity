@@ -320,6 +320,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 568264914022358784, guid: 264406acc6856ed4099490202ebd6423,
+        type: 3}
+      propertyPath: DebugModeOn
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8905136379834025996, guid: 264406acc6856ed4099490202ebd6423,
         type: 3}
       propertyPath: m_Name
@@ -1050,7 +1055,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 1.0437e-41, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 5.84e-43, y: 7.44e-43, z: 0, w: -6.44184e+34}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0

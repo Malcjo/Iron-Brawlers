@@ -20,6 +20,13 @@ public abstract class PlayerState
         public float characterSpeed;
         public Vector3 addForce;
     }
+    /*
+    * idle state doing nothing
+    * moving state running or moving in the air
+    * airborne state in the air
+    * crouching state crouching
+    * busy state attacking, blocking or doing a special move, intro, knockdown, victory
+    */
     public abstract string GiveName();
     public abstract void RunState(Player self, Rigidbody body, PlayerActions actions, InputState input, Calculating calculate);
 

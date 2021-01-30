@@ -10,7 +10,6 @@ public class JumpingState : PlayerState
     }
     public override void RunState(Player self, Rigidbody body, PlayerActions actions, InputState input, Calculating calculate)
     {
-
         if (self.VerticalState == Player.VState.grounded)
         {
             self.CanJumpIndex = 0;
@@ -26,15 +25,47 @@ public class JumpingState : PlayerState
                 self.SetState(new IdleState());
             }
         }
+        else
+        {
+            if (self.VerticalState == Player.VState.jumping)
+            {
+                actions.Jumping();
+            }
+            else
+            {
+                actions.Falling();
+            }
+        }
 
         if (MovementCheck(input.horizontalInput))
         {
             self.CanMove = true;
             self.CanTurn = true;
             body.velocity = new Vector3(input.horizontalInput * calculate.characterSpeed, body.velocity.y, 0) + calculate.addForce;
-
             self.SetState(new MovingState());
         }
+
+        if (JumpingCheck(input.jumpInput))
+        {
+            if (self.CanJumpIndex < self.GetMaxJumps())
+            {
+                self.CanTurn = false;
+                self.InAir = true;
+                body.velocity = (new Vector3(body.velocity.x, calculate.jumpForce, body.velocity.z)) + calculate.addForce;
+                self.JumpingOrFallingAnimations();
+                self.AddOneToJumpIndex();
+                self.SetState(new JumpingState());
+            }
+        }
+
+        if (AttackCheck(input.attackInput))
+        {
+            actions.AerialAttack();
+            self.CanTurn = false;
+            self.WasAttacking = true;
+            self.SetState(new BusyState());
+        }
+
     }
 
     public override bool StickToGround() => false;

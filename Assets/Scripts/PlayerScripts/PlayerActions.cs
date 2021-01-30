@@ -161,6 +161,55 @@ public class PlayerActions : MonoBehaviour
         self.SetState(new IdleState());
     }
 
+    public void AerialAttack()
+    {
+        if (self.DebugModeOn == true)
+        {
+            Debug.Log("Aerial Attack");
+        }
+        StartCoroutine(_AerialAttack());
+    }
+
+    private IEnumerator _AerialAttack()
+    {
+        anim.Play("AERIAL");
+        FindObjectOfType<AudioManager>().Play(AudioManager.AERIALMISS);
+        anim.speed = 1;
+        self.CanTurn = false;
+        self.UseGravity = false;
+        self.StopMovingCharacterOnYAxis();
+        yield return null;
+        hitboxScript._attackType = AttackType.Aerial;
+        hitboxScript._attackDir = Attackdirection.Aerial;
+        hitboxManager.AeiralAttack();
+        while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
+        {
+            while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.4f)
+            {
+                yield return null;
+            }
+            self.UseGravity = true;
+            yield return null;
+        }
+        self.SetState(new JumpingState());
+    }
+
+    public void ForwardAerialAttack()
+    {
+        if (self.DebugModeOn == true)
+        {
+            Debug.Log("Forward Aerial Attack");
+        }
+        self.SetState(new JumpingState());
+    }
+    public void BackAerialAttack()
+    {
+        if (self.DebugModeOn == true)
+        {
+            Debug.Log("Back Aerial Attack");
+        }
+        self.SetState(new JumpingState());
+    }
     public void JumpLanding()
     {
         StartCoroutine(_Jumplanding());
@@ -229,10 +278,7 @@ public class PlayerActions : MonoBehaviour
         }
         self.SetState(new IdleState());
     }
-    public void AerialAttack()
-    {
-        StartCoroutine(_AerialAttack());
-    }
+
     public void PauseCurrentAnimation()
     {
         anim.speed = 0;
@@ -242,29 +288,7 @@ public class PlayerActions : MonoBehaviour
         anim.speed = 1;
     }
 
-    private IEnumerator _AerialAttack()
-    {
-        anim.Play("AERIAL");
-        FindObjectOfType<AudioManager>().Play(AudioManager.AERIALMISS);
-        anim.speed = 1;
-        self.CanTurn = false;
-        self.UseGravity = false;
-        self.StopMovingCharacterOnYAxis();
-        yield return null;
-        hitboxScript._attackType = AttackType.Aerial;
-        hitboxScript._attackDir = Attackdirection.Aerial;
-        hitboxManager.AeiralAttack();
-        while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
-        {
-            while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.4f)
-            {
-                yield return null;
-            }
-            self.UseGravity = true;
-            yield return null;
-        }
-        self.SetState(new AerialIdleState());
-    }
+
 
     public void ArmourBreak()
     {
@@ -299,7 +323,7 @@ public class PlayerActions : MonoBehaviour
             }
             else
             {
-                self.SetState(new AerialIdleState());
+                self.SetState(new JumpingState());
             }
 
         }
@@ -312,7 +336,7 @@ public class PlayerActions : MonoBehaviour
         }
         else
         {
-            self.SetState(new AerialIdleState());
+            self.SetState(new JumpingState());
         }
     }
     public void Block()

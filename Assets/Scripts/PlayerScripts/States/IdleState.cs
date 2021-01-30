@@ -22,14 +22,17 @@ public class IdleState : PlayerState
         if (CrouchingCheck(input.crouchInput))
         {
             body.velocity = new Vector3(Mathf.Lerp(body.velocity.x, 0, calculate.friction), body.velocity.y, 0);
-            actions.Crouching();
+            Debug.Log("Crouching");
             self.SetState(new CrouchingState());
         }
         if (JumpingCheck(input.jumpInput))
         {
             if (self.CanJumpIndex < self.GetMaxJumps())
             {
+                self.CanTurn = false;
+                self.InAir = true;
                 body.velocity = (new Vector3(body.velocity.x, calculate.jumpForce, body.velocity.z)) + calculate.addForce;
+                self.JumpingOrFallingAnimations();
                 self.AddOneToJumpIndex();
                 self.SetState(new JumpingState());
             }
@@ -46,13 +49,7 @@ public class IdleState : PlayerState
         {
             //self.SetState(new BusyState());
         }
-        /*
-         * idle state doing nothing
-         * moving state running or moving in the air
-         * airborne state in the air
-         * crouching state crouching
-         * busy state attacking, blocking or doing a special move, intro, knockdown, victory
-         */
+
 
     }
 }

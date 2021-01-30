@@ -24,7 +24,7 @@ public class AerialMovingState : PlayerState
         }
         if (!MovementCheck(input.horizontalInput))
         {
-            self.SetState(new AerialIdleState());
+            //self.SetState(new AerialIdleState());
         }
         if (JumpingCheck(input.jumpInput) && MovementCheck(input.horizontalInput))
         {
@@ -47,7 +47,7 @@ public class AerialMovingState : PlayerState
         }
         if (AttackCheck(input.attackInput))
         {
-            self.SetState(new AerialAttackState());
+            //self.SetState(new AerialAttackState());
         }
         if (ArmourBreakCheck(input.armourBreakInput) && CrouchingCheck(input.crouchInput))
         {
