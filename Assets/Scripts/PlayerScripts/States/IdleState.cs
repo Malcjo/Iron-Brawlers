@@ -40,9 +40,7 @@ public class IdleState : PlayerState
             body.velocity = new Vector3(0, body.velocity.y, 0);
             self.CanTurn = false;
             actions.JabCombo();
-
             self.SetState(new BusyState());
-            Debug.Log("Jab");
         }
         if (BlockCheck(input.blockInput))
         {

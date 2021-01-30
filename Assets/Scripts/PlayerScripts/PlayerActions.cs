@@ -13,7 +13,6 @@ public class PlayerActions : MonoBehaviour
     [SerializeField] ParticleSystem[] ParticleSmearLines;
 
 
-
     public int comboStep;
     public float comboTimer;
     private void Awake()
@@ -53,11 +52,9 @@ public class PlayerActions : MonoBehaviour
                 emmision.startLifetime = 0;
             }
         }
-
     }
     private void Update()
     {
-
         if (comboTimer > 0)
         {
             comboTimer -= Time.deltaTime;
@@ -68,11 +65,14 @@ public class PlayerActions : MonoBehaviour
         }
     }
 
-    public void JabCombo()
+    public void JabCombo() 
     {
-        StartCoroutine(Jab());
+        if (self.DebugModeOn == true)
+        {
+            Debug.Log("Jab");
+        }
+        StartCoroutine(Jab()); 
     }
-    
     private IEnumerator Jab()
     {
         if (comboStep >= (animlist.Count))
@@ -89,14 +89,11 @@ public class PlayerActions : MonoBehaviour
             FindObjectOfType<AudioManager>().Play(AudioManager.JABMISS);
             comboStep++;
             comboTimer = 1;
-
-
             yield return null;
             hitboxManager.SwapHands(0);
             hitboxScript._attackDir = Attackdirection.Forward;
             hitboxScript._attackType = AttackType.Jab;
             hitboxManager.JabAttack(0.5f);
-
             while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.75f)
             {
                 while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.25f)
@@ -117,6 +114,53 @@ public class PlayerActions : MonoBehaviour
         }
     }
 
+    public void Heavy() 
+    {
+        if (self.DebugModeOn == true)
+        {
+            Debug.Log("Heavy");
+        }
+        StartCoroutine(_Heavy()); 
+    }
+    private IEnumerator _Heavy()
+    {
+        bool canMove = true;
+        anim.Play("HEAVY");
+        FindObjectOfType<AudioManager>().Play(AudioManager.HEAVYMISS);
+        anim.speed = 1;
+        yield return null;
+        hitboxManager.SwapHands(1);
+        hitboxScript._attackDir = Attackdirection.Forward;
+        hitboxScript._attackType = AttackType.HeavyJab;
+        hitboxManager.JabAttack(0.5f);
+        while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
+        {
+            while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.8f)
+            {
+                SetParticleTrail(false);
+                yield return null;
+                while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.65f)
+                {
+                    SetParticleTrail(true);
+                    yield return null;
+                    while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.25f)
+                    {
+                        yield return null;
+                    }
+                    if (canMove == true)
+                    {
+                        Debug.Log("Move Character");
+                        self.MoveCharacterWithAttacks(600);
+                        canMove = false;
+                    }
+                }
+            }
+            SetParticleTrail(false);
+            yield return null;
+        }
+        self.SetState(new IdleState());
+    }
+
     public void JumpLanding()
     {
         StartCoroutine(_Jumplanding());
@@ -131,7 +175,6 @@ public class PlayerActions : MonoBehaviour
         }
         self.SetState(new IdleState());
     }
-    
     public void Running()
     {
         anim.Play("RUN");
@@ -286,52 +329,5 @@ public class PlayerActions : MonoBehaviour
         anim.speed = 1;
     }
 
-    public void Heavy()
-    {
-        StartCoroutine(_Heavy());
-    }
-    private IEnumerator _Heavy()
-    {
-        bool canMove = true;
-        anim.Play("HEAVY");
-        FindObjectOfType<AudioManager>().Play(AudioManager.HEAVYMISS);
-        anim.speed = 1;
-        yield return null;
-        hitboxManager.SwapHands(1);
-        hitboxScript._attackDir = Attackdirection.Forward;
-        hitboxScript._attackType = AttackType.HeavyJab;
-        hitboxManager.JabAttack(0.5f);
 
-        while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
-        {
-            while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.8f)
-            {
-                SetParticleTrail(false);
-                yield return null;
-                while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.65f)
-                {
-                    SetParticleTrail(true);
-                    yield return null;
-                    while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.25f)
-                    {
-
-                        yield return null;
-                    }
-
-                    if (canMove == true)
-                    {
-                        Debug.Log("Move Character");
-                        self.MoveCharacterWithAttacks(600);
-                        canMove = false;
-                    }
-                }
-            }
-
-
-            SetParticleTrail(false);
-            yield return null;
-        }
-
-        self.SetState(new IdleState());
-    }
 }

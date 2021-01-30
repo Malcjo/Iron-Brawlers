@@ -54,9 +54,20 @@ public class MovingState : PlayerState
         {
             self.SetState(new JumpingState());
         }
+        if (AttackCheck(input.attackInput))
+        {
+            self.CanMove = false;
+            body.velocity = new Vector3(0, body.velocity.y, 0);
+            self.CanTurn = false;
+            actions.JabCombo();
+            self.SetState(new BusyState());
+        }
         if (AttackCheck(input.attackInput) && MovementCheck(input.horizontalInput))
         {
-            self.SetState(new HeavyState());
+            self.CanMove = false;
+            actions.Heavy();
+            self.CanTurn = false;
+            self.SetState(new BusyState());
             self.StopMovingCharacterOnXAxis();
         }
     }

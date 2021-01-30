@@ -34,7 +34,11 @@ public class LandingState : PlayerState
             }
             if (AttackCheck(input.attackInput))
             {
-                self.SetState(new JabState());
+                self.CanMove = false;
+                body.velocity = new Vector3(0, body.velocity.y, 0);
+                self.CanTurn = false;
+                actions.JabCombo();
+                self.SetState(new BusyState());
             }
             if (BlockCheck(input.blockInput))
             {

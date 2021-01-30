@@ -1050,7 +1050,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 8.63e-43, y: 1.551e-42, z: 0, w: -0.000000003060313}
+  m_BoundingSphereOverride: {x: 0, y: 1.0437e-41, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -1479,7 +1479,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   focusLevel: {fileID: 1837554095}
   Players:
-  - {fileID: 0}
+  - {fileID: 1395027742}
   depthUpdateSpeed: 5
   angleUpdateSpeed: 7
   positionUpdateSpeed: 5
@@ -1994,6 +1994,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1395027742 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8905136379834025996, guid: 264406acc6856ed4099490202ebd6423,
+    type: 3}
+  m_PrefabInstance: {fileID: 144718137}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1630072807
 GameObject:
   m_ObjectHideFlags: 0
@@ -2270,7 +2276,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1837554093}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 6.43, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

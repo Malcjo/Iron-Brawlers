@@ -11,15 +11,11 @@ public class Player : MonoBehaviour
     [SerializeField] private VState _currentVerticalState;
     [SerializeField] private VState _previousVerticalState;
     [SerializeField] private bool standalone;
-    [SerializeField]
-    private string CurrentStateName;
+    [SerializeField] private string CurrentStateName;
 
-    [SerializeField]
-    public float gravityValue = -10f;
-    [SerializeField]
-    private float friction = 0.25f;
-    [SerializeField]
-    private int maxLives = 3;
+    [SerializeField] public float gravityValue = -10f;
+    [SerializeField] private float friction = 0.25f;
+    [SerializeField] private int maxLives = 3;
 
     [SerializeField] private float speed = 6.5f;
 
@@ -34,10 +30,8 @@ public class Player : MonoBehaviour
     [SerializeField] private PlayerActions playerActions;
 
     [Header("UI")]
-    [SerializeField]
-    public TMP_Text playerLives;
-    [SerializeField]
-    public Image playerImage;
+    [SerializeField] public TMP_Text playerLives;
+    [SerializeField] public Image playerImage;
 
     [Header("Observation Values")]
     [SerializeField] private float CurrentVelocity;
@@ -59,7 +53,6 @@ public class Player : MonoBehaviour
     private bool _blocking;
     private bool _canTurn;
     private bool _canMove;
-
 
     private bool canJump;
     private bool canAirMove;
