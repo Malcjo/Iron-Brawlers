@@ -24,7 +24,8 @@ public class CrouchingState : PlayerState
         }
         if (ArmourBreakCheck(input.armourBreakInput))
         {
-            self.SetState(new ArmourBreakState());
+            actions.ArmourBreak();
+            self.SetState(new BusyState());
         }
     }
 }

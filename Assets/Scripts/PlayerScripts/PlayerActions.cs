@@ -298,7 +298,6 @@ public class PlayerActions : MonoBehaviour
     {
         if (armourCheck.GetLegArmour() == ArmourCheck.Armour.armour || armourCheck.GetChestArmour() == ArmourCheck.Armour.armour)
         {
-            self.SetState(new BusyState());
             anim.Play("ARMOUR_BREAK");
             anim.speed = 1;
             FindObjectOfType<AudioManager>().Play(AudioManager.ARMOURBREAK);

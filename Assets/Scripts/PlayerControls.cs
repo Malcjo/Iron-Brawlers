@@ -179,7 +179,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""HorizontalMovement(WASD)"",
+                    ""name"": ""VerticalMovement(WASD)"",
                     ""id"": ""ced57ec5-954a-4083-aba2-b22bb5759380"",
                     ""path"": ""1DAxis"",
                     ""interactions"": """",
@@ -212,7 +212,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""HorizontalMovement(ARROWS)"",
+                    ""name"": ""VerticalMovement(ARROWS)"",
                     ""id"": ""d51b353f-13ae-4d75-9316-cb263884eda0"",
                     ""path"": ""1DAxis"",
                     ""interactions"": """",
@@ -245,7 +245,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""HorizontalMovement(Gamepad)"",
+                    ""name"": ""VerticalMovement(Gamepad)"",
                     ""id"": ""00728e63-9215-4b40-b674-c8417bcee012"",
                     ""path"": ""1DAxis"",
                     ""interactions"": """",

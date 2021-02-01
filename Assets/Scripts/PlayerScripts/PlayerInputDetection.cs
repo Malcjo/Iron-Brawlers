@@ -2,6 +2,8 @@
 using System.Linq;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
+using System.Runtime.CompilerServices;
+
 public class PlayerInputDetection : MonoBehaviour
 {
     [SerializeField]
@@ -25,12 +27,16 @@ public class PlayerInputDetection : MonoBehaviour
     private float HorizontalValue;
     [SerializeField]
     private float horizontalInput;
+    [SerializeField]
+    private float verticalInput;
+    [SerializeField] 
+    private float VerticalValue;
     [SerializeField] private PlayerConfiguration playerConfig;
     [SerializeField] Player.Wall currentWall;
     [SerializeField] private bool Standalone = false;
 
 
-    public float GetHorizontal(){return HorizontalValue;}
+
     private void Awake()
     {
         if(Standalone == false)
@@ -71,13 +77,24 @@ public class PlayerInputDetection : MonoBehaviour
         return BlockInputQueued;
     }
     public bool ShouldCrouch(){
-        return CrouchInputQueued;
+        if (CrouchInputQueued)
+        {
+            CrouchInputQueued = false;
+            return true;
+        }
+        return false;
     }
     public bool ShouldArmourBreak(){
         return ArmourBreakInputQueued;
     }
-
-
+    public float GetHorizontal() 
+    { 
+        return HorizontalValue; 
+    }
+    public float GetVertical() 
+    { 
+        return VerticalValue; 
+    }
     private void Update()
     {
         currentWall = self.GetCurrentWall();
@@ -101,6 +118,10 @@ public class PlayerInputDetection : MonoBehaviour
         {
             HorizontalInput(context);
         }
+        if (context.action.name == playerControls.Player.PlayerVerticalMovement.name)
+        {
+            VerticalInput(context);
+        }
         if (context.action.name == playerControls.Player.PlayerJump.name)
         {
             JumpInput(context);
@@ -109,6 +130,7 @@ public class PlayerInputDetection : MonoBehaviour
         {
             AttackInput(context);
         }
+
     }
 
     public void HorizontalInput(CallbackContext context)
@@ -133,6 +155,27 @@ public class PlayerInputDetection : MonoBehaviour
         }
     }
 
+    public void VerticalInput(CallbackContext context)
+    {
+        if (self != null)
+        {
+            verticalInput = context.ReadValue<float>();
+            if (verticalInput <= 0.35f && verticalInput >= -0.35f)
+            {
+                if (verticalInput < 0 && verticalInput >= -0.35f)
+                {
+                    verticalInput = -0;
+                }
+                else if (verticalInput > 0 && verticalInput <= 0.35f)
+                {
+                    verticalInput = 0;
+                }
+            }
+            VerticalValue = verticalInput;
+            //self.GetPlayerInputFromInputScript(VerticalValue);
+            //WallCheck();
+        }
+    }
     void WallCheck()
     {
         switch (self.GetCurrentWall())
@@ -153,8 +196,13 @@ public class PlayerInputDetection : MonoBehaviour
                 break;
         }
     }
-    private void CrouchInput()
+
+    private void CrouchInput(CallbackContext context)
     {
+        if (context.started)
+        {
+            CrouchInputQueued = true;
+        }
     }
     //[SerializeField] private float viewableContext;
     public void JumpInput(CallbackContext context)

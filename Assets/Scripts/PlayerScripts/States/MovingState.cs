@@ -82,7 +82,7 @@ public class MovingState : PlayerState
                     {
                         if (AttackCheck(input.attackInput) && MovementCheck(input.horizontalInput))
                         {
-                            actions.BackAerialAttack();
+                            actions.AerialAttack();
                             self.CanTurn = false;
                             self.WasAttacking = true;
                             self.SetState(new BusyState());
@@ -92,7 +92,7 @@ public class MovingState : PlayerState
                     {
                         if (AttackCheck(input.attackInput) && MovementCheck(input.horizontalInput))
                         {
-                            actions.ForwardAerialAttack();
+                            actions.AerialAttack();
                             self.CanTurn = false;
                             self.WasAttacking = true;
                             self.SetState(new BusyState());

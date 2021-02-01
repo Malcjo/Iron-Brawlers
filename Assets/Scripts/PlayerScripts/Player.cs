@@ -100,7 +100,7 @@ public class Player : MonoBehaviour
     private Vector3 _TempDirection;
     private float _tempPower;
 
-    public void SetUpInputDetectionScript(PlayerInputDetection _playerInputDetection) 
+    public void SetUpInputDetectionScript(PlayerInputDetection _playerInputDetection)
     {
         playerInput = _playerInputDetection;
     }
@@ -135,6 +135,8 @@ public class Player : MonoBehaviour
         CharacterStates();
         ReduceCounter();
         currentPushPower = _currentPushPower;
+        Debug.Log("Horizontal " + playerInput.GetHorizontal());
+        Debug.Log("Vertial " + playerInput.GetVertical());
 
     }
     private void FixedUpdate()
@@ -143,6 +145,12 @@ public class Player : MonoBehaviour
         GravityCheck();
     }
     #region State Machine
+    [SerializeField] float ObservableVerticalCheck;
+
+    public void ViewVertical(float VerticalCheck)
+    {
+        ObservableVerticalCheck = VerticalCheck;
+    }
 
     private void CharacterStates()
     {
@@ -164,7 +172,8 @@ public class Player : MonoBehaviour
                 jumpInput = playerInput.ShouldJump(),
                 crouchInput = playerInput.ShouldCrouch(),
                 armourBreakInput = playerInput.ShouldArmourBreak(),
-                blockInput = playerInput.ShouldBlock()
+                blockInput = playerInput.ShouldBlock(),
+                verticalInput = playerInput.GetVertical()
             },
             new PlayerState.Calculating()
             {

@@ -19,12 +19,18 @@ public class IdleState : PlayerState
 
             self.SetState(new MovingState());
         }
-        if (CrouchingCheck(input.crouchInput))
+        if (VerticalCheck(input.verticalInput))
         {
-            body.velocity = new Vector3(Mathf.Lerp(body.velocity.x, 0, calculate.friction), body.velocity.y, 0);
+
             Debug.Log("Crouching");
-            self.SetState(new CrouchingState());
+            if (input.verticalInput == -1)
+            {
+                body.velocity = new Vector3(Mathf.Lerp(body.velocity.x, 0, calculate.friction), body.velocity.y, 0);
+
+                self.SetState(new CrouchingState());
+            }
         }
+
         if (JumpingCheck(input.jumpInput))
         {
             if (self.CanJumpIndex < self.GetMaxJumps())
