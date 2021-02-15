@@ -329,7 +329,9 @@ public class PlayerActions : MonoBehaviour
     {
         if (self.VerticalState == Player.VState.grounded)
         {
+            Debug.Log("End hit stun");
             self.SetState(new IdleState());
+
         }
         else
         {
@@ -358,8 +360,7 @@ public class PlayerActions : MonoBehaviour
         {
             yield return null;
         }
+
         RevertBackToIdleState();
     }
-
-
 }
