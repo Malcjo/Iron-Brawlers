@@ -349,8 +349,7 @@ public class Player : MonoBehaviour
     #region Attacking and Damaging
     public void HitStun()
     {
-        playerActions.HitStun();
-
+        playerActions.JabHitStun();
     }
 
     public void Damage(Vector3 Hit, float Power)

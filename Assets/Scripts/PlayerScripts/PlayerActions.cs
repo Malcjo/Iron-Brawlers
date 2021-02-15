@@ -288,8 +288,6 @@ public class PlayerActions : MonoBehaviour
         anim.speed = 1;
     }
 
-
-
     public void ArmourBreak()
     {
         StartCoroutine(_ArmourBreak());
@@ -346,10 +344,21 @@ public class PlayerActions : MonoBehaviour
     {
         hitboxManager.StopBlock();
     }
-    public void HitStun()
+    public void JabHitStun()
     {
+        StartCoroutine(HitStunJab());
+    }
+    private IEnumerator HitStunJab()
+    {
+        self.SetState(new BusyState());
         anim.Play("HITSTUN_NORMAL_HIT");
         anim.speed = 1;
+        yield return null;
+        while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
+        {
+            yield return null;
+        }
+        RevertBackToIdleState();
     }
 
 
