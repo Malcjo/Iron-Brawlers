@@ -31,6 +31,8 @@ public class MainMenu : MonoBehaviour
 
     [SerializeField] private GameManager gamemanager;
     [SerializeField] private PlayerSetupMenuController menuController;
+    [SerializeField] private Button previousButton;
+    [SerializeField] private Button currentButton;
 
 
     private void Awake()
@@ -57,7 +59,6 @@ public class MainMenu : MonoBehaviour
                 inTitleScreen = false;
             }
         }
-
 
         if(inGame == false)
         {
@@ -91,7 +92,6 @@ public class MainMenu : MonoBehaviour
                 }
             }
         }
-        
     }
     public void PlayGame()
     {

@@ -52,6 +52,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Back",
+                    "type": "Button",
+                    "id": "9acadd10-76bb-4724-a857-5483c52fe8f1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -527,6 +535,17 @@
                     "action": "Player4AxisMovement",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "bb1b83bf-b5ec-453e-9c5d-cd571528198b",
+                    "path": "<Keyboard>/h",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Back",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

@@ -65,6 +65,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Back"",
+                    ""type"": ""Button"",
+                    ""id"": ""9acadd10-76bb-4724-a857-5483c52fe8f1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -540,6 +548,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""Player4AxisMovement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bb1b83bf-b5ec-453e-9c5d-cd571528198b"",
+                    ""path"": ""<Keyboard>/h"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Back"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -554,6 +573,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Player_PlayerAttack = m_Player.FindAction("PlayerAttack", throwIfNotFound: true);
         m_Player_Select = m_Player.FindAction("Select", throwIfNotFound: true);
         m_Player_Player4AxisMovement = m_Player.FindAction("Player4AxisMovement", throwIfNotFound: true);
+        m_Player_Back = m_Player.FindAction("Back", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -609,6 +629,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_PlayerAttack;
     private readonly InputAction m_Player_Select;
     private readonly InputAction m_Player_Player4AxisMovement;
+    private readonly InputAction m_Player_Back;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
@@ -619,6 +640,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @PlayerAttack => m_Wrapper.m_Player_PlayerAttack;
         public InputAction @Select => m_Wrapper.m_Player_Select;
         public InputAction @Player4AxisMovement => m_Wrapper.m_Player_Player4AxisMovement;
+        public InputAction @Back => m_Wrapper.m_Player_Back;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -646,6 +668,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Player4AxisMovement.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPlayer4AxisMovement;
                 @Player4AxisMovement.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPlayer4AxisMovement;
                 @Player4AxisMovement.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPlayer4AxisMovement;
+                @Back.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBack;
+                @Back.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBack;
+                @Back.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBack;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -668,6 +693,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Player4AxisMovement.started += instance.OnPlayer4AxisMovement;
                 @Player4AxisMovement.performed += instance.OnPlayer4AxisMovement;
                 @Player4AxisMovement.canceled += instance.OnPlayer4AxisMovement;
+                @Back.started += instance.OnBack;
+                @Back.performed += instance.OnBack;
+                @Back.canceled += instance.OnBack;
             }
         }
     }
@@ -680,5 +708,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnPlayerAttack(InputAction.CallbackContext context);
         void OnSelect(InputAction.CallbackContext context);
         void OnPlayer4AxisMovement(InputAction.CallbackContext context);
+        void OnBack(InputAction.CallbackContext context);
     }
 }
