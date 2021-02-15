@@ -90,6 +90,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8743139952652113291}
+  - component: {fileID: 4410299304381097317}
   m_Layer: 0
   m_Name: FlowerStatue
   m_TagString: Untagged
@@ -112,3 +113,16 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!65 &4410299304381097317
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8223027399171411761}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.809159, y: 5.7381105, z: 2.4932764}
+  m_Center: {x: -0.0048028827, y: 2.8476696, z: -0.047861457}
