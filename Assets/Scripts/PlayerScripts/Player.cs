@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    public enum PlayerIndex { Player1, Player2 };
+    public enum PlayerIndex { Player1, Player2, NullPlayer };
 
     public PlayerIndex playerNumber;
     [SerializeField] private VState _currentVerticalState;
@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
     [SerializeField] private ArmourCheck armourCheck;
     [SerializeField] private Raycasts raycasts;
     [SerializeField] private PlayerActions playerActions;
+    [SerializeField] private GaugeManager gaugeManager;
 
     [Header("UI")]
     [SerializeField] public TMP_Text playerLives;
@@ -252,8 +253,8 @@ public class Player : MonoBehaviour
     [SerializeField] private float _currentPushPower;
     public void MoveCharacterWithAttacks(float MoveStrength)
     {
-        rb.velocity = new Vector3(rb.velocity.x + facingDirection * (MoveStrength), rb.velocity.y, 0) * Time.deltaTime;
-        rb.AddForce(new Vector3(facingDirection * (MoveStrength), rb.velocity.y, 0));
+        rb.velocity = new Vector3(rb.velocity.x + facingDirection * MoveStrength, rb.velocity.y, 0) * Time.deltaTime;
+        rb.AddForce(new Vector3(facingDirection * MoveStrength, rb.velocity.y, 0));
     }
     void Gravity()
     {
@@ -351,6 +352,7 @@ public class Player : MonoBehaviour
         playerActions.HitStun();
 
     }
+
     public void Damage(Vector3 Hit, float Power)
     {
         hitStun = true;
@@ -382,6 +384,53 @@ public class Player : MonoBehaviour
         _tempPower = Power;
         _TempDirection = Direction;
     }
+
+    public void TakeDamageOnGauge(float amount, ArmourCheck.ArmourPlacement Placement, AttackType attackType)
+    {
+        gaugeManager.TakeDamage(amount, Placement, this, attackType);
+    }
+    public void PlayArmourHitSound(bool Armour, AttackType attackType)
+    {
+        if (Armour)
+        {
+            switch (attackType)
+            {
+                case AttackType.Jab:
+                    FindObjectOfType<AudioManager>().Play(AudioManager.JABHITARMOUR);
+                    break;
+
+                case AttackType.LegSweep:
+                    break;
+                case AttackType.Aerial:
+                    break;
+                case AttackType.ArmourBreak:
+                    break;
+                case AttackType.HeavyJab:
+                    FindObjectOfType<AudioManager>().Play(AudioManager.HEAVYHITARMOUR);
+                    break;
+            }
+        }
+        else
+        {
+            switch (attackType)
+            {
+                case AttackType.Jab:
+                    FindObjectOfType<AudioManager>().Play(AudioManager.JABHITUNARMOURED);
+                    break;
+
+                case AttackType.LegSweep:
+                    break;
+                case AttackType.Aerial:
+                    break;
+                case AttackType.ArmourBreak:
+                    break;
+                case AttackType.HeavyJab:
+                    FindObjectOfType<AudioManager>().Play(AudioManager.HEAVYHITUNARMOURED);
+                    break;
+            }
+        }
+    }
+
 
     #endregion
 

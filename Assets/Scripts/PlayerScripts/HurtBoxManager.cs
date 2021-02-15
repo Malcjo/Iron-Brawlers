@@ -28,7 +28,7 @@ public class HurtBoxManager : MonoBehaviour
 
             HurtBox tempHurtBoxScript = tempHurtBox.GetComponent<HurtBox>();
             tempHurtBoxScript.BodyLocation = locatorScript.GetBodyLocation();
-            tempHurtBoxScript.SetRadius(tempLocatorRadius);
+            tempHurtBoxScript.SetRadius(tempLocatorRadius * 0.1f);
             tempHurtBox.transform.localScale = Vector3.one * (tempLocatorRadius);
             if(viewHurtBoxes == true)
             {

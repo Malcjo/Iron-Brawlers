@@ -8,6 +8,7 @@ public enum HitBoxScale { Jab, ArmourBreak, Aerial };
 public enum FollowDes { Centre, RightHand, RightElbow, LeftHand, LeftElbow , RightFoot, LeftFoot}
 public class Hitbox : MonoBehaviour
 {
+    private float gaugeDamageValue = 1.5f;
     public bool viewHitBox;
     public HitBoxScale _hitBoxScale;
     public Attackdirection _attackDir;
@@ -170,7 +171,7 @@ public class Hitbox : MonoBehaviour
                 return new Vector3(player.GetFacingDirection(), 0.3f, 0);
         }
     }
-    public float HitStrength()
+    public float KnockBackStrenth()
     {
         switch (_attackType)
         {
@@ -187,48 +188,7 @@ public class Hitbox : MonoBehaviour
         }
         return 0;
     }
-    private void PlayHitSound(bool Armour)
-    {
-        if (Armour)
-        {
-            switch (_attackType)
-            {
-                case AttackType.Jab:
-                    FindObjectOfType<AudioManager>().Play(AudioManager.JABHITARMOUR);
-                    break;
 
-                case AttackType.LegSweep:
-                    break;
-                case AttackType.Aerial:
-                    break;
-                case AttackType.ArmourBreak:
-                    break;
-                case AttackType.HeavyJab:
-                    FindObjectOfType<AudioManager>().Play(AudioManager.HEAVYHITARMOUR);
-                    break;
-            }
-        }
-        else
-        {
-            switch (_attackType)
-            {
-                case AttackType.Jab:
-                    FindObjectOfType<AudioManager>().Play(AudioManager.JABHITUNARMOURED);
-                    break;
-
-                case AttackType.LegSweep:
-                    break;
-                case AttackType.Aerial:
-                    break;
-                case AttackType.ArmourBreak:
-                    break;
-                case AttackType.HeavyJab:
-                    FindObjectOfType<AudioManager>().Play(AudioManager.HEAVYHITUNARMOURED);
-                    break;
-            }
-        }
-
-    }
     public void ShowHitBoxes()
     {
         //meshRenderer.enabled = true;
@@ -252,66 +212,47 @@ public class Hitbox : MonoBehaviour
 
         if (other.gameObject.CompareTag("Hurtbox"))
         {
-            var tempAttackedPlayer = other.GetComponentInParent<Player>();
+            var temptDefendingPlayer = other.GetComponentInParent<Player>();
             var tempAttackingPlayer = GetComponentInParent<Player>();
-            var tempArmour = other.GetComponentInParent<ArmourCheck>();
+            var temptArmourCheck = other.GetComponentInParent<ArmourCheck>();
             HurtBox tempHurtBox = other.GetComponent<HurtBox>();
 
-            if (tempAttackedPlayer.GetBlocking() == true)
+            if (temptDefendingPlayer.GetBlocking() == true)
             {
                 HideHitBoxes();
                 return;
             }
-            else if (tempAttackedPlayer.GetBlocking() == false)
-            {
-                DamagePlayer(tempAttackedPlayer, tempAttackingPlayer);
-
-                if (tempHurtBox.BodyLocation == LocationTag.Chest)
-                {
-                    Debug.Log("Hit Chest");
-                    if (tempArmour.ChestArmourType == ArmourCheck.Armour.none)
-                    {
-                        //Player just punch sound
-                        PlayHitSound(false);
-                        
-                        Instantiate(punchParticle, transform.position, transform.rotation);
-                        return;
-                    }
-                    else if(tempArmour.ChestArmourType == ArmourCheck.Armour.armour)
-                    {
-                        //Player Armour break sound
-                        PlayHitSound(true);
-                        Instantiate(punchParticle, transform.position, transform.rotation);
-                        tempArmour.RemoveChestArmour();
-                    }
-                }
-                else if (tempHurtBox.BodyLocation == LocationTag.Legs)
-                {
-                    Debug.Log("Hit Legs");
-                    if (tempArmour.LegArmourType == ArmourCheck.Armour.none)
-                    {
-                        //Player just punch sound
-                        PlayHitSound(false);
-                        Instantiate(punchParticle, transform.position, transform.rotation);
-                        return;
-                    }
-                    else if (tempArmour.LegArmourType == ArmourCheck.Armour.armour)
-                    {
-                        //Player Armour break sound
-                        PlayHitSound(true);
-                        Instantiate(punchParticle, transform.position, transform.rotation);
-                        tempArmour.RemoveLegArmour();
-                    }
-                }
+            else 
+            { 
+                DamagingPlayer(temptDefendingPlayer, tempAttackingPlayer,temptArmourCheck,tempHurtBox); 
             }
         }
     }
-    void DamagePlayer(Player attackedPlayer, Player attackingplayer)
+    private void DamagingPlayer(Player DefendingPlayer, Player attackingPlayer, ArmourCheck armourCheck, HurtBox hurtBox)
     {
-        attackedPlayer.FreezeCharacterBeingAttacked(HitDirection(), HitStrength());
-        attackingplayer.FreezeCharacterAttacking();
-        attackedPlayer.HitStun();
-        Debug.Log("Hit Player");
+        if (hurtBox.BodyLocation == LocationTag.Chest)
+        {
+            DefendingPlayer.TakeDamageOnGauge(gaugeDamageValue, ArmourCheck.ArmourPlacement.Chest, _attackType);
+            Instantiate(punchParticle, transform.position, transform.rotation);
+
+        }
+        else if (hurtBox.BodyLocation == LocationTag.Legs)
+        {
+            DefendingPlayer.TakeDamageOnGauge(gaugeDamageValue, ArmourCheck.ArmourPlacement.Legs, _attackType);
+            Instantiate(punchParticle, transform.position, transform.rotation);
+        }
+
+        ApplyDamageToPlayer(DefendingPlayer, attackingPlayer);
+    }
+    void ApplyDamageToPlayer(Player defendingPlayer, Player attackingPlayer)
+    {
+
+
+
+
+        defendingPlayer.FreezeCharacterBeingAttacked(HitDirection(), KnockBackStrenth());
+        attackingPlayer.FreezeCharacterAttacking();
+        defendingPlayer.HitStun();
         HideHitBoxes();
     }
 }

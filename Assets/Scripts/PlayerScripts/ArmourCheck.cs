@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class ArmourCheck : MonoBehaviour
 {
-    public Armour LegArmourType;
-    public Armour ChestArmourType;
-    public enum ArmourType { Chest, Legs}
-    public ArmourType ArmourPlacement;
-    public enum Armour { none, armour};
+    public ArmourCondition LegArmourCondition;
+    public ArmourCondition ChestArmourCondition;
+    public ArmourCondition HeadArmourCondiditon;
+    public enum ArmourPlacement { Head, Chest, Legs}
+    public ArmourPlacement armourPlacement;
+    public enum ArmourCondition { none, armour};
 
     public float knockBackResistance, armourWeight, armourReduceSpeed, reduceJumpForce;
     float chestKnockBackResistance, legsKnockBackResistance;
@@ -31,11 +32,11 @@ public class ArmourCheck : MonoBehaviour
     }
     public bool HasArmour()
     {
-        if (ChestArmourType == Armour.armour || LegArmourType == Armour.armour)
+        if (ChestArmourCondition == ArmourCondition.armour || LegArmourCondition == ArmourCondition.armour)
         {
             return true;
         }
-        else if (ChestArmourType == Armour.none && LegArmourType == Armour.none)
+        else if (ChestArmourCondition == ArmourCondition.none && LegArmourCondition == ArmourCondition.none)
         {
             return false;
         }
@@ -43,31 +44,31 @@ public class ArmourCheck : MonoBehaviour
     }
     void ArmourStatsCheck()
     {
-        switch (ChestArmourType)
+        switch (ChestArmourCondition)
         {
-            case Armour.armour:
+            case ArmourCondition.armour:
                 chestWeight = armourStats.weightChest;
                 chestArmourReduceSpeed = armourStats.reduceSpeedChest;
                 chestReduceJump = armourStats.reduceJumpChest;
                 chestKnockBackResistance = armourStats.knockBackResistanceChest;
                 break;
 
-            case Armour.none:
+            case ArmourCondition.none:
                 chestWeight = 0;
                 chestArmourReduceSpeed = 0;
                 chestReduceJump = 0;
                 chestKnockBackResistance = 0;
                 break;
         }
-        switch (LegArmourType)
+        switch (LegArmourCondition)
         {
-            case Armour.armour:
+            case ArmourCondition.armour:
                 legsWeight = armourStats.weightLegs;
                 legsArmourReduceSpeed = armourStats.reduceSpeedLegs;
                 legsReduceJump = armourStats.reduceJumpLegs;
                 legsKnockBackResistance = armourStats.knockBackRsistanceLegs;
                 break;
-            case Armour.none:
+            case ArmourCondition.none:
                 legsWeight = 0;
                 legsArmourReduceSpeed = 0;
                 legsReduceJump = 0;
@@ -83,76 +84,110 @@ public class ArmourCheck : MonoBehaviour
 
     public void SetAllArmourOff()
     {
-        SetArmourOff(ArmourType.Legs);
-        SetArmourOff(ArmourType.Chest);
+        SetArmourOff(ArmourPlacement.Legs);
+        SetArmourOff(ArmourPlacement.Chest);
     }
     public void SetAllArmourOn()
     {
-        SetArmourOn(ArmourType.Legs, Armour.armour);
-        SetArmourOn(ArmourType.Chest, Armour.armour);
+        SetArmourOn(ArmourPlacement.Legs, ArmourCondition.armour);
+        SetArmourOn(ArmourPlacement.Chest, ArmourCondition.armour);
     }
-    public void SetArmourOn(ArmourType placement, Armour type)
+    public void SetArmourOn(ArmourPlacement placement, ArmourCondition type)
     {
         switch (placement)
         {
-            case ArmourType.Chest:
+            case ArmourPlacement.Chest:
                 for (int i = 0; i < ChestArmourMesh.Length; i++)
                 {
                     ChestArmourMesh[i].SetActive(true);
-                    ChestArmourType = type;
+                    ChestArmourCondition = type;
                 }
                 break;
-            case ArmourType.Legs:
+            case ArmourPlacement.Legs:
                 for (int i = 0; i < LegArmourMesh.Length; i++)
                 {
                     LegArmourMesh[i].SetActive(true);
-                    LegArmourType = type;
+                    LegArmourCondition = type;
                 }
-                break;
-            default:
                 break;
         }
     }
 
-    public void SetArmourOff(ArmourType armourPlacement)
+    public void DestroyArmour(ArmourCheck.ArmourPlacement placement, Player defendingPlayer, AttackType attackType)
+    {
+        if (placement == ArmourCheck.ArmourPlacement.Head)
+        {
+            if (HeadArmourCondiditon == ArmourCheck.ArmourCondition.none)
+            {
+                defendingPlayer.PlayArmourHitSound(false, attackType);
+                return;
+            }
+            defendingPlayer.PlayArmourHitSound(true, attackType);
+        }
+
+        else if (placement == ArmourCheck.ArmourPlacement.Chest)
+        {
+            if (ChestArmourCondition == ArmourCheck.ArmourCondition.none)
+            {
+                defendingPlayer.PlayArmourHitSound(false, attackType);
+                return;
+            }
+
+            RemoveChestArmour();
+            defendingPlayer.PlayArmourHitSound(true, attackType);
+        }
+
+        else if (placement == ArmourCheck.ArmourPlacement.Legs)
+        {
+            if (LegArmourCondition == ArmourCheck.ArmourCondition.none)
+            {
+                defendingPlayer.PlayArmourHitSound(false, attackType);
+                return;
+            }
+
+            RemoveLegArmour();
+            defendingPlayer.PlayArmourHitSound(true, attackType);
+        }
+    }
+    public void SetArmourOff(ArmourPlacement armourPlacement)
     {
         switch (armourPlacement)
         {
-            case ArmourType.Chest:
+            case ArmourPlacement.Chest:
                 for (int i = 0; i < ChestArmourMesh.Length; i++)
                 {
                     ChestArmourMesh[i].SetActive(false);
-                    ChestArmourType = Armour.none;
+                    ChestArmourCondition = ArmourCondition.none;
                 }
                 break;
-            case ArmourType.Legs:
+            case ArmourPlacement.Legs:
                 for (int i = 0; i < LegArmourMesh.Length; i++)
                 {
                     LegArmourMesh[i].SetActive(false);
-                    LegArmourType = Armour.none;
+                    LegArmourCondition = ArmourCondition.none;
                 }
                 break;
             default:
                 break;
         }
     }
-    public Armour GetChestArmour()
+    public ArmourCondition GetChestArmourCondiditon()
     {
-        return ChestArmourType;
+        return ChestArmourCondition;
     }
-    public Armour GetLegArmour()
+    public ArmourCondition GetLegArmourCondition()
     {
-        return LegArmourType;
+        return LegArmourCondition;
     }
 
     public void RemoveLegArmour()
     {
-        SetArmourOff(ArmourType.Legs);
+        SetArmourOff(ArmourPlacement.Legs);
     }
 
     public void RemoveChestArmour()
     {
-        SetArmourOff(ArmourType.Chest);
+        SetArmourOff(ArmourPlacement.Chest);
     }
 
     void ChangeArmourInputs()

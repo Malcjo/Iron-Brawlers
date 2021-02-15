@@ -95,12 +95,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66a8698e4bb16ec40bcb53bd413b37d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  location: 0
+  BodyLocation: 0
   radius: 0
   hitBoxMesh: {fileID: 1288164786145783550}
   playerLayer: 0
   opponentLayer: 0
   activeLayer: 0
+  self: {fileID: 0}
 --- !u!135 &9217493218779129357
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -112,5 +113,5 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.1
   m_Center: {x: 0, y: 0, z: 0}

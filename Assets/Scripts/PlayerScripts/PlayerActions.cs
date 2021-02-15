@@ -104,7 +104,7 @@ public class PlayerActions : MonoBehaviour
                 if (canMove == true)
                 {
                     Debug.Log("Move Character");
-                    self.MoveCharacterWithAttacks(450);
+                    self.MoveCharacterWithAttacks(200);
                 }
                 canMove = false;
 
@@ -296,7 +296,7 @@ public class PlayerActions : MonoBehaviour
     }
     private IEnumerator _ArmourBreak()
     {
-        if (armourCheck.GetLegArmour() == ArmourCheck.Armour.armour || armourCheck.GetChestArmour() == ArmourCheck.Armour.armour)
+        if (armourCheck.GetLegArmourCondition() == ArmourCheck.ArmourCondition.armour || armourCheck.GetChestArmourCondiditon() == ArmourCheck.ArmourCondition.armour)
         {
             anim.Play("ARMOUR_BREAK");
             anim.speed = 1;
