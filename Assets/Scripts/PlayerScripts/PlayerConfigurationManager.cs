@@ -25,20 +25,6 @@ public class PlayerConfigurationManager : MonoBehaviour
         }
     }
 
-
-    //public void SetPlayerCharacter(int Index, int characterIndex)
-    //{
-    //    GameManager.instance.SetPlayerCharacter(Index, Characters[characterIndex]);
-    //}
-
-    //public void ReadyPlayer(int Index)
-    //{
-    //    playerConfigs[Index].isReady = true;
-    //    if(playerConfigs.Count == maxPlayers && playerConfigs.All(p => p.isReady == true))
-    //    {
-    //        //Load scene
-    //    }
-    //}
     public void HandlePlayerJoin(PlayerInput pi)
     {
         Debug.Log("Player joined " + pi.playerIndex);
@@ -68,3 +54,25 @@ public class PlayerConfiguration
     public bool isReady { get; set; }
     public GameObject playerCharacter { get; set; }
 }
+
+
+
+
+
+
+
+
+
+//public void SetPlayerCharacter(int Index, int characterIndex)
+//{
+//    GameManager.instance.SetPlayerCharacter(Index, Characters[characterIndex]);
+//}
+
+//public void ReadyPlayer(int Index)
+//{
+//    playerConfigs[Index].isReady = true;
+//    if(playerConfigs.Count == maxPlayers && playerConfigs.All(p => p.isReady == true))
+//    {
+//        //Load scene
+//    }
+//}

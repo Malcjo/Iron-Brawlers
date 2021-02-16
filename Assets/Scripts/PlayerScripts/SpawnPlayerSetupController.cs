@@ -4,6 +4,7 @@ using ToonyColorsPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
+using static UnityEngine.InputSystem.InputAction;
 
 public class SpawnPlayerSetupController : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class SpawnPlayerSetupController : MonoBehaviour
 
     private GameObject rootMenu;
     public PlayerInput input;
+
 
     private void Awake()
     {
@@ -21,6 +23,6 @@ public class SpawnPlayerSetupController : MonoBehaviour
             input.uiInputModule = rootMenu.GetComponentInChildren<InputSystemUIInputModule>();
         //    playercontroller.GetComponent<PlayerSetupMenuController>().SetPlayerIndex(input.playerIndex);
         }
-    }
 
+    }
 }

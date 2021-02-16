@@ -130,7 +130,6 @@ public class PlayerInputDetection : MonoBehaviour
         {
             AttackInput(context);
         }
-
     }
 
     public void HorizontalInput(CallbackContext context)

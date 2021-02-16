@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
+public enum MenuLayer { Title, Main_Menu, Character_Select, Stage_Select, Settings, credits, }
 public class MainMenu : MonoBehaviour
     
 {
+    [SerializeField] MenuLayer currentMenu;
+    [SerializeField] MenuLayer previousMenu;
     public GameObject titleScreen;
     public GameObject mainMenuScreen;    
     public GameObject menuGroup;
@@ -31,8 +35,6 @@ public class MainMenu : MonoBehaviour
 
     [SerializeField] private GameManager gamemanager;
     [SerializeField] private PlayerSetupMenuController menuController;
-    [SerializeField] private Button previousButton;
-    [SerializeField] private Button currentButton;
 
 
     private void Awake()
@@ -41,6 +43,7 @@ public class MainMenu : MonoBehaviour
     }
     private void Start()
     {
+        currentMenu = MenuLayer.Title;
         inTitleScreen = true;
         playerSelected = 1;
         titleScreen.SetActive(true);
@@ -54,11 +57,18 @@ public class MainMenu : MonoBehaviour
         {
             if (Input.anyKey)
             {
+                if(currentMenu == MenuLayer.Title)
+                {
+                    currentMenu = MenuLayer.Main_Menu;
+                    previousMenu = MenuLayer.Title;
+                }
+
                 titleScreen.SetActive(false);
                 menuController.ChangedSelectedButton(PlayButton);
                 inTitleScreen = false;
             }
         }
+
 
         if(inGame == false)
         {
@@ -91,6 +101,62 @@ public class MainMenu : MonoBehaviour
                     isPaused = false;
                 }
             }
+        }
+    }
+    public void ChangePreviousMenu(string _previousMenu)
+    {
+        switch (_previousMenu)
+        {
+            case "Title":
+                previousMenu = MenuLayer.Title;
+                break;
+            case "Main_Menu":
+                previousMenu = MenuLayer.Main_Menu;
+                break;
+            case "Character_Select":
+                previousMenu = MenuLayer.Character_Select;
+                break;
+            case "Stage_Select":
+                previousMenu = MenuLayer.Stage_Select;
+                break;
+            case "Settings":
+                previousMenu = MenuLayer.Settings;
+                break;
+            case "credits":
+                previousMenu = MenuLayer.credits;
+                break;
+            default:
+                previousMenu = MenuLayer.Title;
+                break;
+
+        }
+    }
+    public void ChangeMenu(string _CurrentMenu)
+    {
+        switch (_CurrentMenu)
+        {
+            case "Title":
+                currentMenu = MenuLayer.Title;
+            break;
+            case "Main_Menu":
+                currentMenu = MenuLayer.Main_Menu;
+                break;
+            case "Character_Select":
+                currentMenu = MenuLayer.Character_Select;
+                break;
+            case "Stage_Select":
+                currentMenu = MenuLayer.Stage_Select;
+                break;
+            case "Settings":
+                currentMenu = MenuLayer.Settings;
+                break;
+            case "credits":
+                currentMenu = MenuLayer.credits;
+                break;
+            default:
+                currentMenu = MenuLayer.Title;
+                break;
+
         }
     }
     public void PlayGame()
