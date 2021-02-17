@@ -176,7 +176,7 @@ public class Hitbox : MonoBehaviour
         switch (_attackType)
         {
             case AttackType.Jab:
-                return 3;
+                return 10;
             case AttackType.LegSweep:
                 return 7;
             case AttackType.Aerial:

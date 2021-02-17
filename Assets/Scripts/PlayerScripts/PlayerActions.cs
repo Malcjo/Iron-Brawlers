@@ -160,7 +160,7 @@ public class PlayerActions : MonoBehaviour
         }
         self.SetState(new IdleState());
     }
-
+   
     public void AerialAttack()
     {
         if (self.DebugModeOn == true)

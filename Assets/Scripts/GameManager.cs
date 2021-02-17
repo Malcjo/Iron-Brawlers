@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
 
     public Sprite flowerBoi1, flowerBoi2;
     private bool ingame = false;
+    public Transform[] spawnPoints;
 
     private void Awake()
     {
@@ -54,6 +55,7 @@ public class GameManager : MonoBehaviour
         {
             for (int i = 0; i < playersInScene.Length; i++)
             {
+                playersInScene[i].GetComponent<Player>().SetSpawnPoint(spawnPoints[i]);
                 if (playersInScene[i].lives == 0)
                 {
                     mainMenu.GoToCharacterSelect();
@@ -81,6 +83,10 @@ public class GameManager : MonoBehaviour
 
     public void FindPlayers()
     {
+        if (playersInScene == null)
+        {
+            return;
+        }
         playersInScene = FindObjectsOfType<Player>();
 
         for (int i = 0; i < playersInScene.Length; i++)

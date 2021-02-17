@@ -73,6 +73,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""PlayerCrouch"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""4c9594db-488f-478b-ab9a-919d62ab276c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -559,6 +567,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""Back"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b3c2844d-7105-44a5-80db-91628cc4edae"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PlayerCrouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -574,6 +593,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Player_Select = m_Player.FindAction("Select", throwIfNotFound: true);
         m_Player_Player4AxisMovement = m_Player.FindAction("Player4AxisMovement", throwIfNotFound: true);
         m_Player_Back = m_Player.FindAction("Back", throwIfNotFound: true);
+        m_Player_PlayerCrouch = m_Player.FindAction("PlayerCrouch", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -630,6 +650,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Select;
     private readonly InputAction m_Player_Player4AxisMovement;
     private readonly InputAction m_Player_Back;
+    private readonly InputAction m_Player_PlayerCrouch;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
@@ -641,6 +662,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Select => m_Wrapper.m_Player_Select;
         public InputAction @Player4AxisMovement => m_Wrapper.m_Player_Player4AxisMovement;
         public InputAction @Back => m_Wrapper.m_Player_Back;
+        public InputAction @PlayerCrouch => m_Wrapper.m_Player_PlayerCrouch;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -671,6 +693,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Back.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBack;
                 @Back.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBack;
                 @Back.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBack;
+                @PlayerCrouch.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPlayerCrouch;
+                @PlayerCrouch.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPlayerCrouch;
+                @PlayerCrouch.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPlayerCrouch;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -696,6 +721,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Back.started += instance.OnBack;
                 @Back.performed += instance.OnBack;
                 @Back.canceled += instance.OnBack;
+                @PlayerCrouch.started += instance.OnPlayerCrouch;
+                @PlayerCrouch.performed += instance.OnPlayerCrouch;
+                @PlayerCrouch.canceled += instance.OnPlayerCrouch;
             }
         }
     }
@@ -709,5 +737,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnSelect(InputAction.CallbackContext context);
         void OnPlayer4AxisMovement(InputAction.CallbackContext context);
         void OnBack(InputAction.CallbackContext context);
+        void OnPlayerCrouch(InputAction.CallbackContext context);
     }
 }

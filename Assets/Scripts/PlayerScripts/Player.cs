@@ -1,4 +1,6 @@
-﻿using TMPro;
+﻿using System.Collections;
+using System.Collections.Generic;
+using TMPro;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
@@ -100,12 +102,19 @@ public class Player : MonoBehaviour
     private float _PlayerInput;
     private Vector3 _TempDirection;
     private float _tempPower;
+    [SerializeField] private bool isDummy;
 
+    [SerializeField] private Transform SpawnPoint;
+    [SerializeField] private Transform StandaloneSpawnPoint;
     public void SetUpInputDetectionScript(PlayerInputDetection _playerInputDetection)
     {
         playerInput = _playerInputDetection;
     }
 
+    public void SetSpawnPoint(Transform _spawnPoint)
+    {
+        SpawnPoint = _spawnPoint;
+    }
     public int GetPlayerIndex()
     {
         return (int)playerNumber;
@@ -124,6 +133,23 @@ public class Player : MonoBehaviour
     }
     void Awake()
     {
+        if(standalone == true)
+        {
+            if(GetPlayerIndex() == 0)
+            {
+                transform.position = new Vector3(-2.5f, 1.5f, 0);
+            }
+            else if(GetPlayerIndex()== 1)
+            {
+                transform.position = new Vector3(2.5f, 1.5f, 0);
+            }
+
+        }
+        else
+        {
+            transform.position = SpawnPoint.transform.position;
+        }
+
         MyState = new IdleState();
         _gravityOn = true;
         _canTurn = true;
@@ -132,12 +158,16 @@ public class Player : MonoBehaviour
     }
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            addForceValue = new Vector3(0,10,0);
+        }
         CheckDirection();
         CharacterStates();
         ReduceCounter();
         currentPushPower = _currentPushPower;
-        Debug.Log("Horizontal " + playerInput.GetHorizontal());
-        Debug.Log("Vertial " + playerInput.GetVertical());
+        //Debug.Log("Horizontal " + playerInput.GetHorizontal());
+       // Debug.Log("Vertial " + playerInput.GetVertical());
 
     }
     private void FixedUpdate()
@@ -192,7 +222,11 @@ public class Player : MonoBehaviour
     }
     #endregion
 
-
+    private IEnumerator StopCharacter()
+    {
+        yield return new WaitForSeconds(0.1f);
+        StopMovingCharacterOnXAxis();
+    }
     public void StopMovingCharacterOnXAxis()
     {
         rb.velocity = new Vector3(0, rb.velocity.y, 0);
@@ -235,7 +269,16 @@ public class Player : MonoBehaviour
     {
         if (rb.velocity.y < -20)
         {
-            rb.velocity = new Vector3(playerInput.GetHorizontal() * SetPlayerSpeed(), -20, 0) + addForceValue;
+            if (isDummy == false)
+            {
+                rb.velocity = new Vector3(playerInput.GetHorizontal() * SetPlayerSpeed(), -20, 0) + addForceValue;
+
+            }
+            else
+            {
+                rb.velocity = addForceValue;
+            }
+
         }
     }
     void GravityCheck()
@@ -255,6 +298,7 @@ public class Player : MonoBehaviour
     {
         rb.velocity = new Vector3(rb.velocity.x + facingDirection * MoveStrength, rb.velocity.y, 0) * Time.deltaTime;
         rb.AddForce(new Vector3(facingDirection * MoveStrength, rb.velocity.y, 0));
+        StartCoroutine(StopCharacter());
     }
     void Gravity()
     {
