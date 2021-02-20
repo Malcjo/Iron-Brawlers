@@ -108,6 +108,14 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_2E670FCE_Out_0:
+        m_Texture: {fileID: 2800000, guid: 2a2d71ee416d3c844adfa1a053ea32f4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_91DDC983_Out_0:
+        m_Texture: {fileID: 2800000, guid: 2a2d71ee416d3c844adfa1a053ea32f4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Texture2DAsset_963C8D5B_Out_0:
         m_Texture: {fileID: 2800000, guid: cc9578433f9bda14ea94b24c6a74ead5, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -122,14 +130,15 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - Vector1_28D287DC: 1
-    - Vector1_39277DFB: 1.28
+    - Vector1_39277DFB: 1.11
     - Vector1_3A7CFCC: 0.13
     - Vector1_457C9AA5: 1
     - Vector1_476B07D0: 1
     - Vector1_5C021DC1: 4.43
+    - Vector1_72070197: 0.83
     - Vector1_77C7DB1D: 6.34
     - Vector1_7B39CAD0: 0.09
-    - Vector1_7EF99DF9: 1.43
+    - Vector1_7EF99DF9: 0.65
     - Vector1_839B7914: 0.12
     - Vector1_9BC750AE: 0.1
     - Vector1_A1FF4BFA: 1
@@ -139,8 +148,9 @@ Material:
     - Vector1_CAE078CF: 1
     - Vector1_CBB7799C: 1
     - Vector1_D7A43C6F: 1
+    - Vector1_DEA23976: 1.71
     - Vector1_E9502BBB: 2.72
-    - Vector1_F104477C: 5
+    - Vector1_F104477C: 8.42
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -190,12 +200,12 @@ Material:
     - _ZWrite: 1
     - __dummy__: 0
     m_Colors:
-    - Color_16EF1208: {r: 1, g: 0.48956722, b: 0, a: 1}
+    - Color_16EF1208: {r: 1, g: 0.58431375, b: 0, a: 1}
     - Color_1DF9E9ED: {r: 0, g: 0.9563775, b: 1, a: 1}
-    - Color_7F087F7B: {r: 0.84313726, g: 1, b: 0, a: 1}
+    - Color_7F087F7B: {r: 0.64340425, g: 0.745283, b: 0.0660911, a: 1}
     - Color_8A477D84: {r: 0, g: 0.12516737, b: 1, a: 1}
     - Color_A8E3C850: {r: 0.9294228, g: 1, b: 0.4292453, a: 1}
-    - Color_DD18F21F: {r: 0.07563094, g: 0.11320752, b: 0.011213952, a: 1}
+    - Color_DD18F21F: {r: 0.10234959, g: 0.122641504, b: 0.06988252, a: 1}
     - _Albedo_SC: {r: 1, g: 1, b: 0, a: 0}
     - _BaseColor: {r: 0.9433962, g: 0.9433962, b: 0.9433962, a: 1}
     - _BaseMap_SC: {r: 0.1, g: 0.1, b: 0, a: 0}
