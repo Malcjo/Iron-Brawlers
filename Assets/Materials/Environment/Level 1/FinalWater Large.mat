@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: FinalWater
+  m_Name: FinalWater Large
   m_Shader: {fileID: -6465566751694194690, guid: 221e89f68443f994a89ca4a1ea8f9da0,
     type: 3}
   m_ShaderKeywords: _RECEIVE_SHADOWS_OFF
@@ -143,7 +143,7 @@ Material:
     - Vector1_9BC750AE: 0.1
     - Vector1_A1FF4BFA: 1
     - Vector1_AA0ADF88: 1.57
-    - Vector1_ADB196EA: 0.5
+    - Vector1_ADB196EA: 0
     - Vector1_C4722B7C: 2
     - Vector1_CAE078CF: 1
     - Vector1_CBB7799C: 1
