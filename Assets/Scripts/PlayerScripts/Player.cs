@@ -137,11 +137,11 @@ public class Player : MonoBehaviour
         {
             if(GetPlayerIndex() == 0)
             {
-                transform.position = new Vector3(-2.5f, 1.5f, 0);
+                transform.position = StandaloneSpawnPoint.transform.position;
             }
             else if(GetPlayerIndex()== 1)
             {
-                transform.position = new Vector3(2.5f, 1.5f, 0);
+                transform.position = StandaloneSpawnPoint.transform.position;
             }
 
         }

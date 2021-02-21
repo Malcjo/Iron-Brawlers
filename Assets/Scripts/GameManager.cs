@@ -22,18 +22,18 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         #region Singleton Pattern
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            if(instance != this)
-            {
-                Destroy(gameObject);
-            }
-        }
+        //if (instance == null)
+        //{
+        //    instance = this;
+        //    DontDestroyOnLoad(gameObject);
+        //}
+        //else
+        //{
+        //    if(instance != this)
+        //    {
+        //        Destroy(gameObject);
+        //    }
+        //}
         #endregion   
     }
 

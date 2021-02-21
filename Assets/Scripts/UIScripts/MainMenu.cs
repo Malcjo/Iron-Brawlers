@@ -128,7 +128,6 @@ public class MainMenu : MonoBehaviour
             default:
                 previousMenu = MenuLayer.Title;
                 break;
-
         }
     }
     public void ChangeMenu(string _CurrentMenu)

@@ -8,6 +8,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Main Menu.unity
     guid: c6784fa207a05c64da48d6d80dd66992
+  - enabled: 1
+    path: Assets/Scenes/Level 1.unity
+    guid: b884f3c3a467e424b84fee253da09f34
+  - enabled: 0
+    path: Assets/Scenes/Programming test Scene.unity
+    guid: 3ba537d0a6e65fb4cbd17023e6f04487
   - enabled: 0
     path: Assets/Scenes/Prototype 2.unity
     guid: c56a9d1137b989d4385017e75e7bb803
@@ -27,9 +33,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Alpha Scene.unity
     guid: adc54216aefb02646aa19c4b8627c803
   - enabled: 0
-    path: Assets/Scenes/Alpha Scene 2.unity
-    guid: e150316bf94e4b648a16959c10ba923e
-  - enabled: 1
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
     path: Assets/Scenes/TestScene.unity
     guid: 901fdc9f54ee2a84987e3e113f79698d
   m_configObjects:
