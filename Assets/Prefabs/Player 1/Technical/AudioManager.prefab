@@ -328,7 +328,7 @@ MonoBehaviour:
       type: 2}
     name: AlphaMusic
     loop: 0
-    clip: {fileID: 8300000, guid: 3384425f3d3ca7b44b49e4e403f1ad8d, type: 3}
+    clip: {fileID: 8300000, guid: ff723320e8879f14b95271b5e15747d9, type: 3}
     volume: 0
     pitch: 1
     source: {fileID: 0}
