@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.InputSystem.UI;
-using UnityEditorInternal;
+//using UnityEditorInternal;
 
 public class PlayerSetupMenuController : MonoBehaviour
 {
