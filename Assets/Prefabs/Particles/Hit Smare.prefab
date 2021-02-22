@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8315210415111486129}
   - component: {fileID: 8315210415111486128}
   m_Layer: 0
-  m_Name: Particle System
+  m_Name: HitSmare
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -222,7 +222,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 1}
+      maxColor: {r: 0.9339623, g: 0.9339623, b: 0.9339623, a: 0.5372549}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -9693,7 +9693,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8315210415342031141}
   m_Layer: 0
-  m_Name: Particles Trail System
+  m_Name: Hit Smare
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
