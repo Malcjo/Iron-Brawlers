@@ -9260,6 +9260,21 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3316481935566536979, guid: 126aaf139db76c34e9840b02ff4a6fbe,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.022
+      objectReference: {fileID: 0}
+    - target: {fileID: 3316481935566536979, guid: 126aaf139db76c34e9840b02ff4a6fbe,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.372
+      objectReference: {fileID: 0}
+    - target: {fileID: 3316481935566536979, guid: 126aaf139db76c34e9840b02ff4a6fbe,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.037
+      objectReference: {fileID: 0}
     - target: {fileID: 3352405193569832986, guid: 126aaf139db76c34e9840b02ff4a6fbe,
         type: 3}
       propertyPath: SpawnPoint
