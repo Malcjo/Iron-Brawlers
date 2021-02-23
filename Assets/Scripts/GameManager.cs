@@ -8,10 +8,10 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public PlayerInputManager inputManager;
-    private List<GameObject> players = new List<GameObject>();
+    [SerializeField] private List<GameObject> players = new List<GameObject>();
     [SerializeField] GameObject MenuObject;
     [SerializeField] private EventSystem eventSystem;
-
+    public bool inGame = false;
     bool player1Ready, player2Ready;
     public Transform player1Spawn, player2Spawn;
     public int player1Rounds, player2Rounds;
@@ -56,6 +56,7 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
+        TrackPlayers();
         EnableJoiningManager();
     }
     public void EnableMenuCanvas()
@@ -143,29 +144,54 @@ public class GameManager : MonoBehaviour
     }
     private void TrackPlayers()
     {
-        if (player1Rounds == 3 || player2Rounds == 3)
+        if(players.Count > 0)
         {
-            SetRoundsToZero();
-            SceneManager.LoadScene(0);
-        }
-    }
-    private void GetAllPlayersInScene()
-    {
-        foreach (Player obj in FindObjectsOfType(typeof(Player)))
-        {
-            players.Add(obj.gameObject);
-        }
-    }
-    private void TrackPlayer1()
-    {
-        if (players[1].transform.position.y <= belowBounds)
-        {
-            player2Rounds++;
+            TrackPlayer1();
+            if (players.Count > 1)
+            {
+                TrackPlayer2();
+            }
+            if (player1Rounds == 3 || player2Rounds == 3)
+            {
+                SetRoundsToZero();
+                SceneManager.LoadScene(0);
+            }
         }
 
     }
+    public void AddPlayerToList(GameObject player)
+    {
+        players.Add(player);
+    }
+    private void TrackPlayer1()
+    {
+        if (players[0].gameObject.transform.position.y <= belowBounds)
+        {
+            player2Rounds++;
+            ResetPlayers();
+        }
+    }
+    private void TrackPlayer2()
+    {
+        if (players[1].gameObject.transform.position.y <= belowBounds)
+        {
+            player1Rounds++;
+            ResetPlayers();
+        }
+    }
     private void ResetPlayers()
     {
+        players[0].gameObject.GetComponent<ArmourCheck>().SetAllArmourOn();
+        players[0].gameObject.GetComponent<Player>().StopMovingCharacterOnYAxis();
+        players[0].gameObject.GetComponent<Player>().StopMovingCharacterOnXAxis();
+        players[0].transform.position = player1Spawn.transform.position;
+        if (players.Count > 1)
+        {
+            players[1].gameObject.GetComponent<ArmourCheck>().SetAllArmourOn();
+            players[1].gameObject.GetComponent<Player>().StopMovingCharacterOnYAxis();
+            players[1].gameObject.GetComponent<Player>().StopMovingCharacterOnXAxis();
+            players[1].transform.position = player2Spawn.transform.position;
+        }
     }
     private void SetRoundsToZero()
     {

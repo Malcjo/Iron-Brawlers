@@ -75,6 +75,7 @@ public class PlayerInputHandler : MonoBehaviour
     private void StartGame()
     {
         playerCharacter = Instantiate(playerPrefab);
+        GameManager.instance.AddPlayerToList(playerCharacter);
         player = playerCharacter.GetComponent<Player>();
         player.SetUpInputDetectionScript(this);
         player.playerNumber = _PlayerNumber;

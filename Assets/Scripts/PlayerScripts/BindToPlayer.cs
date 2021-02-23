@@ -39,6 +39,7 @@ public class BindToPlayer : MonoBehaviour
                 GameManager.instance.ResetPlayersReady();
                 GameManager.instance.DisableMenuCanvas();
                 SceneManager.LoadScene(1);
+                GameManager.instance.inGame = true;
             }
         }
     }
