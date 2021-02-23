@@ -24,6 +24,7 @@ public class CameraScript : MonoBehaviour
     void Start()
     {
         Players.Add(focusLevel.gameObject);
+        GameManager.instance.SetCameraScript(this);
     }
 
     // Update is called once per frame
@@ -32,6 +33,13 @@ public class CameraScript : MonoBehaviour
         CalculateCameraLocations();
         MoveCamera();
     }
+
+    public void AddPlayers(GameObject player)
+    {
+        Players.Add(player);
+    }
+
+
     void MoveCamera()
     {
         Vector3 position = gameObject.transform.position;
@@ -85,6 +93,5 @@ public class CameraScript : MonoBehaviour
 
         cameraEulerX = angle;
         cameraPosition = new Vector3(averageCenter.x, averageCenter.y, depth);
-
     }
 }

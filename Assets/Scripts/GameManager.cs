@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public Transform player1Spawn, player2Spawn;
     public int player1Rounds, player2Rounds;
     private int sceneIndex;
+    private CameraScript cameraScript;
 
     [SerializeField] private int leftBounds, rightBounds, belowBounds, highBounds;
 
@@ -58,6 +59,14 @@ public class GameManager : MonoBehaviour
     {
         TrackPlayers();
         EnableJoiningManager();
+    }
+    public void SetCameraScript(CameraScript script)
+    {
+        cameraScript = script;
+    }
+    public CameraScript GetCameraScript()
+    {
+        return cameraScript;
     }
     public void EnableMenuCanvas()
     {

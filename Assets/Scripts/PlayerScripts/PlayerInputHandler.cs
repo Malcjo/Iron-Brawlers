@@ -38,7 +38,7 @@ public class PlayerInputHandler : MonoBehaviour
     [SerializeField] Player.Wall currentWall;
     [SerializeField] private bool Standalone = false;
 
-
+    private CameraScript cameraScript;
 
     private void Awake()
     {
@@ -76,6 +76,8 @@ public class PlayerInputHandler : MonoBehaviour
     {
         playerCharacter = Instantiate(playerPrefab);
         GameManager.instance.AddPlayerToList(playerCharacter);
+        cameraScript = GameManager.instance.GetCameraScript();
+        cameraScript.AddPlayers(playerCharacter);
         player = playerCharacter.GetComponent<Player>();
         player.SetUpInputDetectionScript(this);
         player.playerNumber = _PlayerNumber;

@@ -2788,9 +2788,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   focusLevel: {fileID: 1904963778}
-  Players:
-  - {fileID: 1192652120}
-  - {fileID: 1163389259}
+  Players: []
   depthUpdateSpeed: 5
   angleUpdateSpeed: 7
   positionUpdateSpeed: 5
@@ -9732,7 +9730,7 @@ Transform:
   m_LocalScale: {x: 15.224565, y: 1, z: 7.6335}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &980268480
 PrefabInstance:
@@ -10842,10 +10840,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sol Yellow Prefab
       objectReference: {fileID: 0}
+    - target: {fileID: 3180238274731884556, guid: 089322fbd0eb25b4e9329da7f2b24dcd,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4261145186954509726, guid: 089322fbd0eb25b4e9329da7f2b24dcd,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6920566488468720987, guid: 089322fbd0eb25b4e9329da7f2b24dcd,
         type: 3}
@@ -10854,12 +10857,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 089322fbd0eb25b4e9329da7f2b24dcd, type: 3}
---- !u!1 &1163389259 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3180238274731884556, guid: 089322fbd0eb25b4e9329da7f2b24dcd,
-    type: 3}
-  m_PrefabInstance: {fileID: 1163389258}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1165276086
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14278,7 +14275,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1525772483 stripped
 Transform:
@@ -18894,7 +18891,7 @@ Transform:
   - {fileID: 887859611}
   - {fileID: 479340112}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2058370375
 PrefabInstance:

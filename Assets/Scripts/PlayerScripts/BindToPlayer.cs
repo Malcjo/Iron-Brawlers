@@ -10,7 +10,6 @@ public class BindToPlayer : MonoBehaviour
     [SerializeField] private PlayerJoinHandler join = null;
 
     public GameObject events = null;
-
     Scene currentScene;
     Scene menuScene;
 
