@@ -13,19 +13,13 @@ public class SlidableMask : MonoBehaviour
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
-        slider.onValueChanged.AddListener(HandleSliderChanged);
 
         farLeft = rectTransform.position - new Vector3(rectTransform.rect.width, 0f);
         farRight = rectTransform.position;
     }
 
-    private void Start()
+    private void Update()
     {
-        HandleSliderChanged(slider.value); // This needs to be called AFTER RectTransformLockPositions's Awake().
-    }
-
-    private void HandleSliderChanged(float value)
-    {
-        rectTransform.position = Vector2.Lerp(farLeft, farRight, value);
+        rectTransform.position = Vector2.Lerp(farLeft, farRight, slider.value);
     }
 }

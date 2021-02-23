@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[ExecuteInEditMode()]
+
 public class RectTransformLockPosition : MonoBehaviour
 {
     private RectTransform rectTransform;

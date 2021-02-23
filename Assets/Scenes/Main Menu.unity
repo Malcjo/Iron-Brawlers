@@ -482,45 +482,35 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1418921911501246929, guid: 352c744c25ec7a0419ecca1424da1d4c,
-        type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1418921911501246929, guid: 352c744c25ec7a0419ecca1424da1d4c,
+    - target: {fileID: 259497999453052384, guid: 352c744c25ec7a0419ecca1424da1d4c,
         type: 3}
       propertyPath: m_AnchorMax.x
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1418921911501246929, guid: 352c744c25ec7a0419ecca1424da1d4c,
+    - target: {fileID: 259497999453052384, guid: 352c744c25ec7a0419ecca1424da1d4c,
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 2110422206236439538, guid: 352c744c25ec7a0419ecca1424da1d4c,
+    - target: {fileID: 2341953588874116442, guid: 352c744c25ec7a0419ecca1424da1d4c,
         type: 3}
-      propertyPath: m_MaxValue
+      propertyPath: m_AnchorMin.x
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 2110422206236439538, guid: 352c744c25ec7a0419ecca1424da1d4c,
+    - target: {fileID: 2341953588874116442, guid: 352c744c25ec7a0419ecca1424da1d4c,
         type: 3}
-      propertyPath: m_WholeNumbers
-      value: 0
+      propertyPath: m_AnchorMax.x
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 2110422206236439538, guid: 352c744c25ec7a0419ecca1424da1d4c,
+    - target: {fileID: 2341953588874116442, guid: 352c744c25ec7a0419ecca1424da1d4c,
         type: 3}
-      propertyPath: m_Value
+      propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3560223692973814112, guid: 352c744c25ec7a0419ecca1424da1d4c,
         type: 3}
       propertyPath: m_Name
       value: GameManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 3560223692973814112, guid: 352c744c25ec7a0419ecca1424da1d4c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3560223692973814114, guid: 352c744c25ec7a0419ecca1424da1d4c,
         type: 3}
@@ -582,15 +572,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7299711799321582724, guid: 352c744c25ec7a0419ecca1424da1d4c,
+    - target: {fileID: 9050516549699303630, guid: 352c744c25ec7a0419ecca1424da1d4c,
         type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7299711799321582724, guid: 352c744c25ec7a0419ecca1424da1d4c,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 352c744c25ec7a0419ecca1424da1d4c, type: 3}
@@ -28169,7 +28154,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &3060168155268841313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28183,8 +28168,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputManager: {fileID: 7419585329876064304}
+  players: []
   MenuObject: {fileID: 8440738218759293620}
   eventSystem: {fileID: 7419585329876064305}
+  inGame: 0
   player1Spawn: {fileID: 0}
   player2Spawn: {fileID: 0}
   player1Rounds: 0
