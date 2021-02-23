@@ -2,20 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+//using static UnityEngine.InputSystem.InputAction;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public PlayerInputManager inputManager;
     [SerializeField] private List<GameObject> players = new List<GameObject>();
-    [SerializeField] GameObject MenuObject;
-    [SerializeField] private EventSystem eventSystem;
+
+    [SerializeField] GameObject MenuGroup, MainMenu, CharacterSelect;
+    [SerializeField] Button PlayButton;
+
+    [SerializeField] private GameObject eventSystem;
     public bool inGame = false;
     bool player1Ready, player2Ready;
     public Transform player1Spawn, player2Spawn;
     public int player1Rounds, player2Rounds;
-    private int sceneIndex;
+    [SerializeField] private int sceneIndex;
     private CameraScript cameraScript;
 
     [SerializeField] private int leftBounds, rightBounds, belowBounds, highBounds;
@@ -49,10 +54,20 @@ public class GameManager : MonoBehaviour
                 Destroy(gameObject);
             }
         }
+        print(sceneIndex);
         sceneIndex = 0;
         if (eventSystem != null)
         {
-            eventSystem = FindObjectOfType <EventSystem>();
+            eventSystem = GameObject.FindWithTag("Event");
+            inputManager = eventSystem.GetComponent<PlayerInputManager>();
+        }
+    }
+    private void Start()
+    {
+        if (sceneIndex == 1)
+        {
+            Debug.Log("ResetMenu");
+            ResetMenu();
         }
     }
     private void Update()
@@ -68,13 +83,25 @@ public class GameManager : MonoBehaviour
     {
         return cameraScript;
     }
-    public void EnableMenuCanvas()
+    private void EnableMenuCanvas()
     {
-        MenuObject.SetActive(true);
+        MenuGroup.SetActive(true);
     }
     public void DisableMenuCanvas()
     {
-        MenuObject.SetActive(false);
+        MenuGroup.SetActive(false);
+    }
+    private void ResetMenu()
+    {
+        SceneManager.MoveGameObjectToScene(this.gameObject, SceneManager.GetActiveScene());
+        CharacterSelect.SetActive(false);
+        MainMenu.SetActive(true);
+        Debug.Log("Conntect EventSystemObject");
+        print(GameObject.FindGameObjectWithTag("Event"));
+        eventSystem = GameObject.FindGameObjectWithTag("Event");
+        inputManager = eventSystem.gameObject.GetComponent<PlayerInputManager>();
+        eventSystem.gameObject.GetComponent<EventSystem>().firstSelectedGameObject = PlayButton.gameObject;
+        PlayButton.Select();
     }
     public void SetPlayerSpawns(Transform _player1Spawn, Transform _player2Spawn)
     {
@@ -164,6 +191,10 @@ public class GameManager : MonoBehaviour
             {
                 SetRoundsToZero();
                 SceneManager.LoadScene(0);
+                players.Clear();
+                ChangeSceneIndex(1);
+                EnableMenuCanvas();
+                ResetMenu();
             }
         }
 

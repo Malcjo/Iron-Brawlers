@@ -26,7 +26,13 @@ public class BindToPlayer : MonoBehaviour
         if (currentScene == menuScene)
         {
             join.SetPlayerBind(this);
+            foreach (GameObject obj in players)
+            {
+                Destroy(obj);
+            }
+            players.Clear();
         }
+
     }
 
     private void Update()

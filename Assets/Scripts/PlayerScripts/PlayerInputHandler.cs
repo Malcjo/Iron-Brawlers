@@ -42,23 +42,9 @@ public class PlayerInputHandler : MonoBehaviour
 
     private void Awake()
     {
-        //if(Standalone == false)
-        //{
-        //    player = GetComponent<Player>();
-        //    playerControls = new PlayerControls();
-        //    player.SetUpInputDetectionScript(this);
-        //    player.Standalone(false);
-            
-        //}
-        //else
-        //{
-        //    playerInput = GetComponent<PlayerInput>();
-        //    var _self = FindObjectsOfType<Player>();
-        //    var index = playerInput.playerIndex;
-        //    player = _self.FirstOrDefault(m => m.GetPlayerIndex() == index);
-        //    player.SetUpInputDetectionScript(this);
-        //    player.Standalone(true);
-        //}
+        currentScene = SceneManager.GetActiveScene();
+        menuScene = SceneManager.GetSceneByBuildIndex(0);
+        DontDestroyOnLoad(this.gameObject);
     }
     private void Update()
     {
@@ -81,6 +67,7 @@ public class PlayerInputHandler : MonoBehaviour
         player = playerCharacter.GetComponent<Player>();
         player.SetUpInputDetectionScript(this);
         player.playerNumber = _PlayerNumber;
+        SceneManager.MoveGameObjectToScene(this.gameObject, SceneManager.GetActiveScene());
     }
     public void SetInput(PlayerInput input)
     {
