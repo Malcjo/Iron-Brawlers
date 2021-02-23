@@ -28146,6 +28146,12 @@ MonoBehaviour:
   eventSystem: {fileID: 7419585329876064305}
   player1Spawn: {fileID: 0}
   player2Spawn: {fileID: 0}
+  player1Rounds: 0
+  player2Rounds: 0
+  leftBounds: 0
+  rightBounds: 0
+  belowBounds: 0
+  highBounds: 0
 --- !u!4 &3060168155268841314
 Transform:
   m_ObjectHideFlags: 0
