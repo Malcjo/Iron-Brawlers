@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-//using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.InputSystem.InputAction;
 
 public class Player : MonoBehaviour
 {
@@ -25,8 +25,9 @@ public class Player : MonoBehaviour
     [SerializeField] private float knockbackResistance = 3;
 
     [SerializeField] private Rigidbody rb;
+    [SerializeField] private GameObject hitbox;
 
-    [SerializeField] private PlayerInputDetection playerInput;
+    [SerializeField] private PlayerInputHandler playerInputHandler;
     [SerializeField] private ArmourCheck armourCheck;
     [SerializeField] private Raycasts raycasts;
     [SerializeField] private PlayerActions playerActions;
@@ -40,6 +41,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float CurrentVelocity;
     [SerializeField] private float YVelocity;
     [SerializeField] private Vector3 V3Velocity;
+
     public bool DebugModeOn;
 
     private float distanceToGround;
@@ -106,9 +108,9 @@ public class Player : MonoBehaviour
 
     [SerializeField] private Transform SpawnPoint;
     [SerializeField] private Transform StandaloneSpawnPoint;
-    public void SetUpInputDetectionScript(PlayerInputDetection _playerInputDetection)
+    public void SetUpInputDetectionScript(PlayerInputHandler _playerInputDetection)
     {
-        playerInput = _playerInputDetection;
+        playerInputHandler = _playerInputDetection;
     }
 
     public void SetSpawnPoint(Transform _spawnPoint)
@@ -147,7 +149,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            transform.position = SpawnPoint.transform.position;
+            //transform.position = SpawnPoint.transform.position;
         }
 
         MyState = new IdleState();
@@ -155,6 +157,18 @@ public class Player : MonoBehaviour
         _canTurn = true;
         canAirMove = true;
         _canMove = true;
+    }
+    private void Start()
+    {
+        if(playerNumber == PlayerIndex.Player1)
+        {
+            hitbox.gameObject.layer = 8;
+        }
+        else if(playerNumber == PlayerIndex.Player2)
+        {
+            hitbox.gameObject.layer = 9;
+        }
+
     }
     private void Update()
     {
@@ -187,7 +201,7 @@ public class Player : MonoBehaviour
     {
         JumpingOrFallingTracker();
         CurrentStateName = MyState.GiveName();
-        if (playerInput == null)
+        if (playerInputHandler == null)
         {
             return;
         }
@@ -198,13 +212,12 @@ public class Player : MonoBehaviour
             playerActions,
             new PlayerState.InputState()
             {
-                horizontalInput = playerInput.GetHorizontal(),
-                attackInput = playerInput.ShouldAttack(),
-                jumpInput = playerInput.ShouldJump(),
-                crouchInput = playerInput.ShouldCrouch(),
-                armourBreakInput = playerInput.ShouldArmourBreak(),
-                blockInput = playerInput.ShouldBlock(),
-                verticalInput = playerInput.GetVertical()
+                horizontalInput = playerInputHandler.GetHorizontal(),
+                attackInput = playerInputHandler.ShouldAttack(),
+                jumpInput = playerInputHandler.ShouldJump(),
+                crouchInput = playerInputHandler.ShouldCrouch(),
+                armourBreakInput = playerInputHandler.ShouldArmourBreak(),
+                blockInput = playerInputHandler.ShouldBlock()
             },
             new PlayerState.Calculating()
             {
@@ -271,7 +284,7 @@ public class Player : MonoBehaviour
         {
             if (isDummy == false)
             {
-                rb.velocity = new Vector3(playerInput.GetHorizontal() * SetPlayerSpeed(), -20, 0) + addForceValue;
+                rb.velocity = new Vector3(playerInputHandler.GetHorizontal() * SetPlayerSpeed(), -20, 0) + addForceValue;
 
             }
             else
@@ -526,11 +539,11 @@ public class Player : MonoBehaviour
     }
     private void CheckDirection()
     {
-        if (playerInput == null)
+        if (playerInputHandler == null)
         {
             return;
         }
-        var _facingDirection = playerInput.GetHorizontal();
+        var _facingDirection = playerInputHandler.GetHorizontal();
         if (_facingDirection > 0)
         {
             if (_canTurn == false)

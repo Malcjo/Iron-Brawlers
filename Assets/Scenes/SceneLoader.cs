@@ -8,7 +8,7 @@ public class SceneLoader : MonoBehaviour
     void Awake()
     {
         
-        GameManager.instance.FindPlayers();
+        OldGameManager.instance.FindPlayers();
         Destroy(this);
     }
 }

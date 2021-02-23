@@ -10,7 +10,7 @@ public class HitBoxManager : MonoBehaviour
     private int armIndex;
     public PlayerActions animationScript;
     public Player player;
-    private PlayerInputDetection playerInput;
+    private PlayerInputHandler playerInput;
     public Vector3 blockOffset;
 
 
@@ -29,7 +29,7 @@ public class HitBoxManager : MonoBehaviour
 
     void Start()
     {
-        playerInput = GetComponentInParent<PlayerInputDetection>();
+        playerInput = GetComponentInParent<PlayerInputHandler>();
         animationScript = GetComponentInChildren<PlayerActions>();
         hitBox.HideHitBoxes();
         blockBox.SetActive(false);

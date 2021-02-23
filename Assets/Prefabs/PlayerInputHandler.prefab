@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4013719930835473681}
   - component: {fileID: -9111263377578361054}
   m_Layer: 0
-  m_Name: PlayerInput
+  m_Name: PlayerInputHandler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Actions: {fileID: -944628639613478452, guid: 17f4f692809c356498556b1f4470a42a,
     type: 3}
-  m_NotificationBehavior: 3
+  m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
@@ -118,6 +118,14 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 850ecee0-14a6-412a-9dac-47dc401a26d8
     m_ActionName: Player/Player4AxisMovement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow,/DualShock4GamepadHID/leftStick/up,/XInputControllerWindows/leftStick/up,/DualShock4GamepadHID/leftStick/down,/XInputControllerWindows/leftStick/down,/DualShock4GamepadHID/leftStick/left,/XInputControllerWindows/leftStick/left,/DualShock4GamepadHID/leftStick/right,/XInputControllerWindows/leftStick/right]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9acadd10-76bb-4724-a857-5483c52fe8f1
+    m_ActionName: Player/Back[/Keyboard/h]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4c9594db-488f-478b-ab9a-919d62ab276c
+    m_ActionName: Player/PlayerCrouch[/Keyboard/s]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -135,8 +143,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 221ebff82f7f5614984e49302dd716ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oldControlsSetup: {fileID: 0}
-  self: {fileID: 0}
+  player: {fileID: 0}
+  playerPrefab: {fileID: 3180238274731884556, guid: 089322fbd0eb25b4e9329da7f2b24dcd,
+    type: 3}
+  currentScene:
+    m_Handle: 0
+  menuScene:
+    m_Handle: 0
   JumpInputQueued: 0
   BlockInputQueued: 0
   AttackInputQueued: 0
@@ -146,4 +159,4 @@ MonoBehaviour:
   HorizontalValue: 0
   horizontalInput: 0
   currentWall: 0
-  usingMenu: 1
+  Standalone: 0

@@ -5765,10 +5765,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: FlowerBoi_Player2
       objectReference: {fileID: 0}
+    - target: {fileID: 5588404518372249814, guid: 70d5bff14d4166e4ea9e6392b7f6a42e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5588404518379279896, guid: 70d5bff14d4166e4ea9e6392b7f6a42e,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5588404518605893594, guid: 70d5bff14d4166e4ea9e6392b7f6a42e,
         type: 3}
@@ -5944,6 +5949,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TempRoundManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 1457699136791629952, guid: 5c76ce6d7572bb34985ff9bbf4fba4f2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1457699136791629953, guid: 5c76ce6d7572bb34985ff9bbf4fba4f2,
         type: 3}
@@ -9258,7 +9268,7 @@ PrefabInstance:
     - target: {fileID: 575379434675992900, guid: 126aaf139db76c34e9840b02ff4a6fbe,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3352405193569832986, guid: 126aaf139db76c34e9840b02ff4a6fbe,
         type: 3}
@@ -9329,6 +9339,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: FlowerBoi_Player1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7110780920302394701, guid: 126aaf139db76c34e9840b02ff4a6fbe,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 126aaf139db76c34e9840b02ff4a6fbe, type: 3}
@@ -14146,7 +14161,7 @@ GameObject:
   - component: {fileID: 1519471699}
   m_Layer: 0
   m_Name: Player2Spawn
-  m_TagString: Untagged
+  m_TagString: Spawn
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14363,6 +14378,51 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1563678314}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1573903440
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1573903442}
+  - component: {fileID: 1573903441}
+  m_Layer: 0
+  m_Name: Initialize Players
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1573903441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1573903440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b10e0e12ffb1de469429669ab548a52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player1Spawn: {fileID: 1747730186}
+  player2Spawn: {fileID: 1519471699}
+--- !u!4 &1573903442
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1573903440}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.9399999, y: -280.93112, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1578181800
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16174,7 +16234,7 @@ GameObject:
   - component: {fileID: 1747730186}
   m_Layer: 0
   m_Name: Player1Spawn
-  m_TagString: Untagged
+  m_TagString: Spawn
   m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
