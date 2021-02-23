@@ -33,13 +33,13 @@ public class MainMenu : MonoBehaviour
     [Range(1,2)]
     [SerializeField] private int playerSelected;
 
-    [SerializeField] private GameManager gamemanager;
+    [SerializeField] private OldGameManager gamemanager;
     [SerializeField] private PlayerSetupMenuController menuController;
 
 
     private void Awake()
     {
-        gamemanager = GetComponentInParent<GameManager>();
+        gamemanager = GetComponentInParent<OldGameManager>();
     }
     private void Start()
     {
@@ -213,11 +213,11 @@ public class MainMenu : MonoBehaviour
         switch (playerSelected)
         {
             case 1:
-                GameManager.instance.SetPlayerCharacter(1, Character);
+                OldGameManager.instance.SetPlayerCharacter(1, Character);
                 playerSelected++;
                 break;
             case 2:
-                GameManager.instance.SetPlayerCharacter(2, Character);
+                OldGameManager.instance.SetPlayerCharacter(2, Character);
                 GotToStageSelect();
                 break;
         }

@@ -23,7 +23,7 @@ public class Hitbox : MonoBehaviour
     public PlayerActions animantionManager;
     public Animator anim;
     [SerializeField] Player player;
-    PlayerInputDetection playerInput;
+    PlayerInputHandler playerInput;
     HitBoxManager hitBoxManager;
 
     [SerializeField] private bool freezeCharacter;
@@ -42,7 +42,7 @@ public class Hitbox : MonoBehaviour
         hitboxCollider = GetComponent<Collider>();
         meshRenderer = GetComponent<MeshRenderer>();
         hitBoxManager = GetComponent<HitBoxManager>();
-        playerInput = GetComponentInParent<PlayerInputDetection>();
+        playerInput = GetComponentInParent<PlayerInputHandler>();
         player = GetComponentInParent<Player>();
     }
     private void Start()

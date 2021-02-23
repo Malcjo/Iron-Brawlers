@@ -1,27 +1,41 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-using TMPro;
-using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance;
-    [SerializeField]
-    private float boundsUp, boundsDown, boundsLeft, boundsRight;
-    public Player[] playersInScene;
-    [SerializeField]
-    private MainMenu mainMenu;
-    public int player1CharacterIndex, player2CharacterIndex;
+    public PlayerInputManager inputManager;
+    private List<GameObject> players = new List<GameObject>();
+    [SerializeField] GameObject MenuObject;
+    [SerializeField] private EventSystem eventSystem;
 
-    public Sprite flowerBoi1, flowerBoi2;
-    private bool ingame = false;
-    public Transform[] spawnPoints;
+    bool player1Ready, player2Ready;
+    public Transform player1Spawn, player2Spawn;
+    public int player1Rounds, player2Rounds;
+    private int sceneIndex;
+
+    [SerializeField] private int leftBounds, rightBounds, belowBounds, highBounds;
+
+    /*
+     * 0 = title
+     * 1 = main meuu
+     * 2 = Character select
+     * 3 = stage select
+     * 4 = settings
+     * 5 = credtis
+     * 6 = concept art
+     * 7 = In game
+     * 8 = Pause Screen
+     * 9 = Victory screen
+     */
+
+    public static GameManager instance;
 
     private void Awake()
     {
-        #region Singleton Pattern
         if (instance == null)
         {
             instance = this;
@@ -29,109 +43,134 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            if(instance != this)
+            if (instance != this)
             {
                 Destroy(gameObject);
             }
         }
-        #endregion   
+        sceneIndex = 0;
+        if (eventSystem != null)
+        {
+            eventSystem = FindObjectOfType <EventSystem>();
+        }
     }
-
-    private void Start()
-    {
-        boundsUp = 20;
-        boundsDown = -20;
-        boundsLeft = -20;
-        boundsRight = 20;
-    }
-
     private void Update()
     {
-        if("Main Menu" == SceneManager.GetActiveScene().name)
+        EnableJoiningManager();
+    }
+    public void EnableMenuCanvas()
+    {
+        MenuObject.SetActive(true);
+    }
+    public void DisableMenuCanvas()
+    {
+        MenuObject.SetActive(false);
+    }
+    public void SetPlayerSpawns(Transform _player1Spawn, Transform _player2Spawn)
+    {
+        player1Spawn = _player1Spawn;
+        player2Spawn = _player2Spawn;
+    }
+    public void ReadyPlayer()
+    {
+        if (player1Ready == true)
         {
-            return;
+            player2Ready = true;
         }
-        if(ingame == true)
+        else
         {
-            for (int i = 0; i < playersInScene.Length; i++)
-            {
-                playersInScene[i].GetComponent<Player>().SetSpawnPoint(spawnPoints[i]);
-                if (playersInScene[i].lives == 0)
+            player1Ready = true;
+        }
+    }
+    public bool GetPlayer1Ready()
+    {
+        return player1Ready;
+    }
+    public bool GetPlayer2Ready()
+    {
+        return player2Ready;
+    }
+    public void ResetPlayersReady()
+    {
+        player1Ready = false;
+        player2Ready = false;
+    }
+
+    public void ChangeSceneIndex(int index)
+    {
+        sceneIndex = index;
+    }
+    private void EnableJoiningManager()
+    {
+        switch (sceneIndex)
+        {
+            case 0:
+                foreach (Player ob in FindObjectsOfType(typeof(Player)))
                 {
-                    mainMenu.GoToCharacterSelect();
+                    Destroy(ob);
                 }
-            }
-        }
-    }
-    public void StartMatch()
-    {
-        FindPlayers();
-        SetPlayersLivesToThree();
-        InGame();
-    }
-    public void SetPlayersLivesToThree()
-    {
-        for (int i = 0; i < playersInScene.Length; i++)
-        {
-            playersInScene[i].lives = 3;
-        }
-    }
-    public void InGame()
-    {
-        ingame = true;
-    }
-
-    public void FindPlayers()
-    {
-        if (playersInScene == null)
-        {
-            return;
-        }
-        playersInScene = FindObjectsOfType<Player>();
-
-        for (int i = 0; i < playersInScene.Length; i++)
-        {
-            playersInScene[i].GetComponent<Player>();
-            PlayerNumberDetermine(i);
-        }
-    }
-    public GameObject[] playerCharacters;
-    public void SetPlayerCharacter(int index, GameObject character)
-    {
-        switch (index)
-        {
-            case 1: playerCharacters[0] = character;
+                inputManager.DisableJoining();
                 break;
-            case 2: playerCharacters[1] = character;
+            case 1:
+                inputManager.DisableJoining();
+                break;
+            case 2:
+                inputManager.EnableJoining();
+                break;
+            case 3:
+                inputManager.DisableJoining();
+                break;
+            case 4:
+                inputManager.DisableJoining();
+                break;
+            case 5:
+                inputManager.DisableJoining();
+                break;
+            case 6:
+                inputManager.DisableJoining();
+                break;
+            case 7:
+                belowBounds = 0;
+                inputManager.DisableJoining();
+                break;
+            case 8:
+                inputManager.DisableJoining();
+                break;
+            case 9:
+                inputManager.DisableJoining();
                 break;
         }
     }
-    private void PlayerNumberDetermine(int index)
+    private void TrackPlayers()
     {
-        if (index == 0)
+        if (player1Rounds == 3 || player2Rounds == 3)
         {
-            playersInScene[index].playerNumber = Player.PlayerIndex.Player1;
-            playersInScene[index].characterType = player1CharacterIndex;
+            SetRoundsToZero();
+            SceneManager.LoadScene(0);
         }
-        else if (index == 1)
+    }
+    private void GetAllPlayersInScene()
+    {
+        foreach (Player obj in FindObjectsOfType(typeof(Player)))
         {
-            playersInScene[index].playerNumber = Player.PlayerIndex.Player2;
-            playersInScene[index].characterType = player2CharacterIndex;
+            players.Add(obj.gameObject);
         }
+    }
+    private void TrackPlayer1()
+    {
+        if (players[1].transform.position.y <= belowBounds)
+        {
+            player2Rounds++;
+        }
+
+    }
+    private void ResetPlayers()
+    {
+    }
+    private void SetRoundsToZero()
+    {
+        player1Rounds = 0;
+        player2Rounds = 0;
     }
 
-    public static bool CheckIsInBounds(Vector3 position)
-    {
-        return position.x > instance.boundsRight || position.x < instance.boundsLeft || position.y > instance.boundsUp || position.y < instance.boundsDown;
-    }
-
-    public static Sprite GetSprite(Player.PlayerIndex playerIndex)
-    {
-        switch (playerIndex)
-        {
-            case Player.PlayerIndex.Player1: return instance.flowerBoi1;
-            case Player.PlayerIndex.Player2: return instance.flowerBoi2;
-        }
-        return null;
-    }
 }
