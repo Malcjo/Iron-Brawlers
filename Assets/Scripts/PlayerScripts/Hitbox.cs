@@ -33,7 +33,8 @@ public class Hitbox : MonoBehaviour
     public GameObject tipHitBox, midHitBox;
     public GameObject rightHand, leftHand,rightElbow, leftElbow, rightFoot, leftFoot, rightKnee, leftKnee, waist;
 
-    public ParticleSystem punchParticle;
+    public ParticleSystem hitParticle;
+    public ParticleSystem dustHitParticle;
 
     Vector3 hitDirection;
 
@@ -233,13 +234,15 @@ public class Hitbox : MonoBehaviour
         if (hurtBox.BodyLocation == LocationTag.Chest)
         {
             DefendingPlayer.TakeDamageOnGauge(gaugeDamageValue, ArmourCheck.ArmourPlacement.Chest, _attackType);
-            Instantiate(punchParticle, transform.position, transform.rotation);
+            Instantiate(hitParticle, transform.position, transform.rotation);
+            Instantiate(dustHitParticle, transform.position, transform.rotation);
 
         }
         else if (hurtBox.BodyLocation == LocationTag.Legs)
         {
             DefendingPlayer.TakeDamageOnGauge(gaugeDamageValue, ArmourCheck.ArmourPlacement.Legs, _attackType);
-            Instantiate(punchParticle, transform.position, transform.rotation);
+            Instantiate(hitParticle, transform.position, transform.rotation);
+            Instantiate(dustHitParticle, transform.position, transform.rotation);
         }
 
         ApplyDamageToPlayer(DefendingPlayer, attackingPlayer);
