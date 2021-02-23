@@ -8,11 +8,17 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public PlayerInputManager inputManager;
+    private List<GameObject> players = new List<GameObject>();
     [SerializeField] GameObject MenuObject;
     [SerializeField] private EventSystem eventSystem;
+
     bool player1Ready, player2Ready;
     public Transform player1Spawn, player2Spawn;
+    public int player1Rounds, player2Rounds;
     private int sceneIndex;
+
+    [SerializeField] private int leftBounds, rightBounds, belowBounds, highBounds;
+
     /*
      * 0 = title
      * 1 = main meuu
@@ -124,6 +130,7 @@ public class GameManager : MonoBehaviour
                 inputManager.DisableJoining();
                 break;
             case 7:
+                belowBounds = 0;
                 inputManager.DisableJoining();
                 break;
             case 8:
@@ -133,6 +140,37 @@ public class GameManager : MonoBehaviour
                 inputManager.DisableJoining();
                 break;
         }
+    }
+    private void TrackPlayers()
+    {
+        if (player1Rounds == 3 || player2Rounds == 3)
+        {
+            SetRoundsToZero();
+            SceneManager.LoadScene(0);
+        }
+    }
+    private void GetAllPlayersInScene()
+    {
+        foreach (Player obj in FindObjectsOfType(typeof(Player)))
+        {
+            players.Add(obj.gameObject);
+        }
+    }
+    private void TrackPlayer1()
+    {
+        if (players[1].transform.position.y <= belowBounds)
+        {
+            player2Rounds++;
+        }
+
+    }
+    private void ResetPlayers()
+    {
+    }
+    private void SetRoundsToZero()
+    {
+        player1Rounds = 0;
+        player2Rounds = 0;
     }
 
 }
