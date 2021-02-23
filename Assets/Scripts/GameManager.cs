@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public PlayerInputManager inputManager;
+    [SerializeField] GameObject MenuObject;
     [SerializeField] private EventSystem eventSystem;
     bool player1Ready, player2Ready;
     public Transform player1Spawn, player2Spawn;
@@ -51,6 +52,14 @@ public class GameManager : MonoBehaviour
     {
         EnableJoiningManager();
     }
+    public void EnableMenuCanvas()
+    {
+        MenuObject.SetActive(true);
+    }
+    public void DisableMenuCanvas()
+    {
+        MenuObject.SetActive(false);
+    }
     public void SetPlayerSpawns(Transform _player1Spawn, Transform _player2Spawn)
     {
         player1Spawn = _player1Spawn;
@@ -61,12 +70,10 @@ public class GameManager : MonoBehaviour
         if (player1Ready == true)
         {
             player2Ready = true;
-            //player.playerNumber = Player.PlayerIndex.Player2;
         }
         else
         {
             player1Ready = true;
-            //player.playerNumber = Player.PlayerIndex.Player1;
         }
     }
     public bool GetPlayer1Ready()

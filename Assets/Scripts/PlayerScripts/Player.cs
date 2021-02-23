@@ -149,7 +149,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            //transform.position = SpawnPoint.transform.position;
+
         }
 
         MyState = new IdleState();
@@ -163,12 +163,14 @@ public class Player : MonoBehaviour
         if(playerNumber == PlayerIndex.Player1)
         {
             hitbox.gameObject.layer = 8;
+            SpawnPoint = GameManager.instance.player1Spawn;
         }
         else if(playerNumber == PlayerIndex.Player2)
         {
             hitbox.gameObject.layer = 9;
+            SpawnPoint = GameManager.instance.player2Spawn;
         }
-
+        transform.position = SpawnPoint.transform.position;
     }
     private void Update()
     {

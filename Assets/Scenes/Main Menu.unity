@@ -28165,6 +28165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputManager: {fileID: 7419585329876064304}
+  MenuObject: {fileID: 8440738218759293620}
   eventSystem: {fileID: 7419585329876064305}
   player1Spawn: {fileID: 0}
   player2Spawn: {fileID: 0}

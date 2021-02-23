@@ -37,6 +37,7 @@ public class BindToPlayer : MonoBehaviour
             if (GameManager.instance.GetPlayer1Ready() == true && GameManager.instance.GetPlayer2Ready() == true)
             {
                 GameManager.instance.ResetPlayersReady();
+                GameManager.instance.DisableMenuCanvas();
                 SceneManager.LoadScene(1);
             }
         }
