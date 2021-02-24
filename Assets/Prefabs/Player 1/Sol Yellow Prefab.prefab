@@ -2700,6 +2700,8 @@ MonoBehaviour:
     type: 3}
   landOnGroundDustParticle: {fileID: 711904114079186556, guid: b5065ed3a60300b4da043e08e8ff2da6,
     type: 3}
+  RunningParticle: {fileID: 4315519160680907912, guid: fbf5971f3a0f1084aac9cc96dd4fbd33,
+    type: 3}
   playerLives: {fileID: 0}
   playerImage: {fileID: 0}
   CurrentVelocity: 0

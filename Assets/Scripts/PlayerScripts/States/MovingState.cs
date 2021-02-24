@@ -10,12 +10,14 @@ public class MovingState : PlayerState
     }
     public override void RunState(Player self, Rigidbody body, PlayerActions actions, InputState input, Calculating calculate)
     {
+
         if(self.VerticalState == Player.VState.grounded)
         {
             actions.Running();
 
             if (MovementCheck(input.horizontalInput))
             {
+                self.SpawnRunningParticles();
                 self.CanMove = true;
                 self.CanTurn = true;
                 body.velocity = new Vector3(0, body.velocity.y, 0) + calculate.addForce;
