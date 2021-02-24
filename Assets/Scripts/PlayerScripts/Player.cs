@@ -33,6 +33,8 @@ public class Player : MonoBehaviour
     [SerializeField] private PlayerActions playerActions;
     [SerializeField] private GaugeManager gaugeManager;
 
+    [SerializeField] private ParticleSystem landOnGroundDustParticle;
+
     [Header("UI")]
     [SerializeField] public TMP_Text playerLives;
     [SerializeField] public Image playerImage;
@@ -611,6 +613,7 @@ public class Player : MonoBehaviour
         {
             if (hit.collider.CompareTag("Ground") || (hit.collider.CompareTag("Platform")))
             {
+                Instantiate(landOnGroundDustParticle, transform.position, transform.rotation);
                 LandOnGround(hit);
             }
         }

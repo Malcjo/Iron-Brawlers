@@ -85,6 +85,10 @@ public class PlayerInputHandler : MonoBehaviour
             _PlayerNumber = Player.PlayerIndex.Player2;
         }
     }
+    public float GetHorizontal()
+    {
+        return HorizontalValue;
+    }
     public bool ShouldJump(){
         if (JumpInputQueued)
         {
@@ -101,9 +105,6 @@ public class PlayerInputHandler : MonoBehaviour
         }
         return false;
     }
-    public bool ShouldBlock(){
-        return BlockInputQueued;
-    }
     public bool ShouldCrouch(){
         if (CrouchInputQueued)
         {
@@ -112,42 +113,43 @@ public class PlayerInputHandler : MonoBehaviour
         }
         return false;
     }
+    public bool ShouldBlock()
+    {
+        return BlockInputQueued;
+    }
     public bool ShouldArmourBreak(){
         return ArmourBreakInputQueued;
     }
-    public float GetHorizontal() 
-    { 
-        return HorizontalValue; 
-    }
 
-    public void InitializePlayer(PlayerConfiguration config)
-    {
-        if (Standalone == false)
-        {
-            return;
-        }
-        playerConfig = config;
-        config.input.onActionTriggered += Input_OnActionTrigger;
-    }
-    private void Input_OnActionTrigger(CallbackContext context)
-    {
-        if (Standalone == false)
-        {
-            return;
-        }
-        if (context.action.name == playerControls.Player.PlayerHorizontalMovement.name)
-        {
-            HorizontalInput(context);
-        }
-        if (context.action.name == playerControls.Player.PlayerJump.name)
-        {
-            JumpInput(context);
-        }
-        if (context.action.name == playerControls.Player.PlayerAttack.name)
-        {
-            AttackInput(context);
-        }
-    }
+
+    //public void InitializePlayer(PlayerConfiguration config)
+    //{
+    //    if (Standalone == false)
+    //    {
+    //        return;
+    //    }
+    //    playerConfig = config;
+    //    config.input.onActionTriggered += Input_OnActionTrigger;
+    //}
+    //private void Input_OnActionTrigger(CallbackContext context)
+    //{
+    //    if (Standalone == false)
+    //    {
+    //        return;
+    //    }
+    //    if (context.action.name == playerControls.Player.PlayerHorizontalMovement.name)
+    //    {
+    //        HorizontalInput(context);
+    //    }
+    //    if (context.action.name == playerControls.Player.PlayerJump.name)
+    //    {
+    //        JumpInput(context);
+    //    }
+    //    if (context.action.name == playerControls.Player.PlayerAttack.name)
+    //    {
+    //        AttackInput(context);
+    //    }
+    //}
     public void HorizontalInput(CallbackContext context)
     {
         if(player != null)
@@ -184,7 +186,7 @@ public class PlayerInputHandler : MonoBehaviour
             AttackInputQueued = true;
         }
     }
-    private void CrouchInput(CallbackContext context)
+    public void CrouchInput(CallbackContext context)
     {
         if (context.started)
         {

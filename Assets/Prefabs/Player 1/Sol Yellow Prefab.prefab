@@ -2696,6 +2696,8 @@ MonoBehaviour:
   raycasts: {fileID: 2535414095278585841}
   playerActions: {fileID: 4061201398229762350}
   gaugeManager: {fileID: 6030534810202239768}
+  landOnGroundDustParticle: {fileID: 711904114079186556, guid: b5065ed3a60300b4da043e08e8ff2da6,
+    type: 3}
   playerLives: {fileID: 0}
   playerImage: {fileID: 0}
   CurrentVelocity: 0
