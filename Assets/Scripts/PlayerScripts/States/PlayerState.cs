@@ -12,7 +12,6 @@ public abstract class PlayerState
         public bool crouchInput;
         public bool armourBreakInput;
         public bool blockInput;
-        public float verticalInput;
     }
     public struct Calculating
     {
@@ -34,10 +33,6 @@ public abstract class PlayerState
     protected bool MovementCheck(float horizontalInput)
     {
         return horizontalInput != 0;
-    }
-    protected bool VerticalCheck(float verticalInput)
-    {
-        return verticalInput != 0;
     }
     protected bool CrouchingCheck(bool crouchInput)
     {

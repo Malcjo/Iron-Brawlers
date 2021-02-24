@@ -613,7 +613,7 @@ public class Player : MonoBehaviour
         {
             if (hit.collider.CompareTag("Ground") || (hit.collider.CompareTag("Platform")))
             {
-                Instantiate(landOnGroundDustParticle, transform.position, transform.rotation);
+                Instantiate(landOnGroundDustParticle, transform.position, Quaternion.identity);
                 LandOnGround(hit);
             }
         }
