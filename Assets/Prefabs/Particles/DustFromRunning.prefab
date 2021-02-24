@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 1674946261030896723}
   m_LocalRotation: {x: -0.7071068, y: 0.7071068, z: -0.000001065433, w: 0.0000031217933}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -0.031496413, y: 0.120710365, z: 0.2669712}
+  m_LocalScale: {x: -0.05789612, y: 0.120710365, z: 0.2669712}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -41,12 +41,12 @@ ParticleSystem:
   m_GameObject: {fileID: 1674946261030896723}
   serializedVersion: 6
   lengthInSec: 1
-  simulationSpeed: 6
+  simulationSpeed: 5
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -669,7 +669,7 @@ ParticleSystem:
     serializedVersion: 6
     enabled: 1
     type: 4
-    angle: 42.789948
+    angle: 42.162373
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
@@ -755,7 +755,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.5566959
+      value: 0.14173661
       mode: 0
       spread: 0
       speed:
@@ -1048,7 +1048,7 @@ ParticleSystem:
         serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
-          time: 0
+          time: 0.08975106
           value: 0
           inSlope: 0
           outSlope: 0
@@ -1057,13 +1057,31 @@ ParticleSystem:
           inWeight: 0
           outWeight: 0
         - serializedVersion: 3
-          time: 0.42481902
+          time: 0.3334309
+          value: 0.6583201
+          inSlope: 3.0651047
+          outSlope: 3.0651047
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 0.5608969
           value: 1
           inSlope: 0.49632025
           outSlope: 0.49632025
           tangentMode: 0
           weightedMode: 0
           inWeight: 0.36483067
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 0.79570794
+          value: 0.66624665
+          inSlope: -2.7767572
+          outSlope: -2.7767572
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
           outWeight: 0.33333334
         - serializedVersion: 3
           time: 1
