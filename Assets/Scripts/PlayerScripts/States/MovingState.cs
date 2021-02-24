@@ -11,13 +11,14 @@ public class MovingState : PlayerState
     public override void RunState(Player self, Rigidbody body, PlayerActions actions, InputState input, Calculating calculate)
     {
 
-        if(self.VerticalState == Player.VState.grounded)
+        if (self.VerticalState == Player.VState.grounded)
         {
+            self.SpawnRunningParticles();
             actions.Running();
 
             if (MovementCheck(input.horizontalInput))
             {
-                self.SpawnRunningParticles();
+
                 self.CanMove = true;
                 self.CanTurn = true;
                 body.velocity = new Vector3(0, body.velocity.y, 0) + calculate.addForce;
@@ -100,6 +101,17 @@ public class MovingState : PlayerState
                             self.SetState(new BusyState());
                         }
                     }
+                }
+                if (JumpingCheck(input.jumpInput))
+                {
+                    self.CanTurn = false;
+                    self.InAir = true;
+                    body.velocity = (new Vector3(body.velocity.x, calculate.jumpForce, body.velocity.z)) + calculate.addForce;
+                    self.JumpingOrFallingAnimations();
+                    self.AddOneToJumpIndex();
+                    Debug.Log("DoubleJump");
+                    self.SpawnDoubleJumpParticles();
+                    self.SetState(new JumpingState());
                 }
             }
 

@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 1674946261030896723}
   m_LocalRotation: {x: -0.7071068, y: 0.7071068, z: -0.000001065433, w: 0.0000031217933}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -0.05789612, y: 0.120710365, z: 0.2669712}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -669,7 +669,7 @@ ParticleSystem:
     serializedVersion: 6
     enabled: 1
     type: 4
-    angle: 42.162373
+    angle: 1
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
@@ -755,7 +755,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.14173661
+      value: 1
       mode: 0
       spread: 0
       speed:

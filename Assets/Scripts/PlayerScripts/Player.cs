@@ -280,13 +280,8 @@ public class Player : MonoBehaviour
     }
     public void SpawnRunningParticles()
     {
-        StartCoroutine(RunningParticles());
-    }
-    IEnumerator RunningParticles()
-    {
-        yield return new WaitForSeconds(0.5f);
         Vector3 landOnGroundDustPartilePosition = new Vector3(transform.localPosition.x - 0.1f, transform.position.y + 0.1f, transform.position.z);
-        Quaternion landOnGroundDustParticleRotation = Quaternion.Euler(90, 0, 0);
+        Quaternion landOnGroundDustParticleRotation = Quaternion.Euler(0, 0, 0);
         GameObject RunningParticles = Instantiate(RunningParticle, landOnGroundDustPartilePosition, landOnGroundDustParticleRotation);
         SetRemoveParticles(RunningParticles);
     }
