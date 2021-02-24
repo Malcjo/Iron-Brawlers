@@ -33,9 +33,9 @@ public class Player : MonoBehaviour
     [SerializeField] private PlayerActions playerActions;
     [SerializeField] private GaugeManager gaugeManager;
 
-    [SerializeField] private ParticleSystem DoubleJumpDustParticles;
-    [SerializeField] private ParticleSystem landOnGroundDustParticle;
-    [SerializeField] private ParticleSystem RunningParticle;
+    [SerializeField] private GameObject DoubleJumpDustParticles;
+    [SerializeField] private GameObject landOnGroundDustParticle;
+    [SerializeField] private GameObject RunningParticle;
 
     [Header("UI")]
     [SerializeField] public TMP_Text playerLives;
@@ -263,15 +263,20 @@ public class Player : MonoBehaviour
     {
         Vector3 landOnGroundDustPartilePosition = new Vector3(transform.localPosition.x + 0.1f, transform.position.y + 0.1f, transform.position.z);
         Quaternion landOnGroundDustParticleRotation = Quaternion.Euler(90, 0, 0);
-        ParticleSystem LandingParticles = Instantiate(landOnGroundDustParticle, landOnGroundDustPartilePosition, landOnGroundDustParticleRotation);
+        GameObject LandingParticles = Instantiate(landOnGroundDustParticle, landOnGroundDustPartilePosition, landOnGroundDustParticleRotation);
         SetRemoveParticles(LandingParticles);
     }
     public void SpawnDoubleJumpParticles()
     {
+        StartCoroutine(DoubleJumpParticles());
+    }
+    IEnumerator DoubleJumpParticles()
+    {
+        yield return new WaitForSeconds(0);
         Vector3 landOnGroundDustPartilePosition = new Vector3(transform.localPosition.x + 0.1f, transform.position.y + 0.1f, transform.position.z);
         Quaternion landOnGroundDustParticleRotation = Quaternion.Euler(90, 0, 0);
-        ParticleSystem DoubleJumpParticles = Instantiate(DoubleJumpDustParticles, landOnGroundDustPartilePosition, landOnGroundDustParticleRotation);
-        SetRemoveParticles(DoubleJumpDustParticles);
+        GameObject DoubleJumpParticles = Instantiate(DoubleJumpDustParticles, landOnGroundDustPartilePosition, landOnGroundDustParticleRotation);
+        SetRemoveParticles(DoubleJumpParticles);
     }
     public void SpawnRunningParticles()
     {
@@ -282,17 +287,17 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         Vector3 landOnGroundDustPartilePosition = new Vector3(transform.localPosition.x - 0.1f, transform.position.y + 0.1f, transform.position.z);
         Quaternion landOnGroundDustParticleRotation = Quaternion.Euler(90, 0, 0);
-        ParticleSystem RunningParticles = Instantiate(RunningParticle, landOnGroundDustPartilePosition, landOnGroundDustParticleRotation);
+        GameObject RunningParticles = Instantiate(RunningParticle, landOnGroundDustPartilePosition, landOnGroundDustParticleRotation);
         SetRemoveParticles(RunningParticles);
     }
-    private void SetRemoveParticles(ParticleSystem obj)
+    private void SetRemoveParticles(GameObject obj)
     {
         StartCoroutine(RemoveParticles(obj));
     }
-    IEnumerator RemoveParticles (ParticleSystem obj)
+    IEnumerator RemoveParticles (GameObject obj)
     {
         yield return new WaitForSeconds(1);
-        Destroy(obj);
+        Destroy(obj.gameObject);
     }
 
     #region Jumping
