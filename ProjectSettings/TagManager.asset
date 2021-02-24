@@ -14,6 +14,7 @@ TagManager:
   - Hitbox
   - Hurtbox
   - Spawn
+  - Event
   layers:
   - Default
   - TransparentFX

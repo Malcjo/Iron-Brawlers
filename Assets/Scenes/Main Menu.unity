@@ -512,6 +512,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 3560223692973814112, guid: 352c744c25ec7a0419ecca1424da1d4c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3560223692973814114, guid: 352c744c25ec7a0419ecca1424da1d4c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -28154,7 +28159,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &3060168155268841313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28169,13 +28174,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputManager: {fileID: 7419585329876064304}
   players: []
-  MenuObject: {fileID: 8440738218759293620}
-  eventSystem: {fileID: 7419585329876064305}
+  MenuGroup: {fileID: 8440738218759293620}
+  MainMenu: {fileID: 1954441483267434347}
+  CharacterSelect: {fileID: 1665105250636181945}
+  PlayButton: {fileID: 1954441483724161502}
+  eventSystem: {fileID: 7419585329876064302}
   inGame: 0
   player1Spawn: {fileID: 0}
   player2Spawn: {fileID: 0}
   player1Rounds: 0
   player2Rounds: 0
+  sceneIndex: 0
   leftBounds: 0
   rightBounds: 0
   belowBounds: 0
@@ -35072,7 +35081,7 @@ GameObject:
   - component: {fileID: 7419585329876064303}
   m_Layer: 0
   m_Name: EventSystem
-  m_TagString: Untagged
+  m_TagString: Event
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
