@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -35,7 +36,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] private GameObject DoubleJumpDustParticles;
     [SerializeField] private GameObject landOnGroundDustParticle;
-    [SerializeField] private GameObject RunningParticle;
+    [SerializeField] private ParticleSystem RunningParticle;
 
     [Header("UI")]
     [SerializeField] public TMP_Text playerLives;
@@ -278,12 +279,30 @@ public class Player : MonoBehaviour
         GameObject DoubleJumpParticles = Instantiate(DoubleJumpDustParticles, landOnGroundDustPartilePosition, landOnGroundDustParticleRotation);
         SetRemoveParticles(DoubleJumpParticles);
     }
-    public void SpawnRunningParticles()
+    //public void SpawnRunningParticles()
+    //{
+    //    Vector3 landOnGroundDustPartilePosition = new Vector3(transform.localPosition.x - 0.1f, transform.position.y + 0.1f, transform.position.z);
+    //    Quaternion landOnGroundDustParticleRotation = Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y, transform.localEulerAngles.z);
+    //    GameObject RunningParticles = Instantiate(RunningParticle, landOnGroundDustPartilePosition, landOnGroundDustParticleRotation);
+    //    SetRemoveParticles(RunningParticles);
+    //    //StartCoroutine(RunningDustDelay());
+    //}
+    //IEnumerator RunningDustDelay()
+    //{
+    //    Vector3 landOnGroundDustPartilePosition = new Vector3(transform.localPosition.x - 0.1f, transform.position.y + 0.1f, transform.position.z);
+    //    Quaternion landOnGroundDustParticleRotation = Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y, transform.localEulerAngles.z);
+    //    GameObject RunningParticles = Instantiate(RunningParticle, landOnGroundDustPartilePosition, landOnGroundDustParticleRotation);
+    //    SetRemoveParticles(RunningParticles);
+    //    yield return new WaitForSeconds(1f);
+
+    //}
+    public void PlayRunningParticle()
     {
-        Vector3 landOnGroundDustPartilePosition = new Vector3(transform.localPosition.x - 0.1f, transform.position.y + 0.1f, transform.position.z);
-        Quaternion landOnGroundDustParticleRotation = Quaternion.Euler(0, 90, 0);
-        GameObject RunningParticles = Instantiate(RunningParticle, landOnGroundDustPartilePosition, landOnGroundDustParticleRotation);
-        SetRemoveParticles(RunningParticles);
+        RunningParticle.Play();
+    }
+    public void StopRunningParticle()
+    {
+        RunningParticle.Stop();
     }
     private void SetRemoveParticles(GameObject obj)
     {

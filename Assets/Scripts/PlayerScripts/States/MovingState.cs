@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,11 +14,12 @@ public class MovingState : PlayerState
 
         if (self.VerticalState == Player.VState.grounded)
         {
-            self.SpawnRunningParticles();
+
             actions.Running();
 
             if (MovementCheck(input.horizontalInput))
             {
+                self.PlayRunningParticle();
 
                 self.CanMove = true;
                 self.CanTurn = true;
@@ -27,6 +29,7 @@ public class MovingState : PlayerState
 
             if (!MovementCheck(input.horizontalInput))
             {
+                self.StopRunningParticle();
                 self.CanMove = true;
                 self.CanTurn = true;
                 body.velocity = new Vector3(Mathf.Lerp(body.velocity.x, 0, calculate.friction), body.velocity.y, 0) + calculate.addForce;
