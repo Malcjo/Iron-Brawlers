@@ -50,14 +50,19 @@ public class JumpingState : PlayerState
         {
             if (self.CanJumpIndex < self.GetMaxJumps())
             {
-                self.CanTurn = false;
-                self.InAir = true;
-                body.velocity = (new Vector3(body.velocity.x, calculate.jumpForce, body.velocity.z)) + calculate.addForce;
-                self.JumpingOrFallingAnimations();
-                self.AddOneToJumpIndex();
-                Debug.Log("DoubleJump");
-                self.SpawnDoubleJumpParticles();
-                self.SetState(new JumpingState());
+                if(self.canDoubleJump == true)
+                {
+                    self.canDoubleJump = false;
+                    self.CanTurn = false;
+                    self.InAir = true;
+                    body.velocity = (new Vector3(body.velocity.x, calculate.jumpForce, body.velocity.z)) + calculate.addForce;
+                    self.JumpingOrFallingAnimations();
+                    self.AddOneToJumpIndex();
+                    Debug.Log("DoubleJump");
+                    self.SpawnDoubleJumpParticles();
+                    self.SetState(new JumpingState());
+                }
+
             }
         }
 

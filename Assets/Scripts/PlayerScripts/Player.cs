@@ -69,7 +69,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] private bool _gravityOn;
 
-    private bool canDoubleJump;
+    public bool canDoubleJump;
 
     [SerializeField] private int _currentJumpIndex;
     private int maxJumps = 2;
@@ -281,7 +281,7 @@ public class Player : MonoBehaviour
     public void SpawnRunningParticles()
     {
         Vector3 landOnGroundDustPartilePosition = new Vector3(transform.localPosition.x - 0.1f, transform.position.y + 0.1f, transform.position.z);
-        Quaternion landOnGroundDustParticleRotation = Quaternion.Euler(0, 0, 0);
+        Quaternion landOnGroundDustParticleRotation = Quaternion.Euler(0, 90, 0);
         GameObject RunningParticles = Instantiate(RunningParticle, landOnGroundDustPartilePosition, landOnGroundDustParticleRotation);
         SetRemoveParticles(RunningParticles);
     }
