@@ -613,8 +613,9 @@ public class Player : MonoBehaviour
         {
             if (hit.collider.CompareTag("Ground") || (hit.collider.CompareTag("Platform")))
             {
-                Quaternion DustLandRotation = Quaternion.Euler(90, 0, 0);
-                Instantiate(landOnGroundDustParticle, transform.position, DustLandRotation);
+                Vector3 landOnGroundDustPartilePosition = new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z);
+                Quaternion landOnGroundDustParticleRotation = Quaternion.Euler(90, 0, 0);
+                Instantiate(landOnGroundDustParticle, landOnGroundDustPartilePosition, landOnGroundDustParticleRotation);
                 LandOnGround(hit);
             }
         }

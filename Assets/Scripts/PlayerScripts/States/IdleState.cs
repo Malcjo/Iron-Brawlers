@@ -21,7 +21,6 @@ public class IdleState : PlayerState
         }
         if (CrouchingCheck(input.crouchInput))
         {
-
             Debug.Log("Crouching");
             body.velocity = new Vector3(Mathf.Lerp(body.velocity.x, 0, calculate.friction), body.velocity.y, 0);
 
