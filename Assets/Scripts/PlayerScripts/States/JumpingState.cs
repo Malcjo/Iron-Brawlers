@@ -42,6 +42,7 @@ public class JumpingState : PlayerState
             self.CanMove = true;
             self.CanTurn = true;
             body.velocity = new Vector3(input.horizontalInput * calculate.characterSpeed, body.velocity.y, 0) + calculate.addForce;
+            self.SpawnFeetDustParticles();
             self.SetState(new MovingState());
         }
 
@@ -54,6 +55,7 @@ public class JumpingState : PlayerState
                 body.velocity = (new Vector3(body.velocity.x, calculate.jumpForce, body.velocity.z)) + calculate.addForce;
                 self.JumpingOrFallingAnimations();
                 self.AddOneToJumpIndex();
+                self.SpawnFeetDustParticles();
                 self.SetState(new JumpingState());
             }
         }

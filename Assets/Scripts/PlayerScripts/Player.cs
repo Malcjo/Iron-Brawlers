@@ -268,6 +268,12 @@ public class Player : MonoBehaviour
             canDoubleJump = false;
         }
     }
+    public void SpawnFeetDustParticles()
+    {
+        Vector3 landOnGroundDustPartilePosition = new Vector3(transform.localPosition.x + 0.1f, transform.position.y + 0.1f, transform.position.z);
+        Quaternion landOnGroundDustParticleRotation = Quaternion.Euler(90, 0, 0);
+        Instantiate(landOnGroundDustParticle, landOnGroundDustPartilePosition, landOnGroundDustParticleRotation);
+    }
 
     public void AddOneToJumpIndex()
     {
@@ -613,9 +619,7 @@ public class Player : MonoBehaviour
         {
             if (hit.collider.CompareTag("Ground") || (hit.collider.CompareTag("Platform")))
             {
-                Vector3 landOnGroundDustPartilePosition = new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z);
-                Quaternion landOnGroundDustParticleRotation = Quaternion.Euler(90, 0, 0);
-                Instantiate(landOnGroundDustParticle, landOnGroundDustPartilePosition, landOnGroundDustParticleRotation);
+                Invoke("SpawnFeetDustParticles", 0.06f);
                 LandOnGround(hit);
             }
         }
