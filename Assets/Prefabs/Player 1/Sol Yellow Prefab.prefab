@@ -2696,6 +2696,8 @@ MonoBehaviour:
   raycasts: {fileID: 2535414095278585841}
   playerActions: {fileID: 4061201398229762350}
   gaugeManager: {fileID: 6030534810202239768}
+  DoubleJumpDustParticles: {fileID: 711904114079186556, guid: acf0eaec560708945bf82f89c27158ea,
+    type: 3}
   landOnGroundDustParticle: {fileID: 711904114079186556, guid: b5065ed3a60300b4da043e08e8ff2da6,
     type: 3}
   playerLives: {fileID: 0}

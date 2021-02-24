@@ -33,6 +33,7 @@ public class Player : MonoBehaviour
     [SerializeField] private PlayerActions playerActions;
     [SerializeField] private GaugeManager gaugeManager;
 
+    [SerializeField] private ParticleSystem DoubleJumpDustParticles;
     [SerializeField] private ParticleSystem landOnGroundDustParticle;
 
     [Header("UI")]
@@ -257,6 +258,18 @@ public class Player : MonoBehaviour
     {
         standalone = isStandalone;
     }
+    public void SpawnFeetDustParticles()
+    {
+        Vector3 landOnGroundDustPartilePosition = new Vector3(transform.localPosition.x + 0.1f, transform.position.y + 0.1f, transform.position.z);
+        Quaternion landOnGroundDustParticleRotation = Quaternion.Euler(90, 0, 0);
+        Instantiate(landOnGroundDustParticle, landOnGroundDustPartilePosition, landOnGroundDustParticleRotation);
+    }
+    public void SpawnDoubleJumpParticles()
+    {
+        Vector3 landOnGroundDustPartilePosition = new Vector3(transform.localPosition.x + 0.1f, transform.position.y + 0.1f, transform.position.z);
+        Quaternion landOnGroundDustParticleRotation = Quaternion.Euler(90, 0, 0);
+        Instantiate(DoubleJumpDustParticles, landOnGroundDustPartilePosition, landOnGroundDustParticleRotation);
+    }
 
     #region Jumping
     void DoubleJumpCheck()
@@ -268,12 +281,7 @@ public class Player : MonoBehaviour
             canDoubleJump = false;
         }
     }
-    public void SpawnFeetDustParticles()
-    {
-        Vector3 landOnGroundDustPartilePosition = new Vector3(transform.localPosition.x + 0.1f, transform.position.y + 0.1f, transform.position.z);
-        Quaternion landOnGroundDustParticleRotation = Quaternion.Euler(90, 0, 0);
-        Instantiate(landOnGroundDustParticle, landOnGroundDustPartilePosition, landOnGroundDustParticleRotation);
-    }
+
 
     public void AddOneToJumpIndex()
     {
