@@ -26,7 +26,7 @@ public class PlayerInputHandler : MonoBehaviour
     [SerializeField]
     private bool ArmourBreakQueued;
     [SerializeField]
-    private bool CrouchInputQueued;
+    private bool CrouchInputHeld;
     [SerializeField]
     private bool ArmourBreakInputQueued;
     [SerializeField]
@@ -105,13 +105,9 @@ public class PlayerInputHandler : MonoBehaviour
         }
         return false;
     }
+
     public bool ShouldCrouch(){
-        if (CrouchInputQueued)
-        {
-            CrouchInputQueued = false;
-            return true;
-        }
-        return false;
+        return CrouchInputHeld;
     }
     public bool ShouldBlock()
     {
@@ -190,7 +186,11 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if (context.started)
         {
-            CrouchInputQueued = true;
+            CrouchInputHeld = true;
+        }
+        if (context.canceled)
+        {
+            CrouchInputHeld = false;
         }
     }
 

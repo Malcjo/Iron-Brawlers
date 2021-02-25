@@ -2,17 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 //using static UnityEngine.InputSystem.InputAction;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-
+public enum MenuLayer { Title, Main_Menu, Character_Select, Stage_Select, Settings, credits, GameScreen}
 public class GameManager : MonoBehaviour
 {
+    MenuLayer currentScreen;
+    MenuLayer PreviousLayer;
     public PlayerInputManager inputManager;
     [SerializeField] private List<GameObject> players = new List<GameObject>();
 
-    [SerializeField] GameObject MenuGroup, MainMenu, CharacterSelect;
+    [SerializeField] GameObject Title, MenuGroup, MainMenu, CharacterSelect;
     [SerializeField] Button PlayButton;
 
     [SerializeField] private GameObject eventSystem;
@@ -22,7 +25,7 @@ public class GameManager : MonoBehaviour
     public int player1Rounds, player2Rounds;
     [SerializeField] private int sceneIndex;
     private CameraScript cameraScript;
-
+    public GameObject uimodule;
     [SerializeField] private int leftBounds, rightBounds, belowBounds, highBounds;
 
     /*
@@ -72,8 +75,28 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
+
         TrackPlayers();
         EnableJoiningManager();
+    }
+    public void EnableEventSystemOBJ()
+    {
+        eventSystem.SetActive(true);
+
+    }
+    public void SelectPlayButton()
+    {
+        PlayButton.Select();
+        eventSystem = GameObject.FindWithTag("Event");
+        EventSystem system = eventSystem.gameObject.GetComponent<EventSystem>();
+        system.firstSelectedGameObject = PlayButton.gameObject;
+        system.SetSelectedGameObject(system.firstSelectedGameObject);
+        //check the selection of input system ui
+        //use event system get component to find it
+    }
+    public void DisableEventSystemOBJ()
+    {
+        eventSystem.SetActive(false);
     }
     public void SetCameraScript(CameraScript script)
     {
@@ -195,6 +218,7 @@ public class GameManager : MonoBehaviour
                 ChangeSceneIndex(1);
                 EnableMenuCanvas();
                 ResetMenu();
+                sceneIndex = 0;
             }
         }
 

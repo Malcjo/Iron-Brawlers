@@ -20,6 +20,6 @@ public class SlidableMask : MonoBehaviour
 
     private void Update()
     {
-        rectTransform.position = Vector2.Lerp(farLeft, farRight, slider.value);
+        //rectTransform.position = Vector2.Lerp(farLeft, farRight, slider.value);
     }
 }

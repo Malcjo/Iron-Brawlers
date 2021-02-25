@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
-public enum MenuLayer { Title, Main_Menu, Character_Select, Stage_Select, Settings, credits, }
+//public enum MenuLayer { Title, Main_Menu, Character_Select, Stage_Select, Settings, credits, }
 public class MainMenu : MonoBehaviour
     
 {
@@ -49,6 +49,8 @@ public class MainMenu : MonoBehaviour
         titleScreen.SetActive(true);
         gameUIGroup.SetActive(false);
         inGame = false;
+        inTitleScreen = true;
+        //GameManager.instance.DisableEventSystemOBJ();
     }
 
     private void Update()
@@ -57,17 +59,20 @@ public class MainMenu : MonoBehaviour
         {
             if (Input.anyKey)
             {
-                if(currentMenu == MenuLayer.Title)
+                if (currentMenu == MenuLayer.Title)
                 {
                     currentMenu = MenuLayer.Main_Menu;
                     previousMenu = MenuLayer.Title;
+                    //GameManager.instance.EnableEventSystemOBJ();
                 }
 
                 titleScreen.SetActive(false);
-                menuController.ChangedSelectedButton(PlayButton);
+                mainMenuScreen.SetActive(true);
+                GameManager.instance.SelectPlayButton();
                 inTitleScreen = false;
             }
         }
+
 
 
         if(inGame == false)
