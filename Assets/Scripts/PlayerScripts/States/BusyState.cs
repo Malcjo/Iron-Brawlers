@@ -12,7 +12,7 @@ public class BusyState : PlayerState
     {
         if (self.CanMove == true)
         {
-            if(self.VerticalState == Player.VState.grounded)
+            if (self.VerticalState == Player.VState.grounded)
             {
                 body.velocity = new Vector3(input.horizontalInput * calculate.characterSpeed, body.velocity.y, 0) + calculate.addForce;
             }

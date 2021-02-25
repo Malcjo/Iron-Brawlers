@@ -57,6 +57,10 @@ public class Hitbox : MonoBehaviour
     }
     private void Update()
     {
+
+    }
+    private void FixedUpdate()
+    {
         AttackTypeCall();
         HitBoxSize();
     }
@@ -166,11 +170,11 @@ public class Hitbox : MonoBehaviour
         {
             case Attackdirection.Forward:
                 return new Vector3(player.GetFacingDirection(), 1f, 0);
-            case Attackdirection.Low:
-                return new Vector3(player.GetFacingDirection() * 1f, 1f,0);
-            case Attackdirection.Aerial:
+            case Attackdirection.Low:                            
+                return new Vector3(player.GetFacingDirection(), 1f,0);
+            case Attackdirection.Aerial:                         
                 return new Vector3(player.GetFacingDirection(), 1f, 0);
-            case Attackdirection.Down:
+            case Attackdirection.Down:                           
                 return new Vector3(player.GetFacingDirection(), 1f, 0);
             default:
                 hitDirection.x = 1; hitDirection.y = 0.5f; hitDirection.z = 0; ;
@@ -182,15 +186,15 @@ public class Hitbox : MonoBehaviour
         switch (_attackType)
         {
             case AttackType.Jab:
-                return 15;
+                return 5;
             case AttackType.LegSweep:
-                return 15;
+                return 5;
             case AttackType.Aerial:
-                return 15;
+                return 5;
             case AttackType.ArmourBreak:
-                return 15;
+                return 5;
             case AttackType.HeavyJab:
-                return 15;
+                return 5;
         }
         return 0;
     }
@@ -271,10 +275,6 @@ public class Hitbox : MonoBehaviour
     }
     void ApplyDamageToPlayer(Player defendingPlayer, Player attackingPlayer)
     {
-
-
-
-
         defendingPlayer.FreezeCharacterBeingAttacked(HitDirection(), KnockBackStrenth());
         attackingPlayer.FreezeCharacterAttacking();
         defendingPlayer.HitStun();

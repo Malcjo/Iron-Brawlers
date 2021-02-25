@@ -62,7 +62,7 @@ public class Player : MonoBehaviour
 
     private bool _blocking;
     private bool _canTurn;
-    private bool _canMove;
+    [SerializeField] private bool _canMove;
 
     private bool canJump;
     private bool canAirMove;
@@ -184,7 +184,7 @@ public class Player : MonoBehaviour
             addForceValue = new Vector3(0,10,0);
         }
         CheckDirection();
-        CharacterStates();
+
         ReduceCounter();
         currentPushPower = _currentPushPower;
         //Debug.Log("Horizontal " + playerInput.GetHorizontal());
@@ -193,6 +193,7 @@ public class Player : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        CharacterStates();
         Observation();
         GravityCheck();
     }
@@ -234,6 +235,7 @@ public class Player : MonoBehaviour
                 addForce = addForceValue
             }
             );
+        Debug.DrawRay(rb.position, addForceValue);
     }
 
     public void SetState(PlayerState state)
@@ -396,8 +398,8 @@ public class Player : MonoBehaviour
         }
         else if (_currentVerticalState == VState.grounded && MyState.StickToGround())
         {
-            rb.velocity = new Vector3(rb.velocity.x, 0, 0);
-            gravityValue = 0;
+            //rb.velocity = new Vector3(rb.velocity.x, 0, 0);
+            //gravityValue = 0;
         }
     }
     #endregion
@@ -446,7 +448,7 @@ public class Player : MonoBehaviour
         addForceValue.y = Mathf.Lerp(addForceValue.y, 0, 27f * Time.deltaTime);
 
         //reducing to zero if small value
-        if (addForceValue.magnitude < 0.05f && addForceValue.magnitude > -0.05f)
+        if (addForceValue.magnitude < 0.05f)
         {
             addForceValue = Vector3.zero;
         }
