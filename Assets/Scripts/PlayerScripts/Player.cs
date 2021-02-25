@@ -108,7 +108,7 @@ public class Player : MonoBehaviour
     [SerializeField] private bool freezeAttackingPlayer;
     private float _PlayerInput;
     private Vector3 _TempDirection;
-    private float _tempPower;
+    private Vector3 _tempPower;
     [SerializeField] private bool isDummy;
 
     [SerializeField] private Transform SpawnPoint;
@@ -472,15 +472,15 @@ public class Player : MonoBehaviour
         playerActions.JabHitStun();
     }
 
-    public void Damage(Vector3 Hit, float Power)
+    public void Damage(Vector3 Hit, Vector3 Power)
     {
         hitStun = true;
         hitStunTimer = 1.1f;
         addForceValue = AddForce(Hit, Power /*- (armourCheck.knockBackResistance + knockbackResistance)*/);
     }
-    private Vector3 AddForce(Vector3 HitDirection, float hitStrength)
+    private Vector3 AddForce(Vector3 HitDirection, Vector3 hitStrength)
     {
-        Vector3 addForceValue = ((HitDirection) * (hitStrength));
+        Vector3 addForceValue = ((HitDirection) + (hitStrength));
         return addForceValue;
     }
     public void FreezeCharacterAttacking()
@@ -492,7 +492,7 @@ public class Player : MonoBehaviour
         UseGravity = false;
         attackingFreezeCounter = MaxFreezeCounter;
     }
-    public void FreezeCharacterBeingAttacked(Vector3 Direction, float Power)
+    public void FreezeCharacterBeingAttacked(Vector3 Direction, Vector3 Power)
     {
         playerActions.PauseCurrentAnimation();
         freezeAttackedPlayer = true;

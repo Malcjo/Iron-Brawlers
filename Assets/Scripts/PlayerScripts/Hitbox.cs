@@ -181,22 +181,22 @@ public class Hitbox : MonoBehaviour
                 return new Vector3(player.GetFacingDirection(), 0.3f, 0);
         }
     }
-    public float KnockBackStrenth()
+    public Vector3 KnockBackStrenth()
     {
         switch (_attackType)
         {
             case AttackType.Jab:
-                return 5;
+                return new Vector3(player.GetFacingDirection() * 5, 2, 0);
             case AttackType.LegSweep:
-                return 5;
+                return new Vector3(player.GetFacingDirection() * 5, 7, 0);
             case AttackType.Aerial:
-                return 5;
+                return new Vector3(player.GetFacingDirection() * 10, -5, 0);
             case AttackType.ArmourBreak:
-                return 5;
+                return new Vector3(player.GetFacingDirection() * 5, 2, 0);
             case AttackType.HeavyJab:
-                return 5;
+                return new Vector3(player.GetFacingDirection() * 20, 2, 0);
         }
-        return 0;
+        return new Vector3(player.GetFacingDirection() * 5, 2, 0);
     }
 
     public void ShowHitBoxes()
