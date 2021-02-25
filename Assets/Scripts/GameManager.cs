@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     public PlayerInputManager inputManager;
     [SerializeField] private List<GameObject> players = new List<GameObject>();
 
-    [SerializeField] GameObject Title, MenuGroup, MainMenu, CharacterSelect;
+    [SerializeField] GameObject Title, MenuGroup, MainMenu, CharacterSelect, GameUIGroup;
     [SerializeField] Button PlayButton;
 
     [SerializeField] private GameObject eventSystem;
@@ -109,10 +109,12 @@ public class GameManager : MonoBehaviour
     private void EnableMenuCanvas()
     {
         MenuGroup.SetActive(true);
+        GameUIGroup.SetActive(false);
     }
     public void DisableMenuCanvas()
     {
         MenuGroup.SetActive(false);
+        GameUIGroup.SetActive(true);
     }
     private void ResetMenu()
     {
