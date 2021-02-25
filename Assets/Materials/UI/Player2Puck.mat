@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Player1Puck
+  m_Name: Player2Puck
   m_Shader: {fileID: 4800000, guid: d15762ecbffbffc42863e9e0a37356d8, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -33,11 +33,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: 65de6407ca1cd3c4cb4daf813045b134, type: 3}
+        m_Texture: {fileID: 2800000, guid: 9c7a0508e51a6354ab579a62aa3133ee, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: b9fd0d87c34e55349937fa1c9d6bce92, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
@@ -92,6 +92,6 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _HColor: {r: 1, g: 1, b: 1, a: 1}
-    - _SColor: {r: 0.4188323, g: 0.4845264, b: 0.49056602, a: 1}
+    - _SColor: {r: 0.49019608, g: 0.41960785, b: 0.42600825, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   m_BuildTextureStacks: []
