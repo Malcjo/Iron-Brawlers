@@ -6,7 +6,7 @@ public enum ColliderState { Closed, Open, Colliding }
 public class HurtBoxManager : MonoBehaviour
 {
     private ColliderState _state;
-
+    [SerializeField] private Hitbox hitBoxScript;
     public bool viewHurtBoxes;
 
     public GameObject[] locator;
@@ -25,6 +25,7 @@ public class HurtBoxManager : MonoBehaviour
             float tempLocatorRadius = locatorScript.GetRadius();
 
             GameObject tempHurtBox = Instantiate(hurtbox, locator[i].transform.position, Quaternion.identity, locator[i].transform);
+            hitBoxScript.AddHurtBoxToList(tempHurtBox);
 
             HurtBox tempHurtBoxScript = tempHurtBox.GetComponent<HurtBox>();
             tempHurtBoxScript.BodyLocation = locatorScript.GetBodyLocation();

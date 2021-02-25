@@ -23,7 +23,7 @@ public class MovingState : PlayerState
 
                 self.CanMove = true;
                 self.CanTurn = true;
-                body.velocity = new Vector3(0, body.velocity.y, 0) + calculate.addForce;
+                //body.velocity = new Vector3(0, body.velocity.y, 0) + calculate.addForce;
                 body.velocity = new Vector3(input.horizontalInput * calculate.characterSpeed, body.velocity.y, 0) + calculate.addForce;
             }
 

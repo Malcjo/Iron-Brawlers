@@ -13,6 +13,7 @@ public class HurtBox : MonoBehaviour
     [SerializeField] private int activeLayer;
     [SerializeField] private Player self;
     private float newRadius;
+    public bool HasBeenHit = false;
     private void Start()
     {
         self = GetComponentInParent<Player>();
@@ -45,7 +46,11 @@ public class HurtBox : MonoBehaviour
     {
         transform.localPosition = Vector3.zero;
     }
-
+    public void TurnOnHitBoxHit()
+    {
+        HasBeenHit = true;
+        Debug.Log("Hurtbox has been hit");
+    }
     public void SetRadius(float externalRadius)
     {
         radius = externalRadius;

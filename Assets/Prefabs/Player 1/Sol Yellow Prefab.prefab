@@ -2819,6 +2819,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6c7ca999314c5e408b3e130442f0a30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitBoxScript: {fileID: 313810321763567124}
   viewHurtBoxes: 0
   locator:
   - {fileID: 1987514414496696148}
@@ -3611,6 +3612,8 @@ MonoBehaviour:
   anim: {fileID: 7493047910308989877}
   player: {fileID: 6920566488468720987}
   freezeCharacter: 0
+  HitHurtBoxes: []
+  HurtboxList: []
   armIndex: 0
   tipHitBox: {fileID: 3938678239750794650}
   midHitBox: {fileID: 0}

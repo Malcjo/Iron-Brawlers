@@ -27,7 +27,8 @@ public class Hitbox : MonoBehaviour
     HitBoxManager hitBoxManager;
 
     [SerializeField] private bool freezeCharacter;
-
+    public List<GameObject> HitHurtBoxes = new List<GameObject>();
+    public List<GameObject> HurtboxList = new List<GameObject>();
 
     public int armIndex;
     public GameObject tipHitBox, midHitBox;
@@ -38,6 +39,10 @@ public class Hitbox : MonoBehaviour
 
     Vector3 hitDirection;
 
+    public void AddHurtBoxToList(GameObject obj)
+    {
+        HurtboxList.Add(obj);
+    }
     private void Awake()
     {
         hitboxCollider = GetComponent<Collider>();
@@ -160,13 +165,13 @@ public class Hitbox : MonoBehaviour
         switch (_attackDir)
         {
             case Attackdirection.Forward:
-                return new Vector3(player.GetFacingDirection(), 0.3f, 0);
+                return new Vector3(player.GetFacingDirection(), 1f, 0);
             case Attackdirection.Low:
-                return new Vector3(player.GetFacingDirection() * 0.1f, 1f,0);
+                return new Vector3(player.GetFacingDirection() * 1f, 1f,0);
             case Attackdirection.Aerial:
-                return new Vector3(player.GetFacingDirection(), 0.5f, 0);
+                return new Vector3(player.GetFacingDirection(), 1f, 0);
             case Attackdirection.Down:
-                return new Vector3(player.GetFacingDirection(), -0.5f, 0);
+                return new Vector3(player.GetFacingDirection(), 1f, 0);
             default:
                 hitDirection.x = 1; hitDirection.y = 0.5f; hitDirection.z = 0; ;
                 return new Vector3(player.GetFacingDirection(), 0.3f, 0);
@@ -177,15 +182,15 @@ public class Hitbox : MonoBehaviour
         switch (_attackType)
         {
             case AttackType.Jab:
-                return 10;
+                return 15;
             case AttackType.LegSweep:
-                return 7;
+                return 15;
             case AttackType.Aerial:
-                return 3;
+                return 15;
             case AttackType.ArmourBreak:
-                return 5;
+                return 15;
             case AttackType.HeavyJab:
-                return 4;
+                return 15;
         }
         return 0;
     }
@@ -200,6 +205,20 @@ public class Hitbox : MonoBehaviour
         meshRenderer.enabled = false;
         hitboxCollider.enabled = false;
     }
+
+    private void cycleThroughHurboxes()
+    {
+        for (int i = 0; i < HurtboxList.Count; i++)
+        {
+            Debug.Log("Go through list");
+            var _tempHurtBox = HurtboxList[i].gameObject.GetComponent<HurtBox>();
+            if (_tempHurtBox.HasBeenHit == true)
+            {
+                Debug.Log("Add hurtbox to list");
+                HitHurtBoxes.Add(_tempHurtBox.gameObject);
+            }
+        }
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Ground"))
@@ -213,11 +232,14 @@ public class Hitbox : MonoBehaviour
 
         if (other.gameObject.CompareTag("Hurtbox"))
         {
+
             var temptDefendingPlayer = other.GetComponentInParent<Player>();
             var tempAttackingPlayer = GetComponentInParent<Player>();
             var temptArmourCheck = other.GetComponentInParent<ArmourCheck>();
-            HurtBox tempHurtBox = other.GetComponent<HurtBox>();
-
+            HurtBox tempHurtBox = other.gameObject.GetComponent<HurtBox>();
+            tempHurtBox.TurnOnHitBoxHit();
+            Debug.Log("Hit Character");
+            //cycleThroughHurboxes();
             if (temptDefendingPlayer.GetBlocking() == true)
             {
                 HideHitBoxes();
