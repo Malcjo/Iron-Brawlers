@@ -14,12 +14,12 @@ public class SlidableMask : MonoBehaviour
     {
         rectTransform = GetComponent<RectTransform>();
 
-        farLeft = rectTransform.position - new Vector3(rectTransform.rect.width, 0f);
-        farRight = rectTransform.position;
+        farLeft = rectTransform.localPosition - new Vector3(rectTransform.rect.width, 0f);
+        farRight = rectTransform.localPosition;
     }
 
     private void Update()
     {
-        //rectTransform.position = Vector2.Lerp(farLeft, farRight, slider.value);
+        rectTransform.localPosition = Vector2.Lerp(farLeft, farRight, slider.value);
     }
 }
