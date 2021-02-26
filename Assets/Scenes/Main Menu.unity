@@ -353,6 +353,50 @@ Transform:
   m_Father: {fileID: 1118076101}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &54456150
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 54456152}
+  - component: {fileID: 54456151}
+  m_Layer: 0
+  m_Name: CameraConnecter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &54456151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 54456150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b55544971d12384ba0a55c711537847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Camera: {fileID: 777068530}
+--- !u!4 &54456152
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 54456150}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.4055176, y: 9.38, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &56071869
 GameObject:
   m_ObjectHideFlags: 0
@@ -45243,12 +45287,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputManager: {fileID: 7419585329876064304}
   players: []
+  mainCanvas: {fileID: 1954441484530459901}
   Title: {fileID: 1954441484891075974}
   MenuGroup: {fileID: 8440738218759293620}
   MainMenu: {fileID: 1954441483267434347}
   CharacterSelect: {fileID: 1665105250636181945}
   GameUIGroup: {fileID: 6095520434226671343}
   PlayButton: {fileID: 1954441483724161502}
+  mainCamera: {fileID: 0}
   eventSystem: {fileID: 7419585329876064302}
   inGame: 0
   player1Spawn: {fileID: 0}
@@ -50518,12 +50564,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputManager: {fileID: 7419585329876064304}
   players: []
+  mainCanvas: {fileID: 0}
   Title: {fileID: 8675122251694207291}
   MenuGroup: {fileID: 1610086504416136713}
   MainMenu: {fileID: 8675122252210545622}
   CharacterSelect: {fileID: 2005901990}
   GameUIGroup: {fileID: 0}
   PlayButton: {fileID: 489117872}
+  mainCamera: {fileID: 0}
   eventSystem: {fileID: 7419585329876064302}
   inGame: 0
   player1Spawn: {fileID: 0}

@@ -14,10 +14,10 @@ public class GameManager : MonoBehaviour
     MenuLayer PreviousLayer;
     public PlayerInputManager inputManager;
     [SerializeField] private List<GameObject> players = new List<GameObject>();
-
+    [SerializeField] private Canvas mainCanvas;
     [SerializeField] GameObject Title, MenuGroup, MainMenu, CharacterSelect, GameUIGroup;
     [SerializeField] Button PlayButton;
-
+    [SerializeField] GameObject mainCamera;
     [SerializeField] private GameObject eventSystem;
     public bool inGame = false;
     bool player1Ready, player2Ready;
@@ -64,9 +64,11 @@ public class GameManager : MonoBehaviour
             eventSystem = GameObject.FindWithTag("Event");
             inputManager = eventSystem.GetComponent<PlayerInputManager>();
         }
+
     }
     private void Start()
     {
+        ConnectCameraToCanvas();
         if (sceneIndex == 1)
         {
             Debug.Log("ResetMenu");
@@ -115,6 +117,21 @@ public class GameManager : MonoBehaviour
     {
         MenuGroup.SetActive(false);
         GameUIGroup.SetActive(true);
+    }
+    public void GetCameraObject(GameObject cam)
+    {
+        mainCamera = cam;
+    }
+    //need to take camera out of DontDestroyOnLoad to then attach camera to canvas and then bring it back
+    //or jsut have a prefabed cavas on each scene, might have issue with getting the main buttons to select when transitioning through the script
+    public void ConnectCameraToCanvas()
+    {
+        GameObject camObj = mainCamera;
+        DontDestroyOnLoad(camObj);
+        Camera cam = camObj.gameObject.GetComponent<Camera>();
+        Canvas canvas = mainCanvas.GetComponent<Canvas>();
+        canvas.worldCamera = cam;
+        SceneManager.MoveGameObjectToScene(camObj.gameObject, SceneManager.GetActiveScene());
     }
     private void ResetMenu()
     {
@@ -225,6 +242,7 @@ public class GameManager : MonoBehaviour
         }
 
     }
+
     public void AddPlayerToList(GameObject player)
     {
         players.Add(player);
