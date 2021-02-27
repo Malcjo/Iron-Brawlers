@@ -348,19 +348,31 @@ public class PlayerActions : MonoBehaviour
     }
     public void JabHitStun()
     {
-        StartCoroutine(HitStunJab());
+        StartCoroutine(KnockbackStun());
     }
-    private IEnumerator HitStunJab()
+    private IEnumerator KnockbackStun()
     {
         self.SetState(new BusyState());
-        anim.Play("HITSTUN_NORMAL_HIT");
+        //anim.Play("HITSTUN_NORMAL_HIT");
+        anim.Play("KNOCKDOWN_NORMAL");
         anim.speed = 1;
         yield return null;
         while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
         {
             yield return null;
         }
+        StartCoroutine(GetBackUp());
 
+    }
+    private IEnumerator GetBackUp()
+    {
+        anim.Play("GETTING_UP_NORMAL");
+        anim.speed = 1;
+        yield return null;
+        while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
+        {
+            yield return null;
+        }
         RevertBackToIdleState();
     }
 }
