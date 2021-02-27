@@ -49353,7 +49353,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 005ea62b013960942a65c30cde60be53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxTimer: 5
+  maxTimer: 60
   minTimer: 0
   currentTime: 0
   pause: 0
