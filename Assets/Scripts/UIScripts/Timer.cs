@@ -11,6 +11,9 @@ using UnityEngine.SceneManagement;
 
 public class Timer : MonoBehaviour
 {
+    [SerializeField] private float maxTimer;
+    [SerializeField] private float minTimer;
+    [SerializeField] private float currentTime;
     private TMP_Text timerUI;
     private float timer;
     public bool pause;
@@ -28,26 +31,23 @@ public class Timer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        int timerInt = Convert.ToInt32(timer);
-        timerUI.text = "" + timerInt;
+        currentTime = Convert.ToInt32(timer);
+        timerUI.text = "" + currentTime;
 
         if(pause == false)
         {
             TimerCountDown();
         }
-        /*
-        if(timer <= 0)
+        if (timer < (int)minTimer)
         {
-
-            //GameAnalytics.NewResourceEvent(GAResourceFlowType.Source, "Points", Score.points,"Mowed_Grass","score_G");
-            //Reset to main menu scene
-            //SceneManager.LoadScene(0);
+            Debug.Log("Run Out Of Time!");
+            ResetTimer();
+            GameManager.instance.TimerRunOut();
         }
-        */
     }
     void ResetTimer()
     {
-        timer = startTimerValue;
+        timer = maxTimer;
     }
     void TimerCountDown()
     {

@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     MenuLayer currentScreen;
     MenuLayer PreviousLayer;
     public PlayerInputManager inputManager;
+    [SerializeField] private Timer timer;
     [SerializeField] private List<GameObject> players = new List<GameObject>();
     [SerializeField] private Canvas mainCanvas;
     [SerializeField] GameObject Title, MenuGroup, MainMenu, CharacterSelect, GameUIGroup;
@@ -28,7 +29,7 @@ public class GameManager : MonoBehaviour
     public GameObject uimodule;
     [SerializeField] private int leftBounds, rightBounds, belowBounds, highBounds;
 
-    [SerializeField] GameObject player1Wins, player2Wins, player1Loses;
+    [SerializeField] GameObject player1Wins, player2Wins, player1Loses, bothLose;
 
     /*
      * 0 = title
@@ -241,10 +242,24 @@ public class GameManager : MonoBehaviour
                 break;
         }
     }
+    public int draws;
+    public void TimerRunOut()
+    {
+        draws++;
+        ResetPlayers();
+    }
     private void TrackPlayers()
     {
         if(players.Count > 0)
         {
+            if(draws == 3)
+            {
+                Destroy(players[0].gameObject);
+                Destroy(players[1].gameObject);
+                bothLose.SetActive(true);
+                timer.pause = true;
+                Invoke("TransisitonBackToMainMenu", 2);
+            }
             TrackPlayer1();
             if (players.Count > 1)
             {
@@ -272,8 +287,9 @@ public class GameManager : MonoBehaviour
                     Debug.Log("Player 1 Loses!");
                     player1Loses.SetActive(true);
                 }
-                Invoke("TransisitonBackToMainMenu", 3);
+                Invoke("TransisitonBackToMainMenu", 2);
             }
+
         }
     }
     private void TransisitonBackToMainMenu()
@@ -281,6 +297,7 @@ public class GameManager : MonoBehaviour
         player1Wins.SetActive(false);
         player2Wins.SetActive(false);
         player1Loses.SetActive(false);
+        bothLose.SetActive(false);
         SetRoundsToZero();
         SceneManager.LoadScene(0);
         players.Clear();
