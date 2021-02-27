@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: FinalWater Large
-  m_Shader: {fileID: -6465566751694194690, guid: 221e89f68443f994a89ca4a1ea8f9da0,
+  m_Shader: {fileID: -6465566751694194690, guid: f8c64868d5aa30b4ca81227b309ba5ee,
     type: 3}
   m_ShaderKeywords: _RECEIVE_SHADOWS_OFF
   m_LightmapFlags: 4
