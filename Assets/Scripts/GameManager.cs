@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviour
     public GameObject uimodule;
     [SerializeField] private int leftBounds, rightBounds, belowBounds, highBounds;
 
+    [SerializeField] GameObject player1Wins, player2Wins, player1Loses;
+
     /*
      * 0 = title
      * 1 = main meuu
@@ -39,6 +41,9 @@ public class GameManager : MonoBehaviour
      * 7 = In game
      * 8 = Pause Screen
      * 9 = Victory screen
+     * 10 = CONTROLS
+     * 11 = AUDIO
+     * 12 = GRAPHICS
      */
 
     public static GameManager instance;
@@ -68,7 +73,7 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        ConnectCameraToCanvas();
+        ConnectToGameManager(0);
         if (sceneIndex == 1)
         {
             Debug.Log("ResetMenu");
@@ -77,7 +82,6 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
-
         TrackPlayers();
         EnableJoiningManager();
     }
@@ -93,8 +97,6 @@ public class GameManager : MonoBehaviour
         EventSystem system = eventSystem.gameObject.GetComponent<EventSystem>();
         system.firstSelectedGameObject = PlayButton.gameObject;
         system.SetSelectedGameObject(system.firstSelectedGameObject);
-        //check the selection of input system ui
-        //use event system get component to find it
     }
     public void DisableEventSystemOBJ()
     {
@@ -122,16 +124,35 @@ public class GameManager : MonoBehaviour
     {
         mainCamera = cam;
     }
-    //need to take camera out of DontDestroyOnLoad to then attach camera to canvas and then bring it back
-    //or jsut have a prefabed cavas on each scene, might have issue with getting the main buttons to select when transitioning through the script
-    public void ConnectCameraToCanvas()
+    public void ConnectToGameManager(int CameraType)
+    {
+        Invoke("MoveGameManagerOutOfDontDestroy", 1);
+        ConnectToCanvas(CameraType);
+        Invoke("SetThisToDontDestroy", 1);
+    }
+    private void ConnectToCanvas(int CameraType)
     {
         GameObject camObj = mainCamera;
         DontDestroyOnLoad(camObj);
         Camera cam = camObj.gameObject.GetComponent<Camera>();
         Canvas canvas = mainCanvas.GetComponent<Canvas>();
+        if (CameraType == 0)
+        {
+            canvas.renderMode = RenderMode.ScreenSpaceCamera;
+        }
+        else if (CameraType == 1)
+        {
+            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        }
         canvas.worldCamera = cam;
-        SceneManager.MoveGameObjectToScene(camObj.gameObject, SceneManager.GetActiveScene());
+    }
+    private void SetThisToDontDestroy()
+    {
+        DontDestroyOnLoad(this.gameObject);
+    }
+    private void MoveGameManagerOutOfDontDestroy()
+    {
+        SceneManager.MoveGameObjectToScene(this.gameObject, SceneManager.GetActiveScene());
     }
     private void ResetMenu()
     {
@@ -231,18 +252,43 @@ public class GameManager : MonoBehaviour
             }
             if (player1Rounds == 3 || player2Rounds == 3)
             {
-                SetRoundsToZero();
-                SceneManager.LoadScene(0);
-                players.Clear();
-                ChangeSceneIndex(1);
-                EnableMenuCanvas();
-                ResetMenu();
-                sceneIndex = 0;
+                if(players.Count > 1)
+                {
+                    if (player1Rounds > player2Rounds)
+                    {
+                        Debug.Log("Player 1 wins!");
+                        player1Wins.SetActive(true);
+                        Destroy(players[1].gameObject);
+                    }
+                    else if (player2Rounds < player1Rounds)
+                    {
+                        Debug.Log("Player 2 wins!");
+                        player2Wins.SetActive(true);
+                        Destroy(players[0].gameObject);
+                    }
+                }
+                else
+                {
+                    Debug.Log("Player 1 Loses!");
+                    player1Loses.SetActive(true);
+                }
+                Invoke("TransisitonBackToMainMenu", 3);
             }
         }
-
     }
-
+    private void TransisitonBackToMainMenu()
+    {
+        player1Wins.SetActive(false);
+        player2Wins.SetActive(false);
+        player1Loses.SetActive(false);
+        SetRoundsToZero();
+        SceneManager.LoadScene(0);
+        players.Clear();
+        ChangeSceneIndex(1);
+        EnableMenuCanvas();
+        ResetMenu();
+        sceneIndex = 1;
+    }
     public void AddPlayerToList(GameObject player)
     {
         players.Add(player);
