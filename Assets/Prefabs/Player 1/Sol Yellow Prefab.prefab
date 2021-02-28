@@ -1109,7 +1109,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1268653946504625820}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -1524,7 +1524,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1548339274987178637}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -2687,6 +2687,7 @@ MonoBehaviour:
   gravityValue: -10
   friction: 0.25
   maxLives: 3
+  landing: 0
   speed: 6.5
   weight: 22
   knockbackResistance: 3
@@ -7183,6 +7184,7 @@ MonoBehaviour:
   breakingPoint: 9
   playerUI: {fileID: 0}
   self: {fileID: 6920566488468720987}
+  WaitTime: 0
 --- !u!1 &7795831943907951826
 GameObject:
   m_ObjectHideFlags: 0

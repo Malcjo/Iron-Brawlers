@@ -19,7 +19,8 @@ public class BusyState : PlayerState
             }
             else
             {
-                body.velocity = new Vector3(input.horizontalInput * (calculate.characterSpeed / 1.5f), body.velocity.y, 0) + calculate.addForce;
+                //body.velocity = new Vector3(input.horizontalInput * (calculate.characterSpeed / 1.5f), body.velocity.y, 0) + calculate.addForce;
+                body.velocity = new Vector3(body.velocity.x, body.velocity.y, 0) + calculate.addForce;
             }
         }
         else

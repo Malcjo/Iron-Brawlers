@@ -82,7 +82,7 @@ public class Player : MonoBehaviour
     private PlayerState MyState;
 
     private bool _wasAttacking;
-    private int facingDirection;
+    [SerializeField] private int facingDirection;
     public int lives;
     public int characterType;
     private bool _inAir;
@@ -181,9 +181,11 @@ public class Player : MonoBehaviour
         {
             addForceValue = new Vector3(0,10,0);
         }
+        
         CheckDirection();
         ReduceCounter();
         currentPushPower = _currentPushPower;
+        FindFacingDirection();
 
     }
     private void FixedUpdate()
@@ -238,7 +240,17 @@ public class Player : MonoBehaviour
         MyState = state;
     }
     #endregion
-
+    private void FindFacingDirection()
+    {
+        if (transform.rotation.y == 0)
+        {
+            facingDirection = -1;
+        }
+        else if (transform.rotation.y == -180)
+        {
+            facingDirection = 1;
+        }
+    }
     private IEnumerator StopCharacter()
     {
         yield return new WaitForSeconds(0.1f);
@@ -367,10 +379,12 @@ public class Player : MonoBehaviour
     [SerializeField] private float _currentPushPower;
     public void MoveCharacterWithAttacks(float MoveStrength)
     {
+
         rb.velocity = new Vector3(rb.velocity.x + facingDirection * MoveStrength, rb.velocity.y, 0) * Time.deltaTime;
         rb.AddForce(new Vector3(facingDirection * MoveStrength, rb.velocity.y, 0));
         StartCoroutine(StopCharacter());
     }
+
     void Gravity()
     {
         TerminalVelocity();

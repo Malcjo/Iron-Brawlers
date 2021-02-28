@@ -172,6 +172,7 @@ public class PlayerActions : MonoBehaviour
 
     private IEnumerator _AerialAttack()
     {
+        self.MoveCharacterWithAttacks(200);
         anim.Play("AERIAL");
         FindObjectOfType<AudioManager>().Play(AudioManager.AERIALMISS);
         anim.speed = 1;
@@ -182,6 +183,7 @@ public class PlayerActions : MonoBehaviour
         hitboxScript._attackType = AttackType.Aerial;
         hitboxScript._attackDir = Attackdirection.Aerial;
         hitboxManager.AeiralAttack();
+
         while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
         {
             while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.4f)
@@ -274,6 +276,7 @@ public class PlayerActions : MonoBehaviour
         {
             yield return null;
         }
+        self.landing = false;
         self.SetState(new IdleState());
     }
     public void LegSweep()
