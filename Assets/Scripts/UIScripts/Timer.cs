@@ -23,6 +23,7 @@ public class Timer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameManager.instance.SetMaxTimer(maxTimer);
         ResetTimer();
         pause = false;
         timerUI = GetComponent<TMP_Text>();
@@ -45,7 +46,7 @@ public class Timer : MonoBehaviour
             GameManager.instance.TimerRunOut();
         }
     }
-    void ResetTimer()
+    public void ResetTimer()
     {
         timer = maxTimer;
     }

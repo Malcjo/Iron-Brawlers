@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     MenuLayer currentScreen;
     MenuLayer PreviousLayer;
     public PlayerInputManager inputManager;
-    [SerializeField] private Timer timer;
+    [SerializeField] private Timer timerScript;
     [SerializeField] private List<GameObject> players = new List<GameObject>();
     [SerializeField] private Canvas mainCanvas;
     [SerializeField] GameObject Title, MenuGroup, MainMenu, CharacterSelect, GameUIGroup;
@@ -36,6 +36,9 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject player1Round1, player1Round2, player1Round3;
     [SerializeField] private GameObject player2Round1, player2Round2, player2Round3;
+
+    [SerializeField] private GameObject player1Head, player1Chest, player1Legs;
+    [SerializeField] private GameObject player2Head, player2Chest, player2Legs;
 
     /*
      * 0 = title
@@ -92,11 +95,11 @@ public class GameManager : MonoBehaviour
         TrackPlayers();
         EnableJoiningManager();
         TrackPlayerRounds();
+        TrackPlayersArmour();
     }
     public void EnableEventSystemOBJ()
     {
         eventSystem.SetActive(true);
-
     }
     public void SelectPlayButton()
     {
@@ -264,6 +267,83 @@ public class GameManager : MonoBehaviour
         draws++;
         ResetPlayers();
     }
+    [SerializeField] private float maxTimer;
+    public void SetMaxTimer(float max)
+    {
+        maxTimer = max;
+    }
+    private void TrackPlayersArmour()
+    {
+        TrackPlayer1Armour();
+        TrackPlayer2Armour();
+    }
+    private void TrackPlayer1Armour()
+    {
+        if(players.Count >= 1)
+        {
+            ArmourCheck playerArmour = players[0].GetComponent<ArmourCheck>();
+            if (playerArmour.HeadArmourCondiditon == ArmourCheck.ArmourCondition.armour)
+            {
+                player1Head.SetActive(true);
+            }
+            else if (playerArmour.HeadArmourCondiditon == ArmourCheck.ArmourCondition.none)
+            {
+                player1Head.SetActive(false);
+            }
+
+            if (playerArmour.ChestArmourCondition == ArmourCheck.ArmourCondition.armour)
+            {
+                player1Chest.SetActive(true);
+            }
+            else if (playerArmour.ChestArmourCondition == ArmourCheck.ArmourCondition.none)
+            {
+                player1Chest.SetActive(false);
+            }
+
+            if (playerArmour.LegArmourCondition == ArmourCheck.ArmourCondition.armour)
+            {
+                player1Legs.SetActive(true);
+            }
+            else if (playerArmour.LegArmourCondition == ArmourCheck.ArmourCondition.none)
+            {
+                player1Legs.SetActive(false);
+            }
+        }
+    }
+
+    private void TrackPlayer2Armour()
+    {
+        if(players.Count > 1)
+        {
+            ArmourCheck playerArmour = players[1].GetComponent<ArmourCheck>();
+            if (playerArmour.HeadArmourCondiditon == ArmourCheck.ArmourCondition.armour)
+            {
+                player2Head.SetActive(true);
+            }
+            else if (playerArmour.HeadArmourCondiditon == ArmourCheck.ArmourCondition.none)
+            {
+                player2Head.SetActive(false);
+            }
+
+            if (playerArmour.ChestArmourCondition == ArmourCheck.ArmourCondition.armour)
+            {
+                player2Chest.SetActive(true);
+            }
+            else if (playerArmour.ChestArmourCondition == ArmourCheck.ArmourCondition.none)
+            {
+                player2Chest.SetActive(false);
+            }
+
+            if (playerArmour.LegArmourCondition == ArmourCheck.ArmourCondition.armour)
+            {
+                player2Legs.SetActive(true);
+            }
+            else if (playerArmour.LegArmourCondition == ArmourCheck.ArmourCondition.none)
+            {
+                player2Legs.SetActive(false);
+            }
+        }
+    }
     private void TrackPlayers()
     {
         if(players.Count > 0)
@@ -273,7 +353,7 @@ public class GameManager : MonoBehaviour
                 Destroy(players[0].gameObject);
                 Destroy(players[1].gameObject);
                 bothLose.SetActive(true);
-                timer.pause = true;
+                timerScript.pause = true;
                 Invoke("TransisitonBackToMainMenu", 2);
             }
             TrackPlayer1();
@@ -291,7 +371,7 @@ public class GameManager : MonoBehaviour
                         player1Wins.SetActive(true);
                         Destroy(players[1].gameObject);
                     }
-                    else if (player2Rounds < player1Rounds)
+                    else if (player2Rounds > player1Rounds)
                     {
                         Debug.Log("Player 2 wins!");
                         player2Wins.SetActive(true);
@@ -305,7 +385,6 @@ public class GameManager : MonoBehaviour
                 }
                 Invoke("TransisitonBackToMainMenu", 2);
             }
-
         }
     }
     private void TransisitonBackToMainMenu()
@@ -386,6 +465,7 @@ public class GameManager : MonoBehaviour
     }
     private void ResetPlayers()
     {
+        timerScript.ResetTimer();
         players[0].gameObject.GetComponent<ArmourCheck>().SetAllArmourOn();
         players[0].gameObject.GetComponent<Player>().StopMovingCharacterOnYAxis();
         players[0].gameObject.GetComponent<Player>().StopMovingCharacterOnXAxis();

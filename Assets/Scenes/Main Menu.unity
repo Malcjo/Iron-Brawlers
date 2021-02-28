@@ -7825,7 +7825,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &758881205
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14879,7 +14879,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1437192155
 RectTransform:
   m_ObjectHideFlags: 0
@@ -51873,7 +51873,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputManager: {fileID: 7419585329876064304}
-  timer: {fileID: 4187275908889569972}
+  timerScript: {fileID: 4187275908889569972}
   players: []
   mainCanvas: {fileID: 1954441484530459901}
   Title: {fileID: 1954441484891075974}
@@ -51907,7 +51907,14 @@ MonoBehaviour:
   player2Round1: {fileID: 1482344994}
   player2Round2: {fileID: 1332494659}
   player2Round3: {fileID: 1045005187}
+  player1Head: {fileID: 1437192154}
+  player1Chest: {fileID: 557608131}
+  player1Legs: {fileID: 861574425}
+  player2Head: {fileID: 758881204}
+  player2Chest: {fileID: 2021316948}
+  player2Legs: {fileID: 747330275}
   draws: 0
+  maxTimer: 0
 --- !u!4 &3060168155268841314
 Transform:
   m_ObjectHideFlags: 0
@@ -56904,7 +56911,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputManager: {fileID: 7419585329876064304}
-  timer: {fileID: 0}
+  timerScript: {fileID: 0}
   players: []
   mainCanvas: {fileID: 0}
   Title: {fileID: 8675122251694207291}
@@ -56938,7 +56945,14 @@ MonoBehaviour:
   player2Round1: {fileID: 0}
   player2Round2: {fileID: 0}
   player2Round3: {fileID: 0}
+  player1Head: {fileID: 0}
+  player1Chest: {fileID: 0}
+  player1Legs: {fileID: 0}
+  player2Head: {fileID: 0}
+  player2Chest: {fileID: 0}
+  player2Legs: {fileID: 0}
   draws: 0
+  maxTimer: 0
 --- !u!4 &5263666916092492767
 Transform:
   m_ObjectHideFlags: 0
