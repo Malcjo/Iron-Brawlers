@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Spike1
+  m_Name: Spike2
   m_Shader: {fileID: 4800000, guid: d15762ecbffbffc42863e9e0a37356d8, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -20,7 +20,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: 47e94559b61f5a84880e7180be7780fa, type: 3}
+        m_Texture: {fileID: 2800000, guid: 12d9cecb9ce29a94fa9b8bc5efb6e0cb, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -62,7 +62,7 @@ Material:
     - _OcclusionStrength: 1
     - _QueueOffset: 0
     - _RampSmoothing: 1
-    - _RampThreshold: 0.01
+    - _RampThreshold: 0.18
     - _ReceiveShadows: 1
     - _ReceiveShadowsOff: 1
     - _RenderingMode: 0
@@ -79,7 +79,7 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _HColor: {r: 1, g: 1, b: 1, a: 1}
-    - _SColor: {r: 0.4528302, g: 0.4528302, b: 0.4528302, a: 1}
+    - _SColor: {r: 0.5943396, g: 0.5943396, b: 0.5943396, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &3747653625531381581
