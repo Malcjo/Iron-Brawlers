@@ -185,11 +185,12 @@ public class Player : MonoBehaviour
         CheckDirection();
         ReduceCounter();
         currentPushPower = _currentPushPower;
-        FindFacingDirection();
+
 
     }
     private void FixedUpdate()
     {
+        FindFacingDirection();
         CharacterStates();
         Observation();
         GravityCheck();
