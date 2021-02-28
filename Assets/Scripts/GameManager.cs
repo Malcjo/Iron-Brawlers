@@ -7,6 +7,8 @@ using UnityEngine.InputSystem.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Net.Http.Headers;
+
 public enum MenuLayer { Title, Main_Menu, Character_Select, Stage_Select, Settings, credits, GameScreen}
 public class GameManager : MonoBehaviour
 {
@@ -31,6 +33,9 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameObject player1Wins, player2Wins, player1Loses, bothLose;
     [SerializeField] private Slider player1UI, player2UI;
+
+    [SerializeField] private GameObject player1Round1, player1Round2, player1Round3;
+    [SerializeField] private GameObject player2Round1, player2Round2, player2Round3;
 
     /*
      * 0 = title
@@ -86,6 +91,7 @@ public class GameManager : MonoBehaviour
     {
         TrackPlayers();
         EnableJoiningManager();
+        TrackPlayerRounds();
     }
     public void EnableEventSystemOBJ()
     {
@@ -304,6 +310,12 @@ public class GameManager : MonoBehaviour
     }
     private void TransisitonBackToMainMenu()
     {
+        player1Round1.SetActive(false);
+        player1Round2.SetActive(false);
+        player1Round3.SetActive(false);
+        player2Round1.SetActive(false);
+        player2Round2.SetActive(false);
+        player2Round3.SetActive(false);
         player1Wins.SetActive(false);
         player2Wins.SetActive(false);
         player1Loses.SetActive(false);
@@ -319,6 +331,42 @@ public class GameManager : MonoBehaviour
     public void AddPlayerToList(GameObject player)
     {
         players.Add(player);
+    }
+    private void TrackPlayerRounds()
+    {
+        TrackPlayer1Rounds();
+        TrackPlayer2Rounds();
+    }
+    private void TrackPlayer1Rounds()
+    {
+        switch (player1Rounds)
+        {
+            case 1:
+                player1Round1.SetActive(true);
+                break;
+            case 2:
+                player1Round2.SetActive(true);
+                break;
+            case 3:
+                player1Round3.SetActive(true);
+                break;
+        }
+    }
+    private void TrackPlayer2Rounds()
+    {
+        switch (player2Rounds)
+        {
+            case 1:
+                player2Round1.SetActive(true);
+                break;
+            case 2:
+                player2Round2.SetActive(true);
+                break;
+            case 3:
+                player2Round3.SetActive(true);
+                break;
+        }
+    
     }
     private void TrackPlayer1()
     {
