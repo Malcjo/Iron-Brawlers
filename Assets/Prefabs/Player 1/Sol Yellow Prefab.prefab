@@ -7176,15 +7176,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gauge: {fileID: 9011973057594521544}
   armourCheck: {fileID: 2313752520885891229}
-  gaugeRect: {fileID: 7644251002968681734}
   currentGauge: 0
-  GaugeImage: {fileID: 8357114697706920294}
-  previousColour: {r: 0, g: 0, b: 0, a: 0}
-  currentColour: {r: 0, g: 0, b: 0, a: 0}
   lowDamamgeValue: 2
   midDamamgeValue: 4
   highDamamgeValue: 7
   breakingPoint: 9
+  playerUI: {fileID: 0}
+  self: {fileID: 6920566488468720987}
 --- !u!1 &7795831943907951826
 GameObject:
   m_ObjectHideFlags: 0
