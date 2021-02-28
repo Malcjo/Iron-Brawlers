@@ -346,16 +346,17 @@ public class PlayerActions : MonoBehaviour
     {
         hitboxManager.StopBlock();
     }
-    public void JabHitStun()
+    public void HitstunKnockBack()
     {
         StartCoroutine(KnockbackStun());
     }
     private IEnumerator KnockbackStun()
     {
         self.SetState(new BusyState());
+        self.CanTurn = false;
         //anim.Play("HITSTUN_NORMAL_HIT");
         anim.Play("KNOCKDOWN_NORMAL");
-        anim.speed = 1;
+        anim.speed = 2.5f;
         yield return null;
         while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
         {
@@ -367,7 +368,7 @@ public class PlayerActions : MonoBehaviour
     private IEnumerator GetBackUp()
     {
         anim.Play("GETTING_UP_NORMAL");
-        anim.speed = 1;
+        anim.speed = 2;
         yield return null;
         while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
         {

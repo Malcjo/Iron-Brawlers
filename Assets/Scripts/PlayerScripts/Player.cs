@@ -469,13 +469,13 @@ public class Player : MonoBehaviour
     #region Attacking and Damaging
     public void HitStun()
     {
-        playerActions.JabHitStun();
+        playerActions.HitstunKnockBack();
     }
 
     public void Damage(Vector3 Hit, Vector3 Power)
     {
         hitStun = true;
-        hitStunTimer = 1.1f;
+        hitStunTimer = 2f;
         addForceValue = AddForce(Hit, Power /*- (armourCheck.knockBackResistance + knockbackResistance)*/);
     }
     private Vector3 AddForce(Vector3 HitDirection, Vector3 hitStrength)

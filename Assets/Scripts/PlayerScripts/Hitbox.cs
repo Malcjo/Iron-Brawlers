@@ -210,19 +210,6 @@ public class Hitbox : MonoBehaviour
         hitboxCollider.enabled = false;
     }
 
-    private void cycleThroughHurboxes()
-    {
-        for (int i = 0; i < HurtboxList.Count; i++)
-        {
-            Debug.Log("Go through list");
-            var _tempHurtBox = HurtboxList[i].gameObject.GetComponent<HurtBox>();
-            if (_tempHurtBox.HasBeenHit == true)
-            {
-                Debug.Log("Add hurtbox to list");
-                HitHurtBoxes.Add(_tempHurtBox.gameObject);
-            }
-        }
-    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Ground"))
@@ -243,7 +230,6 @@ public class Hitbox : MonoBehaviour
             HurtBox tempHurtBox = other.gameObject.GetComponent<HurtBox>();
             tempHurtBox.TurnOnHitBoxHit();
             Debug.Log("Hit Character");
-            //cycleThroughHurboxes();
             if (temptDefendingPlayer.GetBlocking() == true)
             {
                 HideHitBoxes();
