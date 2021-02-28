@@ -15,7 +15,8 @@ public class JumpingState : PlayerState
             self.CanJumpIndex = 0;
             self.CanMove = true;
             self.CanTurn = true;
-            body.velocity = new Vector3(Mathf.Lerp(body.velocity.x, 0, calculate.friction), body.velocity.y, 0) + calculate.addForce;
+            body.velocity = new Vector3(body.velocity.x, body.velocity.y, 0) + calculate.addForce;
+            //body.velocity = new Vector3(Mathf.Lerp(body.velocity.x, 0, calculate.friction), body.velocity.y, 0) + calculate.addForce;
             if (body.velocity.x < 0.25f && body.velocity.x > -0.25f)
             {
                 body.velocity = new Vector3(0, body.velocity.y, 0) + calculate.addForce;

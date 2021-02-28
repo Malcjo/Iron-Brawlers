@@ -10,6 +10,7 @@ public class CrouchingState : PlayerState
     }
     public override void RunState(Player self, Rigidbody body, PlayerActions actions, InputState input, Calculating calculate)
     {
+
         actions.Crouching();
         if (!CrouchingCheck(input.crouchInput))
         {

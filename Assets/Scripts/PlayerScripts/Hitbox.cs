@@ -186,7 +186,7 @@ public class Hitbox : MonoBehaviour
             case AttackType.LegSweep:
                 return new Vector3(player.GetFacingDirection() * 5, 7, 0);
             case AttackType.Aerial:
-                return new Vector3(player.GetFacingDirection() * 10, -5, 0);
+                return new Vector3(player.GetFacingDirection() * 15, -2, 0);
             case AttackType.ArmourBreak:
                 return new Vector3(player.GetFacingDirection() * 5, 2, 0);
             case AttackType.HeavyJab:
@@ -255,13 +255,21 @@ public class Hitbox : MonoBehaviour
             Instantiate(dustHitParticle, transform.position, transform.rotation);
         }
 
-        ApplyDamageToPlayer(DefendingPlayer, attackingPlayer);
+        ApplyDamageToPlayer(DefendingPlayer, attackingPlayer, _attackType);
     }
-    void ApplyDamageToPlayer(Player defendingPlayer, Player attackingPlayer)
+    void ApplyDamageToPlayer(Player defendingPlayer, Player attackingPlayer, AttackType attackType)
     {
         defendingPlayer.FreezeCharacterBeingAttacked(HitDirection(), KnockBackStrenth());
         attackingPlayer.FreezeCharacterAttacking();
-        defendingPlayer.HitStun();
+        if(attackType == AttackType.Aerial || attackType == AttackType.ArmourBreak || attackType == AttackType.HeavyJab || attackType == AttackType.LegSweep)
+        {
+            defendingPlayer.KnockDown();
+        }
+        else if(attackType == AttackType.Jab)
+        {
+            defendingPlayer.KnockBack();
+        }
+
         HideHitBoxes();
     }
 }

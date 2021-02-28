@@ -378,11 +378,27 @@ public class PlayerActions : MonoBehaviour
         }
         self.SetState(new IdleState());
     }
-    public void HitstunKnockBack()
+    public void HitKnockBack()
     {
-        StartCoroutine(KnockbackStun());
+        StartCoroutine(KnockBack());
     }
-    private IEnumerator KnockbackStun()
+    IEnumerator KnockBack()
+    {
+        self.SetState(new BusyState());
+        yield return null;
+        anim.Play("HITSTUN_NORMAL_HIT");
+        anim.speed = 2;
+        while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
+        {
+            yield return null;
+        }
+        self.SetState(new IdleState());
+    }
+    public void HitStunKnockDown()
+    {
+        StartCoroutine(KnockDownStun());
+    }
+    private IEnumerator KnockDownStun()
     {
         self.SetState(new BusyState());
         self.CanTurn = false;

@@ -462,9 +462,13 @@ public class Player : MonoBehaviour
     }
     #endregion
     #region Attacking and Damaging
-    public void HitStun()
+    public void KnockDown()
     {
-        playerActions.HitstunKnockBack();
+        playerActions.HitStunKnockDown();
+    }
+    public void KnockBack()
+    {
+        playerActions.HitKnockBack();
     }
 
     public void Damage(Vector3 Hit, Vector3 Power)
