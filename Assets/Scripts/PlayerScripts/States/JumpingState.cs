@@ -27,6 +27,20 @@ public class JumpingState : PlayerState
         }
         else
         {
+            if (AttackCheck(input.attackInput))
+            {
+                actions.AerialAttack();
+                self.CanTurn = false;
+                self.WasAttacking = true;
+                self.SetState(new BusyState());
+            }
+            if (AttackCheck(input.attackInput) && (self.GetFacingDirection() > 0 || self.GetFacingDirection() < 0))
+            {
+                actions.AerialAttack();
+                self.CanTurn = false;
+                self.WasAttacking = true;
+                self.SetState(new BusyState());
+            }
             if (self.VerticalState == Player.VState.jumping)
             {
                 actions.Jumping();

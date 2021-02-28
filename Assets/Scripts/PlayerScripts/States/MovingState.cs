@@ -70,7 +70,21 @@ public class MovingState : PlayerState
         }
         else
         {
-            if(self.VerticalState == Player.VState.jumping)
+            if (AttackCheck(input.attackInput) && MovementCheck(input.horizontalInput))
+            {
+                actions.AerialAttack();
+                self.CanTurn = false;
+                self.WasAttacking = true;
+                self.SetState(new BusyState());
+            }
+            if (AttackCheck(input.attackInput))
+            {
+                actions.AerialAttack();
+                self.CanTurn = false;
+                self.WasAttacking = true;
+                self.SetState(new BusyState());
+            }
+            if (self.VerticalState == Player.VState.jumping)
             {
                 actions.Jumping();
             }
@@ -80,6 +94,7 @@ public class MovingState : PlayerState
             }
             if(self.GetCanAirMove() == true)
             {
+
                 if (MovementCheck(input.horizontalInput))
                 {
                     body.velocity = new Vector3(0, body.velocity.y, 0) + calculate.addForce;
