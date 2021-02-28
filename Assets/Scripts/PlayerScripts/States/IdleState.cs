@@ -49,7 +49,8 @@ public class IdleState : PlayerState
         }
         if (BlockCheck(input.blockInput))
         {
-            //self.SetState(new BusyState());
+            actions.Block();
+            self.SetState(new BlockState());
         }
 
 

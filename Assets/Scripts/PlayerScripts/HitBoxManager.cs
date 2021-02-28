@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HitBoxManager : MonoBehaviour
 {
-    public GameObject tipHitBox, blockBox;
+    public GameObject hitBoxObj, blockObj;
     public Hitbox hitBox;
     [Range(0,1)]
     private int armIndex;
@@ -13,7 +13,6 @@ public class HitBoxManager : MonoBehaviour
     private PlayerInputHandler playerInput;
     public Vector3 blockOffset;
 
-    [SerializeField] private GameObject blockObj;
     private Attackdirection _attackDirection;
     private FollowDes _hitboxFollow;
     private HitBoxScale _hitboxScale;
@@ -32,16 +31,16 @@ public class HitBoxManager : MonoBehaviour
         playerInput = GetComponentInParent<PlayerInputHandler>();
         animationScript = GetComponentInChildren<PlayerActions>();
         hitBox.HideHitBoxes();
-        blockBox.SetActive(false);
+        blockObj.SetActive(false);
     }
     public void Block()
     {
-        blockBox.transform.position = transform.position + new Vector3(player.GetFacingDirection() * blockOffset.x, blockOffset.y, 0);
-        blockBox.SetActive(true);
+        //blockBox.transform.position = transform.position + new Vector3(player.GetFacingDirection() * blockOffset.x, blockOffset.y, 0);
+        blockObj.SetActive(true);
     }
     public void StopBlock()
     {
-        blockBox.SetActive(false);
+        blockObj.SetActive(false);
     }
     public void SwapHands(int _armIndex)
     {

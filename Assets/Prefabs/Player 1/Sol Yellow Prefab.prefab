@@ -325,13 +325,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afed8a1a1e82d0647870d50032667fb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tipHitBox: {fileID: 3938678239750794650}
-  blockBox: {fileID: 3938678240040364670}
+  hitBoxObj: {fileID: 3938678239750794650}
+  blockObj: {fileID: 3938678240040364670}
   hitBox: {fileID: 313810321763567124}
   animationScript: {fileID: 4061201398229762350}
   player: {fileID: 6920566488468720987}
   blockOffset: {x: 0, y: 0, z: 0}
-  blockObj: {fileID: 0}
 --- !u!114 &4061201398229762350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2693,6 +2692,7 @@ MonoBehaviour:
   knockbackResistance: 3
   rb: {fileID: 4643627960604792311}
   hitbox: {fileID: 3938678239750794650}
+  blockObj: {fileID: 3938678240040364670}
   playerInputHandler: {fileID: 0}
   armourCheck: {fileID: 2313752520885891229}
   raycasts: {fileID: 2535414095278585841}

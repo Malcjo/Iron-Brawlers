@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float knockbackResistance = 3;
 
     [SerializeField] private Rigidbody rb;
-    [SerializeField] private GameObject hitbox;
+    [SerializeField] private GameObject hitbox, blockObj;
 
     [SerializeField] private PlayerInputHandler playerInputHandler;
     [SerializeField] private ArmourCheck armourCheck;
@@ -164,11 +164,13 @@ public class Player : MonoBehaviour
         if(playerNumber == PlayerIndex.Player1)
         {
             hitbox.gameObject.layer = 8;
+            blockObj.gameObject.layer = 8;
             SpawnPoint = GameManager.instance.player1Spawn;
         }
         else if(playerNumber == PlayerIndex.Player2)
         {
             hitbox.gameObject.layer = 9;
+            blockObj.gameObject.layer = 9;
             SpawnPoint = GameManager.instance.player2Spawn;
         }
         transform.position = SpawnPoint.transform.position;

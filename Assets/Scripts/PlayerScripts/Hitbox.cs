@@ -214,7 +214,9 @@ public class Hitbox : MonoBehaviour
         }
         if (other.gameObject.CompareTag("Block"))
         {
+            Debug.Log("Blocked");
             HideHitBoxes();
+            return;
         }
 
         if (other.gameObject.CompareTag("Hurtbox"))
