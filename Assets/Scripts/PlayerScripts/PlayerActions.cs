@@ -176,7 +176,7 @@ public class PlayerActions : MonoBehaviour
         FindObjectOfType<AudioManager>().Play(AudioManager.AERIALMISS);
         anim.speed = 1;
         self.CanTurn = false;
-        self.UseGravity = false;
+        //self.UseGravity = false;
         self.StopMovingCharacterOnYAxis();
         yield return null;
         hitboxScript._attackType = AttackType.Aerial;
@@ -188,7 +188,7 @@ public class PlayerActions : MonoBehaviour
             {
                 yield return null;
             }
-            self.UseGravity = true;
+            //self.UseGravity = true;
             yield return null;
         }
         self.SetState(new JumpingState());
