@@ -84,26 +84,35 @@ public class MovingState : PlayerState
                 {
                     body.velocity = new Vector3(0, body.velocity.y, 0) + calculate.addForce;
                     body.velocity = new Vector3(input.horizontalInput * calculate.characterSpeed, body.velocity.y, 0) + calculate.addForce;
-                    if (input.horizontalInput == self.GetFacingDirection())
+
+                    if (AttackCheck(input.attackInput) && MovementCheck(input.horizontalInput))
                     {
-                        if (AttackCheck(input.attackInput) && MovementCheck(input.horizontalInput))
-                        {
-                            actions.AerialAttack();
-                            self.CanTurn = false;
-                            self.WasAttacking = true;
-                            self.SetState(new BusyState());
-                        }
+                        actions.AerialAttack();
+                        self.CanTurn = false;
+                        self.WasAttacking = true;
+                        self.SetState(new BusyState());
                     }
-                    if (input.horizontalInput == self.GetFacingDirection() * -1)
-                    {
-                        if (AttackCheck(input.attackInput) && MovementCheck(input.horizontalInput))
-                        {
-                            actions.AerialAttack();
-                            self.CanTurn = false;
-                            self.WasAttacking = true;
-                            self.SetState(new BusyState());
-                        }
-                    }
+
+                    //if (input.horizontalInput == self.GetFacingDirection())
+                    //{
+                    //    if (AttackCheck(input.attackInput) && MovementCheck(input.horizontalInput))
+                    //    {
+                    //        actions.AerialAttack();
+                    //        self.CanTurn = false;
+                    //        self.WasAttacking = true;
+                    //        self.SetState(new BusyState());
+                    //    }
+                    //}
+                    //if (input.horizontalInput == self.GetFacingDirection() * -1)
+                    //{
+                    //    if (AttackCheck(input.attackInput) && MovementCheck(input.horizontalInput))
+                    //    {
+                    //        actions.AerialAttack();
+                    //        self.CanTurn = false;
+                    //        self.WasAttacking = true;
+                    //        self.SetState(new BusyState());
+                    //    }
+                    //}
                 }
                 if (JumpingCheck(input.jumpInput))
                 {
