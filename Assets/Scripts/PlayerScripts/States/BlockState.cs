@@ -13,7 +13,6 @@ public class BlockState : PlayerState
         if (!BlockCheck(input.blockInput))
         {
             actions.StopBlock();
-            self.SetState(new IdleState());
         }
     }
 }

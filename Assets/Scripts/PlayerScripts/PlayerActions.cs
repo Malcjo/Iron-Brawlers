@@ -340,11 +340,43 @@ public class PlayerActions : MonoBehaviour
     }
     public void Block()
     {
+
+        StartCoroutine(EnterBlock());
+    }
+    IEnumerator EnterBlock()
+    {
         hitboxManager.Block();
+        anim.Play("BLOCK");
+        yield return null;
+        while(anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
+        {
+            yield return null;
+        }
+        StartCoroutine(BlockIdle());
+    }
+    IEnumerator BlockIdle()
+    {
+        anim.Play("BLOCK_IDLE");
+        yield return null;
+        while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
+        {
+            yield return null;
+        }
     }
     public void StopBlock()
     {
+        StartCoroutine(ExitBlock());
+    }
+    IEnumerator ExitBlock()
+    {
         hitboxManager.StopBlock();
+        anim.Play("BLOCK_EXIT");
+        yield return null;
+        while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
+        {
+            yield return null;
+        }
+        self.SetState(new IdleState());
     }
     public void HitstunKnockBack()
     {
