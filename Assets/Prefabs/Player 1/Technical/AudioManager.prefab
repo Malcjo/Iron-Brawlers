@@ -48,7 +48,7 @@ MonoBehaviour:
       type: 2}
     name: Aerial Miss
     loop: 0
-    clip: {fileID: 8300000, guid: d28878cbbf808fb4084bc3de360cf71f, type: 3}
+    clip: {fileID: 8300000, guid: b9fccd123b5f7884fbbd7e177ed83363, type: 3}
     volume: 0.5
     pitch: 1
     source: {fileID: 0}
@@ -58,7 +58,7 @@ MonoBehaviour:
     loop: 0
     clip: {fileID: 8300000, guid: b9fccd123b5f7884fbbd7e177ed83363, type: 3}
     volume: 0.5
-    pitch: 0.9
+    pitch: 1
     source: {fileID: 0}
 --- !u!1 &910931074
 GameObject:
@@ -108,7 +108,7 @@ MonoBehaviour:
       type: 2}
     name: Heavy Miss
     loop: 0
-    clip: {fileID: 8300000, guid: fcbcd1d3c169246478f8f0bc978f149c, type: 3}
+    clip: {fileID: 8300000, guid: b9fccd123b5f7884fbbd7e177ed83363, type: 3}
     volume: 0.5
     pitch: 1
     source: {fileID: 0}
@@ -116,7 +116,7 @@ MonoBehaviour:
       type: 2}
     name: Heavy Miss
     loop: 0
-    clip: {fileID: 8300000, guid: 23e618a9d3669fa4198afd0482b42ab2, type: 3}
+    clip: {fileID: 8300000, guid: b9fccd123b5f7884fbbd7e177ed83363, type: 3}
     volume: 0.5
     pitch: 1
     source: {fileID: 0}
@@ -329,7 +329,7 @@ MonoBehaviour:
     name: AlphaMusic
     loop: 0
     clip: {fileID: 8300000, guid: ff723320e8879f14b95271b5e15747d9, type: 3}
-    volume: 0
+    volume: 0.1
     pitch: 1
     source: {fileID: 0}
   - audioMixerGroup: {fileID: 8700233496606524339, guid: f545ac14fd68fda4da64ec4d708a85eb,
