@@ -138,6 +138,7 @@ public class Player : MonoBehaviour
         jumping,
         falling
     }
+    //Turn back button UI back on later
     void Awake()
     {
         if(standalone == true)
@@ -150,11 +151,6 @@ public class Player : MonoBehaviour
             {
                 transform.position = StandaloneSpawnPoint.transform.position;
             }
-
-        }
-        else
-        {
-
         }
 
         MyState = new IdleState();
@@ -184,11 +180,8 @@ public class Player : MonoBehaviour
             addForceValue = new Vector3(0,10,0);
         }
         CheckDirection();
-
         ReduceCounter();
         currentPushPower = _currentPushPower;
-        //Debug.Log("Horizontal " + playerInput.GetHorizontal());
-       // Debug.Log("Vertial " + playerInput.GetVertical());
 
     }
     private void FixedUpdate()
@@ -517,7 +510,6 @@ public class Player : MonoBehaviour
                 case AttackType.Jab:
                     FindObjectOfType<AudioManager>().Play(AudioManager.JABHITARMOUR);
                     break;
-
                 case AttackType.LegSweep:
                     break;
                 case AttackType.Aerial:

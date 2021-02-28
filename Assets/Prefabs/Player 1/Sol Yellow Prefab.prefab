@@ -331,6 +331,7 @@ MonoBehaviour:
   animationScript: {fileID: 4061201398229762350}
   player: {fileID: 6920566488468720987}
   blockOffset: {x: 0, y: 0, z: 0}
+  blockObj: {fileID: 0}
 --- !u!114 &4061201398229762350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2710,6 +2711,7 @@ MonoBehaviour:
   DebugModeOn: 1
   jumpForce: 9
   hitStun: 0
+  _canMove: 0
   _gravityOn: 0
   canDoubleJump: 0
   _currentJumpIndex: 0
@@ -3657,8 +3659,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3938678240040364670}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.26, y: 3.48, z: -0.17}
-  m_LocalScale: {x: 0.7500001, y: 0.75, z: 0.7500002}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children: []
   m_Father: {fileID: 3938678240389829088}
   m_RootOrder: 1
@@ -3678,7 +3680,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3938678240040364670}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3690,7 +3692,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 3618404c2711f7f4799ec3def1484d8e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

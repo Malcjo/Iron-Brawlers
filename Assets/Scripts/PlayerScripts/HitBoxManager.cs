@@ -13,7 +13,7 @@ public class HitBoxManager : MonoBehaviour
     private PlayerInputHandler playerInput;
     public Vector3 blockOffset;
 
-
+    [SerializeField] private GameObject blockObj;
     private Attackdirection _attackDirection;
     private FollowDes _hitboxFollow;
     private HitBoxScale _hitboxScale;

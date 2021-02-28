@@ -55,10 +55,6 @@ public class Hitbox : MonoBehaviour
     {
         HideHitBoxes();
     }
-    private void Update()
-    {
-
-    }
     private void FixedUpdate()
     {
         AttackTypeCall();
