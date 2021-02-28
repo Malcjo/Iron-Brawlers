@@ -23,7 +23,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject mainCamera;
     [SerializeField] private GameObject eventSystem;
     public bool inGame = false;
-    bool player1Ready, player2Ready;
+    [SerializeField] bool player1Ready;
+    [SerializeField] bool player2Ready;
     public Transform player1Spawn, player2Spawn;
     public int player1Rounds, player2Rounds;
     [SerializeField] private int sceneIndex;
@@ -40,6 +41,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject player1Head, player1Chest, player1Legs;
     [SerializeField] private GameObject player2Head, player2Chest, player2Legs;
     [SerializeField] private GameObject player1Character, player2Character;
+    [SerializeField] private GameObject player1Puck, player2Puck;
+    [SerializeField] private GameObject p1OBJ, p2OBJ;
 
     /*
      * 0 = title
@@ -195,15 +198,21 @@ public class GameManager : MonoBehaviour
     {
         if (player1Ready == true)
         {
+            Debug.Log("Player 2 set ready");
             player2Ready = true;
             player2Character.SetActive(true);
+            p2OBJ.SetActive(true);
+            player2Puck.SetActive(false);
         }
         else
         {
             player1Ready = true;
             player1Character.SetActive(true);
+            p1OBJ.SetActive(true);
+            player1Puck.SetActive(false);
         }
     }
+
     public bool GetPlayer1Ready()
     {
         return player1Ready;
