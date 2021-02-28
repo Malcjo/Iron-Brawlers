@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int leftBounds, rightBounds, belowBounds, highBounds;
 
     [SerializeField] GameObject player1Wins, player2Wins, player1Loses, bothLose;
+    [SerializeField] private Slider player1UI, player2UI;
 
     /*
      * 0 = title
@@ -125,6 +126,15 @@ public class GameManager : MonoBehaviour
     {
         mainCamera = cam;
     }
+    public Slider GetPlayer1UI()
+    {
+        return player1UI;
+    }
+    public Slider GetPlayer2UI()
+    {
+        return player2UI;
+    }
+
     public void ConnectToGameManager(int CameraType)
     {
         Invoke("MoveGameManagerOutOfDontDestroy", 1);

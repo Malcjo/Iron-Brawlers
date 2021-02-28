@@ -13232,7 +13232,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1899991318}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
+  m_MaxValue: 10
   m_WholeNumbers: 0
   m_Value: 1
   m_OnValueChanged:
@@ -22391,7 +22391,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 209610453}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
+  m_MaxValue: 10
   m_WholeNumbers: 0
   m_Value: 1
   m_OnValueChanged:
@@ -51899,6 +51899,8 @@ MonoBehaviour:
   player2Wins: {fileID: 1546889324}
   player1Loses: {fileID: 340799521}
   bothLose: {fileID: 492105600}
+  player1UI: {fileID: 1281432072}
+  player2UI: {fileID: 2096455490}
   draws: 0
 --- !u!4 &3060168155268841314
 Transform:
@@ -56922,6 +56924,8 @@ MonoBehaviour:
   player2Wins: {fileID: 0}
   player1Loses: {fileID: 0}
   bothLose: {fileID: 0}
+  player1UI: {fileID: 0}
+  player2UI: {fileID: 0}
   draws: 0
 --- !u!4 &5263666916092492767
 Transform:
