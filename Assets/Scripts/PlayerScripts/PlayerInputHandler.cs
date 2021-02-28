@@ -113,8 +113,14 @@ public class PlayerInputHandler : MonoBehaviour
     {
         return BlockInputQueued;
     }
-    public bool ShouldArmourBreak(){
-        return ArmourBreakInputQueued;
+    public bool ShouldArmourBreak()
+    {
+        if (ArmourBreakInputQueued)
+        {
+            ArmourBreakInputQueued = false;
+            return true;
+        }
+        return false;
     }
 
 
@@ -194,7 +200,13 @@ public class PlayerInputHandler : MonoBehaviour
         }
     }
 
-
+    public void ArmourBreakInput(CallbackContext context)
+    {
+        if (context.started)
+        {
+            ArmourBreakInputQueued = true;
+        }
+    }
 
 
 
