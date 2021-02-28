@@ -6,7 +6,6 @@ public class GaugeManager : MonoBehaviour
 {
     public Slider gauge;
     [SerializeField] ArmourCheck armourCheck;
-    [SerializeField] RectTransform gaugeRect;
 
     private WaitForSeconds repairTick = new WaitForSeconds(0.1f);
     private Coroutine repair;
@@ -14,15 +13,6 @@ public class GaugeManager : MonoBehaviour
     [SerializeField] private float currentGauge;
     private float maxGauge = 10;
     private float minGague = 0;
-
-    [SerializeField] private Image GaugeImage;
-
-    private Color lowDamamgeColour = new Color(0.432644f, 1, 0, 1);
-    private Color midDamamgeColour = new Color(0.824272f, 1, 0, 1);
-    private Color highDamamgeColour = new Color(1, 0.5828071f, 0, 1);
-    private Color breakingPointColour = new Color(1, 0.1717473f, 0, 1);
-    [SerializeField] private Color previousColour;
-    [SerializeField] private Color currentColour;
 
     [SerializeField] private float lowDamamgeValue = 2;
     [SerializeField] private float midDamamgeValue = 4;
@@ -47,66 +37,35 @@ public class GaugeManager : MonoBehaviour
         gauge.maxValue = maxGauge;
         gauge.minValue = minGague;
         gauge.value = minGague;
-        previousColour = lowDamamgeColour;
-        currentColour = lowDamamgeColour;
     }
     private void Update()
     {
         if (currentGauge < 0) { currentGauge = 0; }
         GaugeVariableChecker();
-        GaugeImage.color = currentColour;
+    }
+    public float GetArmourGaugeValue()
+    {
+        return currentGauge;
     }
     private void GaugeVariableChecker()
     {
         if (currentGauge <= lowDamamgeValue)
         {
-            if (currentColour == midDamamgeColour)
-            {
-                previousColour = midDamamgeColour;
-            }
-            else
-            {
-                previousColour = lowDamamgeColour;
-            }
-            currentColour = lowDamamgeColour;
             WaitTime = lowDamamgeWait;
             DamageTick = lowDamamgeTick;
         }
         else if (currentGauge <= midDamamgeValue)
         {
-            if (currentColour == lowDamamgeColour)
-            {
-                previousColour = lowDamamgeColour;
-            }
-            else if (currentColour == highDamamgeColour)
-            {
-                previousColour = highDamamgeColour;
-            }
-            currentColour = midDamamgeColour;
             WaitTime = midDamamgeWait;
             DamageTick = midDamamgeTick;
         }
         else if (currentGauge <= highDamamgeValue)
         {
-            if (currentColour == midDamamgeColour)
-            {
-                previousColour = midDamamgeColour;
-            }
-            else if (currentColour == breakingPointColour)
-            {
-                previousColour = breakingPointColour;
-            }
-            currentColour = highDamamgeColour;
             WaitTime = highDamamgeWait;
             DamageTick = highDamamgeTick;
         }
         else if (currentGauge <= breakingPoint)
         {
-            if (currentColour == highDamamgeColour)
-            {
-                previousColour = highDamamgeColour;
-            }
-            currentColour = breakingPointColour;
             WaitTime = breakingPointWait;
             DamageTick = breakingPointTick;
         }
