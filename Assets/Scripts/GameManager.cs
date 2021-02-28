@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject player1Head, player1Chest, player1Legs;
     [SerializeField] private GameObject player2Head, player2Chest, player2Legs;
+    [SerializeField] private GameObject player1Character, player2Character;
 
     /*
      * 0 = title
@@ -153,7 +154,6 @@ public class GameManager : MonoBehaviour
     private void ConnectToCanvas(int CameraType)
     {
         GameObject camObj = mainCamera;
-        DontDestroyOnLoad(camObj);
         Camera cam = camObj.gameObject.GetComponent<Camera>();
         Canvas canvas = mainCanvas.GetComponent<Canvas>();
         if (CameraType == 0)
@@ -196,10 +196,12 @@ public class GameManager : MonoBehaviour
         if (player1Ready == true)
         {
             player2Ready = true;
+            player2Character.SetActive(true);
         }
         else
         {
             player1Ready = true;
+            player1Character.SetActive(true);
         }
     }
     public bool GetPlayer1Ready()
@@ -214,6 +216,8 @@ public class GameManager : MonoBehaviour
     {
         player1Ready = false;
         player2Ready = false;
+        player1Character.SetActive(false);
+        player2Character.SetActive(false);
     }
 
     public void ChangeSceneIndex(int index)
@@ -466,12 +470,14 @@ public class GameManager : MonoBehaviour
     private void ResetPlayers()
     {
         timerScript.ResetTimer();
+        players[0].gameObject.GetComponent<Player>().SetJumpIndexTo1();
         players[0].gameObject.GetComponent<ArmourCheck>().SetAllArmourOn();
         players[0].gameObject.GetComponent<Player>().StopMovingCharacterOnYAxis();
         players[0].gameObject.GetComponent<Player>().StopMovingCharacterOnXAxis();
         players[0].transform.position = player1Spawn.transform.position;
         if (players.Count > 1)
         {
+            players[1].gameObject.GetComponent<Player>().SetJumpIndexTo1();
             players[1].gameObject.GetComponent<ArmourCheck>().SetAllArmourOn();
             players[1].gameObject.GetComponent<Player>().StopMovingCharacterOnYAxis();
             players[1].gameObject.GetComponent<Player>().StopMovingCharacterOnXAxis();
