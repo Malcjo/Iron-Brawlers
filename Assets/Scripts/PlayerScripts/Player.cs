@@ -691,6 +691,10 @@ public class Player : MonoBehaviour
             }
         }
     }
+    public void SetJumpIndexTo1()
+    {
+        _currentJumpIndex = 1;
+    }
     private void LandOnGround(RaycastHit hit)
     {
         distanceToGround = hit.distance;
