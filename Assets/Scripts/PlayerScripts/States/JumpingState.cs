@@ -55,7 +55,7 @@ public class JumpingState : PlayerState
                     self.canDoubleJump = false;
                     self.CanTurn = false;
                     self.InAir = true;
-                    body.velocity = (new Vector3(body.velocity.x, calculate.jumpForce, body.velocity.z)) + calculate.addForce;
+                    body.velocity = (new Vector3(body.velocity.x, calculate.jumpForce + 2, body.velocity.z)) + calculate.addForce;
                     self.JumpingOrFallingAnimations();
                     self.AddOneToJumpIndex();
                     Debug.Log("DoubleJump");
