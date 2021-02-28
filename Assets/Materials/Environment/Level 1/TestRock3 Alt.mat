@@ -74,8 +74,8 @@ Material:
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _QueueOffset: 0
-    - _RampSmoothing: 0.23
-    - _RampThreshold: 0.26
+    - _RampSmoothing: 0.09
+    - _RampThreshold: 0.67
     - _ReceiveShadows: 1
     - _ReceiveShadowsOff: 1
     - _RenderingMode: 0
