@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System.Diagnostics.Eventing.Reader;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,6 +26,26 @@ public class BusyState : PlayerState
         {
             body.velocity = new Vector3(body.velocity.x, body.velocity.y, 0) + calculate.addForce;
             //body.velocity = new Vector3(Mathf.Lerp(body.velocity.x, 0, calculate.friction), body.velocity.y, 0);
+        }
+        if(self.landing == true)
+        {
+            if (MovementCheck(input.horizontalInput))
+            {
+                self.landing = false;
+                self.CanMove = true;
+                self.CanTurn = true;
+                body.velocity = new Vector3(input.horizontalInput * calculate.characterSpeed, body.velocity.y, 0) + calculate.addForce;
+
+                self.SetState(new MovingState());
+            }
+            if (CrouchingCheck(input.crouchInput))
+            {
+                self.landing = false;
+                Debug.Log("Crouching");
+                //body.velocity = new Vector3(Mathf.Lerp(body.velocity.x, 0, calculate.friction), body.velocity.y, 0);
+                body.velocity = new Vector3(0, 0, 0) + calculate.addForce;
+                self.SetState(new CrouchingState());
+            }
         }
     }
 }

@@ -19,12 +19,12 @@ public class Player : MonoBehaviour
     [SerializeField] public float gravityValue = -10f;
     [SerializeField] private float friction = 0.25f;
     [SerializeField] private int maxLives = 3;
-
+    public bool landing = false;
     [SerializeField] private float speed = 6.5f;
 
     [SerializeField] private float weight = 22;
     [SerializeField] private float knockbackResistance = 3;
-
+    
     [SerializeField] private Rigidbody rb;
     [SerializeField] private GameObject hitbox, blockObj;
 
@@ -671,6 +671,7 @@ public class Player : MonoBehaviour
             if (hit.collider.CompareTag("Ground") || (hit.collider.CompareTag("Platform")))
             {
                 Invoke("spawnLandingDustParticles", 0.06f);
+                playerActions.Landing();
                 LandOnGround(hit);
             }
         }

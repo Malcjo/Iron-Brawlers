@@ -258,6 +258,24 @@ public class PlayerActions : MonoBehaviour
         anim.speed = 1;
     }
 
+
+    public void Landing()
+    {
+        StartCoroutine(LandingAnim());
+    }
+    IEnumerator LandingAnim()
+    {
+        self.landing = true;
+        anim.Play("LANDING");
+        anim.speed = 2;
+        self.SetState(new BusyState());
+        yield return null;
+        while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
+        {
+            yield return null;
+        }
+        self.SetState(new IdleState());
+    }
     public void LegSweep()
     {
         StartCoroutine(_LegSweep());
@@ -340,7 +358,6 @@ public class PlayerActions : MonoBehaviour
     }
     public void Block()
     {
-
         StartCoroutine(EnterBlock());
     }
     IEnumerator EnterBlock()
