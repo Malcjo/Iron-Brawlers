@@ -229,7 +229,7 @@ public class PlayerActions : MonoBehaviour
     public void Running()
     {
         anim.Play("RUN");
-        anim.speed = self.SendAbsPlayerInputValueToActionsScript();
+        anim.speed = self.GetAbsolutInputValueForMovingAnimationSpeed();
     }
   
 

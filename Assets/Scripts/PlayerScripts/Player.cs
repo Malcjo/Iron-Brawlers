@@ -96,7 +96,7 @@ public class Player : MonoBehaviour
     public bool GetBlocking() { return _blocking; }
     public int GetMaxJumps() { return maxJumps; }
     public VState VerticalState { get { return _currentVerticalState; } set { _currentVerticalState = value; } }
-    public VState PreviousVerticalState { get { return _previousVerticalState; } set { _previousVerticalState = value; } }
+    //public VState PreviousVerticalState { get { return _previousVerticalState; } set { _previousVerticalState = value; } }
 
     [SerializeField] private float attackedFreezeCounter;
     [SerializeField] private float MaxFreezeCounter;
@@ -122,10 +122,10 @@ public class Player : MonoBehaviour
     {
         SpawnPoint = _spawnPoint;
     }
-    public int GetPlayerIndex()
-    {
-        return (int)playerNumber;
-    }
+    //public int GetPlayerIndex()
+    //{
+    //    return (int)playerNumber;
+    //}
     public enum Wall
     {
         leftWall,
@@ -141,17 +141,17 @@ public class Player : MonoBehaviour
     //Turn back button UI back on later
     void Awake()
     {
-        if(standalone == true)
-        {
-            if(GetPlayerIndex() == 0)
-            {
-                transform.position = StandaloneSpawnPoint.transform.position;
-            }
-            else if(GetPlayerIndex()== 1)
-            {
-                transform.position = StandaloneSpawnPoint.transform.position;
-            }
-        }
+        //if(standalone == true)
+        //{
+        //    if(GetPlayerIndex() == 0)
+        //    {
+        //        transform.position = StandaloneSpawnPoint.transform.position;
+        //    }
+        //    else if(GetPlayerIndex()== 1)
+        //    {
+        //        transform.position = StandaloneSpawnPoint.transform.position;
+        //    }
+        //}
 
         MyState = new IdleState();
         _gravityOn = true;
@@ -177,16 +177,14 @@ public class Player : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            addForceValue = new Vector3(0,10,0);
-        }
+        //if (Input.GetKeyDown(KeyCode.L))
+        //{
+        //    addForceValue = new Vector3(0,10,0);
+        //}
         
         CheckDirection();
         ReduceCounter();
-        currentPushPower = _currentPushPower;
-
-
+        //currentPushPower = _currentPushPower;
     }
     private void FixedUpdate()
     {
@@ -196,12 +194,12 @@ public class Player : MonoBehaviour
         GravityCheck();
     }
     #region State Machine
-    [SerializeField] float ObservableVerticalCheck;
+    //[SerializeField] float ObservableVerticalCheck;
 
-    public void ViewVertical(float VerticalCheck)
-    {
-        ObservableVerticalCheck = VerticalCheck;
-    }
+    //public void ViewVertical(float VerticalCheck)
+    //{
+    //    ObservableVerticalCheck = VerticalCheck;
+    //}
 
     private void CharacterStates()
     {
@@ -266,10 +264,10 @@ public class Player : MonoBehaviour
         rb.velocity = new Vector3(rb.velocity.x, 0, 0);
     }
 
-    public void Standalone(bool isStandalone)
-    {
-        standalone = isStandalone;
-    }
+    //public void Standalone(bool isStandalone)
+    //{
+    //    standalone = isStandalone;
+    //}
     public void spawnLandingDustParticles()
     {
         Vector3 landOnGroundDustPartilePosition = new Vector3(transform.localPosition.x + 0.1f, transform.position.y + 0.1f, transform.position.z);
@@ -325,44 +323,44 @@ public class Player : MonoBehaviour
     }
 
     #region Jumping
-    void DoubleJumpCheck()
-    {
-        if (canDoubleJump == true)
-        {
-            _canTurn = true;
-            playerActions.DoubleJump(true);
-            canDoubleJump = false;
-        }
-    }
+    //void DoubleJumpCheck()
+    //{
+    //    if (canDoubleJump == true)
+    //    {
+    //        _canTurn = true;
+    //        playerActions.DoubleJump(true);
+    //        canDoubleJump = false;
+    //    }
+    //}
 
 
     public void AddOneToJumpIndex()
     {
         _currentJumpIndex++;
     }
-    void MinusJumpIndexWhenNotOnGround()
-    {
-        if(_currentJumpIndex == 0)
-        {
-            _currentJumpIndex = 1;
-        }
-    }
+    //void MinusJumpIndexWhenNotOnGround()
+    //{
+    //    if(_currentJumpIndex == 0)
+    //    {
+    //        _currentJumpIndex = 1;
+    //    }
+    //}
     #endregion
     #region Gravity methods
     void TerminalVelocity()
     {
         if (rb.velocity.y < -20)
         {
-            if (isDummy == false)
-            {
-                rb.velocity = new Vector3(playerInputHandler.GetHorizontal() * SetPlayerSpeed(), -20, 0) + addForceValue;
+            rb.velocity = new Vector3(playerInputHandler.GetHorizontal() * SetPlayerSpeed(), -20, 0) + addForceValue;
+            //if (isDummy == false)
+            //{
+            //    rb.velocity = new Vector3(playerInputHandler.GetHorizontal() * SetPlayerSpeed(), -20, 0) + addForceValue;
 
-            }
-            else
-            {
-                rb.velocity = addForceValue;
-            }
-
+            //}
+            //else
+            //{
+            //    rb.velocity = addForceValue;
+            //}
         }
     }
     void GravityCheck()
@@ -376,11 +374,10 @@ public class Player : MonoBehaviour
             Gravity();
         }
     }
-    [SerializeField] private float currentPushPower;
-    [SerializeField] private float _currentPushPower;
+    //[SerializeField] private float currentPushPower;
+    //[SerializeField] private float _currentPushPower;
     public void MoveCharacterWithAttacks(float MoveStrength)
     {
-
         rb.velocity = new Vector3(rb.velocity.x + facingDirection * MoveStrength, rb.velocity.y, 0) * Time.deltaTime;
         rb.AddForce(new Vector3(facingDirection * MoveStrength, rb.velocity.y, 0));
         StartCoroutine(StopCharacter());
@@ -485,7 +482,6 @@ public class Player : MonoBehaviour
     {
         playerActions.HitKnockBack();
     }
-
     public void Damage(Vector3 Hit, Vector3 Power)
     {
         hitStun = true;
@@ -562,11 +558,9 @@ public class Player : MonoBehaviour
             }
         }
     }
-
-
     #endregion
 
-    public float SendAbsPlayerInputValueToActionsScript()
+    public float GetAbsolutInputValueForMovingAnimationSpeed()
     {
         return Mathf.Abs(_PlayerInput);
     }

@@ -9,7 +9,7 @@ public class PlayerInputHandler : MonoBehaviour
     [SerializeField]
     private Player player;
     private PlayerInput playerInput;
-    private PlayerControls playerControls;
+    //private PlayerControls playerControls;
     private Player.PlayerIndex _PlayerNumber;
     [SerializeField] GameObject playerPrefab;
 
