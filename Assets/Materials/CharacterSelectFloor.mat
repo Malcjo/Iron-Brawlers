@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: CharacterSelectBGTest
+  m_Name: CharacterSelectFloor
   m_Shader: {fileID: 4800000, guid: d15762ecbffbffc42863e9e0a37356d8, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -75,7 +75,7 @@ Material:
     - _OcclusionStrength: 1
     - _QueueOffset: 0
     - _RampSmoothing: 0.015
-    - _RampThreshold: 0.361
+    - _RampThreshold: 0.16
     - _ReceiveShadows: 1
     - _ReceiveShadowsOff: 1
     - _RenderingMode: 0
@@ -88,7 +88,7 @@ Material:
     - _ZWrite: 1
     - __dummy__: 0
     m_Colors:
-    - _BaseColor: {r: 0.735849, g: 0.735849, b: 0.735849, a: 1}
+    - _BaseColor: {r: 0.16981131, g: 0.16981131, b: 0.16981131, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _HColor: {r: 0.7169812, g: 0.7169812, b: 0.7169812, a: 1}
