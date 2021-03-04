@@ -12,6 +12,7 @@ public abstract class PlayerState
         public bool crouchInput;
         public bool armourBreakInput;
         public bool blockInput;
+        public bool heavyInput;
     }
     public struct Calculating
     {
@@ -53,6 +54,11 @@ public abstract class PlayerState
     protected bool BlockCheck(bool blockInput)
     {
         return blockInput;
+    }
+
+    protected bool HeavyCheck(bool heavyInput)
+    {
+        return heavyInput;
     }
 
     public virtual bool StickToGround() => true;

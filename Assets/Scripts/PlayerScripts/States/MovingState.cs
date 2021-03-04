@@ -43,13 +43,21 @@ public class MovingState : PlayerState
                 }
             }
 
-            if (AttackCheck(input.attackInput) && MovementCheck(input.horizontalInput))
+            if (HeavyCheck(input.heavyInput) && MovementCheck(input.horizontalInput))
             {
                 self.CanMove = false;
                 actions.Heavy();
                 self.CanTurn = false;
                 self.SetState(new BusyState());
                 self.StopMovingCharacterOnXAxis();
+            }
+            if (AttackCheck(input.attackInput) && MovementCheck(input.horizontalInput))
+            {
+                self.CanMove = false;
+                body.velocity = new Vector3(0, body.velocity.y, 0);
+                self.CanTurn = false;
+                actions.JabCombo();
+                self.SetState(new BusyState());
             }
 
             if (AttackCheck(input.attackInput) && !MovementCheck(input.horizontalInput))
@@ -59,6 +67,14 @@ public class MovingState : PlayerState
                 self.CanTurn = false;
                 actions.JabCombo();
                 self.SetState(new BusyState());
+            }
+            if (HeavyCheck(input.heavyInput) && !MovementCheck(input.horizontalInput))
+            {
+                self.CanMove = false;
+                actions.Heavy();
+                self.CanTurn = false;
+                self.SetState(new BusyState());
+                self.StopMovingCharacterOnXAxis();
             }
 
             if (CrouchingCheck(input.crouchInput))

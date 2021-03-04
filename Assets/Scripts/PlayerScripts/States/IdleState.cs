@@ -47,6 +47,14 @@ public class IdleState : PlayerState
             actions.JabCombo();
             self.SetState(new BusyState());
         }
+        if (HeavyCheck(input.heavyInput))
+        {
+            self.CanMove = false;
+            actions.Heavy();
+            self.CanTurn = false;
+            self.SetState(new BusyState());
+            self.StopMovingCharacterOnXAxis();
+        }
         if (BlockCheck(input.blockInput))
         {
             actions.Block();

@@ -198,6 +198,26 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 5de74386-ecd3-48b7-923e-6118961232b2
     m_ActionName: Player/ArmourBreak[/Keyboard/h]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: fb8dcb07-6b45-4dea-be72-14e353da06d2
+    m_ActionName: Player/Pause[/DualShock4GamepadHID/start,/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -9111263377578361054}
+        m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
+        m_MethodName: HeavyInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: f83a7d4b-20d1-4d64-95f2-588158505266
+    m_ActionName: Player/Heavy[/Keyboard/j,/DualShock4GamepadHID/buttonWest,/Keyboard/numpad3]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -228,8 +248,9 @@ MonoBehaviour:
   ArmourBreakQueued: 0
   CrouchInputHeld: 0
   blockInputHeld: 0
-  ArmourBreakInputQueued: 0
+  ArmourBreakInputQueued: 1
   HorizontalValue: 0
   horizontalInput: 0
+  heavyQueued: 1
   currentWall: 0
   Standalone: 0

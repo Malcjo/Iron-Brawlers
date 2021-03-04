@@ -177,14 +177,9 @@ public class Player : MonoBehaviour
     }
     private void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.L))
-        //{
-        //    addForceValue = new Vector3(0,10,0);
-        //}
         
         CheckDirection();
         ReduceCounter();
-        //currentPushPower = _currentPushPower;
     }
     private void FixedUpdate()
     {
@@ -194,12 +189,6 @@ public class Player : MonoBehaviour
         GravityCheck();
     }
     #region State Machine
-    //[SerializeField] float ObservableVerticalCheck;
-
-    //public void ViewVertical(float VerticalCheck)
-    //{
-    //    ObservableVerticalCheck = VerticalCheck;
-    //}
 
     private void CharacterStates()
     {
@@ -222,7 +211,8 @@ public class Player : MonoBehaviour
                 jumpInput = playerInputHandler.ShouldJump(),
                 crouchInput = playerInputHandler.ShouldCrouch(),
                 armourBreakInput = playerInputHandler.ShouldArmourBreak(),
-                blockInput = playerInputHandler.ShouldBlock()
+                blockInput = playerInputHandler.ShouldBlock(),
+                heavyInput = playerInputHandler.ShouldHeavy()
             },
             new PlayerState.Calculating()
             {
@@ -231,7 +221,7 @@ public class Player : MonoBehaviour
                 characterSpeed = SetPlayerSpeed(),
                 addForce = addForceValue
             }
-            );
+            ); ;
         Debug.DrawRay(rb.position, addForceValue);
     }
 

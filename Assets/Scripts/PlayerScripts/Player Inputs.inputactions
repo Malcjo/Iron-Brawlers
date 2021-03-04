@@ -35,7 +35,7 @@
                     "id": "623ae8d9-59e0-4b10-b606-a2ccf8579902",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "Hold"
                 },
                 {
                     "name": "Block",
@@ -57,6 +57,14 @@
                     "name": "Pause",
                     "type": "Button",
                     "id": "fb8dcb07-6b45-4dea-be72-14e353da06d2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold"
+                },
+                {
+                    "name": "Heavy",
+                    "type": "Button",
+                    "id": "f83a7d4b-20d1-4d64-95f2-588158505266",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Hold"
@@ -232,7 +240,7 @@
                     "name": "",
                     "id": "4b11efbf-8af2-4601-a163-b0c1864c4bd0",
                     "path": "<Keyboard>/s",
-                    "interactions": "Hold",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Crouch",
@@ -243,7 +251,7 @@
                     "name": "",
                     "id": "c46fefca-2b52-4701-ba0c-de72c4f8e055",
                     "path": "<Keyboard>/downArrow",
-                    "interactions": "Hold",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Crouch",
@@ -254,7 +262,7 @@
                     "name": "",
                     "id": "5959be3d-9549-49db-865a-8f3bc359519a",
                     "path": "<Gamepad>/leftStick/down",
-                    "interactions": "Hold",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Crouch",
@@ -265,7 +273,7 @@
                     "name": "",
                     "id": "90a8a033-f69b-404e-86c5-4d12fafb7696",
                     "path": "<Gamepad>/dpad/down",
-                    "interactions": "Hold",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Crouch",
@@ -297,7 +305,7 @@
                 {
                     "name": "",
                     "id": "474a5d57-09f1-4cdf-9557-cb6148c3269d",
-                    "path": "<Keyboard>/j",
+                    "path": "<Keyboard>/u",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -308,7 +316,7 @@
                 {
                     "name": "",
                     "id": "6cc911fa-a137-4299-8828-589825ffa0e2",
-                    "path": "<Keyboard>/numpad3",
+                    "path": "<Keyboard>/numpad6",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -357,6 +365,39 @@
                     "processors": "",
                     "groups": "",
                     "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d61c101b-6ff8-4a75-8f17-f7e22c1e900c",
+                    "path": "<Keyboard>/j",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Heavy",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "497e7cb9-c88b-490a-824d-fe2c9ab2324f",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Heavy",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d2d4af79-5602-45df-b76c-11f2bb309729",
+                    "path": "<Keyboard>/numpad3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Heavy",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
