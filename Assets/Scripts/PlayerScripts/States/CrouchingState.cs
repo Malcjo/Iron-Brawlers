@@ -8,7 +8,7 @@ public class CrouchingState : PlayerState
     {
         return "Crouching";
     }
-    public override void RunState(Player self, Rigidbody body, PlayerActions actions, InputState input, Calculating calculate)
+    public override void RunState(Player self, Rigidbody body, PlayerActions actions, ArmourCheck armour, InputState input, Calculating calculate)
     {
 
         actions.Crouching();
@@ -25,6 +25,10 @@ public class CrouchingState : PlayerState
         }
         if (ArmourBreakCheck(input.armourBreakInput))
         {
+            if(armour.GetChestArmourCondiditon() == ArmourCheck.ArmourCondition.none && armour.GetLegArmourCondition() == ArmourCheck.ArmourCondition.none)
+            {
+                return;
+            }
             actions.ArmourBreak();
             self.SetState(new BusyState());
         }

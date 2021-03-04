@@ -47078,6 +47078,7 @@ MonoBehaviour:
   inGame: 0
   PlayButton: {fileID: 1954441483724161502}
   Stage1Button: {fileID: 0}
+  inTitleScreen: 0
   playerSelected: 0
   gamemanager: {fileID: 0}
   menuController: {fileID: 0}
@@ -54171,10 +54172,10 @@ MonoBehaviour:
   player2Legs: {fileID: 747330275}
   player1Character: {fileID: 8213258392532201648}
   player2Character: {fileID: 1665105250521899240}
-  player1Puck: {fileID: 0}
-  player2Puck: {fileID: 0}
+  player1Puck: {fileID: 1676064430}
+  player2Puck: {fileID: 1907885342}
   p1OBJ: {fileID: 7410522353264361767}
-  p2OBJ: {fileID: 0}
+  p2OBJ: {fileID: 1639738248}
   draws: 0
   maxTimer: 0
 --- !u!4 &3060168155268841314
@@ -59455,7 +59456,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5442745506606040309
 RectTransform:
   m_ObjectHideFlags: 0
@@ -74398,6 +74399,7 @@ MonoBehaviour:
   inGame: 0
   PlayButton: {fileID: 489117872}
   Stage1Button: {fileID: 0}
+  inTitleScreen: 0
   playerSelected: 0
   gamemanager: {fileID: 0}
   menuController: {fileID: 0}

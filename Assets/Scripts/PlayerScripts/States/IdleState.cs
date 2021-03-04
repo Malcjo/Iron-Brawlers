@@ -8,7 +8,7 @@ public class IdleState : PlayerState
     {
         return "Idle";
     }
-    public override void RunState(Player self, Rigidbody body, PlayerActions actions, InputState input, Calculating calculate)
+    public override void RunState(Player self, Rigidbody body, PlayerActions actions, ArmourCheck armour, InputState input, Calculating calculate)
     {
         actions.Idle();
         if (MovementCheck(input.horizontalInput))
@@ -46,6 +46,14 @@ public class IdleState : PlayerState
             self.CanTurn = false;
             actions.JabCombo();
             self.SetState(new BusyState());
+        }
+        if (HeavyCheck(input.heavyInput))
+        {
+            self.CanMove = false;
+            actions.Heavy();
+            self.CanTurn = false;
+            self.SetState(new BusyState());
+            self.StopMovingCharacterOnXAxis();
         }
         if (BlockCheck(input.blockInput))
         {

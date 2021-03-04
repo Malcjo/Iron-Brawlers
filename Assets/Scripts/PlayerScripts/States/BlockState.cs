@@ -8,7 +8,7 @@ public class BlockState : PlayerState
     {
         return "BlockState";
     }
-    public override void RunState(Player self, Rigidbody body, PlayerActions actions, InputState input, Calculating calculate)
+    public override void RunState(Player self, Rigidbody body, PlayerActions actions, ArmourCheck armour, InputState input, Calculating calculate)
     {
         if (!BlockCheck(input.blockInput))
         {

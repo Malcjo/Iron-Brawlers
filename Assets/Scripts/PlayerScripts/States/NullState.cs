@@ -8,7 +8,7 @@ public class NullState : PlayerState
     {
         return "Null";
     }
-    public override void RunState(Player self, Rigidbody body, PlayerActions actions, InputState input, Calculating calculate)
+    public override void RunState(Player self, Rigidbody body, PlayerActions actions, ArmourCheck armour, InputState input, Calculating calculate)
     {
 
     }

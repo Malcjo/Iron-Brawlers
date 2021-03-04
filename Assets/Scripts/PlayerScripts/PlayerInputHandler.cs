@@ -35,8 +35,9 @@ public class PlayerInputHandler : MonoBehaviour
     private float HorizontalValue;
     [SerializeField]
     private float horizontalInput;
+    [SerializeField]
+    private bool heavyQueued;
 
-    [SerializeField] private PlayerConfiguration playerConfig;
     [SerializeField] Player.Wall currentWall;
     [SerializeField] private bool Standalone = false;
 
@@ -124,36 +125,18 @@ public class PlayerInputHandler : MonoBehaviour
         }
         return false;
     }
+    public bool ShouldHeavy()
+    {
+        if (heavyQueued)
+        {
+            heavyQueued = false;
+            return true;
+        }
+        return false;
+    }
 
 
-    //public void InitializePlayer(PlayerConfiguration config)
-    //{
-    //    if (Standalone == false)
-    //    {
-    //        return;
-    //    }
-    //    playerConfig = config;
-    //    config.input.onActionTriggered += Input_OnActionTrigger;
-    //}
-    //private void Input_OnActionTrigger(CallbackContext context)
-    //{
-    //    if (Standalone == false)
-    //    {
-    //        return;
-    //    }
-    //    if (context.action.name == playerControls.Player.PlayerHorizontalMovement.name)
-    //    {
-    //        HorizontalInput(context);
-    //    }
-    //    if (context.action.name == playerControls.Player.PlayerJump.name)
-    //    {
-    //        JumpInput(context);
-    //    }
-    //    if (context.action.name == playerControls.Player.PlayerAttack.name)
-    //    {
-    //        AttackInput(context);
-    //    }
-    //}
+
     public void HorizontalInput(CallbackContext context)
     {
         if(player != null)
@@ -221,10 +204,15 @@ public class PlayerInputHandler : MonoBehaviour
             ArmourBreakInputQueued = true;
         }
     }
-    public 
+    public void HeavyInput(CallbackContext context)
+    {
+        if (context.started)
+        {
+            heavyQueued = true;
+        }
+    }
 
-
-    void WallCheck()
+    public void WallCheck()
     {
         switch (player.GetCurrentWall())
         {
