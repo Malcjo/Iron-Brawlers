@@ -315,7 +315,12 @@ public class PlayerActions : MonoBehaviour
     }
     private IEnumerator _ArmourBreak()
     {
-        if (armourCheck.GetLegArmourCondition() == ArmourCheck.ArmourCondition.armour || armourCheck.GetChestArmourCondiditon() == ArmourCheck.ArmourCondition.armour)
+        if (armourCheck.GetLegArmourCondition() == ArmourCheck.ArmourCondition.none && armourCheck.GetChestArmourCondiditon() == ArmourCheck.ArmourCondition.none)
+        {
+            RevertBackToIdleState();
+            yield return null;
+        }
+        else
         {
             anim.Play("ARMOUR_BREAK");
             anim.speed = 1;
@@ -331,19 +336,6 @@ public class PlayerActions : MonoBehaviour
                 yield return null;
             }
             RevertBackToIdleState();
-        }
-        else
-        {
-            Debug.Log("Cannot Armour Break, no armour");
-            if(self.VerticalState == Player.VState.grounded)
-            {
-                self.SetState(new CrouchingState());
-            }
-            else
-            {
-                self.SetState(new JumpingState());
-            }
-
         }
     }
     private void RevertBackToIdleState()

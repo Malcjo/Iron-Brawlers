@@ -214,6 +214,7 @@ public class Player : MonoBehaviour
             this,
             rb,
             playerActions,
+            armourCheck,
             new PlayerState.InputState()
             {
                 horizontalInput = playerInputHandler.GetHorizontal(),

@@ -9,7 +9,7 @@ public class MovingState : PlayerState
     {
         return "Moving";
     }
-    public override void RunState(Player self, Rigidbody body, PlayerActions actions, InputState input, Calculating calculate)
+    public override void RunState(Player self, Rigidbody body, PlayerActions actions, ArmourCheck armour, InputState input, Calculating calculate)
     {
 
         if (self.VerticalState == Player.VState.grounded)
