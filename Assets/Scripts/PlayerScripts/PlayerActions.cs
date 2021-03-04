@@ -396,6 +396,7 @@ public class PlayerActions : MonoBehaviour
     }
     IEnumerator KnockBack()
     {
+        self.hitStun = true;
         self.SetState(new BusyState());
         yield return null;
         anim.Play("HITSTUN_NORMAL_HIT");
@@ -404,6 +405,7 @@ public class PlayerActions : MonoBehaviour
         {
             yield return null;
         }
+        self.hitStun = false;
         self.SetState(new IdleState());
     }
     public void HitStunKnockDown()
@@ -412,8 +414,9 @@ public class PlayerActions : MonoBehaviour
     }
     private IEnumerator KnockDownStun()
     {
-        self.SetState(new BusyState());
+        self.hitStun = true;
         self.CanTurn = false;
+        self.SetState(new BusyState());
         //anim.Play("HITSTUN_NORMAL_HIT");
         anim.Play("KNOCKDOWN_NORMAL");
         anim.speed = 2.5f;
@@ -430,10 +433,11 @@ public class PlayerActions : MonoBehaviour
         anim.Play("GETTING_UP_NORMAL");
         anim.speed = 2;
         yield return null;
-        while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
+        while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.8f)
         {
             yield return null;
         }
+        self.hitStun = false;
         RevertBackToIdleState();
     }
 }

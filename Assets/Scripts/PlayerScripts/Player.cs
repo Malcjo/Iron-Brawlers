@@ -58,7 +58,7 @@ public class Player : MonoBehaviour
 
     private bool canHitBox;
     private bool hasArmour;
-    [SerializeField] private bool hitStun;
+    public bool hitStun;
 
     private bool _blocking;
     private bool _canTurn;
@@ -473,10 +473,11 @@ public class Player : MonoBehaviour
     {
         playerActions.HitKnockBack();
     }
+    [SerializeField] private float maxHitStunTime;
     public void Damage(Vector3 Hit, Vector3 Power)
     {
-        hitStun = true;
-        hitStunTimer = 2f;
+        //hitStun = true;
+        hitStunTimer = maxHitStunTime;
         addForceValue = AddForce(Hit, Power /*- (armourCheck.knockBackResistance + knockbackResistance)*/);
     }
     private Vector3 AddForce(Vector3 HitDirection, Vector3 hitStrength)

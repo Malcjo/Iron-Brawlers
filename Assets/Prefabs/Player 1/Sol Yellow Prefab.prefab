@@ -2730,9 +2730,7 @@ MonoBehaviour:
   isDummy: 0
   SpawnPoint: {fileID: 0}
   StandaloneSpawnPoint: {fileID: 0}
-  ObservableVerticalCheck: 0
-  currentPushPower: 0
-  _currentPushPower: 0
+  maxHitStunTime: 1
 --- !u!114 &1181940027119994825
 MonoBehaviour:
   m_ObjectHideFlags: 0

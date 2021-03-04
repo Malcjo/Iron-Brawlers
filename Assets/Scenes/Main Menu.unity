@@ -33913,7 +33913,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1665105250636181946
 RectTransform:
   m_ObjectHideFlags: 0
@@ -38780,7 +38780,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1954441483272664136
 RectTransform:
   m_ObjectHideFlags: 0
@@ -47061,27 +47061,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca399d0315444fe48a4b94275c378e3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentMenu: 0
-  previousMenu: 0
-  titleScreen: {fileID: 1954441484891075974}
-  mainMenuScreen: {fileID: 1954441483267434347}
-  menuGroup: {fileID: 8440738218759293620}
-  pauseMenuGroup: {fileID: 0}
-  pauseMenu: {fileID: 0}
-  gameUIGroup: {fileID: 6095520434226671343}
-  settingsMenu: {fileID: 1954441483727055298}
-  characterMenu: {fileID: 1665105250636181945}
-  confirmMenu: {fileID: 0}
-  stageMenu: {fileID: 1665105251636821831}
-  canPause: 0
-  isPaused: 0
-  inGame: 0
-  PlayButton: {fileID: 1954441483724161502}
-  Stage1Button: {fileID: 0}
-  inTitleScreen: 0
-  playerSelected: 0
-  gamemanager: {fileID: 0}
-  menuController: {fileID: 0}
 --- !u!224 &1954441484549931956
 RectTransform:
   m_ObjectHideFlags: 0
@@ -74382,27 +74361,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca399d0315444fe48a4b94275c378e3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentMenu: 0
-  previousMenu: 0
-  titleScreen: {fileID: 8675122251694207291}
-  mainMenuScreen: {fileID: 8675122252210545622}
-  menuGroup: {fileID: 1610086504416136713}
-  pauseMenuGroup: {fileID: 0}
-  pauseMenu: {fileID: 0}
-  gameUIGroup: {fileID: 4029604697191934546}
-  settingsMenu: {fileID: 8675122252875787647}
-  characterMenu: {fileID: 2005901990}
-  confirmMenu: {fileID: 0}
-  stageMenu: {fileID: 8385720039144881146}
-  canPause: 0
-  isPaused: 0
-  inGame: 0
-  PlayButton: {fileID: 489117872}
-  Stage1Button: {fileID: 0}
-  inTitleScreen: 0
-  playerSelected: 0
-  gamemanager: {fileID: 0}
-  menuController: {fileID: 0}
 --- !u!1 &8675122251534721093
 GameObject:
   m_ObjectHideFlags: 0
