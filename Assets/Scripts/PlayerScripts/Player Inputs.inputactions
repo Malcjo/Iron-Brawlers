@@ -130,6 +130,39 @@
                     "isPartOfComposite": true
                 },
                 {
+                    "name": "D-Pad",
+                    "id": "ddd20032-4e2b-4304-87f7-24c8dd740d0a",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "72400ca0-3d86-4f1a-95e0-7a6eaa3963a5",
+                    "path": "<Gamepad>/dpad/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "74fb0c7d-c622-4d93-9250-6c3adf9eb83e",
+                    "path": "<Gamepad>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
                     "name": "",
                     "id": "194cd93e-793c-46e3-953d-0ee17e87b65e",
                     "path": "<Keyboard>/y",
@@ -221,6 +254,17 @@
                     "name": "",
                     "id": "5959be3d-9549-49db-865a-8f3bc359519a",
                     "path": "<Gamepad>/leftStick/down",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Crouch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "90a8a033-f69b-404e-86c5-4d12fafb7696",
+                    "path": "<Gamepad>/dpad/down",
                     "interactions": "Hold",
                     "processors": "",
                     "groups": "",

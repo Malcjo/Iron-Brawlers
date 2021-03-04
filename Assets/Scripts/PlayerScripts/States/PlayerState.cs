@@ -28,7 +28,7 @@ public abstract class PlayerState
     * busy state attacking, blocking or doing a special move, intro, knockdown, victory
     */
     public abstract string GiveName();
-    public abstract void RunState(Player self, Rigidbody body, PlayerActions actions, InputState input, Calculating calculate);
+    public abstract void RunState(Player self, Rigidbody body, PlayerActions actions, ArmourCheck armour, InputState input, Calculating calculate);
 
     protected bool MovementCheck(float horizontalInput)
     {
