@@ -36,7 +36,6 @@ public class PlayerInputHandler : MonoBehaviour
     [SerializeField]
     private float horizontalInput;
 
-    [SerializeField] private PlayerConfiguration playerConfig;
     [SerializeField] Player.Wall currentWall;
     [SerializeField] private bool Standalone = false;
 
