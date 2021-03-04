@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerActions : MonoBehaviour
 {
+    [SerializeField] private GameObject[] playerGeometry, armourGeometry;
+    [SerializeField] private Material normalSkinMaterial, normalSkinBlocking, armourMaterial, armourBlocking;
     public List<string> animlist = new List<string>();
     public Animator anim;
     [SerializeField] Player self;
@@ -357,6 +359,16 @@ public class PlayerActions : MonoBehaviour
     }
     IEnumerator EnterBlock()
     {
+        for (int i = 0; i < playerGeometry.Length; i++)
+        {
+            var tempMaterial = playerGeometry[i].GetComponent<SkinnedMeshRenderer>();
+            tempMaterial.material = normalSkinBlocking;
+        }
+        for (int i = 0; i < armourGeometry.Length; i++)
+        {
+            var tempMaterial = armourGeometry[i].GetComponent<MeshRenderer>();
+            tempMaterial.material = armourBlocking;
+        }
         hitboxManager.Block();
         anim.Play("BLOCK");
         yield return null;
@@ -381,6 +393,16 @@ public class PlayerActions : MonoBehaviour
     }
     IEnumerator ExitBlock()
     {
+        for (int i = 0; i < playerGeometry.Length; i++)
+        {
+            var tempMaterial = playerGeometry[i].GetComponent<SkinnedMeshRenderer>();
+            tempMaterial.material = normalSkinMaterial;
+        }
+        for (int i = 0; i < armourGeometry.Length; i++)
+        {
+            var tempMaterial = armourGeometry[i].GetComponent<MeshRenderer>();
+            tempMaterial.material = armourMaterial;
+        }
         hitboxManager.StopBlock();
         anim.Play("BLOCK_EXIT");
         yield return null;

@@ -343,6 +343,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a01b5cc4a819b64cba1be8b0dcd0d89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerGeometry:
+  - {fileID: 5563512080631227908}
+  - {fileID: 7864227960471021717}
+  - {fileID: 3722237002355314114}
+  - {fileID: 6685637169993446824}
+  armourGeometry:
+  - {fileID: 1456583493708856795}
+  - {fileID: 8958769018889835837}
+  - {fileID: 5953275727548485505}
+  - {fileID: 6755610840135456512}
+  - {fileID: 7117338792149338845}
+  - {fileID: 853247779606567556}
+  - {fileID: 927534905297519668}
+  - {fileID: 1023223991200237769}
+  - {fileID: 8349588432788907273}
+  - {fileID: 8078475487486809788}
+  - {fileID: 4594779466272818362}
+  - {fileID: 4573559008957743876}
+  - {fileID: 5089095821713333518}
+  normalSkinMaterial: {fileID: 2100000, guid: 0f6919708cee88a43ac261beb6762dc2, type: 2}
+  normalSkinBlocking: {fileID: 2100000, guid: 53745303ab7323e40a5c3598b9142777, type: 2}
+  armourMaterial: {fileID: 2100000, guid: c37ecc0d23a3a94488ffa89a7e6cec05, type: 2}
+  armourBlocking: {fileID: 2100000, guid: 4e1195364bbb91d4797f126e66fd4abb, type: 2}
   animlist:
   - JAB
   - JAB
@@ -3724,7 +3747,7 @@ SphereCollider:
   m_GameObject: {fileID: 3938678240040364670}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5000002
   m_Center: {x: -0.00000035762787, y: 0.0000009536743, z: 0.0000009536743}

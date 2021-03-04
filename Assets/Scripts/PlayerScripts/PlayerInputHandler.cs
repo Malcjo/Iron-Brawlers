@@ -37,6 +37,8 @@ public class PlayerInputHandler : MonoBehaviour
     private float horizontalInput;
     [SerializeField]
     private bool heavyQueued;
+    [SerializeField]
+    private bool UpDirectionHeld;
 
     [SerializeField] Player.Wall currentWall;
     [SerializeField] private bool Standalone = false;
@@ -135,6 +137,10 @@ public class PlayerInputHandler : MonoBehaviour
         return false;
     }
 
+    public bool ShouldUpDirection()
+    {
+        return UpDirectionHeld;
+    }
 
 
     public void HorizontalInput(CallbackContext context)
@@ -209,6 +215,18 @@ public class PlayerInputHandler : MonoBehaviour
         if (context.started)
         {
             heavyQueued = true;
+        }
+    }
+
+    public void UpDirectionInput(CallbackContext context)
+    {
+        if (context.started)
+        {
+            UpDirectionHeld = true;
+        }
+        if (context.canceled)
+        {
+            UpDirectionHeld = false;
         }
     }
 

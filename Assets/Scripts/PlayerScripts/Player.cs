@@ -98,6 +98,7 @@ public class Player : MonoBehaviour
     public VState VerticalState { get { return _currentVerticalState; } set { _currentVerticalState = value; } }
     //public VState PreviousVerticalState { get { return _previousVerticalState; } set { _previousVerticalState = value; } }
 
+
     [SerializeField] private float attackedFreezeCounter;
     [SerializeField] private float MaxFreezeCounter;
     [SerializeField] private Vector3 _TempAttackedVelocity;
@@ -141,18 +142,6 @@ public class Player : MonoBehaviour
     //Turn back button UI back on later
     void Awake()
     {
-        //if(standalone == true)
-        //{
-        //    if(GetPlayerIndex() == 0)
-        //    {
-        //        transform.position = StandaloneSpawnPoint.transform.position;
-        //    }
-        //    else if(GetPlayerIndex()== 1)
-        //    {
-        //        transform.position = StandaloneSpawnPoint.transform.position;
-        //    }
-        //}
-
         MyState = new IdleState();
         _gravityOn = true;
         _canTurn = true;
@@ -177,7 +166,6 @@ public class Player : MonoBehaviour
     }
     private void Update()
     {
-        
         CheckDirection();
         ReduceCounter();
     }
@@ -212,7 +200,8 @@ public class Player : MonoBehaviour
                 crouchInput = playerInputHandler.ShouldCrouch(),
                 armourBreakInput = playerInputHandler.ShouldArmourBreak(),
                 blockInput = playerInputHandler.ShouldBlock(),
-                heavyInput = playerInputHandler.ShouldHeavy()
+                heavyInput = playerInputHandler.ShouldHeavy(),
+                upDirectionInput = playerInputHandler.ShouldUpDirection()
             },
             new PlayerState.Calculating()
             {
@@ -221,7 +210,7 @@ public class Player : MonoBehaviour
                 characterSpeed = SetPlayerSpeed(),
                 addForce = addForceValue
             }
-            ); ;
+            ); ; ;
         Debug.DrawRay(rb.position, addForceValue);
     }
 
@@ -255,10 +244,6 @@ public class Player : MonoBehaviour
         rb.velocity = new Vector3(rb.velocity.x, 0, 0);
     }
 
-    //public void Standalone(bool isStandalone)
-    //{
-    //    standalone = isStandalone;
-    //}
     public void spawnLandingDustParticles()
     {
         Vector3 landOnGroundDustPartilePosition = new Vector3(transform.localPosition.x + 0.1f, transform.position.y + 0.1f, transform.position.z);

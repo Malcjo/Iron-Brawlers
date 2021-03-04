@@ -51,7 +51,7 @@
                     "id": "5de74386-ecd3-48b7-923e-6118961232b2",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Hold"
+                    "interactions": ""
                 },
                 {
                     "name": "Pause",
@@ -59,12 +59,20 @@
                     "id": "fb8dcb07-6b45-4dea-be72-14e353da06d2",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Hold"
+                    "interactions": ""
                 },
                 {
                     "name": "Heavy",
                     "type": "Button",
                     "id": "f83a7d4b-20d1-4d64-95f2-588158505266",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "UpDirection",
+                    "type": "PassThrough",
+                    "id": "480affb7-de56-4798-9c77-48b73e4484e3",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Hold"
@@ -398,6 +406,50 @@
                     "processors": "",
                     "groups": "",
                     "action": "Heavy",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fd5305ca-69c7-41b6-805e-c576bfd87ac0",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UpDirection",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "31b4db1e-c8ae-4af2-9b58-720591187720",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UpDirection",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8e7243a7-fd7d-445c-a5eb-e20a632fddb0",
+                    "path": "<Gamepad>/dpad/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UpDirection",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "41396da4-7767-42bf-93ab-77a037ddb443",
+                    "path": "<Gamepad>/leftStick/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UpDirection",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
