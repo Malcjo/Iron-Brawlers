@@ -189,6 +189,16 @@ public class GameManager : MonoBehaviour
         eventSystem.gameObject.GetComponent<EventSystem>().firstSelectedGameObject = PlayButton.gameObject;
         PlayButton.Select();
     }
+
+    public void SwitchOnCharacterSelect()
+    {
+        Invoke("CharacterSelectTransition", 0.2f);
+    }
+    private void CharacterSelectTransition()
+    {
+        MainMenu.SetActive(false);
+        CharacterSelect.SetActive(true);
+    }
     public void SetPlayerSpawns(Transform _player1Spawn, Transform _player2Spawn)
     {
         player1Spawn = _player1Spawn;
