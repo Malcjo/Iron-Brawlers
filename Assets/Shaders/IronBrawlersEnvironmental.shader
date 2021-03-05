@@ -29,6 +29,14 @@ Shader "IronBrawlersEnvironmental"
 		[NoScaleOffset] _BumpMap ("Normal Map", 2D) = "bump" {}
 		[TCP2Separator]
 		
+		[Header(Wind)]
+		[Toggle(TCP2_WIND)] _UseWind ("Enable Wind", Float) = 0
+		_WindDirection ("Direction", Vector) = (1,0,0,0)
+		_WindStrength ("Strength", Range(0,0.2)) = 0.025
+		[NoScaleOffset] _WindMask ("Mask", 2D) = "white" {}
+		[NoScaleOffset] _WindTexture ("Wind Texture", 2D) = "gray" {}
+		_WindTexTilingSpeed ("Tiling (XY) Speed (ZW)", Vector) = (0.2,0.2,0.1,0.1)
+		
 		[ToggleOff(_RECEIVE_SHADOWS_OFF)] _ReceiveShadowsOff ("Receive Shadows", Float) = 1
 
 		//Avoid compile error if the properties are ending with a drawer
@@ -55,18 +63,23 @@ Shader "IronBrawlersEnvironmental"
 		// Uniforms
 
 		// Shader Properties
+		sampler2D _WindTexture;
+		sampler2D _WindMask;
 		sampler2D _BumpMap;
 		sampler2D _BaseMap;
 
 		CBUFFER_START(UnityPerMaterial)
 			
 			// Shader Properties
+			float4 _WindDirection;
+			float _WindStrength;
 			float4 _BaseMap_ST;
 			fixed4 _BaseColor;
 			float _RampThreshold;
 			float _RampSmoothing;
 			fixed4 _SColor;
 			fixed4 _HColor;
+			float4 _WindTexTilingSpeed;
 		CBUFFER_END
 		
 		// Built-in renderer (CG) to SRP (HLSL) bindings
@@ -108,6 +121,7 @@ Shader "IronBrawlersEnvironmental"
 			#pragma multi_compile _ _MIXED_LIGHTING_SUBTRACTIVE
 
 			// -------------------------------------
+			#pragma multi_compile_fog
 
 			//--------------------------------------
 			// GPU Instancing
@@ -119,6 +133,7 @@ Shader "IronBrawlersEnvironmental"
 			//--------------------------------------
 			// Toony Colors Pro 2 keywords
 		#pragma shader_feature _ _ALPHAPREMULTIPLY_ON
+			#pragma shader_feature TCP2_WIND
 
 			// vertex input
 			struct Attributes
@@ -126,6 +141,7 @@ Shader "IronBrawlersEnvironmental"
 				float4 vertex       : POSITION;
 				float3 normal       : NORMAL;
 				float4 tangent      : TANGENT;
+				half4 vertexColor   : COLOR;
 				float4 texcoord0 : TEXCOORD0;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
@@ -142,7 +158,7 @@ Shader "IronBrawlersEnvironmental"
 			#ifdef _ADDITIONAL_LIGHTS_VERTEX
 				half3 vertexLights : TEXCOORD2;
 			#endif
-				float3 pack0 : TEXCOORD3; /* pack0.xyz = tangent */
+				float4 pack0 : TEXCOORD3; /* pack0.xyz = tangent  pack0.w = fogFactor */
 				float3 pack1 : TEXCOORD4; /* pack1.xyz = bitangent */
 				float2 pack2 : TEXCOORD5; /* pack2.xy = texcoord0 */
 				UNITY_VERTEX_INPUT_INSTANCE_ID
@@ -157,9 +173,31 @@ Shader "IronBrawlersEnvironmental"
 				UNITY_TRANSFER_INSTANCE_ID(input, output);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
 
+				float3 worldPosUv = mul(unity_ObjectToWorld, input.vertex).xyz;
+
 				// Texture Coordinates
 				output.pack2.xy.xy = input.texcoord0.xy * _BaseMap_ST.xy + _BaseMap_ST.zw;
+				// Sampled in Custom Code
+				float4 imp_100 = _WindTexTilingSpeed;
+								// Shader Properties Sampling
+				float __windTimeOffset = ( input.vertexColor.g );
+				float2 __windTextureUv = ( worldPosUv.xz * imp_100.xy + (_Time.yy + __windTimeOffset) * imp_100.zw );
+				float3 __windTexture = ( tex2Dlod(_WindTexture, float4(__windTextureUv.xy, 0, 0)).rgb );
+				float3 __windDirection = ( _WindDirection.xyz );
+				float3 __windMask = ( tex2Dlod(_WindMask, float4(output.pack2.xy.xy, 0, 0)).rgb );
+				float __windStrength = ( _WindStrength );
 
+				float3 worldPos = mul(unity_ObjectToWorld, input.vertex).xyz;
+				#if defined(TCP2_WIND)
+				// Wind Animation
+				float windTimeOffset = __windTimeOffset;
+				float3 windFactor = __windTexture * 2.0 - 1.0;
+				float3 windDir = normalize(__windDirection);
+				float3 windMask = __windMask;
+				float windStrength = __windStrength;
+				worldPos.xyz += windDir * windFactor * windMask * windStrength;
+				#endif
+				input.vertex.xyz = mul(unity_WorldToObject, float4(worldPos, 1)).xyz;
 				VertexPositionInputs vertexInput = GetVertexPositionInputs(input.vertex.xyz);
 			#if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
 				output.shadowCoord = GetShadowCoord(vertexInput);
@@ -173,6 +211,9 @@ Shader "IronBrawlersEnvironmental"
 
 				// world position
 				output.worldPosAndFog = float4(vertexInput.positionWS.xyz, 0);
+
+				// Computes fog factor per-vertex
+				output.worldPosAndFog.w = ComputeFogFactor(vertexInput.positionCS.z);
 
 				// normal
 				output.normal = NormalizeNormalPerVertex(vertexNormalInput.normalWS);
@@ -302,6 +343,10 @@ Shader "IronBrawlersEnvironmental"
 
 				color += emission;
 
+				// Mix the pixel color with fogColor. You can optionally use MixFogColor to override the fogColor with a custom one.
+				float fogFactor = input.worldPosAndFog.w;
+				color = MixFog(color, fogFactor);
+
 				return half4(color, alpha);
 			}
 			ENDHLSL
@@ -323,6 +368,7 @@ Shader "IronBrawlersEnvironmental"
 				float4 vertex   : POSITION;
 				float3 normal   : NORMAL;
 				float4 texcoord0 : TEXCOORD0;
+				half4 vertexColor : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -360,8 +406,31 @@ Shader "IronBrawlersEnvironmental"
 					UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
 				#endif
 
+				float3 worldPosUv = mul(unity_ObjectToWorld, input.vertex).xyz;
+
 				// Texture Coordinates
 				output.pack0.xy.xy = input.texcoord0.xy * _BaseMap_ST.xy + _BaseMap_ST.zw;
+				// Sampled in Custom Code
+				float4 imp_101 = _WindTexTilingSpeed;
+								// Shader Properties Sampling
+				float __windTimeOffset = ( input.vertexColor.g );
+				float2 __windTextureUv = ( worldPosUv.xz * imp_101.xy + (_Time.yy + __windTimeOffset) * imp_101.zw );
+				float3 __windTexture = ( tex2Dlod(_WindTexture, float4(__windTextureUv.xy, 0, 0)).rgb );
+				float3 __windDirection = ( _WindDirection.xyz );
+				float3 __windMask = ( tex2Dlod(_WindMask, float4(output.pack0.xy.xy, 0, 0)).rgb );
+				float __windStrength = ( _WindStrength );
+
+				float3 worldPos = mul(unity_ObjectToWorld, input.vertex).xyz;
+				#if defined(TCP2_WIND)
+				// Wind Animation
+				float windTimeOffset = __windTimeOffset;
+				float3 windFactor = __windTexture * 2.0 - 1.0;
+				float3 windDir = normalize(__windDirection);
+				float3 windMask = __windMask;
+				float windStrength = __windStrength;
+				worldPos.xyz += windDir * windFactor * windMask * windStrength;
+				#endif
+				input.vertex.xyz = mul(unity_WorldToObject, float4(worldPos, 1)).xyz;
 
 				#if defined(DEPTH_ONLY_PASS)
 					output.positionCS = TransformObjectToHClip(input.vertex.xyz);
@@ -427,6 +496,10 @@ Shader "IronBrawlersEnvironmental"
 			#pragma vertex ShadowDepthPassVertex
 			#pragma fragment ShadowDepthPassFragment
 			
+			//--------------------------------------
+			// Toony Colors Pro 2 keywords
+			#pragma shader_feature TCP2_WIND
+
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Shadows.hlsl"
 
@@ -466,6 +539,10 @@ Shader "IronBrawlersEnvironmental"
 			#pragma vertex ShadowDepthPassVertex
 			#pragma fragment ShadowDepthPassFragment
 			
+			//--------------------------------------
+			// Toony Colors Pro 2 keywords
+			#pragma shader_feature TCP2_WIND
+
 			ENDHLSL
 		}
 
@@ -475,5 +552,5 @@ Shader "IronBrawlersEnvironmental"
 	CustomEditor "ToonyColorsPro.ShaderGenerator.MaterialInspector_SG2"
 }
 
-/* TCP_DATA u config(unity:"2020.1.3f1";ver:"2.6.0";tmplt:"SG2_Template_URP";features:list["UNITY_5_4","UNITY_5_5","UNITY_5_6","UNITY_2017_1","UNITY_2018_1","UNITY_2018_2","UNITY_2018_3","UNITY_2019_1","UNITY_2019_2","UNITY_2019_3","BUMP","TEMPLATE_LWRP","AUTO_TRANSPARENT_BLENDING"];flags:list[];flags_extra:dict[];keywords:dict[RENDER_TYPE="Opaque",RampTextureDrawer="[TCP2Gradient]",RampTextureLabel="Ramp Texture",SHADER_TARGET="3.0"];shaderProperties:list[];customTextures:list[];codeInjection:codeInjection(injectedFiles:list[];mark:False)) */
-/* TCP_HASH 33449074e1421f385c04591e1274747c */
+/* TCP_DATA u config(unity:"2020.1.3f1";ver:"2.6.0";tmplt:"SG2_Template_URP";features:list["UNITY_5_4","UNITY_5_5","UNITY_5_6","UNITY_2017_1","UNITY_2018_1","UNITY_2018_2","UNITY_2018_3","UNITY_2019_1","UNITY_2019_2","UNITY_2019_3","BUMP","AUTO_TRANSPARENT_BLENDING","WIND_ANIM","WIND_SHADER_FEATURE","WIND_ANIM_TEX","TEMPLATE_LWRP","FOG"];flags:list[];flags_extra:dict[];keywords:dict[RENDER_TYPE="Opaque",RampTextureDrawer="[TCP2Gradient]",RampTextureLabel="Ramp Texture",SHADER_TARGET="3.0"];shaderProperties:list[,,,,,,,,,,,,,sp(name:"Wind Mask";imps:list[imp_mp_texture(uto:False;tov:"";tov_lbl:"";gto:False;sbt:False;scr:False;scv:"";scv_lbl:"";gsc:False;roff:False;goff:False;sin_anm:False;notile:False;triplanar_local:False;def:"white";locked_uv:False;uv:0;cc:3;chan:"RGB";mip:0;mipprop:False;ssuv_vert:False;ssuv_obj:False;uv_type:Texcoord;uv_chan:"XZ";uv_shaderproperty:__NULL__;prop:"_WindMask";md:"";custom:False;refs:"";guid:"6ce4ecd8-9bec-49ab-9e3b-183c1194c361";op:Multiply;lbl:"Mask";gpu_inst:False;locked:False;impl_index:-1)])];customTextures:list[];codeInjection:codeInjection(injectedFiles:list[];mark:False)) */
+/* TCP_HASH 92efc2a9f07af5f5effd6eb6b83580d6 */
