@@ -214,7 +214,7 @@ public class Hitbox : MonoBehaviour
         }
         if (other.gameObject.CompareTag("Block"))
         {
-            if (_attackType != AttackType.LegSweep)
+            if (_attackType == AttackType.Aerial || _attackType == AttackType.ArmourBreak || _attackType == AttackType.HeavyJab || _attackType == AttackType.Jab)
             {
                 Debug.Log("Blocked");
                 HideHitBoxes();
