@@ -234,10 +234,17 @@ public class Hitbox : MonoBehaviour
             tempHurtBox.TurnOnHitBoxHit();
             Debug.Log("Hit Character");
 
-            else 
-            { 
-                DamagingPlayer(temptDefendingPlayer, tempAttackingPlayer,temptArmourCheck,tempHurtBox); 
-            }
+            //if (temptDefendingPlayer.Blocking == true)
+            //{
+            //    Debug.Log("Blocking2");
+            //    //temptDefendingPlayer.ResetBlocking();
+            //    HideHitBoxes();
+            //}
+            //else 
+            //{ 
+            //    DamagingPlayer(temptDefendingPlayer, tempAttackingPlayer,temptArmourCheck,tempHurtBox); 
+            //}
+            DamagingPlayer(temptDefendingPlayer, tempAttackingPlayer, temptArmourCheck, tempHurtBox);
         }
     }
     private void DamagingPlayer(Player DefendingPlayer, Player attackingPlayer, ArmourCheck armourCheck, HurtBox hurtBox)
