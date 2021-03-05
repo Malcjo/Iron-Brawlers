@@ -214,10 +214,15 @@ public class Hitbox : MonoBehaviour
         }
         if (other.gameObject.CompareTag("Block"))
         {
-            Debug.Log("Blocked");
-            HideHitBoxes();
-            return;
+            if (_attackType != AttackType.LegSweep)
+            {
+                Debug.Log("Blocked");
+                HideHitBoxes();
+                return;
+            }
         }
+
+
 
         if (other.gameObject.CompareTag("Hurtbox"))
         {
@@ -228,11 +233,7 @@ public class Hitbox : MonoBehaviour
             HurtBox tempHurtBox = other.gameObject.GetComponent<HurtBox>();
             tempHurtBox.TurnOnHitBoxHit();
             Debug.Log("Hit Character");
-            if (temptDefendingPlayer.GetBlocking() == true)
-            {
-                HideHitBoxes();
-                return;
-            }
+
             else 
             { 
                 DamagingPlayer(temptDefendingPlayer, tempAttackingPlayer,temptArmourCheck,tempHurtBox); 
@@ -261,9 +262,19 @@ public class Hitbox : MonoBehaviour
     {
         defendingPlayer.FreezeCharacterBeingAttacked(HitDirection(), KnockBackStrenth());
         attackingPlayer.FreezeCharacterAttacking();
-        if(attackType == AttackType.Aerial || attackType == AttackType.ArmourBreak || attackType == AttackType.HeavyJab || attackType == AttackType.LegSweep)
+        if(attackType == AttackType.Aerial || attackType == AttackType.ArmourBreak || attackType == AttackType.HeavyJab)
         {
             defendingPlayer.KnockDown();
+        }
+        else if(attackType == AttackType.LegSweep)
+        {
+            defendingPlayer.KnockDown();
+            if (defendingPlayer.Blocking == true)
+            {
+                Debug.Log("Blocking2");
+                //temptDefendingPlayer.ResetBlocking();
+                HideHitBoxes();
+            }
         }
         else if(attackType == AttackType.Jab)
         {

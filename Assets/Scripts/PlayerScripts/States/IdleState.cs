@@ -58,6 +58,7 @@ public class IdleState : PlayerState
         if (BlockCheck(input.blockInput))
         {
             actions.Block();
+            self.Blocking = true;
             self.SetState(new BlockState());
         }
 

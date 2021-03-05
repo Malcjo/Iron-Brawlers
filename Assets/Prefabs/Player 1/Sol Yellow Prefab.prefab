@@ -363,9 +363,9 @@ MonoBehaviour:
   - {fileID: 4573559008957743876}
   - {fileID: 5089095821713333518}
   normalSkinMaterial: {fileID: 2100000, guid: 0f6919708cee88a43ac261beb6762dc2, type: 2}
-  normalSkinBlocking: {fileID: 2100000, guid: 53745303ab7323e40a5c3598b9142777, type: 2}
+  normalSkinBlocking: {fileID: 2100000, guid: 92da77293324c6648be667a4910ca38f, type: 2}
   armourMaterial: {fileID: 2100000, guid: c37ecc0d23a3a94488ffa89a7e6cec05, type: 2}
-  armourBlocking: {fileID: 2100000, guid: 4e1195364bbb91d4797f126e66fd4abb, type: 2}
+  armourBlocking: {fileID: 2100000, guid: 553419b3c3520804baea01d3d90bb8fc, type: 2}
   animlist:
   - JAB
   - JAB

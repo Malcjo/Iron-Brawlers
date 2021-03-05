@@ -62,6 +62,7 @@ public class Player : MonoBehaviour
 
     private bool _blocking;
     private bool _canTurn;
+    private bool _canBlock;
     [SerializeField] private bool _canMove;
 
     private bool canJump;
@@ -90,10 +91,11 @@ public class Player : MonoBehaviour
     public bool UseGravity { get { return _gravityOn; } set { _gravityOn = value; } }
     public bool InAir { get { return _inAir; } set { _inAir = value; } }
     public bool CanTurn { get { return _canTurn; } set { _canTurn = value; } }
+    public bool CanBlock { get { return _canBlock; } set { _canBlock = value; } }
     public bool CanMove { get { return _canMove; } set { _canMove = value; } }
     public int CanJumpIndex { get { return _currentJumpIndex; } set { _currentJumpIndex = value; } }
     public bool GetCanAirMove() { return canAirMove; }
-    public bool GetBlocking() { return _blocking; }
+    public bool Blocking { get { return _blocking;  }set { _blocking = value; } }
     public int GetMaxJumps() { return maxJumps; }
     public VState VerticalState { get { return _currentVerticalState; } set { _currentVerticalState = value; } }
     //public VState PreviousVerticalState { get { return _previousVerticalState; } set { _previousVerticalState = value; } }
@@ -214,6 +216,10 @@ public class Player : MonoBehaviour
         Debug.DrawRay(rb.position, addForceValue);
     }
 
+    public PlayerState GetMyState()
+    {
+        return MyState;
+    }
     public void SetState(PlayerState state)
     {
         MyState = state;
@@ -435,6 +441,10 @@ public class Player : MonoBehaviour
         {
             addForceValue = Vector3.zero;
         }
+    }
+    public void ResetBlocking()
+    {
+        playerActions.StopBlock();
     }
     void ReduceHitStun()
     {
