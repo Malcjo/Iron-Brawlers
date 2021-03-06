@@ -58,7 +58,7 @@ public class Player : MonoBehaviour
 
     private bool canHitBox;
     private bool hasArmour;
-    public bool hitStun;
+    [SerializeField] private bool _hitStun;
 
     private bool _blocking;
     private bool _canTurn;
@@ -95,7 +95,8 @@ public class Player : MonoBehaviour
     public bool CanMove { get { return _canMove; } set { _canMove = value; } }
     public int CanJumpIndex { get { return _currentJumpIndex; } set { _currentJumpIndex = value; } }
     public bool GetCanAirMove() { return canAirMove; }
-    public bool Blocking { get { return _blocking;  }set { _blocking = value; } }
+    public bool Blocking { get { return _blocking;  } set { _blocking = value; } }
+    public bool HitStun { get { return _hitStun; } set { _hitStun = value; } }
     public int GetMaxJumps() { return maxJumps; }
     public VState VerticalState { get { return _currentVerticalState; } set { _currentVerticalState = value; } }
     //public VState PreviousVerticalState { get { return _previousVerticalState; } set { _previousVerticalState = value; } }
@@ -177,9 +178,17 @@ public class Player : MonoBehaviour
         CharacterStates();
         Observation();
         GravityCheck();
+        ZeroOutMomentumWhileOnGround();
     }
+    
     #region State Machine
-
+    private void ZeroOutMomentumWhileOnGround()
+    {
+        if (MyState == new BusyState())
+        {
+            Debug.Log("in BusyState state");
+        }
+    }
     private void CharacterStates()
     {
         JumpingOrFallingTracker();
@@ -235,6 +244,10 @@ public class Player : MonoBehaviour
         {
             facingDirection = 1;
         }
+    }
+    public void HideHitBoxes()
+    {
+        hitbox.gameObject.GetComponent<Hitbox>().HideHitBoxes();
     }
     private IEnumerator StopCharacter()
     {
@@ -454,13 +467,13 @@ public class Player : MonoBehaviour
 
     void ReduceHitStun()
     {
-        if (hitStun == true)
+        if (_hitStun == true)
         {
             hitStunTimer -= 1 * Time.deltaTime;
             if (hitStunTimer < 0.001f)
             {
                 hitStunTimer = 0;
-                hitStun = false;
+                _hitStun = false;
             }
         }
     }
@@ -475,6 +488,10 @@ public class Player : MonoBehaviour
         playerActions.HitKnockBack();
     }
     [SerializeField] private float maxHitStunTime;
+    public void SetPlayerXToZero()
+    {
+
+    }
     public void Damage(Vector3 Hit, Vector3 Power)
     {
         //hitStun = true;
@@ -565,7 +582,7 @@ public class Player : MonoBehaviour
     public float SetPlayerSpeed()
     {
         float characterSpeed = speed - armourCheck.armourReduceSpeed;
-        if (hitStun == true)
+        if (_hitStun == true)
         {
             characterSpeed *= 0 + (5 * Time.deltaTime);
         }
@@ -606,23 +623,23 @@ public class Player : MonoBehaviour
         {
             return;
         }
-        var _facingDirection = playerInputHandler.GetHorizontal();
-        if (_facingDirection > 0)
+        int _facingDirection;
+        if (transform.rotation == Quaternion.Euler(0, 180, 0))
         {
-            if (_canTurn == false)
-            {
-                return;
-            }
-            transform.rotation = Quaternion.Euler(0, 180, 0);
+            //if (_canTurn == false)
+            //{
+            //    return;
+            //}
+            _facingDirection = 1;
             facingDirection = (int)_facingDirection;
         }
-        else if (_facingDirection < 0)
+        else if (transform.rotation == Quaternion.Euler(0, 0, 0))
         {
-            if (_canTurn == false)
-            {
-                return;
-            }
-            transform.rotation = Quaternion.Euler(0, 0, 0);
+            //if (_canTurn == false)
+            //{
+            //    return;
+            //}
+            _facingDirection = -1;
             facingDirection = (int)_facingDirection;
         }
     }
@@ -673,7 +690,10 @@ public class Player : MonoBehaviour
             if (hit.collider.CompareTag("Ground") || (hit.collider.CompareTag("Platform")))
             {
                 Invoke("spawnLandingDustParticles", 0.06f);
-                playerActions.Landing();
+                if(_hitStun != true)
+                {
+                    playerActions.Landing();
+                }
                 LandOnGround(hit);
             }
         }

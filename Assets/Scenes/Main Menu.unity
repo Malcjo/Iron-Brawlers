@@ -77448,6 +77448,8 @@ MonoBehaviour:
   player2Puck: {fileID: 1907885342}
   p1OBJ: {fileID: 7410522353264361767}
   p2OBJ: {fileID: 1639738248}
+  Player1CharacterSelectButton: {fileID: 0}
+  player2CharacterSelectButton: {fileID: 0}
   draws: 0
   maxTimer: 0
 --- !u!4 &3060168155268841314
@@ -82448,6 +82450,8 @@ MonoBehaviour:
   player2Puck: {fileID: 0}
   p1OBJ: {fileID: 0}
   p2OBJ: {fileID: 0}
+  Player1CharacterSelectButton: {fileID: 0}
+  player2CharacterSelectButton: {fileID: 0}
   draws: 0
   maxTimer: 0
 --- !u!4 &5263666916092492767

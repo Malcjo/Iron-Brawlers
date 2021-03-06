@@ -19,6 +19,18 @@ public class MovingState : PlayerState
 
             if (MovementCheck(input.horizontalInput))
             {
+                if(self.CanTurn == true)
+                {
+                    if (input.horizontalInput > 0)
+                    {
+                        self.transform.rotation = Quaternion.Euler(0, 180, 0);
+                    }
+                    else if (input.horizontalInput < 0)
+                    {
+                        self.transform.rotation = Quaternion.Euler(0, 0, 0);
+                    }
+                }
+
                 self.PlayRunningParticle();
 
                 self.CanMove = true;
@@ -116,6 +128,18 @@ public class MovingState : PlayerState
                 {
                     body.velocity = new Vector3(0, body.velocity.y, 0) + calculate.addForce;
                     body.velocity = new Vector3(input.horizontalInput * calculate.characterSpeed, body.velocity.y, 0) + calculate.addForce;
+
+                    if (self.CanTurn == true)
+                    {
+                        if (input.horizontalInput > 0)
+                        {
+                            self.transform.rotation = Quaternion.Euler(0, 180, 0);
+                        }
+                        else if (input.horizontalInput < 0)
+                        {
+                            self.transform.rotation = Quaternion.Euler(0, 0, 0);
+                        }
+                    }
 
                     if (AttackCheck(input.attackInput) && MovementCheck(input.horizontalInput))
                     {

@@ -431,7 +431,7 @@ public class PlayerActions : MonoBehaviour
     }
     IEnumerator KnockBack()
     {
-        self.hitStun = true;
+        self.HitStun = true;
         self.SetState(new BusyState());
         yield return null;
         anim.Play("HITSTUN_NORMAL_HIT");
@@ -440,7 +440,7 @@ public class PlayerActions : MonoBehaviour
         {
             yield return null;
         }
-        self.hitStun = false;
+        self.HitStun = false;
         self.SetState(new IdleState());
     }
     public void HitStunKnockDown()
@@ -449,7 +449,7 @@ public class PlayerActions : MonoBehaviour
     }
     private IEnumerator KnockDownStun()
     {
-        self.hitStun = true;
+        self.HitStun = true;
         self.CanTurn = false;
         self.SetState(new BusyState());
         //anim.Play("HITSTUN_NORMAL_HIT");
@@ -472,7 +472,7 @@ public class PlayerActions : MonoBehaviour
         {
             yield return null;
         }
-        self.hitStun = false;
+        self.HitStun = false;
         RevertBackToIdleState();
     }
 }
