@@ -262,60 +262,6 @@ public class Player : MonoBehaviour
         rb.velocity = new Vector3(rb.velocity.x, 0, 0);
     }
 
-    //public void spawnLandingDustParticles()
-    //{
-    //    Vector3 landOnGroundDustPartilePosition = new Vector3(transform.localPosition.x + 0.1f, transform.position.y + 0.1f, transform.position.z);
-    //    Quaternion landOnGroundDustParticleRotation = Quaternion.Euler(90, 0, 0);
-    //    GameObject LandingParticles = Instantiate(landOnGroundDustParticle, landOnGroundDustPartilePosition, landOnGroundDustParticleRotation);
-    //    SetRemoveParticles(LandingParticles);
-    //}
-    //public void SpawnDoubleJumpParticles()
-    //{
-    //    StartCoroutine(DoubleJumpParticles());
-    //}
-    //IEnumerator DoubleJumpParticles()
-    //{
-    //    yield return new WaitForSeconds(0);
-    //    Vector3 landOnGroundDustPartilePosition = new Vector3(transform.localPosition.x + 0.1f, transform.position.y + 0.1f, transform.position.z);
-    //    Quaternion landOnGroundDustParticleRotation = Quaternion.Euler(90, 0, 0);
-    //    GameObject DoubleJumpParticles = Instantiate(DoubleJumpDustParticles, landOnGroundDustPartilePosition, landOnGroundDustParticleRotation);
-    //    SetRemoveParticles(DoubleJumpParticles);
-    //}
-    //public void SpawnRunningParticles()
-    //{
-    //    Vector3 landOnGroundDustPartilePosition = new Vector3(transform.localPosition.x - 0.1f, transform.position.y + 0.1f, transform.position.z);
-    //    Quaternion landOnGroundDustParticleRotation = Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y, transform.localEulerAngles.z);
-    //    GameObject RunningParticles = Instantiate(RunningParticle, landOnGroundDustPartilePosition, landOnGroundDustParticleRotation);
-    //    SetRemoveParticles(RunningParticles);
-    //    //StartCoroutine(RunningDustDelay());
-    //}
-    //IEnumerator RunningDustDelay()
-    //{
-    //    Vector3 landOnGroundDustPartilePosition = new Vector3(transform.localPosition.x - 0.1f, transform.position.y + 0.1f, transform.position.z);
-    //    Quaternion landOnGroundDustParticleRotation = Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y, transform.localEulerAngles.z);
-    //    GameObject RunningParticles = Instantiate(RunningParticle, landOnGroundDustPartilePosition, landOnGroundDustParticleRotation);
-    //    SetRemoveParticles(RunningParticles);
-    //    yield return new WaitForSeconds(1f);
-
-    //}
-    //public void PlayRunningParticle()
-    //{
-    //    RunningParticle.Play();
-    //}
-    //public void StopRunningParticle()
-    //{
-    //    RunningParticle.Stop();
-    //}
-    //private void SetRemoveParticles(GameObject obj)
-    //{
-    //    StartCoroutine(RemoveParticles(obj));
-    //}
-    //IEnumerator RemoveParticles(GameObject obj)
-    //{
-    //    yield return new WaitForSeconds(1);
-    //    Destroy(obj.gameObject);
-    //}
-
     #region Jumping
     //void DoubleJumpCheck()
     //{
@@ -355,15 +301,6 @@ public class Player : MonoBehaviour
         if (rb.velocity.y < -20)
         {
             rb.velocity = new Vector3(playerInputHandler.GetHorizontal() * SetPlayerSpeed(), -20, 0) + addForceValue;
-            //if (isDummy == false)
-            //{
-            //    rb.velocity = new Vector3(playerInputHandler.GetHorizontal() * SetPlayerSpeed(), -20, 0) + addForceValue;
-
-            //}
-            //else
-            //{
-            //    rb.velocity = addForceValue;
-            //}
         }
     }
     void GravityCheck()
@@ -377,8 +314,6 @@ public class Player : MonoBehaviour
             Gravity();
         }
     }
-    //[SerializeField] private float currentPushPower;
-    //[SerializeField] private float _currentPushPower;
     public void MoveCharacterWithAttacks(float MoveStrength)
     {
         rb.velocity = new Vector3(rb.velocity.x + facingDirection * MoveStrength, rb.velocity.y, 0) * Time.deltaTime;
@@ -554,7 +489,6 @@ public class Player : MonoBehaviour
                 case AttackType.Jab:
                     FindObjectOfType<AudioManager>().Play(AudioManager.JABHITUNARMOURED);
                     break;
-
                 case AttackType.LegSweep:
                     break;
                 case AttackType.Aerial:
@@ -694,7 +628,6 @@ public class Player : MonoBehaviour
             if (hit.collider.CompareTag("Ground") || (hit.collider.CompareTag("Platform")))
             {
                 PlayParticle(ParticleType.Landing);
-                //Invoke("spawnLandingDustParticles", 0.06f);
                 if(_hitStun != true)
                 {
                     playerActions.Landing();
