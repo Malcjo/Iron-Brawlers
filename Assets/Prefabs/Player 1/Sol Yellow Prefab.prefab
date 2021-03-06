@@ -2710,7 +2710,7 @@ MonoBehaviour:
   standalone: 0
   CurrentStateName: 
   gravityValue: -10
-  friction: 0.25
+  friction: 0.15
   maxLives: 3
   landing: 0
   speed: 6.5

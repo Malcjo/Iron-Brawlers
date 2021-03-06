@@ -97,6 +97,8 @@ public class Player : MonoBehaviour
     public bool Blocking { get { return _blocking;  } set { _blocking = value; } }
     public bool HitStun { get { return _hitStun; } set { _hitStun = value; } }
     public int GetMaxJumps() { return maxJumps; }
+    [SerializeField] private float _SlideFriction;
+    public float SlideFricton { get { return _SlideFriction; } } 
     public VState VerticalState { get { return _currentVerticalState; } set { _currentVerticalState = value; } }
     //public VState PreviousVerticalState { get { return _previousVerticalState; } set { _previousVerticalState = value; } }
 
