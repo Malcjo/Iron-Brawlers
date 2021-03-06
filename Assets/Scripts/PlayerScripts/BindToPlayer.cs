@@ -49,7 +49,10 @@ public class BindToPlayer : MonoBehaviour
             }
         }
     }
+    private void CheckIfPlayersAreReady()
+    {
 
+    }
     public void JoinGame(PlayerInput input)
     {
         players.Add(input.gameObject);

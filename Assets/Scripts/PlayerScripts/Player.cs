@@ -446,7 +446,7 @@ public class Player : MonoBehaviour
         UseGravity = false;
         attackingFreezeCounter = MaxFreezeCounter;
     }
-    public void FreezeCharacterBeingAttacked(Vector3 Direction, Vector3 Power)
+    public void FreezeCharacterBeingAttacked(Vector3 Power)
     {
         playerActions.PauseCurrentAnimation();
         freezeAttackedPlayer = true;
@@ -455,7 +455,6 @@ public class Player : MonoBehaviour
         UseGravity = false;
         attackedFreezeCounter = MaxFreezeCounter;
         _tempPower = Power;
-        _TempDirection = Direction;
     }
 
     public void TakeDamageOnGauge(float amount, ArmourCheck.ArmourPlacement Placement, AttackType attackType)

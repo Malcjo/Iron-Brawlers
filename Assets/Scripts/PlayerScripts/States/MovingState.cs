@@ -21,11 +21,11 @@ public class MovingState : PlayerState
             {
                 if(self.CanTurn == true)
                 {
-                    if (input.horizontalInput > 0)
+                    if (input.horizontalInput > 0.001f)
                     {
                         self.transform.rotation = Quaternion.Euler(0, 180, 0);
                     }
-                    else if (input.horizontalInput < 0)
+                    else if (input.horizontalInput < -0.001f)
                     {
                         self.transform.rotation = Quaternion.Euler(0, 0, 0);
                     }

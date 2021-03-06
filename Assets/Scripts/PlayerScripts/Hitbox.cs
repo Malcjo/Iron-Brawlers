@@ -159,25 +159,7 @@ public class Hitbox : MonoBehaviour
         tipHitBox.gameObject.transform.position = new Vector3(leftFoot.transform.position.x, leftFoot.transform.position.y, 0);
         tipHitBox.gameObject.transform.rotation = leftFoot.transform.rotation;
     }
-
-    public Vector3 HitDirection()
-    {
-        switch (_attackDir)
-        {
-            case Attackdirection.Forward:
-                return new Vector3(player.GetFacingDirection(), 1f, 0);
-            case Attackdirection.Low:                            
-                return new Vector3(player.GetFacingDirection(), 1f,0);
-            case Attackdirection.Aerial:                         
-                return new Vector3(player.GetFacingDirection(), 1f, 0);
-            case Attackdirection.Down:                           
-                return new Vector3(player.GetFacingDirection(), 1f, 0);
-            default:
-                hitDirection.x = 1; hitDirection.y = 0.5f; hitDirection.z = 0; ;
-                return new Vector3(player.GetFacingDirection(), 0.3f, 0);
-        }
-    }
-    public Vector3 KnockBackStrenth()
+    public Vector3 KnockBackStrength()
     {
         switch (_attackType)
         {
@@ -237,7 +219,6 @@ public class Hitbox : MonoBehaviour
                     tempDefendingPlayer.HideHitBoxes();
                     tempDefendingPlayer.ResetCharacterMaterialToStandard();
                 }
-
             }
             else
             {
@@ -266,7 +247,7 @@ public class Hitbox : MonoBehaviour
     }
     void ApplyDamageToPlayer(Player defendingPlayer, Player attackingPlayer, AttackType attackType)
     {
-        defendingPlayer.FreezeCharacterBeingAttacked(HitDirection(), KnockBackStrenth());
+        defendingPlayer.FreezeCharacterBeingAttacked(KnockBackStrength());
         attackingPlayer.FreezeCharacterAttacking();
         if(attackType == AttackType.Aerial || attackType == AttackType.ArmourBreak || attackType == AttackType.HeavyJab)
         {
