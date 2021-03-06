@@ -74,7 +74,7 @@ public class JumpingState : PlayerState
                     self.JumpingOrFallingAnimations();
                     self.AddOneToJumpIndex();
                     Debug.Log("DoubleJump");
-                    self.SpawnDoubleJumpParticles();
+                    self.PlayParticle(ParticleType.DoubleJump);
                     self.SetState(new JumpingState());
                 }
 

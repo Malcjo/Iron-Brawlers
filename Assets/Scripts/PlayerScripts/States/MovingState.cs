@@ -31,7 +31,7 @@ public class MovingState : PlayerState
                     }
                 }
 
-                self.PlayRunningParticle();
+                //self.PlayRunningParticle();
 
                 self.CanMove = true;
                 self.CanTurn = true;
@@ -41,7 +41,7 @@ public class MovingState : PlayerState
 
             if (!MovementCheck(input.horizontalInput))
             {
-                self.StopRunningParticle();
+                //self.StopRunningParticle();
                 self.CanMove = true;
                 self.CanTurn = true;
                 body.velocity = new Vector3(Mathf.Lerp(body.velocity.x, 0, calculate.friction), body.velocity.y, 0) + calculate.addForce;
@@ -181,7 +181,7 @@ public class MovingState : PlayerState
                         self.JumpingOrFallingAnimations();
                         self.AddOneToJumpIndex();
                         Debug.Log("DoubleJump");
-                        self.SpawnDoubleJumpParticles();
+                        self.PlayParticle(ParticleType.DoubleJump);
                         self.SetState(new JumpingState());
                     }
 
