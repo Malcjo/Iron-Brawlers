@@ -391,6 +391,19 @@ public class PlayerActions : MonoBehaviour
     {
         StartCoroutine(ExitBlock());
     }
+    public void ResetMaterial()
+    {
+        for (int i = 0; i < playerGeometry.Length; i++)
+        {
+            var tempMaterial = playerGeometry[i].GetComponent<SkinnedMeshRenderer>();
+            tempMaterial.material = normalSkinMaterial;
+        }
+        for (int i = 0; i < armourGeometry.Length; i++)
+        {
+            var tempMaterial = armourGeometry[i].GetComponent<MeshRenderer>();
+            tempMaterial.material = armourMaterial;
+        }
+    }
     IEnumerator ExitBlock()
     {
         for (int i = 0; i < playerGeometry.Length; i++)

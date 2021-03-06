@@ -328,6 +328,15 @@ public class Player : MonoBehaviour
     //    }
     //}
     #endregion
+    public void ResetBlocking()
+    {
+        playerActions.StopBlock();
+    }
+
+    public void ResetCharacterMaterialToStandard()
+    {
+        playerActions.ResetMaterial();
+    }
     #region Gravity methods
     void TerminalVelocity()
     {
@@ -442,10 +451,7 @@ public class Player : MonoBehaviour
             addForceValue = Vector3.zero;
         }
     }
-    public void ResetBlocking()
-    {
-        playerActions.StopBlock();
-    }
+
     void ReduceHitStun()
     {
         if (hitStun == true)
