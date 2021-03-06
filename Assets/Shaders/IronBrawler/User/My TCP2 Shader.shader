@@ -1,17 +1,15 @@
 ﻿// Toony Colors Pro+Mobile 2
 // (c) 2014-2020 Jean Moreno
 
-Shader "CloudPlaneShader"
+Shader "Toony Colors Pro 2/User/My TCP2 Shader"
 {
 	Properties
 	{
 		[TCP2HeaderHelp(Base)]
-		[HDR] _MainColor ("Color", Color) = (1,1,1,1)
+		_BaseColor ("Color", Color) = (1,1,1,1)
 		[TCP2ColorNoAlpha] _HColor ("Highlight Color", Color) = (0.75,0.75,0.75,1)
 		[TCP2ColorNoAlpha] _SColor ("Shadow Color", Color) = (0.2,0.2,0.2,1)
-		_Albedo ("Albedo", 2D) = "white" {}
-		[TCP2UVScrolling] _Albedo_SC ("Albedo UV Scrolling", Vector) = (1,1,0,0)
-		 _Albedo1 ("Albedo Color", Color) = (1,1,1,1)
+		_BaseMap ("Albedo", 2D) = "white" {}
 		[TCP2Separator]
 
 		[TCP2Header(Ramp Shading)]
@@ -20,21 +18,10 @@ Shader "CloudPlaneShader"
 		_RampSmoothing ("Smoothing", Range(0.001,1)) = 0.5
 		[TCP2Separator]
 		
-		[Header(Vertex Waves Animation)]
-		_WavesSpeed ("Speed", Float) = 2
-		_WavesHeight ("Height", Float) = 0.1
-		_WavesFrequency ("Frequency", 2D) = "white" {}
-		
-		[Header(Depth Based Effects)]
-		[TCP2ColorNoAlpha] _DepthColor ("Depth Color", Color) = (0,0,1,1)
-		[PowerSlider(5.0)] _DepthColorDistance ("Depth Color Distance", Range(0.01,3)) = 0.5
-		
 		[TCP2HeaderHelp(Vertical Fog)]
 			_VerticalFogThreshold ("Y Threshold", Float) = 0
 			_VerticalFogSmoothness ("Smoothness", Float) = 0.5
-			_VerticalFogColor ("Fog Color", 2D) = "white" {}
-			[TCP2UVScrolling] _VerticalFogColor_SC ("Fog Color UV Scrolling", Vector) = (1,1,0,0)
-			 _VerticalFogColor1 ("Vertical Fog Color Color", Color) = (1,1,1,1)
+			_VerticalFogColor ("Fog Color", Color) = (0.5,0.5,0.5,1)
 		[TCP2Separator]
 
 		[ToggleOff(_RECEIVE_SHADOWS_OFF)] _ReceiveShadowsOff ("Receive Shadows", Float) = 1
@@ -59,36 +46,24 @@ Shader "CloudPlaneShader"
 
 		#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 		#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
-		#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareDepthTexture.hlsl"
 
 		// Uniforms
 
 		// Shader Properties
-		sampler2D _WavesFrequency;
-		sampler2D _Albedo;
-		sampler2D _VerticalFogColor;
+		sampler2D _BaseMap;
 
 		CBUFFER_START(UnityPerMaterial)
 			
 			// Shader Properties
-			float4 _WavesFrequency_ST;
-			float _WavesHeight;
-			float _WavesSpeed;
-			float4 _Albedo_ST;
-			half4 _Albedo_SC;
-			fixed4 _Albedo1;
-			half4 _MainColor;
-			fixed4 _DepthColor;
-			float _DepthColorDistance;
+			float4 _BaseMap_ST;
+			fixed4 _BaseColor;
 			float _RampThreshold;
 			float _RampSmoothing;
 			fixed4 _SColor;
 			fixed4 _HColor;
 			float _VerticalFogThreshold;
 			float _VerticalFogSmoothness;
-			float4 _VerticalFogColor_ST;
-			half4 _VerticalFogColor_SC;
-			fixed4 _VerticalFogColor1;
+			fixed4 _VerticalFogColor;
 		CBUFFER_END
 		
 		// Built-in renderer (CG) to SRP (HLSL) bindings
@@ -127,7 +102,6 @@ Shader "CloudPlaneShader"
 			#pragma multi_compile _ _MIXED_LIGHTING_SUBTRACTIVE
 
 			// -------------------------------------
-			#pragma multi_compile_fog
 
 			//--------------------------------------
 			// GPU Instancing
@@ -142,6 +116,7 @@ Shader "CloudPlaneShader"
 				float4 vertex       : POSITION;
 				float3 normal       : NORMAL;
 				float4 tangent      : TANGENT;
+				float4 texcoord0 : TEXCOORD0;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -157,8 +132,7 @@ Shader "CloudPlaneShader"
 			#ifdef _ADDITIONAL_LIGHTS_VERTEX
 				half3 vertexLights : TEXCOORD2;
 			#endif
-				float4 screenPosition : TEXCOORD3;
-				float pack1 : TEXCOORD4; /* pack1.x = fogFactor */
+				float2 pack0 : TEXCOORD3; /* pack0.xy = texcoord0 */
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
@@ -171,31 +145,14 @@ Shader "CloudPlaneShader"
 				UNITY_TRANSFER_INSTANCE_ID(input, output);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
 
-				float3 worldPosUv = mul(unity_ObjectToWorld, input.vertex).xyz;
-
-				// Shader Properties Sampling
-				float __wavesFrequency = ( tex2Dlod(_WavesFrequency, float4(worldPosUv.xz * _WavesFrequency_ST.xy + _WavesFrequency_ST.zw, 0, 0)).r );
-				float __wavesHeight = ( _WavesHeight );
-				float __wavesSpeed = ( _WavesSpeed );
+				// Texture Coordinates
+				output.pack0.xy.xy = input.texcoord0.xy * _BaseMap_ST.xy + _BaseMap_ST.zw;
 
 				float3 worldPos = mul(unity_ObjectToWorld, input.vertex).xyz;
-				
-				// Vertex water waves
-				float _waveFrequency = __wavesFrequency;
-				float _waveHeight = __wavesHeight;
-				float3 _vertexWavePos = worldPos.xyz * _waveFrequency;
-				float _phase = _Time.y * __wavesSpeed;
-				float waveFactorX = sin(_vertexWavePos.x + _phase) * _waveHeight;
-				float waveFactorZ = sin(_vertexWavePos.z + _phase) * _waveHeight;
-				input.vertex.y += (waveFactorX + waveFactorZ);
 				VertexPositionInputs vertexInput = GetVertexPositionInputs(input.vertex.xyz);
 			#if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
 				output.shadowCoord = GetShadowCoord(vertexInput);
 			#endif
-				float4 clipPos = vertexInput.positionCS;
-
-				float4 screenPos = ComputeScreenPos(clipPos);
-				output.screenPosition.xyzw = screenPos;
 
 				VertexNormalInputs vertexNormalInput = GetVertexNormalInputs(input.normal);
 			#ifdef _ADDITIONAL_LIGHTS_VERTEX
@@ -205,9 +162,6 @@ Shader "CloudPlaneShader"
 
 				// world position
 				output.worldPosAndFog = float4(vertexInput.positionWS.xyz, 0);
-
-				// Computes fog factor per-vertex
-				output.worldPosAndFog.w = ComputeFogFactor(vertexInput.positionCS.z);
 
 				// normal
 				output.normal = NormalizeNormalPerVertex(vertexNormalInput.normalWS);
@@ -225,15 +179,11 @@ Shader "CloudPlaneShader"
 
 				float3 positionWS = input.worldPosAndFog.xyz;
 				float3 normalWS = NormalizeNormalPerPixel(input.normal);
-				half3 viewDirWS = SafeNormalize(GetCameraPositionWS() - positionWS);
 
 				// Shader Properties Sampling
-				float __depthViewCorrectionBias = ( 2.0 );
-				float4 __albedo = ( tex2D(_Albedo, positionWS.xz * _Albedo_ST.xy + frac(_Time.yy * _Albedo_SC.xy) + _Albedo_ST.zw).rgba * _Albedo1.rgba );
-				float4 __mainColor = ( _MainColor.rgba );
+				float4 __albedo = ( tex2D(_BaseMap, input.pack0.xy.xy).rgba );
+				float4 __mainColor = ( _BaseColor.rgba );
 				float __alpha = ( __albedo.a * __mainColor.a );
-				float3 __depthColor = ( _DepthColor.rgb );
-				float __depthColorDistance = ( _DepthColorDistance );
 				float __ambientIntensity = ( 1.0 );
 				float __rampThreshold = ( _RampThreshold );
 				float __rampSmoothing = ( _RampSmoothing );
@@ -241,32 +191,7 @@ Shader "CloudPlaneShader"
 				float3 __highlightColor = ( _HColor.rgb );
 				float __verticalFogThreshold = ( _VerticalFogThreshold );
 				float __verticalFogSmoothness = ( _VerticalFogSmoothness );
-				float4 __verticalFogColor = ( tex2D(_VerticalFogColor, positionWS.xz * _VerticalFogColor_ST.xy + frac(_Time.yy * _VerticalFogColor_SC.xy) + _VerticalFogColor_ST.zw).rgba * _VerticalFogColor1.rgba );
-
-				half ndv = abs(dot(viewDirWS, normalWS));
-				half ndvRaw = ndv;
-
-				// Sample depth texture and calculate difference with local depth
-				//float sceneDepth = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, sampler_CameraDepthTexture, input.[[INPUT_VALUE:screenPosition]].xy / input.[[INPUT_VALUE:screenPosition]].w);
-				float sceneDepth = SampleSceneDepth(input.screenPosition.xyzw.xy / input.screenPosition.xyzw.w);
-				if (unity_OrthoParams.w > 0.0)
-				{
-					// Orthographic camera
-					#if defined(UNITY_REVERSED_Z)
-						sceneDepth = 1.0 - sceneDepth;
-					#endif
-					sceneDepth = (sceneDepth * _ProjectionParams.z) + _ProjectionParams.y;
-				}
-				else
-				{
-					// Perspective camera
-					sceneDepth = LinearEyeDepth(sceneDepth, _ZBufferParams);
-				}
-				
-				//float localDepth = LinearEyeDepth(worldPos, UNITY_MATRIX_V);
-				float localDepth = LinearEyeDepth(input.screenPosition.xyzw.z / input.screenPosition.xyzw.w, _ZBufferParams);
-				float depthDiff = abs(sceneDepth - localDepth);
-				depthDiff *= ndvRaw * __depthViewCorrectionBias;
+				float4 __verticalFogColor = ( _VerticalFogColor.rgba );
 
 				// main texture
 				half3 albedo = __albedo.rgb;
@@ -274,11 +199,6 @@ Shader "CloudPlaneShader"
 				half3 emission = half3(0,0,0);
 				
 				albedo *= __mainColor.rgb;
-				
-				// Depth-based color
-				half3 depthColor = __depthColor;
-				half3 depthColorDist = __depthColorDistance;
-				albedo.rgb = lerp(depthColor, albedo.rgb, saturate(depthColorDist * depthDiff));
 
 				// main light: direction, color, distanceAttenuation, shadowAttenuation
 			#if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
@@ -355,10 +275,6 @@ Shader "CloudPlaneShader"
 				color += indirectDiffuse;
 
 				color += emission;
-
-				// Mix the pixel color with fogColor. You can optionally use MixFogColor to override the fogColor with a custom one.
-				float fogFactor = input.worldPosAndFog.w;
-				color = MixFog(color, fogFactor);
 				
 					//Vertical Fog
 					half vertFogThreshold = input.worldPosAndFog.xyz.y;
@@ -370,7 +286,7 @@ Shader "CloudPlaneShader"
 				#if defined(UNITY_PASS_FORWARDADD)
 					fogColor.rgb = half3(0, 0, 0);
 				#endif
-					half vertFogFactor = 1 - smoothstep(verticalFogMin, verticalFogMax, vertFogThreshold);
+					half vertFogFactor = 1 - saturate((vertFogThreshold - verticalFogMin) / (verticalFogMax - verticalFogMin));
 					color.rgb = lerp(color.rgb, fogColor.rgb, vertFogFactor);
 
 				return half4(color, alpha);
@@ -393,15 +309,15 @@ Shader "CloudPlaneShader"
 			{
 				float4 vertex   : POSITION;
 				float3 normal   : NORMAL;
+				float4 texcoord0 : TEXCOORD0;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
 			struct Varyings
 			{
 				float4 positionCS     : SV_POSITION;
-				float3 normal         : NORMAL;
-				float4 screenPosition : TEXCOORD0;
-				float3 pack1 : TEXCOORD1; /* pack1.xyz = positionWS */
+				float3 pack0 : TEXCOORD0; /* pack0.xyz = positionWS */
+				float2 pack1 : TEXCOORD1; /* pack1.xy = texcoord0 */
 			#if defined(DEPTH_ONLY_PASS)
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
@@ -432,31 +348,12 @@ Shader "CloudPlaneShader"
 					UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
 				#endif
 
-				float3 worldPosUv = mul(unity_ObjectToWorld, input.vertex).xyz;
-				float3 worldNormalUv = mul(unity_ObjectToWorld, float4(input.normal, 1.0)).xyz;
-
-				// Shader Properties Sampling
-				float __wavesFrequency = ( tex2Dlod(_WavesFrequency, float4(worldPosUv.xz * _WavesFrequency_ST.xy + _WavesFrequency_ST.zw, 0, 0)).r );
-				float __wavesHeight = ( _WavesHeight );
-				float __wavesSpeed = ( _WavesSpeed );
+				// Texture Coordinates
+				output.pack1.xy.xy = input.texcoord0.xy * _BaseMap_ST.xy + _BaseMap_ST.zw;
 
 				float3 worldPos = mul(unity_ObjectToWorld, input.vertex).xyz;
-				
-				// Vertex water waves
-				float _waveFrequency = __wavesFrequency;
-				float _waveHeight = __wavesHeight;
-				float3 _vertexWavePos = worldPos.xyz * _waveFrequency;
-				float _phase = _Time.y * __wavesSpeed;
-				float waveFactorX = sin(_vertexWavePos.x + _phase) * _waveHeight;
-				float waveFactorZ = sin(_vertexWavePos.z + _phase) * _waveHeight;
-				input.vertex.y += (waveFactorX + waveFactorZ);
 				VertexPositionInputs vertexInput = GetVertexPositionInputs(input.vertex.xyz);
-
-				//Screen Space UV
-				float4 screenPos = ComputeScreenPos(vertexInput.positionCS);
-				output.screenPosition.xyzw = screenPos;
-				output.normal = NormalizeNormalPerVertex(worldNormalUv);
-				output.pack1.xyz = vertexInput.positionWS;
+				output.pack0.xyz = vertexInput.positionWS;
 
 				#if defined(DEPTH_ONLY_PASS)
 					output.positionCS = TransformObjectToHClip(input.vertex.xyz);
@@ -475,17 +372,12 @@ Shader "CloudPlaneShader"
 					UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
 				#endif
 
-				float3 positionWS = input.pack1.xyz;
-				float3 normalWS = NormalizeNormalPerPixel(input.normal);
+				float3 positionWS = input.pack0.xyz;
 
 				// Shader Properties Sampling
-				float4 __albedo = ( tex2D(_Albedo, positionWS.xz * _Albedo_ST.xy + frac(_Time.yy * _Albedo_SC.xy) + _Albedo_ST.zw).rgba * _Albedo1.rgba );
-				float4 __mainColor = ( _MainColor.rgba );
+				float4 __albedo = ( tex2D(_BaseMap, input.pack1.xy.xy).rgba );
+				float4 __mainColor = ( _BaseColor.rgba );
 				float __alpha = ( __albedo.a * __mainColor.a );
-
-				half3 viewDirWS = SafeNormalize(GetCameraPositionWS() - positionWS);
-				half ndv = abs(dot(viewDirWS, normalWS));
-				half ndvRaw = ndv;
 
 				half3 albedo = __albedo.rgb;
 				half alpha = __alpha;
@@ -535,11 +427,47 @@ Shader "CloudPlaneShader"
 			ENDHLSL
 		}
 
+		Pass
+		{
+			Name "DepthOnly"
+			Tags
+			{
+				"LightMode" = "DepthOnly"
+			}
+
+			ZWrite On
+			ColorMask 0
+
+			HLSLPROGRAM
+
+			// Required to compile gles 2.0 with standard srp library
+			#pragma prefer_hlslcc gles
+			#pragma exclude_renderers d3d11_9x
+			#pragma target 2.0
+
+			// -------------------------------------
+			// Material Keywords
+			// #pragma shader_feature _ALPHATEST_ON
+			// #pragma shader_feature _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
+
+			//--------------------------------------
+			// GPU Instancing
+			#pragma multi_compile_instancing
+
+			// using simple #define doesn't work, we have to use this instead
+			#pragma multi_compile DEPTH_ONLY_PASS
+
+			#pragma vertex ShadowDepthPassVertex
+			#pragma fragment ShadowDepthPassFragment
+			
+			ENDHLSL
+		}
+
 	}
 
 	FallBack "Hidden/InternalErrorShader"
 	CustomEditor "ToonyColorsPro.ShaderGenerator.MaterialInspector_SG2"
 }
 
-/* TCP_DATA u config(unity:"2020.1.3f1";ver:"2.6.0";tmplt:"SG2_Template_URP";features:list["UNITY_5_4","UNITY_5_5","UNITY_5_6","UNITY_2017_1","UNITY_2018_1","UNITY_2018_2","UNITY_2018_3","UNITY_2019_1","UNITY_2019_2","UNITY_2019_3","FOG","VERTEX_SIN_WAVES","SMOOTH_FOAM","VSW_WORLDPOS","DEPTH_VIEW_CORRECTION","VERTICAL_FOG","VERTICAL_FOG_SMOOTHSTEP","DEPTH_BUFFER_COLOR","TEMPLATE_LWRP"];flags:list[];flags_extra:dict[];keywords:dict[RENDER_TYPE="Opaque",RampTextureDrawer="[TCP2Gradient]",RampTextureLabel="Ramp Texture",SHADER_TARGET="3.0",RIM_LABEL="Rim Outline",BLEND_TEX1_CHNL="g"];shaderProperties:list[sp(name:"Albedo";imps:list[imp_mp_texture(uto:True;tov:"";tov_lbl:"";gto:False;sbt:False;scr:True;scv:"";scv_lbl:"";gsc:False;roff:False;goff:False;sin_anm:False;notile:False;triplanar_local:False;def:"white";locked_uv:False;uv:5;cc:4;chan:"RGBA";mip:-1;mipprop:False;ssuv_vert:False;ssuv_obj:False;uv_type:WorldPosition;uv_chan:"XZ";uv_shaderproperty:__NULL__;prop:"_Albedo";md:"";custom:False;refs:"";guid:"41bd495f-da97-46c3-a0dc-c3491d3ed56e";op:Multiply;lbl:"Albedo";gpu_inst:False;locked:False;impl_index:-1),imp_mp_color(def:RGBA(1.000, 1.000, 1.000, 1.000);hdr:False;cc:4;chan:"RGBA";prop:"_Albedo1";md:"";custom:False;refs:"";guid:"748c77eb-dba4-4ab6-8ec6-6362ee889b1f";op:Multiply;lbl:"Albedo Color";gpu_inst:False;locked:False;impl_index:-1)]),sp(name:"Main Color";imps:list[imp_mp_color(def:RGBA(1.000, 1.000, 1.000, 1.000);hdr:True;cc:4;chan:"RGBA";prop:"_MainColor";md:"";custom:False;refs:"";guid:"d712c7ac-dc7b-4e59-a230-fdaf187f016b";op:Multiply;lbl:"Color";gpu_inst:False;locked:False;impl_index:-1)]),,,,,,,,,sp(name:"Waves Frequency";imps:list[imp_mp_texture(uto:True;tov:"";tov_lbl:"";gto:False;sbt:False;scr:False;scv:"";scv_lbl:"";gsc:False;roff:False;goff:False;sin_anm:False;notile:False;triplanar_local:False;def:"white";locked_uv:False;uv:4;cc:1;chan:"R";mip:0;mipprop:False;ssuv_vert:False;ssuv_obj:False;uv_type:WorldPosition;uv_chan:"XZ";uv_shaderproperty:__NULL__;prop:"_WavesFrequency";md:"";custom:False;refs:"";guid:"27681e86-6b31-43b6-837d-8e031162182b";op:Multiply;lbl:"Frequency";gpu_inst:False;locked:False;impl_index:-1)]),,,,,,sp(name:"Vertical Fog Color";imps:list[imp_mp_texture(uto:True;tov:"";tov_lbl:"";gto:False;sbt:False;scr:True;scv:"";scv_lbl:"";gsc:False;roff:False;goff:False;sin_anm:False;notile:False;triplanar_local:False;def:"white";locked_uv:False;uv:5;cc:4;chan:"RGBA";mip:-1;mipprop:False;ssuv_vert:False;ssuv_obj:False;uv_type:WorldPosition;uv_chan:"XZ";uv_shaderproperty:__NULL__;prop:"_VerticalFogColor";md:"";custom:False;refs:"";guid:"6a666d30-8f6d-426e-8250-8ea449d927f4";op:Multiply;lbl:"Fog Color";gpu_inst:False;locked:False;impl_index:-1),imp_mp_color(def:RGBA(1.000, 1.000, 1.000, 1.000);hdr:False;cc:4;chan:"RGBA";prop:"_VerticalFogColor1";md:"";custom:False;refs:"";guid:"b062bcf7-da35-4200-b570-15a005a0993d";op:Multiply;lbl:"Vertical Fog Color Color";gpu_inst:False;locked:False;impl_index:-1)])];customTextures:list[];codeInjection:codeInjection(injectedFiles:list[];mark:False)) */
-/* TCP_HASH dcb54074fea49434e9ab7f89e20c765c */
+/* TCP_DATA u config(unity:"2020.1.3f1";ver:"2.6.0";tmplt:"SG2_Template_URP";features:list["UNITY_5_4","UNITY_5_5","UNITY_5_6","UNITY_2017_1","UNITY_2018_1","UNITY_2018_2","UNITY_2018_3","UNITY_2019_1","UNITY_2019_2","UNITY_2019_3","ALBEDO_HSV_MASK","TRIPLANAR_OBJ_POS_OFFSET","TEMPLATE_LWRP","VERTICAL_FOG"];flags:list[];flags_extra:dict[];keywords:dict[RENDER_TYPE="Opaque",RampTextureDrawer="[TCP2Gradient]",RampTextureLabel="Ramp Texture",SHADER_TARGET="3.0"];shaderProperties:list[];customTextures:list[];codeInjection:codeInjection(injectedFiles:list[];mark:False)) */
+/* TCP_HASH 21b86f439ff0fabf66b223ac537cd55e */
