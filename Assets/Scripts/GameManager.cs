@@ -44,6 +44,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject player1Puck, player2Puck;
     [SerializeField] private GameObject p1OBJ, p2OBJ;
 
+    [SerializeField] private Button Player1CharacterSelectButton, player2CharacterSelectButton;
+
     /*
      * 0 = title
      * 1 = main meuu
@@ -113,6 +115,8 @@ public class GameManager : MonoBehaviour
         system.firstSelectedGameObject = PlayButton.gameObject;
         system.SetSelectedGameObject(system.firstSelectedGameObject);
     }
+
+
     public void DisableEventSystemOBJ()
     {
         eventSystem.SetActive(false);

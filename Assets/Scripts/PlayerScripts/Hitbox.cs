@@ -212,28 +212,18 @@ public class Hitbox : MonoBehaviour
         {
             return;
         }
-        //if (other.gameObject.CompareTag("Block"))
-        //{
-        //    if (_attackType == AttackType.Aerial || _attackType == AttackType.ArmourBreak || _attackType == AttackType.HeavyJab || _attackType == AttackType.Jab)
-        //    {
-        //        Debug.Log("Blocked");
-        //        HideHitBoxes();
-        //        return;
-        //    }
-        //}
-
 
 
         if (other.gameObject.CompareTag("Hurtbox"))
         {
             
-            var temptDefendingPlayer = other.GetComponentInParent<Player>();
+            var tempDefendingPlayer = other.GetComponentInParent<Player>();
             var tempAttackingPlayer = GetComponentInParent<Player>();
             var temptArmourCheck = other.GetComponentInParent<ArmourCheck>();
             HurtBox tempHurtBox = other.gameObject.GetComponent<HurtBox>();
             tempHurtBox.TurnOnHitBoxHit();
             Debug.Log("Hit Character");
-            if (temptDefendingPlayer.Blocking == true)
+            if (tempDefendingPlayer.Blocking == true)
             {
                 if(_attackType != AttackType.LegSweep)
                 {
@@ -243,27 +233,17 @@ public class Hitbox : MonoBehaviour
                 }
                 else
                 {
-                    DamagingPlayer(temptDefendingPlayer, tempAttackingPlayer, temptArmourCheck, tempHurtBox);
-                    temptDefendingPlayer.ResetCharacterMaterialToStandard();
+                    DamagingPlayer(tempDefendingPlayer, tempAttackingPlayer, temptArmourCheck, tempHurtBox);
+                    tempDefendingPlayer.HideHitBoxes();
+                    tempDefendingPlayer.ResetCharacterMaterialToStandard();
                 }
 
             }
             else
             {
-                DamagingPlayer(temptDefendingPlayer, tempAttackingPlayer, temptArmourCheck, tempHurtBox);
+                DamagingPlayer(tempDefendingPlayer, tempAttackingPlayer, temptArmourCheck, tempHurtBox);
+                tempDefendingPlayer.HideHitBoxes();
             }
-
-            //if (temptDefendingPlayer.Blocking == true)
-            //{
-            //    Debug.Log("Blocking2");
-            //    //temptDefendingPlayer.ResetBlocking();
-            //    HideHitBoxes();
-            //}
-            //else 
-            //{ 
-            //    DamagingPlayer(temptDefendingPlayer, tempAttackingPlayer,temptArmourCheck,tempHurtBox); 
-            //}
-
         }
     }
     private void DamagingPlayer(Player DefendingPlayer, Player attackingPlayer, ArmourCheck armourCheck, HurtBox hurtBox)

@@ -10,6 +10,7 @@ public class IdleState : PlayerState
     }
     public override void RunState(Player self, Rigidbody body, PlayerActions actions, ArmourCheck armour, InputState input, Calculating calculate)
     {
+        self.CanMove = true;
         actions.Idle();
         if (MovementCheck(input.horizontalInput))
         {

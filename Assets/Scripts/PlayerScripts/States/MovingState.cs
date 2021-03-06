@@ -19,7 +19,19 @@ public class MovingState : PlayerState
 
             if (MovementCheck(input.horizontalInput))
             {
-                self.PlayRunningParticle();
+                if(self.CanTurn == true)
+                {
+                    if (input.horizontalInput > 0)
+                    {
+                        self.transform.rotation = Quaternion.Euler(0, 180, 0);
+                    }
+                    else if (input.horizontalInput < 0)
+                    {
+                        self.transform.rotation = Quaternion.Euler(0, 0, 0);
+                    }
+                }
+
+                //self.PlayRunningParticle();
 
                 self.CanMove = true;
                 self.CanTurn = true;
@@ -29,7 +41,7 @@ public class MovingState : PlayerState
 
             if (!MovementCheck(input.horizontalInput))
             {
-                self.StopRunningParticle();
+                //self.StopRunningParticle();
                 self.CanMove = true;
                 self.CanTurn = true;
                 body.velocity = new Vector3(Mathf.Lerp(body.velocity.x, 0, calculate.friction), body.velocity.y, 0) + calculate.addForce;
@@ -117,6 +129,18 @@ public class MovingState : PlayerState
                     body.velocity = new Vector3(0, body.velocity.y, 0) + calculate.addForce;
                     body.velocity = new Vector3(input.horizontalInput * calculate.characterSpeed, body.velocity.y, 0) + calculate.addForce;
 
+                    if (self.CanTurn == true)
+                    {
+                        if (input.horizontalInput > 0)
+                        {
+                            self.transform.rotation = Quaternion.Euler(0, 180, 0);
+                        }
+                        else if (input.horizontalInput < 0)
+                        {
+                            self.transform.rotation = Quaternion.Euler(0, 0, 0);
+                        }
+                    }
+
                     if (AttackCheck(input.attackInput) && MovementCheck(input.horizontalInput))
                     {
                         actions.AerialAttack();
@@ -157,7 +181,7 @@ public class MovingState : PlayerState
                         self.JumpingOrFallingAnimations();
                         self.AddOneToJumpIndex();
                         Debug.Log("DoubleJump");
-                        self.SpawnDoubleJumpParticles();
+                        self.PlayParticle(ParticleType.DoubleJump);
                         self.SetState(new JumpingState());
                     }
 

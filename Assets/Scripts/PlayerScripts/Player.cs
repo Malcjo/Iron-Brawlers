@@ -33,10 +33,9 @@ public class Player : MonoBehaviour
     [SerializeField] private Raycasts raycasts;
     [SerializeField] private PlayerActions playerActions;
     [SerializeField] private GaugeManager gaugeManager;
+    [SerializeField] private ParticleManager particleManager;
 
-    [SerializeField] private GameObject DoubleJumpDustParticles;
-    [SerializeField] private GameObject landOnGroundDustParticle;
-    [SerializeField] private ParticleSystem RunningParticle;
+
 
     [Header("UI")]
     [SerializeField] public TMP_Text playerLives;
@@ -58,7 +57,7 @@ public class Player : MonoBehaviour
 
     private bool canHitBox;
     private bool hasArmour;
-    public bool hitStun;
+    [SerializeField] private bool _hitStun;
 
     private bool _blocking;
     private bool _canTurn;
@@ -95,7 +94,8 @@ public class Player : MonoBehaviour
     public bool CanMove { get { return _canMove; } set { _canMove = value; } }
     public int CanJumpIndex { get { return _currentJumpIndex; } set { _currentJumpIndex = value; } }
     public bool GetCanAirMove() { return canAirMove; }
-    public bool Blocking { get { return _blocking;  }set { _blocking = value; } }
+    public bool Blocking { get { return _blocking;  } set { _blocking = value; } }
+    public bool HitStun { get { return _hitStun; } set { _hitStun = value; } }
     public int GetMaxJumps() { return maxJumps; }
     public VState VerticalState { get { return _currentVerticalState; } set { _currentVerticalState = value; } }
     //public VState PreviousVerticalState { get { return _previousVerticalState; } set { _previousVerticalState = value; } }
@@ -177,9 +177,17 @@ public class Player : MonoBehaviour
         CharacterStates();
         Observation();
         GravityCheck();
+        ZeroOutMomentumWhileOnGround();
     }
+    
     #region State Machine
-
+    private void ZeroOutMomentumWhileOnGround()
+    {
+        if (MyState == new BusyState())
+        {
+            Debug.Log("in BusyState state");
+        }
+    }
     private void CharacterStates()
     {
         JumpingOrFallingTracker();
@@ -236,6 +244,10 @@ public class Player : MonoBehaviour
             facingDirection = 1;
         }
     }
+    public void HideHitBoxes()
+    {
+        hitbox.gameObject.GetComponent<Hitbox>().HideHitBoxes();
+    }
     private IEnumerator StopCharacter()
     {
         yield return new WaitForSeconds(0.1f);
@@ -248,60 +260,6 @@ public class Player : MonoBehaviour
     public void StopMovingCharacterOnYAxis()
     {
         rb.velocity = new Vector3(rb.velocity.x, 0, 0);
-    }
-
-    public void spawnLandingDustParticles()
-    {
-        Vector3 landOnGroundDustPartilePosition = new Vector3(transform.localPosition.x + 0.1f, transform.position.y + 0.1f, transform.position.z);
-        Quaternion landOnGroundDustParticleRotation = Quaternion.Euler(90, 0, 0);
-        GameObject LandingParticles = Instantiate(landOnGroundDustParticle, landOnGroundDustPartilePosition, landOnGroundDustParticleRotation);
-        SetRemoveParticles(LandingParticles);
-    }
-    public void SpawnDoubleJumpParticles()
-    {
-        StartCoroutine(DoubleJumpParticles());
-    }
-    IEnumerator DoubleJumpParticles()
-    {
-        yield return new WaitForSeconds(0);
-        Vector3 landOnGroundDustPartilePosition = new Vector3(transform.localPosition.x + 0.1f, transform.position.y + 0.1f, transform.position.z);
-        Quaternion landOnGroundDustParticleRotation = Quaternion.Euler(90, 0, 0);
-        GameObject DoubleJumpParticles = Instantiate(DoubleJumpDustParticles, landOnGroundDustPartilePosition, landOnGroundDustParticleRotation);
-        SetRemoveParticles(DoubleJumpParticles);
-    }
-    //public void SpawnRunningParticles()
-    //{
-    //    Vector3 landOnGroundDustPartilePosition = new Vector3(transform.localPosition.x - 0.1f, transform.position.y + 0.1f, transform.position.z);
-    //    Quaternion landOnGroundDustParticleRotation = Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y, transform.localEulerAngles.z);
-    //    GameObject RunningParticles = Instantiate(RunningParticle, landOnGroundDustPartilePosition, landOnGroundDustParticleRotation);
-    //    SetRemoveParticles(RunningParticles);
-    //    //StartCoroutine(RunningDustDelay());
-    //}
-    //IEnumerator RunningDustDelay()
-    //{
-    //    Vector3 landOnGroundDustPartilePosition = new Vector3(transform.localPosition.x - 0.1f, transform.position.y + 0.1f, transform.position.z);
-    //    Quaternion landOnGroundDustParticleRotation = Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y, transform.localEulerAngles.z);
-    //    GameObject RunningParticles = Instantiate(RunningParticle, landOnGroundDustPartilePosition, landOnGroundDustParticleRotation);
-    //    SetRemoveParticles(RunningParticles);
-    //    yield return new WaitForSeconds(1f);
-
-    //}
-    public void PlayRunningParticle()
-    {
-        RunningParticle.Play();
-    }
-    public void StopRunningParticle()
-    {
-        RunningParticle.Stop();
-    }
-    private void SetRemoveParticles(GameObject obj)
-    {
-        StartCoroutine(RemoveParticles(obj));
-    }
-    IEnumerator RemoveParticles (GameObject obj)
-    {
-        yield return new WaitForSeconds(1);
-        Destroy(obj.gameObject);
     }
 
     #region Jumping
@@ -343,15 +301,6 @@ public class Player : MonoBehaviour
         if (rb.velocity.y < -20)
         {
             rb.velocity = new Vector3(playerInputHandler.GetHorizontal() * SetPlayerSpeed(), -20, 0) + addForceValue;
-            //if (isDummy == false)
-            //{
-            //    rb.velocity = new Vector3(playerInputHandler.GetHorizontal() * SetPlayerSpeed(), -20, 0) + addForceValue;
-
-            //}
-            //else
-            //{
-            //    rb.velocity = addForceValue;
-            //}
         }
     }
     void GravityCheck()
@@ -365,8 +314,6 @@ public class Player : MonoBehaviour
             Gravity();
         }
     }
-    //[SerializeField] private float currentPushPower;
-    //[SerializeField] private float _currentPushPower;
     public void MoveCharacterWithAttacks(float MoveStrength)
     {
         rb.velocity = new Vector3(rb.velocity.x + facingDirection * MoveStrength, rb.velocity.y, 0) * Time.deltaTime;
@@ -454,13 +401,13 @@ public class Player : MonoBehaviour
 
     void ReduceHitStun()
     {
-        if (hitStun == true)
+        if (_hitStun == true)
         {
             hitStunTimer -= 1 * Time.deltaTime;
             if (hitStunTimer < 0.001f)
             {
                 hitStunTimer = 0;
-                hitStun = false;
+                _hitStun = false;
             }
         }
     }
@@ -475,6 +422,10 @@ public class Player : MonoBehaviour
         playerActions.HitKnockBack();
     }
     [SerializeField] private float maxHitStunTime;
+    public void SetPlayerXToZero()
+    {
+
+    }
     public void Damage(Vector3 Hit, Vector3 Power)
     {
         //hitStun = true;
@@ -538,7 +489,6 @@ public class Player : MonoBehaviour
                 case AttackType.Jab:
                     FindObjectOfType<AudioManager>().Play(AudioManager.JABHITUNARMOURED);
                     break;
-
                 case AttackType.LegSweep:
                     break;
                 case AttackType.Aerial:
@@ -565,7 +515,7 @@ public class Player : MonoBehaviour
     public float SetPlayerSpeed()
     {
         float characterSpeed = speed - armourCheck.armourReduceSpeed;
-        if (hitStun == true)
+        if (_hitStun == true)
         {
             characterSpeed *= 0 + (5 * Time.deltaTime);
         }
@@ -593,7 +543,20 @@ public class Player : MonoBehaviour
         }
         return 0;
     }
-
+    public void PlayParticle(ParticleType type)
+    {
+        switch (type)
+        {
+            case ParticleType.Landing:
+                particleManager.PlayLandOnGroundParticle();
+                break;
+            case ParticleType.DoubleJump:
+                particleManager.PlayDoubleJumpParticle();
+                break;
+            case ParticleType.Running:
+                break;
+        }
+    }
     #region Direction Player is Facing
     public int GetFacingDirection()
     {
@@ -606,23 +569,15 @@ public class Player : MonoBehaviour
         {
             return;
         }
-        var _facingDirection = playerInputHandler.GetHorizontal();
-        if (_facingDirection > 0)
+        int _facingDirection;
+        if (transform.rotation == Quaternion.Euler(0, 180, 0))
         {
-            if (_canTurn == false)
-            {
-                return;
-            }
-            transform.rotation = Quaternion.Euler(0, 180, 0);
+            _facingDirection = 1;
             facingDirection = (int)_facingDirection;
         }
-        else if (_facingDirection < 0)
+        else if (transform.rotation == Quaternion.Euler(0, 0, 0))
         {
-            if (_canTurn == false)
-            {
-                return;
-            }
-            transform.rotation = Quaternion.Euler(0, 0, 0);
+            _facingDirection = -1;
             facingDirection = (int)_facingDirection;
         }
     }
@@ -672,8 +627,11 @@ public class Player : MonoBehaviour
         {
             if (hit.collider.CompareTag("Ground") || (hit.collider.CompareTag("Platform")))
             {
-                Invoke("spawnLandingDustParticles", 0.06f);
-                playerActions.Landing();
+                PlayParticle(ParticleType.Landing);
+                if(_hitStun != true)
+                {
+                    playerActions.Landing();
+                }
                 LandOnGround(hit);
             }
         }

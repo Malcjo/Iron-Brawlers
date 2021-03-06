@@ -12,7 +12,6 @@ public class BlockState : PlayerState
     {
         if (!BlockCheck(input.blockInput))
         {
-
             self.Blocking = false;
             actions.StopBlock();
         }
