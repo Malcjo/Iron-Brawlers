@@ -1,7 +1,7 @@
 ﻿// Toony Colors Pro+Mobile 2
 // (c) 2014-2020 Jean Moreno
 
-Shader "Toony Colors Pro 2/User/My TCP2 Shader"
+Shader "Grass"
 {
 	Properties
 	{
@@ -10,20 +10,16 @@ Shader "Toony Colors Pro 2/User/My TCP2 Shader"
 		[TCP2ColorNoAlpha] _HColor ("Highlight Color", Color) = (0.75,0.75,0.75,1)
 		[TCP2ColorNoAlpha] _SColor ("Shadow Color", Color) = (0.2,0.2,0.2,1)
 		_BaseMap ("Albedo", 2D) = "white" {}
+		_Cutoff ("Alpha Cutoff", Range(0,1)) = 0.5
 		[TCP2Separator]
 
-		[TCP2Header(Ramp Shading)]
+		[Header(Wind)]
+		_WindDirection ("Direction", Vector) = (1,0,0,0)
+		_WindStrength ("Strength", Range(0,0.2)) = 0.025
+		[NoScaleOffset] _WindMask ("Mask", 2D) = "white" {}
+		[NoScaleOffset] _WindTexture ("Wind Texture", 2D) = "gray" {}
+		_WindTexTilingSpeed ("Tiling (XY) Speed (ZW)", Vector) = (0.2,0.2,0.1,0.1)
 		
-		_RampThreshold ("Threshold", Range(0.01,1)) = 0.5
-		_RampSmoothing ("Smoothing", Range(0.001,1)) = 0.5
-		[TCP2Separator]
-		
-		[TCP2HeaderHelp(Vertical Fog)]
-			_VerticalFogThreshold ("Y Threshold", Float) = 0
-			_VerticalFogSmoothness ("Smoothness", Float) = 0.5
-			_VerticalFogColor ("Fog Color", Color) = (0.5,0.5,0.5,1)
-		[TCP2Separator]
-
 		[ToggleOff(_RECEIVE_SHADOWS_OFF)] _ReceiveShadowsOff ("Receive Shadows", Float) = 1
 
 		//Avoid compile error if the properties are ending with a drawer
@@ -35,7 +31,9 @@ Shader "Toony Colors Pro 2/User/My TCP2 Shader"
 		Tags
 		{
 			"RenderPipeline" = "UniversalPipeline"
-			"RenderType"="Opaque"
+			"RenderType"="Transparent"
+			"Queue"="Transparent"
+			"IgnoreProjectors"="True"
 		}
 
 		HLSLINCLUDE
@@ -50,20 +48,20 @@ Shader "Toony Colors Pro 2/User/My TCP2 Shader"
 		// Uniforms
 
 		// Shader Properties
+		sampler2D _WindTexture;
+		sampler2D _WindMask;
 		sampler2D _BaseMap;
 
 		CBUFFER_START(UnityPerMaterial)
 			
 			// Shader Properties
+			float4 _WindDirection;
+			float _WindStrength;
 			float4 _BaseMap_ST;
 			fixed4 _BaseColor;
-			float _RampThreshold;
-			float _RampSmoothing;
 			fixed4 _SColor;
 			fixed4 _HColor;
-			float _VerticalFogThreshold;
-			float _VerticalFogSmoothness;
-			fixed4 _VerticalFogColor;
+			float4 _WindTexTilingSpeed;
 		CBUFFER_END
 		
 		// Built-in renderer (CG) to SRP (HLSL) bindings
@@ -79,6 +77,10 @@ Shader "Toony Colors Pro 2/User/My TCP2 Shader"
 			{
 				"LightMode"="UniversalForward"
 			}
+			Blend SrcAlpha OneMinusSrcAlpha
+			BlendOp Add
+			AlphaToMask On
+			Cull Off
 
 			HLSLPROGRAM
 			// Required to compile gles 2.0 with standard SRP library
@@ -116,6 +118,7 @@ Shader "Toony Colors Pro 2/User/My TCP2 Shader"
 				float4 vertex       : POSITION;
 				float3 normal       : NORMAL;
 				float4 tangent      : TANGENT;
+				half4 vertexColor   : COLOR;
 				float4 texcoord0 : TEXCOORD0;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
@@ -145,10 +148,29 @@ Shader "Toony Colors Pro 2/User/My TCP2 Shader"
 				UNITY_TRANSFER_INSTANCE_ID(input, output);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
 
+				float3 worldPosUv = mul(unity_ObjectToWorld, input.vertex).xyz;
+
 				// Texture Coordinates
 				output.pack0.xy.xy = input.texcoord0.xy * _BaseMap_ST.xy + _BaseMap_ST.zw;
+				// Sampled in Custom Code
+				float4 imp_100 = _WindTexTilingSpeed;
+								// Shader Properties Sampling
+				float __windTimeOffset = ( input.vertexColor.g );
+				float2 __windTextureUv = ( worldPosUv.xz * imp_100.xy + (_Time.yy + __windTimeOffset) * imp_100.zw );
+				float3 __windTexture = ( tex2Dlod(_WindTexture, float4(__windTextureUv.xy, 0, 0)).rgb );
+				float3 __windDirection = ( _WindDirection.xyz );
+				float3 __windMask = ( tex2Dlod(_WindMask, float4(output.pack0.xy.xy, 0, 0)).rgb );
+				float __windStrength = ( _WindStrength );
 
 				float3 worldPos = mul(unity_ObjectToWorld, input.vertex).xyz;
+				// Wind Animation
+				float windTimeOffset = __windTimeOffset;
+				float3 windFactor = __windTexture * 2.0 - 1.0;
+				float3 windDir = normalize(__windDirection);
+				float3 windMask = __windMask;
+				float windStrength = __windStrength;
+				worldPos.xyz += windDir * windFactor * windMask * windStrength;
+				input.vertex.xyz = mul(unity_WorldToObject, float4(worldPos, 1)).xyz;
 				VertexPositionInputs vertexInput = GetVertexPositionInputs(input.vertex.xyz);
 			#if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
 				output.shadowCoord = GetShadowCoord(vertexInput);
@@ -185,19 +207,14 @@ Shader "Toony Colors Pro 2/User/My TCP2 Shader"
 				float4 __mainColor = ( _BaseColor.rgba );
 				float __alpha = ( __albedo.a * __mainColor.a );
 				float __ambientIntensity = ( 1.0 );
-				float __rampThreshold = ( _RampThreshold );
-				float __rampSmoothing = ( _RampSmoothing );
 				float3 __shadowColor = ( _SColor.rgb );
 				float3 __highlightColor = ( _HColor.rgb );
-				float __verticalFogThreshold = ( _VerticalFogThreshold );
-				float __verticalFogSmoothness = ( _VerticalFogSmoothness );
-				float4 __verticalFogColor = ( _VerticalFogColor.rgba );
 
 				// main texture
 				half3 albedo = __albedo.rgb;
 				half alpha = __alpha;
 				half3 emission = half3(0,0,0);
-				
+
 				albedo *= __mainColor.rgb;
 
 				// main light: direction, color, distanceAttenuation, shadowAttenuation
@@ -221,15 +238,13 @@ Shader "Toony Colors Pro 2/User/My TCP2 Shader"
 				half3 lightDir = mainLight.direction;
 				half3 lightColor = mainLight.color.rgb;
 
-				half atten = mainLight.shadowAttenuation * mainLight.distanceAttenuation;
+				half atten = mainLight.shadowAttenuation;
 
 				half ndl = dot(normalWS, lightDir);
 				half3 ramp;
 				
-				half rampThreshold = __rampThreshold;
-				half rampSmooth = __rampSmoothing * 0.5;
 				ndl = saturate(ndl);
-				ramp = smoothstep(rampThreshold - rampSmooth, rampThreshold + rampSmooth, ndl);
+				ramp = float3(1, 1, 1);
 
 				// apply attenuation
 				ramp *= atten;
@@ -252,7 +267,7 @@ Shader "Toony Colors Pro 2/User/My TCP2 Shader"
 					half3 ramp;
 					
 					ndl = saturate(ndl);
-					ramp = smoothstep(rampThreshold - rampSmooth, rampThreshold + rampSmooth, ndl);
+					ramp = float3(1, 1, 1);
 
 					// apply attenuation (shadowmaps & point/spot lights attenuation)
 					ramp *= atten;
@@ -275,19 +290,6 @@ Shader "Toony Colors Pro 2/User/My TCP2 Shader"
 				color += indirectDiffuse;
 
 				color += emission;
-				
-					//Vertical Fog
-					half vertFogThreshold = input.worldPosAndFog.xyz.y;
-					half verticalFogThreshold = __verticalFogThreshold;
-					half verticalFogSmooothness = __verticalFogSmoothness;
-					half verticalFogMin = verticalFogThreshold - verticalFogSmooothness;
-					half verticalFogMax = verticalFogThreshold + verticalFogSmooothness;
-					half4 fogColor = __verticalFogColor;
-				#if defined(UNITY_PASS_FORWARDADD)
-					fogColor.rgb = half3(0, 0, 0);
-				#endif
-					half vertFogFactor = 1 - saturate((vertFogThreshold - verticalFogMin) / (verticalFogMax - verticalFogMin));
-					color.rgb = lerp(color.rgb, fogColor.rgb, vertFogFactor);
 
 				return half4(color, alpha);
 			}
@@ -310,14 +312,14 @@ Shader "Toony Colors Pro 2/User/My TCP2 Shader"
 				float4 vertex   : POSITION;
 				float3 normal   : NORMAL;
 				float4 texcoord0 : TEXCOORD0;
+				half4 vertexColor : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
 			struct Varyings
 			{
 				float4 positionCS     : SV_POSITION;
-				float3 pack0 : TEXCOORD0; /* pack0.xyz = positionWS */
-				float2 pack1 : TEXCOORD1; /* pack1.xy = texcoord0 */
+				float2 pack0 : TEXCOORD0; /* pack0.xy = texcoord0 */
 			#if defined(DEPTH_ONLY_PASS)
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
@@ -348,12 +350,29 @@ Shader "Toony Colors Pro 2/User/My TCP2 Shader"
 					UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
 				#endif
 
+				float3 worldPosUv = mul(unity_ObjectToWorld, input.vertex).xyz;
+
 				// Texture Coordinates
-				output.pack1.xy.xy = input.texcoord0.xy * _BaseMap_ST.xy + _BaseMap_ST.zw;
+				output.pack0.xy.xy = input.texcoord0.xy * _BaseMap_ST.xy + _BaseMap_ST.zw;
+				// Sampled in Custom Code
+				float4 imp_101 = _WindTexTilingSpeed;
+								// Shader Properties Sampling
+				float __windTimeOffset = ( input.vertexColor.g );
+				float2 __windTextureUv = ( worldPosUv.xz * imp_101.xy + (_Time.yy + __windTimeOffset) * imp_101.zw );
+				float3 __windTexture = ( tex2Dlod(_WindTexture, float4(__windTextureUv.xy, 0, 0)).rgb );
+				float3 __windDirection = ( _WindDirection.xyz );
+				float3 __windMask = ( tex2Dlod(_WindMask, float4(output.pack0.xy.xy, 0, 0)).rgb );
+				float __windStrength = ( _WindStrength );
 
 				float3 worldPos = mul(unity_ObjectToWorld, input.vertex).xyz;
-				VertexPositionInputs vertexInput = GetVertexPositionInputs(input.vertex.xyz);
-				output.pack0.xyz = vertexInput.positionWS;
+				// Wind Animation
+				float windTimeOffset = __windTimeOffset;
+				float3 windFactor = __windTexture * 2.0 - 1.0;
+				float3 windDir = normalize(__windDirection);
+				float3 windMask = __windMask;
+				float windStrength = __windStrength;
+				worldPos.xyz += windDir * windFactor * windMask * windStrength;
+				input.vertex.xyz = mul(unity_WorldToObject, float4(worldPos, 1)).xyz;
 
 				#if defined(DEPTH_ONLY_PASS)
 					output.positionCS = TransformObjectToHClip(input.vertex.xyz);
@@ -372,10 +391,8 @@ Shader "Toony Colors Pro 2/User/My TCP2 Shader"
 					UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
 				#endif
 
-				float3 positionWS = input.pack0.xyz;
-
 				// Shader Properties Sampling
-				float4 __albedo = ( tex2D(_BaseMap, input.pack1.xy.xy).rgba );
+				float4 __albedo = ( tex2D(_BaseMap, input.pack0.xy.xy).rgba );
 				float4 __mainColor = ( _BaseColor.rgba );
 				float __alpha = ( __albedo.a * __mainColor.a );
 
@@ -383,7 +400,7 @@ Shader "Toony Colors Pro 2/User/My TCP2 Shader"
 				half alpha = __alpha;
 				half3 emission = half3(0,0,0);
 
-				return 0;
+				return alpha;
 			}
 
 		#endif
@@ -397,8 +414,10 @@ Shader "Toony Colors Pro 2/User/My TCP2 Shader"
 				"LightMode" = "ShadowCaster"
 			}
 
+			AlphaToMask On
 			ZWrite On
 			ZTest LEqual
+			Cull Off
 
 			HLSLPROGRAM
 			// Required to compile gles 2.0 with standard srp library
@@ -435,8 +454,10 @@ Shader "Toony Colors Pro 2/User/My TCP2 Shader"
 				"LightMode" = "DepthOnly"
 			}
 
+			AlphaToMask On
 			ZWrite On
 			ColorMask 0
+			Cull Off
 
 			HLSLPROGRAM
 
@@ -469,5 +490,5 @@ Shader "Toony Colors Pro 2/User/My TCP2 Shader"
 	CustomEditor "ToonyColorsPro.ShaderGenerator.MaterialInspector_SG2"
 }
 
-/* TCP_DATA u config(unity:"2020.1.3f1";ver:"2.6.0";tmplt:"SG2_Template_URP";features:list["UNITY_5_4","UNITY_5_5","UNITY_5_6","UNITY_2017_1","UNITY_2018_1","UNITY_2018_2","UNITY_2018_3","UNITY_2019_1","UNITY_2019_2","UNITY_2019_3","ALBEDO_HSV_MASK","TRIPLANAR_OBJ_POS_OFFSET","TEMPLATE_LWRP","VERTICAL_FOG"];flags:list[];flags_extra:dict[];keywords:dict[RENDER_TYPE="Opaque",RampTextureDrawer="[TCP2Gradient]",RampTextureLabel="Ramp Texture",SHADER_TARGET="3.0"];shaderProperties:list[];customTextures:list[];codeInjection:codeInjection(injectedFiles:list[];mark:False)) */
-/* TCP_HASH 21b86f439ff0fabf66b223ac537cd55e */
+/* TCP_DATA u config(unity:"2020.1.3f1";ver:"2.6.0";tmplt:"SG2_Template_URP";features:list["UNITY_5_4","UNITY_5_5","UNITY_5_6","UNITY_2017_1","UNITY_2018_1","UNITY_2018_2","UNITY_2018_3","UNITY_2019_1","UNITY_2019_2","UNITY_2019_3","WIND_ANIM","ALPHA_TESTING","TEXTURE_RAMP_2D","NO_RAMP_UNLIT","BLEND_OP","ALPHA_BLENDING","SHADER_BLENDING","ALPHA_TO_COVERAGE","ALPHA_TO_COVERAGE_RAW","CULLING","TEMPLATE_LWRP","WIND_ANIM_TEX"];flags:list[];flags_extra:dict[];keywords:dict[RENDER_TYPE="TransparentCutout",RampTextureDrawer="[NoScaleOffset]",RampTextureLabel="2D Ramp Texture",SHADER_TARGET="3.0"];shaderProperties:list[,,,,,,,,,,,sp(name:"Wind Mask";imps:list[imp_mp_texture(uto:False;tov:"";tov_lbl:"";gto:False;sbt:False;scr:False;scv:"";scv_lbl:"";gsc:False;roff:False;goff:False;sin_anm:False;notile:False;triplanar_local:False;def:"white";locked_uv:False;uv:0;cc:3;chan:"RGB";mip:0;mipprop:False;ssuv_vert:False;ssuv_obj:False;uv_type:Texcoord;uv_chan:"XZ";uv_shaderproperty:__NULL__;prop:"_WindMask";md:"";custom:False;refs:"";guid:"a2443bc1-43f0-4839-91a3-4dc6cd67a288";op:Multiply;lbl:"Mask";gpu_inst:False;locked:False;impl_index:-1)]),,,sp(name:"Face Culling";imps:list[imp_enum(value_type:0;value:2;enum_type:"ToonyColorsPro.ShaderGenerator.Culling";guid:"49b512dd-e80a-47a5-9dfc-60e1c0b1c463";op:Multiply;lbl:"Face Culling";gpu_inst:False;locked:False;impl_index:0)])];customTextures:list[];codeInjection:codeInjection(injectedFiles:list[];mark:False)) */
+/* TCP_HASH 27aaeb017b9c3d98e87d6ccc11e3e642 */

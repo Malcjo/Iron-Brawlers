@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: FlowerBoiHouseGreen
+  m_Name: Flowerpot Blue
   m_Shader: {fileID: 4800000, guid: d15762ecbffbffc42863e9e0a37356d8, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -20,7 +20,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: db234bb8cea78a44ca0f5c1c85868dce, type: 3}
+        m_Texture: {fileID: 2800000, guid: df969c007e8aaa64d85235c684288c5f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -47,6 +47,14 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _WindMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _WindTexture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
     - _AlphaClip: 0
     - _Blend: 0
@@ -61,14 +69,18 @@ Material:
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _QueueOffset: 0
-    - _RampThreshold: 0.35
+    - _RampSmoothing: 0.258
+    - _RampThreshold: 0.197
     - _ReceiveShadows: 1
     - _ReceiveShadowsOff: 1
+    - _RenderingMode: 0
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
+    - _UseWind: 0
+    - _WindStrength: 0.025
     - _WorkflowMode: 1
     - _ZWrite: 1
     - __dummy__: 0
@@ -76,11 +88,13 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _HColor: {r: 0.75, g: 0.75, b: 0.75, a: 1}
-    - _SColor: {r: 0.26415092, g: 0.15076537, b: 0.15076537, a: 1}
+    - _HColor: {r: 1, g: 1, b: 1, a: 1}
+    - _SColor: {r: 0.16196156, g: 0.254717, b: 0.22801468, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+    - _WindDirection: {r: 1, g: 0, b: 0, a: 0}
+    - _WindTexTilingSpeed: {r: 0.2, g: 0.2, b: 0.1, a: 0.1}
   m_BuildTextureStacks: []
---- !u!114 &4789391626754594695
+--- !u!114 &5398210069930590310
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
