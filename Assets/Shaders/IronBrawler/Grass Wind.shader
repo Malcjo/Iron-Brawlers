@@ -1,7 +1,7 @@
 ﻿// Toony Colors Pro+Mobile 2
 // (c) 2014-2020 Jean Moreno
 
-Shader "Grass"
+Shader "Grass Wind"
 {
 	Properties
 	{
@@ -9,11 +9,12 @@ Shader "Grass"
 		_BaseColor ("Color", Color) = (1,1,1,1)
 		[TCP2ColorNoAlpha] _HColor ("Highlight Color", Color) = (0.75,0.75,0.75,1)
 		[TCP2ColorNoAlpha] _SColor ("Shadow Color", Color) = (0.2,0.2,0.2,1)
-		_BaseMap ("Albedo", 2D) = "white" {}
+		[NoScaleOffset] _BaseMap ("Albedo", 2D) = "white" {}
 		_Cutoff ("Alpha Cutoff", Range(0,1)) = 0.5
 		[TCP2Separator]
 
 		[Header(Wind)]
+		[Toggle(TCP2_WIND)] _UseWind ("Enable Wind", Float) = 0
 		_WindDirection ("Direction", Vector) = (1,0,0,0)
 		_WindStrength ("Strength", Range(0,0.2)) = 0.025
 		[NoScaleOffset] _WindMask ("Mask", 2D) = "white" {}
@@ -57,7 +58,7 @@ Shader "Grass"
 			// Shader Properties
 			float4 _WindDirection;
 			float _WindStrength;
-			float4 _BaseMap_ST;
+			float _Cutoff;
 			fixed4 _BaseColor;
 			fixed4 _SColor;
 			fixed4 _HColor;
@@ -79,7 +80,6 @@ Shader "Grass"
 			}
 			Blend SrcAlpha OneMinusSrcAlpha
 			BlendOp Add
-			AlphaToMask On
 			Cull Off
 
 			HLSLPROGRAM
@@ -111,6 +111,10 @@ Shader "Grass"
 
 			#pragma vertex Vertex
 			#pragma fragment Fragment
+
+			//--------------------------------------
+			// Toony Colors Pro 2 keywords
+			#pragma shader_feature TCP2_WIND
 
 			// vertex input
 			struct Attributes
@@ -151,7 +155,7 @@ Shader "Grass"
 				float3 worldPosUv = mul(unity_ObjectToWorld, input.vertex).xyz;
 
 				// Texture Coordinates
-				output.pack0.xy.xy = input.texcoord0.xy * _BaseMap_ST.xy + _BaseMap_ST.zw;
+				output.pack0.xy = input.texcoord0.xy;
 				// Sampled in Custom Code
 				float4 imp_100 = _WindTexTilingSpeed;
 								// Shader Properties Sampling
@@ -163,6 +167,7 @@ Shader "Grass"
 				float __windStrength = ( _WindStrength );
 
 				float3 worldPos = mul(unity_ObjectToWorld, input.vertex).xyz;
+				#if defined(TCP2_WIND)
 				// Wind Animation
 				float windTimeOffset = __windTimeOffset;
 				float3 windFactor = __windTexture * 2.0 - 1.0;
@@ -170,6 +175,7 @@ Shader "Grass"
 				float3 windMask = __windMask;
 				float windStrength = __windStrength;
 				worldPos.xyz += windDir * windFactor * windMask * windStrength;
+				#endif
 				input.vertex.xyz = mul(unity_WorldToObject, float4(worldPos, 1)).xyz;
 				VertexPositionInputs vertexInput = GetVertexPositionInputs(input.vertex.xyz);
 			#if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
@@ -206,6 +212,7 @@ Shader "Grass"
 				float4 __albedo = ( tex2D(_BaseMap, input.pack0.xy.xy).rgba );
 				float4 __mainColor = ( _BaseColor.rgba );
 				float __alpha = ( __albedo.a * __mainColor.a );
+				float __cutoff = ( _Cutoff );
 				float __ambientIntensity = ( 1.0 );
 				float3 __shadowColor = ( _SColor.rgb );
 				float3 __highlightColor = ( _HColor.rgb );
@@ -215,6 +222,9 @@ Shader "Grass"
 				half alpha = __alpha;
 				half3 emission = half3(0,0,0);
 
+				//Alpha Testing
+				clip(alpha - __cutoff);
+				
 				albedo *= __mainColor.rgb;
 
 				// main light: direction, color, distanceAttenuation, shadowAttenuation
@@ -353,7 +363,7 @@ Shader "Grass"
 				float3 worldPosUv = mul(unity_ObjectToWorld, input.vertex).xyz;
 
 				// Texture Coordinates
-				output.pack0.xy.xy = input.texcoord0.xy * _BaseMap_ST.xy + _BaseMap_ST.zw;
+				output.pack0.xy = input.texcoord0.xy;
 				// Sampled in Custom Code
 				float4 imp_101 = _WindTexTilingSpeed;
 								// Shader Properties Sampling
@@ -365,6 +375,7 @@ Shader "Grass"
 				float __windStrength = ( _WindStrength );
 
 				float3 worldPos = mul(unity_ObjectToWorld, input.vertex).xyz;
+				#if defined(TCP2_WIND)
 				// Wind Animation
 				float windTimeOffset = __windTimeOffset;
 				float3 windFactor = __windTexture * 2.0 - 1.0;
@@ -372,6 +383,7 @@ Shader "Grass"
 				float3 windMask = __windMask;
 				float windStrength = __windStrength;
 				worldPos.xyz += windDir * windFactor * windMask * windStrength;
+				#endif
 				input.vertex.xyz = mul(unity_WorldToObject, float4(worldPos, 1)).xyz;
 
 				#if defined(DEPTH_ONLY_PASS)
@@ -395,12 +407,16 @@ Shader "Grass"
 				float4 __albedo = ( tex2D(_BaseMap, input.pack0.xy.xy).rgba );
 				float4 __mainColor = ( _BaseColor.rgba );
 				float __alpha = ( __albedo.a * __mainColor.a );
+				float __cutoff = ( _Cutoff );
 
 				half3 albedo = __albedo.rgb;
 				half alpha = __alpha;
 				half3 emission = half3(0,0,0);
 
-				return alpha;
+				//Alpha Testing
+				clip(alpha - __cutoff);
+
+				return 0;
 			}
 
 		#endif
@@ -414,7 +430,6 @@ Shader "Grass"
 				"LightMode" = "ShadowCaster"
 			}
 
-			AlphaToMask On
 			ZWrite On
 			ZTest LEqual
 			Cull Off
@@ -440,6 +455,10 @@ Shader "Grass"
 			#pragma vertex ShadowDepthPassVertex
 			#pragma fragment ShadowDepthPassFragment
 			
+			//--------------------------------------
+			// Toony Colors Pro 2 keywords
+			#pragma shader_feature TCP2_WIND
+
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Shadows.hlsl"
 
@@ -454,7 +473,6 @@ Shader "Grass"
 				"LightMode" = "DepthOnly"
 			}
 
-			AlphaToMask On
 			ZWrite On
 			ColorMask 0
 			Cull Off
@@ -481,6 +499,10 @@ Shader "Grass"
 			#pragma vertex ShadowDepthPassVertex
 			#pragma fragment ShadowDepthPassFragment
 			
+			//--------------------------------------
+			// Toony Colors Pro 2 keywords
+			#pragma shader_feature TCP2_WIND
+
 			ENDHLSL
 		}
 
@@ -490,5 +512,5 @@ Shader "Grass"
 	CustomEditor "ToonyColorsPro.ShaderGenerator.MaterialInspector_SG2"
 }
 
-/* TCP_DATA u config(unity:"2020.1.3f1";ver:"2.6.0";tmplt:"SG2_Template_URP";features:list["UNITY_5_4","UNITY_5_5","UNITY_5_6","UNITY_2017_1","UNITY_2018_1","UNITY_2018_2","UNITY_2018_3","UNITY_2019_1","UNITY_2019_2","UNITY_2019_3","WIND_ANIM","ALPHA_TESTING","TEXTURE_RAMP_2D","NO_RAMP_UNLIT","BLEND_OP","ALPHA_BLENDING","SHADER_BLENDING","ALPHA_TO_COVERAGE","ALPHA_TO_COVERAGE_RAW","CULLING","TEMPLATE_LWRP","WIND_ANIM_TEX"];flags:list[];flags_extra:dict[];keywords:dict[RENDER_TYPE="TransparentCutout",RampTextureDrawer="[NoScaleOffset]",RampTextureLabel="2D Ramp Texture",SHADER_TARGET="3.0"];shaderProperties:list[,,,,,,,,,,,sp(name:"Wind Mask";imps:list[imp_mp_texture(uto:False;tov:"";tov_lbl:"";gto:False;sbt:False;scr:False;scv:"";scv_lbl:"";gsc:False;roff:False;goff:False;sin_anm:False;notile:False;triplanar_local:False;def:"white";locked_uv:False;uv:0;cc:3;chan:"RGB";mip:0;mipprop:False;ssuv_vert:False;ssuv_obj:False;uv_type:Texcoord;uv_chan:"XZ";uv_shaderproperty:__NULL__;prop:"_WindMask";md:"";custom:False;refs:"";guid:"a2443bc1-43f0-4839-91a3-4dc6cd67a288";op:Multiply;lbl:"Mask";gpu_inst:False;locked:False;impl_index:-1)]),,,sp(name:"Face Culling";imps:list[imp_enum(value_type:0;value:2;enum_type:"ToonyColorsPro.ShaderGenerator.Culling";guid:"49b512dd-e80a-47a5-9dfc-60e1c0b1c463";op:Multiply;lbl:"Face Culling";gpu_inst:False;locked:False;impl_index:0)])];customTextures:list[];codeInjection:codeInjection(injectedFiles:list[];mark:False)) */
-/* TCP_HASH 27aaeb017b9c3d98e87d6ccc11e3e642 */
+/* TCP_DATA u config(unity:"2020.1.3f1";ver:"2.6.0";tmplt:"SG2_Template_URP";features:list["UNITY_5_4","UNITY_5_5","UNITY_5_6","UNITY_2017_1","UNITY_2018_1","UNITY_2018_2","UNITY_2018_3","UNITY_2019_1","UNITY_2019_2","UNITY_2019_3","WIND_ANIM","ALPHA_BLENDING","SHADER_BLENDING","ALPHA_TO_COVERAGE_RAW","ALPHA_TESTING","BLEND_OP","CULLING","WIND_ANIM_TEX","WIND_SHADER_FEATURE","TEMPLATE_LWRP","NO_RAMP_UNLIT"];flags:list[];flags_extra:dict[];keywords:dict[RENDER_TYPE="TransparentCutout",RampTextureDrawer="[TCP2Gradient]",RampTextureLabel="Ramp Texture",SHADER_TARGET="3.0"];shaderProperties:list[sp(name:"Albedo";imps:list[imp_mp_texture(uto:False;tov:"";tov_lbl:"";gto:False;sbt:False;scr:False;scv:"";scv_lbl:"";gsc:False;roff:False;goff:False;sin_anm:False;notile:False;triplanar_local:False;def:"white";locked_uv:False;uv:0;cc:4;chan:"RGBA";mip:-1;mipprop:False;ssuv_vert:False;ssuv_obj:False;uv_type:Texcoord;uv_chan:"XZ";uv_shaderproperty:__NULL__;prop:"_BaseMap";md:"";custom:False;refs:"";guid:"1680adfe-e235-409a-8e00-a0374ddf82ad";op:Multiply;lbl:"Albedo";gpu_inst:False;locked:False;impl_index:0)]),,,,,,,,,,,,,sp(name:"Wind Mask";imps:list[imp_mp_texture(uto:False;tov:"";tov_lbl:"";gto:False;sbt:False;scr:False;scv:"";scv_lbl:"";gsc:False;roff:False;goff:False;sin_anm:False;notile:False;triplanar_local:False;def:"white";locked_uv:False;uv:0;cc:3;chan:"RGB";mip:0;mipprop:False;ssuv_vert:False;ssuv_obj:False;uv_type:Texcoord;uv_chan:"XZ";uv_shaderproperty:__NULL__;prop:"_WindMask";md:"";custom:False;refs:"";guid:"0da30ad4-1b45-4844-842e-d0d31880441d";op:Multiply;lbl:"Mask";gpu_inst:False;locked:False;impl_index:-1)]),,,sp(name:"Face Culling";imps:list[imp_enum(value_type:0;value:2;enum_type:"ToonyColorsPro.ShaderGenerator.Culling";guid:"e8701df6-26c6-4bdc-8fd8-fdb256973279";op:Multiply;lbl:"Face Culling";gpu_inst:False;locked:False;impl_index:0)])];customTextures:list[];codeInjection:codeInjection(injectedFiles:list[];mark:False)) */
+/* TCP_HASH 8fedb6a83913af719df393b67dcb2402 */
