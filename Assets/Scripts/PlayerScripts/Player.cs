@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Net;
+using System.Runtime.InteropServices.WindowsRuntime;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,13 +19,14 @@ public class Player : MonoBehaviour
 
     [SerializeField] public float gravityValue = -10f;
     [SerializeField] private float friction = 0.25f;
+    [SerializeField] private float normalFriction, slideFriction;
     [SerializeField] private int maxLives = 3;
     public bool landing = false;
     [SerializeField] private float speed = 6.5f;
 
     [SerializeField] private float weight = 22;
     [SerializeField] private float knockbackResistance = 3;
-    
+
     [SerializeField] private Rigidbody rb;
     [SerializeField] private GameObject hitbox, blockObj;
 
@@ -34,7 +36,13 @@ public class Player : MonoBehaviour
     [SerializeField] private PlayerActions playerActions;
     [SerializeField] private GaugeManager gaugeManager;
     [SerializeField] private ParticleManager particleManager;
-
+    private bool _DecreaseSlide;
+    public bool DecreaseSlide { get { return _DecreaseSlide; } set { _DecreaseSlide = value; } }
+    [Range(0, 5)]
+    [SerializeField] private float _SlideValue;
+    public float maxSliderValue;
+    public int SliderCountUpSetValue;
+    public float SlideValue { get { return _SlideValue; } set { _SlideValue = value; } }
 
 
     [Header("UI")]
@@ -86,6 +94,8 @@ public class Player : MonoBehaviour
     public int lives;
     public int characterType;
     private bool _inAir;
+    [SerializeField] private bool _moving;
+    public bool Moving {get { return _moving; } set { _moving = value; } }
     public bool WasAttacking { get { return _wasAttacking; } set { _wasAttacking = value; } }
     public bool UseGravity { get { return _gravityOn; } set { _gravityOn = value; } }
     public bool InAir { get { return _inAir; } set { _inAir = value; } }
@@ -94,11 +104,11 @@ public class Player : MonoBehaviour
     public bool CanMove { get { return _canMove; } set { _canMove = value; } }
     public int CanJumpIndex { get { return _currentJumpIndex; } set { _currentJumpIndex = value; } }
     public bool GetCanAirMove() { return canAirMove; }
-    public bool Blocking { get { return _blocking;  } set { _blocking = value; } }
+    public bool Blocking { get { return _blocking; } set { _blocking = value; } }
     public bool HitStun { get { return _hitStun; } set { _hitStun = value; } }
     public int GetMaxJumps() { return maxJumps; }
     [SerializeField] private float _SlideFriction;
-    public float SlideFricton { get { return _SlideFriction; } } 
+    public float SlideFricton { get { return _SlideFriction; } }
     public VState VerticalState { get { return _currentVerticalState; } set { _currentVerticalState = value; } }
     //public VState PreviousVerticalState { get { return _previousVerticalState; } set { _previousVerticalState = value; } }
 
@@ -154,13 +164,15 @@ public class Player : MonoBehaviour
     }
     private void Start()
     {
-        if(playerNumber == PlayerIndex.Player1)
+        _interuptSliderSetToZero = true;
+        DecreaseSlide = true;
+        if (playerNumber == PlayerIndex.Player1)
         {
             hitbox.gameObject.layer = 8;
             blockObj.gameObject.layer = 8;
             SpawnPoint = GameManager.instance.player1Spawn;
         }
-        else if(playerNumber == PlayerIndex.Player2)
+        else if (playerNumber == PlayerIndex.Player2)
         {
             hitbox.gameObject.layer = 9;
             blockObj.gameObject.layer = 9;
@@ -170,8 +182,58 @@ public class Player : MonoBehaviour
     }
     private void Update()
     {
+
+        if (_SlideValue < 0)
+        {
+            _SlideValue = 0;
+        }
+        if (_SlideValue >= maxSliderValue)
+        {
+            _SlideValue = maxSliderValue;
+            friction = slideFriction;
+        }
+        else if (_SlideValue < maxSliderValue)
+        {
+            friction = normalFriction;
+        }
+
+        Delaycounter -= 1 * Time.deltaTime;
+        if (Delaycounter <= 0)
+        {
+            if(_moving == false)
+            {
+                _SlideValue = 0;
+            }
+            Delaycounter = 0;
+        }
         CheckDirection();
         ReduceCounter();
+    }
+    [SerializeField] private bool _interuptSliderSetToZero;
+    public bool InteruptSliderSetToZero { get { return _interuptSliderSetToZero; } set { _interuptSliderSetToZero = value; } }
+    public void SetSlideValueToZero()
+    {
+        if(_moving == true)
+        {
+            return;
+        }
+        else if(_moving == false)
+        {
+            DelaySliderDecrease();
+        }
+    }
+    [SerializeField] private float Delaycounter;
+    private void DelaySliderDecrease()
+    {
+        if(_SlideValue == maxSliderValue)
+        {
+            Delaycounter = 0.5f;
+        }
+        else
+        {
+            Delaycounter = 0.2f;
+        }
+
     }
     private void FixedUpdate()
     {

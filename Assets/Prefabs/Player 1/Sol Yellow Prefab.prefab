@@ -2710,7 +2710,9 @@ MonoBehaviour:
   standalone: 0
   CurrentStateName: 
   gravityValue: -10
-  friction: 0.15
+  friction: 5
+  normalFriction: 0.3
+  slideFriction: 0.1
   maxLives: 3
   landing: 0
   speed: 6.5
@@ -2725,6 +2727,9 @@ MonoBehaviour:
   playerActions: {fileID: 4061201398229762350}
   gaugeManager: {fileID: 6030534810202239768}
   particleManager: {fileID: 8197868842654377680}
+  _SlideValue: 3.3
+  maxSliderValue: 5
+  SliderCountUpSetValue: 7
   playerLives: {fileID: 0}
   playerImage: {fileID: 0}
   CurrentVelocity: 0
@@ -2741,6 +2746,7 @@ MonoBehaviour:
   facingDirection: 0
   lives: 0
   characterType: 0
+  _SlideFriction: 0
   attackedFreezeCounter: 0
   MaxFreezeCounter: 1
   _TempAttackedVelocity: {x: 0, y: 0, z: 0}

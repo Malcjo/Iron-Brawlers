@@ -16,9 +16,12 @@ public class MovingState : PlayerState
         {
 
             actions.Running();
-
+            self.SlideValue += self.SliderCountUpSetValue * Time.deltaTime;
             if (MovementCheck(input.horizontalInput))
             {
+                self.Moving = true;
+                self.InteruptSliderSetToZero = true;
+
                 if(self.CanTurn == true)
                 {
                     if (input.horizontalInput > 0.001f)
@@ -41,6 +44,17 @@ public class MovingState : PlayerState
 
             if (!MovementCheck(input.horizontalInput))
             {
+                self.Moving = false;
+                if(self.SlideValue >= self.maxSliderValue)
+                {
+                    self.InteruptSliderSetToZero = false;
+                }
+                else
+                {
+                    self.SlideValue = 0;
+                }
+
+                self.SetSlideValueToZero();
                 //self.StopRunningParticle();
                 self.CanMove = true;
                 self.CanTurn = true;
