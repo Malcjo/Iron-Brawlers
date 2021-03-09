@@ -218,6 +218,30 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: f83a7d4b-20d1-4d64-95f2-588158505266
     m_ActionName: Player/Heavy[/Keyboard/j,/DualShock4GamepadHID/buttonWest,/Keyboard/numpad3]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 480affb7-de56-4798-9c77-48b73e4484e3
+    m_ActionName: Player/UpDirection[/Keyboard/w,/Keyboard/upArrow]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -9111263377578361054}
+        m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
+        m_MethodName: HorizontalInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: d6ff7dca-39d2-4190-a2ef-002eb97c056f
+    m_ActionName: Player/Move1[/DualShock4GamepadHID/leftStick/left,/DualShock4GamepadHID/leftStick/right]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0a7c055d-00b0-4d18-a99a-c520a4789e21
+    m_ActionName: Player/Move2
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -235,13 +259,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 221ebff82f7f5614984e49302dd716ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  character: 0
   player: {fileID: 0}
   playerPrefab: {fileID: 3180238274731884556, guid: 089322fbd0eb25b4e9329da7f2b24dcd,
     type: 3}
+  sol: {fileID: 3180238274731884556, guid: 089322fbd0eb25b4e9329da7f2b24dcd, type: 3}
+  goblin: {fileID: 3180238274731884556, guid: 8ade5203cc890754d9b1b3f8cac6e34d, type: 3}
+  PlayerIndex: 0
   currentScene:
     m_Handle: 0
   menuScene:
     m_Handle: 0
+  canAct: 0
+  read: 0
+  Readied: 0
+  chara: 0
+  primed: 0
   JumpInputQueued: 0
   BlockInputQueued: 0
   AttackInputQueued: 1
@@ -252,5 +285,6 @@ MonoBehaviour:
   HorizontalValue: 0
   horizontalInput: 0
   heavyQueued: 1
+  UpDirectionHeld: 0
   currentWall: 0
   Standalone: 0

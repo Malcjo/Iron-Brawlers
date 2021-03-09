@@ -19,7 +19,7 @@ public class PlayerInputHandler : MonoBehaviour
     GameObject playerCharacter = null;
 
     public int PlayerIndex;
-
+    [SerializeField] private float testfloat;
     [SerializeField] Scene currentScene;
     [SerializeField] Scene menuScene;
     private bool readyAndWaiting = false;
@@ -28,7 +28,7 @@ public class PlayerInputHandler : MonoBehaviour
     public bool read = false;
 
     public bool Readied = false;
-    public int chara = 0;
+    public float chara = 0;
     public bool primed = false;
 
     [SerializeField]
@@ -162,14 +162,14 @@ public class PlayerInputHandler : MonoBehaviour
 
     void CharacterSwitch()
     {
-        character = (PlayerCharacterEnum.Characters)character;
+        character = (PlayerCharacterEnum.Characters)chara;
         switch (character)
         {
             case PlayerCharacterEnum.Characters.Sol:
                 playerPrefab = sol;
                 break;
             case PlayerCharacterEnum.Characters.Goblin:
-                playerPrefab = sol;
+                playerPrefab = goblin;
                 break;
         }
     }
@@ -178,10 +178,12 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if(currentScene.buildIndex == SceneManager.GetSceneByBuildIndex(0).buildIndex && !Readied)
         {
+
             if (context.started)
             {
+                testfloat = context.ReadValue<float>();
                 primed = false;
-                if(context.ReadValue<Vector2>().x == 1)
+                if(context.ReadValue<float>() >= 0.8f)
                 {
                     chara--;
                     if(chara < 0)
@@ -190,6 +192,19 @@ public class PlayerInputHandler : MonoBehaviour
                     }
                     CharacterSwitch();
                 }
+                else if (context.ReadValue<float>() <= -0.8f)
+                {
+                    chara++;
+                    if(chara == (int)PlayerCharacterEnum.Characters.End)
+                    {
+                        chara = 0;
+                    }
+                    CharacterSwitch();
+                }
+            }
+            if (context.canceled)
+            {
+                primed = true;
             }
         }
         else
@@ -214,6 +229,28 @@ public class PlayerInputHandler : MonoBehaviour
             }
         }
     }
+
+    public void Activate(CallbackContext context)
+    {
+        if (canAct)
+        {
+            if(context.started && primed)
+            {
+                primed = false;
+                Readied = true;
+                if (Readied)
+                {
+                    readyAndWaiting = true;
+                }
+            }
+            else if (context.canceled)
+            {
+                primed = true;
+                Readied = false;
+            }
+        }
+    }
+
     public void JumpInput(CallbackContext context)
     {
         if (context.started)
