@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerInputHandler : MonoBehaviour
 {
+    public PlayerCharacterEnum.Characters character;
     [SerializeField]
     private Player player;
     private PlayerInput playerInput;
@@ -13,9 +14,22 @@ public class PlayerInputHandler : MonoBehaviour
     private Player.PlayerIndex _PlayerNumber;
     [SerializeField] GameObject playerPrefab;
 
+    [SerializeField] private GameObject sol = null;
+    [SerializeField] private GameObject goblin = null;
+    GameObject playerCharacter = null;
+
+    public int PlayerIndex;
+
     [SerializeField] Scene currentScene;
     [SerializeField] Scene menuScene;
-    GameObject playerCharacter = null;
+    private bool readyAndWaiting = false;
+
+    public bool canAct = false;
+    public bool read = false;
+
+    public bool Readied = false;
+    public int chara = 0;
+    public bool primed = false;
 
     [SerializeField]
     private bool JumpInputQueued;
@@ -61,6 +75,10 @@ public class PlayerInputHandler : MonoBehaviour
                 currentScene = SceneManager.GetActiveScene();
                 StartGame();
             }
+        }
+        if (readyAndWaiting)
+        {
+            GameManager.instance.ReadyPlayer(PlayerIndex);
         }
     }
     private void StartGame()
@@ -142,26 +160,58 @@ public class PlayerInputHandler : MonoBehaviour
         return UpDirectionHeld;
     }
 
+    void CharacterSwitch()
+    {
+        character = (PlayerCharacterEnum.Characters)character;
+        switch (character)
+        {
+            case PlayerCharacterEnum.Characters.Sol:
+                playerPrefab = sol;
+                break;
+            case PlayerCharacterEnum.Characters.Goblin:
+                playerPrefab = sol;
+                break;
+        }
+    }
 
     public void HorizontalInput(CallbackContext context)
     {
-        if(player != null)
+        if(currentScene.buildIndex == SceneManager.GetSceneByBuildIndex(0).buildIndex && !Readied)
         {
-            horizontalInput = context.ReadValue<float>();
-            if(horizontalInput <= 0.35f && horizontalInput >= -0.35f)
+            if (context.started)
             {
-                if(horizontalInput < 0 && horizontalInput >= -0.35f)
+                primed = false;
+                if(context.ReadValue<Vector2>().x == 1)
                 {
-                    horizontalInput = -0;
-                }
-                else if (horizontalInput > 0 && horizontalInput <= 0.35f)
-                {
-                    horizontalInput = 0;
+                    chara--;
+                    if(chara < 0)
+                    {
+                        chara = (int)PlayerCharacterEnum.Characters.End - 1;
+                    }
+                    CharacterSwitch();
                 }
             }
-            HorizontalValue = horizontalInput;
-            player.GetPlayerInputFromInputScript(HorizontalValue);
-            WallCheck();
+        }
+        else
+        {
+            if (player != null)
+            {
+                horizontalInput = context.ReadValue<float>();
+                if (horizontalInput <= 0.35f && horizontalInput >= -0.35f)
+                {
+                    if (horizontalInput < 0 && horizontalInput >= -0.35f)
+                    {
+                        horizontalInput = -0;
+                    }
+                    else if (horizontalInput > 0 && horizontalInput <= 0.35f)
+                    {
+                        horizontalInput = 0;
+                    }
+                }
+                HorizontalValue = horizontalInput;
+                player.GetPlayerInputFromInputScript(HorizontalValue);
+                WallCheck();
+            }
         }
     }
     public void JumpInput(CallbackContext context)

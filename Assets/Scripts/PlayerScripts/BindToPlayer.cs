@@ -10,8 +10,11 @@ public class BindToPlayer : MonoBehaviour
     [SerializeField] private PlayerJoinHandler join = null;
 
     public GameObject events = null;
+    
     Scene currentScene;
     Scene menuScene;
+
+    public int playerIndex;
 
     private void OnEnable()
     {
@@ -56,8 +59,11 @@ public class BindToPlayer : MonoBehaviour
     public void JoinGame(PlayerInput input)
     {
         players.Add(input.gameObject);
-        input.gameObject.GetComponent<PlayerInputHandler>().SetPlayerNumber(GameManager.instance.inputManager);
         input.gameObject.GetComponent<PlayerInputHandler>().SetInput(input);
+        playerIndex = players.Count;
+        input.gameObject.GetComponent<PlayerInputHandler>().PlayerIndex = playerIndex;
+        input.gameObject.GetComponent<PlayerInputHandler>().canAct = true;
+
         DontDestroyOnLoad(input.gameObject);
     }
     public void ReadyPlayer()

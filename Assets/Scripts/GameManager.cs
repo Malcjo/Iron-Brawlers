@@ -103,6 +103,18 @@ public class GameManager : MonoBehaviour
         TrackPlayerRounds();
         TrackPlayersArmour();
     }
+    public void ReadyPlayer(int i)
+    {
+        switch (i)
+        {
+            case 1:
+                player1Ready = true;
+                break;
+            case 2:
+                player2Ready = true;
+                break;
+        }
+    }
     public void EnableEventSystemOBJ()
     {
         eventSystem.SetActive(true);
