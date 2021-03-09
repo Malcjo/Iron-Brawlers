@@ -111,7 +111,7 @@ Material:
     - _Cutoff: 0.5
     - _DepthAlphaDistance: 0.5
     - _DepthAlphaMin: 0.5
-    - _DepthColorDistance: 0.2
+    - _DepthColorDistance: 0.04
     - _DstBlend: 0
     - _EnvironmentReflections: 1
     - _FoamSmoothness: 0
@@ -141,7 +141,7 @@ Material:
     - _TriplanarHeightOffset: 0
     - _TriplanarHeightSmooth: 0.1
     - _VerticalFogSmoothness: 1.2
-    - _VerticalFogThreshold: -1.75
+    - _VerticalFogThreshold: -1.86
     - _WavesFrequency: 0.3
     - _WavesHeight: 1
     - _WavesSpeed: 0.4
