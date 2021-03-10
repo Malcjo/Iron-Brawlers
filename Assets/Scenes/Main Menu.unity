@@ -52218,7 +52218,7 @@ GameObject:
   - component: {fileID: 1665105250636181947}
   m_Layer: 5
   m_Name: CharacterSelectScreen
-  m_TagString: Untagged
+  m_TagString: Joining
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -96645,7 +96645,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_NotificationBehavior: 2
   m_MaxPlayerCount: -1
-  m_AllowJoining: 1
+  m_AllowJoining: 0
   m_JoinBehavior: 0
   m_PlayerJoinedEvent:
     m_PersistentCalls:
@@ -96666,16 +96666,17 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_JoinAction:
-    m_UseReference: 0
+    m_UseReference: 1
     m_Action:
-      m_Name: 
+      m_Name: Join
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: 
+      m_Id: 51d6a9dd-15d3-4ed9-b69d-397d606bc516
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
-    m_Reference: {fileID: 0}
+    m_Reference: {fileID: -8439548632470373512, guid: 800ec6ac0aa47ed40a745bfadeb43aaf,
+      type: 3}
   m_PlayerPrefab: {fileID: 5758469960653601827, guid: c842e26e4bf62bb46a941fdc5a1e77c1,
     type: 3}
   m_SplitScreen: 0

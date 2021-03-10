@@ -59,14 +59,17 @@ public class BindToPlayer : MonoBehaviour
     }
     public void JoinGame(PlayerInput input)
     {
-        players.Add(input.gameObject);
-        input.gameObject.GetComponent<PlayerInputHandler>().SetInput(input);
-        playerIndex = players.Count;
-        input.gameObject.GetComponent<PlayerInputHandler>().SetPlayerNumber(GameManager.instance.inputManager);
-        input.gameObject.GetComponent<PlayerInputHandler>().PlayerIndex = playerIndex;
-        input.gameObject.GetComponent<PlayerInputHandler>().canAct = true;
+        if(this.gameObject.tag == "Joining")
+        {
+            players.Add(input.gameObject);
+            input.gameObject.GetComponent<PlayerInputHandler>().SetInput(input);
+            playerIndex = players.Count;
+            input.gameObject.GetComponent<PlayerInputHandler>().SetPlayerNumber(GameManager.instance.inputManager);
+            input.gameObject.GetComponent<PlayerInputHandler>().PlayerIndex = playerIndex;
+            //input.gameObject.GetComponent<PlayerInputHandler>().canAct = true;
 
-        DontDestroyOnLoad(input.gameObject);
+            DontDestroyOnLoad(input.gameObject);
+        }
     }
     public void ReadyPlayer()
     {

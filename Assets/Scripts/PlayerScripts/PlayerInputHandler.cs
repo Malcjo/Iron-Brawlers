@@ -3,6 +3,7 @@ using System.Linq;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class PlayerInputHandler : MonoBehaviour
 {
@@ -63,14 +64,18 @@ public class PlayerInputHandler : MonoBehaviour
     {
         currentScene = SceneManager.GetActiveScene();
         menuScene = SceneManager.GetSceneByBuildIndex(0);
+        StartCoroutine(DelayedStart());
         DontDestroyOnLoad(this.gameObject);
     }
     private void Update()
     {
+
         //currentWall = player.GetCurrentWall();
         if(playerCharacter == null)
         {
-            if(SceneManager.GetActiveScene().buildIndex == SceneManager.GetSceneByBuildIndex(1).buildIndex)
+            print("player in null");
+
+            if (SceneManager.GetActiveScene().buildIndex == SceneManager.GetSceneByBuildIndex(1).buildIndex)
             {
                 currentScene = SceneManager.GetActiveScene();
                 StartGame();
@@ -91,7 +96,14 @@ public class PlayerInputHandler : MonoBehaviour
         player.SetUpInputDetectionScript(this);
         player.playerNumber = _PlayerNumber;
         SceneManager.MoveGameObjectToScene(this.gameObject, SceneManager.GetActiveScene());
+
     }
+    IEnumerator DelayedStart()
+    {
+        yield return new WaitForSeconds(0.5f);
+        canAct = true;
+    }
+
     public void SetInput(PlayerInput input)
     {
         this.playerInput = input;
@@ -177,8 +189,10 @@ public class PlayerInputHandler : MonoBehaviour
 
     public void HorizontalInput(CallbackContext context)
     {
-        if(currentScene.buildIndex == SceneManager.GetSceneByBuildIndex(0).buildIndex && !Readied)
+        print("hit button1");
+        if (currentScene.buildIndex == SceneManager.GetSceneByBuildIndex(0).buildIndex && !Readied)
         {
+            print("hit button2");
             if (context.started)
             {
                 testfloat = context.ReadValue<float>();

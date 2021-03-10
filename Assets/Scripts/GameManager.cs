@@ -277,8 +277,7 @@ public class GameManager : MonoBehaviour
                 inputManager.DisableJoining();
                 break;
             case 2:
-                inputManager.EnableJoining();
-                canJoin = true;
+                //inputManager.EnableJoining();
                 break;
             case 3:
                 inputManager.DisableJoining();
@@ -306,11 +305,17 @@ public class GameManager : MonoBehaviour
     }
     public void EnabledJoining()
     {
-        inputManager.EnableJoining();
+        StartCoroutine(DelayedEnabled());
     }
     public void DisableJoining()
     {
         inputManager.DisableJoining();
+    }
+    IEnumerator DelayedEnabled()
+    {
+        yield return new WaitForSeconds(0.5f);
+        canJoin = true;
+        inputManager.EnableJoining();
     }
 
     public int draws;

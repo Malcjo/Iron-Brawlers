@@ -15,6 +15,7 @@ TagManager:
   - Hurtbox
   - Spawn
   - Event
+  - Joining
   layers:
   - Default
   - TransparentFX
