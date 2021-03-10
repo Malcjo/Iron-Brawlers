@@ -108,6 +108,7 @@ public class PlayerInputHandler : MonoBehaviour
             _PlayerNumber = Player.PlayerIndex.Player2;
         }
     }
+    #region GetInputs
     public float GetHorizontal()
     {
         return HorizontalValue;
@@ -159,7 +160,7 @@ public class PlayerInputHandler : MonoBehaviour
     {
         return UpDirectionHeld;
     }
-
+    #endregion
     void CharacterSwitch()
     {
         character = (PlayerCharacterEnum.Characters)chara;
@@ -178,12 +179,11 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if(currentScene.buildIndex == SceneManager.GetSceneByBuildIndex(0).buildIndex && !Readied)
         {
-
             if (context.started)
             {
                 testfloat = context.ReadValue<float>();
                 primed = false;
-                if(context.ReadValue<float>() >= 0.8f)
+                if(context.ReadValue<float>() >=1f)
                 {
                     chara--;
                     if(chara < 0)
@@ -192,7 +192,7 @@ public class PlayerInputHandler : MonoBehaviour
                     }
                     CharacterSwitch();
                 }
-                else if (context.ReadValue<float>() <= -0.8f)
+                else if (context.ReadValue<float>() <=1f)
                 {
                     chara++;
                     if(chara == (int)PlayerCharacterEnum.Characters.End)
@@ -243,11 +243,12 @@ public class PlayerInputHandler : MonoBehaviour
                     readyAndWaiting = true;
                 }
             }
-            else if (context.canceled)
-            {
-                primed = true;
-                Readied = false;
-            }
+            //else if (context.canceled)
+            //{
+            //    Debug.Log("Active cancelled");
+            //    primed = true;
+            //    Readied = false;
+            //}
         }
     }
 

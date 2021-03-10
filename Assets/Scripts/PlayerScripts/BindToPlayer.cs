@@ -44,6 +44,7 @@ public class BindToPlayer : MonoBehaviour
         {
             if (GameManager.instance.GetPlayer1Ready() == true && GameManager.instance.GetPlayer2Ready() == true)
             {
+                GameManager.instance.DisableJoining();
                 GameManager.instance.ResetPlayersReady();
                 GameManager.instance.DisableMenuCanvas();
                 SceneManager.LoadScene(1);
@@ -61,6 +62,7 @@ public class BindToPlayer : MonoBehaviour
         players.Add(input.gameObject);
         input.gameObject.GetComponent<PlayerInputHandler>().SetInput(input);
         playerIndex = players.Count;
+        input.gameObject.GetComponent<PlayerInputHandler>().SetPlayerNumber(GameManager.instance.inputManager);
         input.gameObject.GetComponent<PlayerInputHandler>().PlayerIndex = playerIndex;
         input.gameObject.GetComponent<PlayerInputHandler>().canAct = true;
 

@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject p1OBJ, p2OBJ;
 
     [SerializeField] private Button Player1CharacterSelectButton, player2CharacterSelectButton;
-
+    public bool canJoin = false;
     /*
      * 0 = title
      * 1 = main meuu
@@ -89,6 +89,7 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
+        canJoin = false;
         ConnectToGameManager(0);
         if (sceneIndex == 1)
         {
@@ -195,6 +196,8 @@ public class GameManager : MonoBehaviour
     }
     private void ResetMenu()
     {
+
+        EnabledJoining();
         SceneManager.MoveGameObjectToScene(this.gameObject, SceneManager.GetActiveScene());
         CharacterSelect.SetActive(false);
         MainMenu.SetActive(true);
@@ -275,6 +278,7 @@ public class GameManager : MonoBehaviour
                 break;
             case 2:
                 inputManager.EnableJoining();
+                canJoin = true;
                 break;
             case 3:
                 inputManager.DisableJoining();
@@ -300,6 +304,15 @@ public class GameManager : MonoBehaviour
                 break;
         }
     }
+    public void EnabledJoining()
+    {
+        inputManager.EnableJoining();
+    }
+    public void DisableJoining()
+    {
+        inputManager.DisableJoining();
+    }
+
     public int draws;
     public void TimerRunOut()
     {

@@ -10,6 +10,10 @@ public class PlayerJoinHandler : MonoBehaviour
     public void JoinPlayer(PlayerInput input)
     {
         currentPlayerBind.JoinGame(input);
+        if (GameManager.instance.canJoin == true)
+        {
+
+        }
     }
     public void SetPlayerBind(BindToPlayer players)
     {

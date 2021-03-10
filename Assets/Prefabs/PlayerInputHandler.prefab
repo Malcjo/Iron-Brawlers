@@ -239,9 +239,21 @@ MonoBehaviour:
     m_ActionId: d6ff7dca-39d2-4190-a2ef-002eb97c056f
     m_ActionName: Player/Move1[/DualShock4GamepadHID/leftStick/left,/DualShock4GamepadHID/leftStick/right]
   - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 0a7c055d-00b0-4d18-a99a-c520a4789e21
-    m_ActionName: Player/Move2
+      m_Calls:
+      - m_Target: {fileID: -9111263377578361054}
+        m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
+        m_MethodName: Activate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: e0a45532-9fe9-4059-9c52-249fb48b8f70
+    m_ActionName: Player/Action[/DualShock4GamepadHID/buttonSouth,/Keyboard/g,/Keyboard/numpad1,/Keyboard/enter]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -266,6 +278,7 @@ MonoBehaviour:
   sol: {fileID: 3180238274731884556, guid: 089322fbd0eb25b4e9329da7f2b24dcd, type: 3}
   goblin: {fileID: 3180238274731884556, guid: 8ade5203cc890754d9b1b3f8cac6e34d, type: 3}
   PlayerIndex: 0
+  testfloat: 0.0643383
   currentScene:
     m_Handle: 0
   menuScene:
@@ -274,8 +287,8 @@ MonoBehaviour:
   read: 0
   Readied: 0
   chara: 0
-  primed: 0
-  JumpInputQueued: 0
+  primed: 1
+  JumpInputQueued: 1
   BlockInputQueued: 0
   AttackInputQueued: 1
   ArmourBreakQueued: 0
