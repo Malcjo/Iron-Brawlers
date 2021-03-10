@@ -111,7 +111,7 @@ Material:
     - _Cutoff: 0.5
     - _DepthAlphaDistance: 0.5
     - _DepthAlphaMin: 0.5
-    - _DepthColorDistance: 0.04
+    - _DepthColorDistance: 0.19
     - _DstBlend: 0
     - _EnvironmentReflections: 1
     - _FoamSmoothness: 0
