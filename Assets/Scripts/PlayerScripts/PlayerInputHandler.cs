@@ -179,10 +179,24 @@ public class PlayerInputHandler : MonoBehaviour
         switch (character)
         {
             case PlayerCharacterEnum.Characters.Sol:
-                playerPrefab = sol;
+                if (GameManager.instance.Character1BeenPicked)
+                {
+                    playerPrefab = sol;
+                }
+                else
+                {
+                    playerPrefab = goblin;
+                }
                 break;
             case PlayerCharacterEnum.Characters.Goblin:
-                playerPrefab = goblin;
+                if (GameManager.instance.Character2BeenPicked)
+                {
+                    playerPrefab = goblin;
+                }
+                else
+                {
+                    playerPrefab = sol;
+                }
                 break;
         }
     }
@@ -209,7 +223,7 @@ public class PlayerInputHandler : MonoBehaviour
                 else if (context.ReadValue<float>() <=1f)
                 {
                     chara++;
-                    if(chara == (int)PlayerCharacterEnum.Characters.End)
+                    if (chara == (int)PlayerCharacterEnum.Characters.End)
                     {
                         chara = 0;
                     }
@@ -252,6 +266,14 @@ public class PlayerInputHandler : MonoBehaviour
             {
                 primed = false;
                 Readied = true;
+                if(playerPrefab == sol)
+                {
+                    GameManager.instance.Character1BeenPicked = false;
+                }
+                else if(playerPrefab == goblin)
+                {
+                    GameManager.instance.Character2BeenPicked = false;
+                }
                 if (Readied)
                 {
                     readyAndWaiting = true;

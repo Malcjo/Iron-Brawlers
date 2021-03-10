@@ -71,8 +71,8 @@ public class BindToPlayer : MonoBehaviour
             DontDestroyOnLoad(input.gameObject);
         }
     }
-    public void ReadyPlayer()
-    {
-        GameManager.instance.ReadyPlayer();
-    }
+    //public void ReadyPlayer()
+    //{
+    //    GameManager.instance.ReadyPlayer();
+    //}
 }

@@ -81904,12 +81904,18 @@ MonoBehaviour:
   player2Legs: {fileID: 747330275}
   player1Character: {fileID: 8213258392532201648}
   player2Character: {fileID: 1665105250521899240}
-  player1Puck: {fileID: 1676064430}
-  player2Puck: {fileID: 1907885342}
-  p1OBJ: {fileID: 7410522353264361767}
-  p2OBJ: {fileID: 1639738248}
-  Player1CharacterSelectButton: {fileID: 0}
-  player2CharacterSelectButton: {fileID: 0}
+  player1PortraitPuck: {fileID: 0}
+  player2PortraitPuck: {fileID: 0}
+  player1CharacterPuck: {fileID: 0}
+  player2CharacterPuck: {fileID: 0}
+  player1Character1Button: {fileID: 0}
+  player1Character2Button: {fileID: 0}
+  player2Character1Button: {fileID: 0}
+  player2Character2Button: {fileID: 0}
+  character1ButtonSelected: {fileID: 0}
+  character2ButtonSelected: {fileID: 0}
+  Character1BeenPicked: 1
+  Character2BeenPicked: 1
   canJoin: 0
   draws: 0
   maxTimer: 0
@@ -91715,12 +91721,18 @@ MonoBehaviour:
   player2Legs: {fileID: 0}
   player1Character: {fileID: 0}
   player2Character: {fileID: 0}
-  player1Puck: {fileID: 0}
-  player2Puck: {fileID: 0}
-  p1OBJ: {fileID: 0}
-  p2OBJ: {fileID: 0}
-  Player1CharacterSelectButton: {fileID: 0}
-  player2CharacterSelectButton: {fileID: 0}
+  player1PortraitPuck: {fileID: 0}
+  player2PortraitPuck: {fileID: 0}
+  player1CharacterPuck: {fileID: 0}
+  player2CharacterPuck: {fileID: 0}
+  player1Character1Button: {fileID: 0}
+  player1Character2Button: {fileID: 0}
+  player2Character1Button: {fileID: 0}
+  player2Character2Button: {fileID: 0}
+  character1ButtonSelected: {fileID: 0}
+  character2ButtonSelected: {fileID: 0}
+  Character1BeenPicked: 1
+  Character2BeenPicked: 1
   canJoin: 0
   draws: 0
   maxTimer: 0

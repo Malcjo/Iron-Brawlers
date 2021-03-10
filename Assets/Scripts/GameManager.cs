@@ -32,7 +32,10 @@ public class GameManager : MonoBehaviour
     public GameObject uimodule;
     [SerializeField] private int leftBounds, rightBounds, belowBounds, highBounds;
 
+
+    [Header("In Game UI")]
     [SerializeField] GameObject player1Wins, player2Wins, player1Loses, bothLose;
+    
     [SerializeField] private Slider player1UI, player2UI;
 
     [SerializeField] private GameObject player1Round1, player1Round2, player1Round3;
@@ -40,11 +43,20 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject player1Head, player1Chest, player1Legs;
     [SerializeField] private GameObject player2Head, player2Chest, player2Legs;
-    [SerializeField] private GameObject player1Character, player2Character;
-    [SerializeField] private GameObject player1Puck, player2Puck;
-    [SerializeField] private GameObject p1OBJ, p2OBJ;
 
-    [SerializeField] private Button Player1CharacterSelectButton, player2CharacterSelectButton;
+
+
+    [Header("Menu UI")]
+    public GameObject player1Character, player2Character;
+    public GameObject player1PortraitPuck, player2PortraitPuck;
+    public GameObject player1CharacterPuck, player2CharacterPuck;
+
+    public GameObject player1Character1Button, player1Character2Button;
+    public GameObject player2Character1Button, player2Character2Button;
+    public GameObject character1ButtonSelected, character2ButtonSelected;
+
+    public bool Character1BeenPicked = true;
+    public bool Character2BeenPicked = true;
     public bool canJoin = false;
     /*
      * 0 = title
@@ -230,15 +242,15 @@ public class GameManager : MonoBehaviour
             Debug.Log("Player 2 set ready");
             player2Ready = true;
             player2Character.SetActive(true);
-            p2OBJ.SetActive(true);
-            player2Puck.SetActive(false);
+            player2CharacterPuck.SetActive(true);
+            player2PortraitPuck.SetActive(false);
         }
         else
         {
             player1Ready = true;
             player1Character.SetActive(true);
-            p1OBJ.SetActive(true);
-            player1Puck.SetActive(false);
+            player1CharacterPuck.SetActive(true);
+            player1PortraitPuck.SetActive(false);
         }
     }
 
