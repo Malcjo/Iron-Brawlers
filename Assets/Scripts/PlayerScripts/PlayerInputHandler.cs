@@ -179,23 +179,43 @@ public class PlayerInputHandler : MonoBehaviour
         switch (character)
         {
             case PlayerCharacterEnum.Characters.Sol:
+                if(playerInput.playerIndex == 1 -1)
+                {
+                    GameManager.instance.player1Character1PortraitPuck.SetActive(true);
+                    GameManager.instance.player1Character2PortraitPuck.SetActive(false);
+                }
+                else if (playerInput.playerIndex == 2 -1)
+                {
+                    GameManager.instance.player2Character1PortraitPuck.SetActive(true);
+                    GameManager.instance.player2Character2PortraitPuck.SetActive(false);
+                }
                 if (GameManager.instance.Character1BeenPicked)
                 {
                     playerPrefab = sol;
                 }
                 else
                 {
-                    playerPrefab = goblin;
+                    playerPrefab = sol;
                 }
                 break;
             case PlayerCharacterEnum.Characters.Goblin:
+                if (playerInput.playerIndex == 1 -1)
+                {
+                    GameManager.instance.player1Character1PortraitPuck.SetActive(false);
+                    GameManager.instance.player1Character2PortraitPuck.SetActive(true);
+                }
+                else if (playerInput.playerIndex == 2 -1)
+                {
+                    GameManager.instance.player2Character1PortraitPuck.SetActive(false);
+                    GameManager.instance.player2Character2PortraitPuck.SetActive(true);
+                }
                 if (GameManager.instance.Character2BeenPicked)
                 {
                     playerPrefab = goblin;
                 }
                 else
                 {
-                    playerPrefab = sol;
+                    playerPrefab = goblin;
                 }
                 break;
         }
@@ -269,10 +289,30 @@ public class PlayerInputHandler : MonoBehaviour
                 if(playerPrefab == sol)
                 {
                     GameManager.instance.Character1BeenPicked = false;
+                    if(playerInput.playerIndex == 1 -1)
+                    {
+                        GameManager.instance.player1Character1Selected.SetActive(true);
+                        GameManager.instance.player1Character1PortraitPuck.SetActive(false);
+                    }
+                    else if (playerInput.playerIndex == 2 -1)
+                    {
+                        GameManager.instance.player2Character1Selected.SetActive(true);
+                        GameManager.instance.player2Character1PortraitPuck.SetActive(false);
+                    }
                 }
                 else if(playerPrefab == goblin)
                 {
                     GameManager.instance.Character2BeenPicked = false;
+                    if (playerInput.playerIndex == 1 -1)
+                    {
+                        GameManager.instance.player1Character2Selected.SetActive(true);
+                        GameManager.instance.player1Character2PortraitPuck.SetActive(false);
+                    }
+                    else if (playerInput.playerIndex == 2 -1)
+                    {
+                        GameManager.instance.player2Character2Selected.SetActive(true);
+                        GameManager.instance.player2Character2PortraitPuck.SetActive(false);
+                    }
                 }
                 if (Readied)
                 {

@@ -48,11 +48,12 @@ public class GameManager : MonoBehaviour
 
     [Header("Menu UI")]
     public GameObject player1Character, player2Character;
-    public GameObject player1PortraitPuck, player2PortraitPuck;
+    public GameObject player1Character1PortraitPuck, player1Character2PortraitPuck;
+    public GameObject player2Character1PortraitPuck, player2Character2PortraitPuck;
     public GameObject player1CharacterPuck, player2CharacterPuck;
 
-    public GameObject player1Character1Button, player1Character2Button;
-    public GameObject player2Character1Button, player2Character2Button;
+    public GameObject player1Character1Selected, player1Character2Selected;
+    public GameObject player2Character1Selected, player2Character2Selected;
     public GameObject character1ButtonSelected, character2ButtonSelected;
 
     public bool Character1BeenPicked = true;
@@ -243,14 +244,14 @@ public class GameManager : MonoBehaviour
             player2Ready = true;
             player2Character.SetActive(true);
             player2CharacterPuck.SetActive(true);
-            player2PortraitPuck.SetActive(false);
+            player1Character2PortraitPuck.SetActive(false);
         }
         else
         {
             player1Ready = true;
             player1Character.SetActive(true);
             player1CharacterPuck.SetActive(true);
-            player1PortraitPuck.SetActive(false);
+            player1Character1PortraitPuck.SetActive(false);
         }
     }
 

@@ -44,14 +44,23 @@ public class BindToPlayer : MonoBehaviour
         {
             if (GameManager.instance.GetPlayer1Ready() == true && GameManager.instance.GetPlayer2Ready() == true)
             {
-                GameManager.instance.DisableJoining();
-                GameManager.instance.ResetPlayersReady();
-                GameManager.instance.DisableMenuCanvas();
-                SceneManager.LoadScene(1);
-                GameManager.instance.ConnectToGameManager(1);
-                GameManager.instance.inGame = true;
+                StartGame();
             }
         }
+    }
+    private void StartGame()
+    {
+        StartCoroutine(DelayStartGame());
+    }
+    IEnumerator DelayStartGame()
+    {
+        yield return new WaitForSeconds(1);
+        GameManager.instance.DisableJoining();
+        GameManager.instance.ResetPlayersReady();
+        GameManager.instance.DisableMenuCanvas();
+        SceneManager.LoadScene(1);
+        GameManager.instance.ConnectToGameManager(1);
+        GameManager.instance.inGame = true;
     }
     private void CheckIfPlayersAreReady()
     {
@@ -61,6 +70,14 @@ public class BindToPlayer : MonoBehaviour
     {
         if(this.gameObject.tag == "Joining")
         {
+            if(input.playerIndex == 1 - 1)
+            {
+                GameManager.instance.player1Character1PortraitPuck.SetActive(true);
+            }
+            else if (input.playerIndex == 2 - 1)
+            {
+                GameManager.instance.player2Character1PortraitPuck.SetActive(true);
+            }
             players.Add(input.gameObject);
             input.gameObject.GetComponent<PlayerInputHandler>().SetInput(input);
             playerIndex = players.Count;
