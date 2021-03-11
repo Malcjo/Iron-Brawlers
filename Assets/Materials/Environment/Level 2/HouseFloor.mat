@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: FlowerBoysHouse
+  m_Name: HouseFloor
   m_Shader: {fileID: 4800000, guid: d15762ecbffbffc42863e9e0a37356d8, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -20,11 +20,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: cc7710ec31dd4e545a49c3ec7157efa7, type: 3}
+        m_Texture: {fileID: 2800000, guid: 58a3ae533a2c2694e8e4ee4a79c41230, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: 00f0fb8f9d21b3e41ba95cbafae3e029, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
@@ -69,8 +69,8 @@ Material:
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _QueueOffset: 0
-    - _RampSmoothing: 0.309
-    - _RampThreshold: 0.174
+    - _RampSmoothing: 0.5
+    - _RampThreshold: 0.5
     - _ReceiveShadows: 1
     - _ReceiveShadowsOff: 1
     - _RenderingMode: 0
@@ -88,13 +88,13 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _HColor: {r: 1, g: 1, b: 1, a: 1}
-    - _SColor: {r: 0.4811321, g: 0.33316126, b: 0.33316126, a: 1}
+    - _HColor: {r: 0.9339623, g: 0.7313792, b: 0.6819687, a: 1}
+    - _SColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
     - _WindDirection: {r: 1, g: 0, b: 0, a: 0}
     - _WindTexTilingSpeed: {r: 0.2, g: 0.2, b: 0.1, a: 0.1}
   m_BuildTextureStacks: []
---- !u!114 &3339391955815903803
+--- !u!114 &7778184609356370164
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
