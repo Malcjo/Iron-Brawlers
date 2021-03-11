@@ -9,11 +9,14 @@ public class PlayerJoinHandler : MonoBehaviour
 
     public void JoinPlayer(PlayerInput input)
     {
-        currentPlayerBind.JoinGame(input);
+        if (GameManager.instance.canJoin == true)
+        {
+            print("Spawn Player");
+            currentPlayerBind.JoinGame(input);
+        }
     }
     public void SetPlayerBind(BindToPlayer players)
     {
         currentPlayerBind = players;
     }
-
 }

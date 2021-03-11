@@ -3,19 +3,36 @@ using System.Linq;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class PlayerInputHandler : MonoBehaviour
 {
+    public PlayerCharacterEnum.Characters character;
     [SerializeField]
     private Player player;
     private PlayerInput playerInput;
     //private PlayerControls playerControls;
     private Player.PlayerIndex _PlayerNumber;
-    [SerializeField] GameObject playerPrefab;
+    [SerializeField] public GameObject playerPrefab;
 
+    [SerializeField] private GameObject sol = null;
+    [SerializeField] private GameObject solAlt = null;
+    [SerializeField] private GameObject goblin = null;
+    [SerializeField] private GameObject goblinAlt = null;
+    GameObject playerCharacter = null;
+
+    public int PlayerIndex;
+    [SerializeField] private float testfloat;
     [SerializeField] Scene currentScene;
     [SerializeField] Scene menuScene;
-    GameObject playerCharacter = null;
+    private bool readyAndWaiting = false;
+
+    public bool canAct = false;
+    public bool read = false;
+
+    public bool Readied = false;
+    public float chara = 0;
+    public bool primed = false;
 
     [SerializeField]
     private bool JumpInputQueued;
@@ -49,18 +66,26 @@ public class PlayerInputHandler : MonoBehaviour
     {
         currentScene = SceneManager.GetActiveScene();
         menuScene = SceneManager.GetSceneByBuildIndex(0);
+        StartCoroutine(DelayedStart());
         DontDestroyOnLoad(this.gameObject);
     }
     private void Update()
     {
+
         //currentWall = player.GetCurrentWall();
         if(playerCharacter == null)
         {
-            if(SceneManager.GetActiveScene().buildIndex == SceneManager.GetSceneByBuildIndex(1).buildIndex)
+            print("player in null");
+
+            if (SceneManager.GetActiveScene().buildIndex == SceneManager.GetSceneByBuildIndex(1).buildIndex)
             {
                 currentScene = SceneManager.GetActiveScene();
                 StartGame();
             }
+        }
+        if (readyAndWaiting)
+        {
+            GameManager.instance.ReadyPlayer(PlayerIndex);
         }
     }
     private void StartGame()
@@ -73,7 +98,14 @@ public class PlayerInputHandler : MonoBehaviour
         player.SetUpInputDetectionScript(this);
         player.playerNumber = _PlayerNumber;
         SceneManager.MoveGameObjectToScene(this.gameObject, SceneManager.GetActiveScene());
+
     }
+    IEnumerator DelayedStart()
+    {
+        yield return new WaitForSeconds(0.5f);
+        canAct = true;
+    }
+
     public void SetInput(PlayerInput input)
     {
         this.playerInput = input;
@@ -90,6 +122,7 @@ public class PlayerInputHandler : MonoBehaviour
             _PlayerNumber = Player.PlayerIndex.Player2;
         }
     }
+    #region GetInputs
     public float GetHorizontal()
     {
         return HorizontalValue;
@@ -141,29 +174,224 @@ public class PlayerInputHandler : MonoBehaviour
     {
         return UpDirectionHeld;
     }
-
+    #endregion
+    void CharacterSwitch()
+    {
+        character = (PlayerCharacterEnum.Characters)chara;
+        switch (character)
+        {
+            case PlayerCharacterEnum.Characters.Sol:
+                if(playerInput.playerIndex == 1 -1)
+                {
+                    GameManager.instance.player1Character1PortraitPuck.SetActive(true);
+                    GameManager.instance.player1Character2PortraitPuck.SetActive(false);
+                }
+                else if (playerInput.playerIndex == 2 -1)
+                {
+                    GameManager.instance.player2Character1PortraitPuck.SetActive(true);
+                    GameManager.instance.player2Character2PortraitPuck.SetActive(false);
+                }
+                if (GameManager.instance.Character1BeenPicked == false)
+                {
+                    playerPrefab = sol;
+                }
+                else if(GameManager.instance.Character1BeenPicked == true)
+                {
+                    playerPrefab = solAlt;
+                }
+                break;
+            case PlayerCharacterEnum.Characters.Goblin:
+                if (playerInput.playerIndex == 1 -1)
+                {
+                    GameManager.instance.player1Character1PortraitPuck.SetActive(false);
+                    GameManager.instance.player1Character2PortraitPuck.SetActive(true);
+                }
+                else if (playerInput.playerIndex == 2 -1)
+                {
+                    GameManager.instance.player2Character1PortraitPuck.SetActive(false);
+                    GameManager.instance.player2Character2PortraitPuck.SetActive(true);
+                }
+                if (GameManager.instance.Character2BeenPicked == false)
+                {
+                    playerPrefab = goblin;
+                }
+                else if(GameManager.instance.Character2BeenPicked == true)
+                {
+                    playerPrefab = goblinAlt;
+                }
+                break;
+        }
+    }
 
     public void HorizontalInput(CallbackContext context)
     {
-        if(player != null)
+        print("hit button1");
+        if (currentScene.buildIndex == SceneManager.GetSceneByBuildIndex(0).buildIndex && !Readied)
         {
-            horizontalInput = context.ReadValue<float>();
-            if(horizontalInput <= 0.35f && horizontalInput >= -0.35f)
+            print("hit button2");
+            if (context.started)
             {
-                if(horizontalInput < 0 && horizontalInput >= -0.35f)
+                testfloat = context.ReadValue<float>();
+                primed = false;
+                if(context.ReadValue<float>() >=1f)
                 {
-                    horizontalInput = -0;
+                    chara--;
+                    if(chara < 0)
+                    {
+                        chara = (int)PlayerCharacterEnum.Characters.End - 1;
+                    }
+                    CharacterSwitch();
                 }
-                else if (horizontalInput > 0 && horizontalInput <= 0.35f)
+                else if (context.ReadValue<float>() <=1f)
                 {
-                    horizontalInput = 0;
+                    chara++;
+                    if (chara == (int)PlayerCharacterEnum.Characters.End)
+                    {
+                        chara = 0;
+                    }
+                    CharacterSwitch();
                 }
             }
-            HorizontalValue = horizontalInput;
-            player.GetPlayerInputFromInputScript(HorizontalValue);
-            WallCheck();
+            if (context.canceled)
+            {
+                primed = true;
+            }
+        }
+        else
+        {
+            if (player != null)
+            {
+                horizontalInput = context.ReadValue<float>();
+                if (horizontalInput <= 0.35f && horizontalInput >= -0.35f)
+                {
+                    if (horizontalInput < 0 && horizontalInput >= -0.35f)
+                    {
+                        horizontalInput = -0;
+                    }
+                    else if (horizontalInput > 0 && horizontalInput <= 0.35f)
+                    {
+                        horizontalInput = 0;
+                    }
+                }
+                HorizontalValue = horizontalInput;
+                player.GetPlayerInputFromInputScript(HorizontalValue);
+                WallCheck();
+            }
         }
     }
+    public void SwitchModel(GameObject character, GameObject currentCharacter)
+    {
+        Debug.Log("Fire!");
+        if(Readied == false)
+        {
+            if (playerPrefab == currentCharacter)
+            {
+                playerPrefab = character;
+            }
+        }
+    }
+    public void Activate(CallbackContext context)
+    {
+        if (canAct)
+        {
+            if(context.started && primed)
+            {
+                primed = false;
+                Readied = true;
+                if(playerPrefab == sol || playerPrefab == solAlt) //Sol Picked
+                {
+
+                    if(playerInput.playerIndex == 1 -1) // player 1
+                    {
+                        GameManager.instance.player1CharacterPuck.SetActive(true);
+                        GameManager.instance.player1Character1Selected.SetActive(true);
+                        GameManager.instance.player1Character1PortraitPuck.SetActive(false);
+                        if(GameManager.instance.Character1BeenPicked == false)
+                        {
+                            GameManager.instance.player1SolAnimated.SetActive(true);
+                            GameManager.instance.ChangeCharacterModelIfSameIsChosen(1 - 1, solAlt, sol);
+                        }
+                        else if(GameManager.instance.Character1BeenPicked == true)
+                        {
+                            GameManager.instance.player1SolAltAnimated.SetActive(true);
+                        }
+
+                        GameManager.instance.Character1BeenPicked = true;
+                    }
+
+                    else if (playerInput.playerIndex == 2 -1) // player 2
+                    {
+                        GameManager.instance.player2CharacterPuck.SetActive(true);
+                        GameManager.instance.player2Character1Selected.SetActive(true);
+                        GameManager.instance.player2Character1PortraitPuck.SetActive(false);
+                        if (GameManager.instance.Character1BeenPicked == false)
+                        {
+                            GameManager.instance.player2SolAnimated.SetActive(true);
+                            GameManager.instance.ChangeCharacterModelIfSameIsChosen(2 - 1, solAlt, sol);
+                        }
+                        else if(GameManager.instance.Character1BeenPicked == true)
+                        {
+                            GameManager.instance.player2SolAltAnimated.SetActive(true);
+                        }
+                        GameManager.instance.Character1BeenPicked = true;
+                    }
+
+                }
+
+
+                else if(playerPrefab == goblin || playerPrefab == goblinAlt) //Goblin Picked
+                {
+                    if (playerInput.playerIndex == 1 -1) // player 1
+                    {
+                        GameManager.instance.player1CharacterPuck.SetActive(true);
+                        GameManager.instance.player1Character2Selected.SetActive(true);
+                        GameManager.instance.player1Character2PortraitPuck.SetActive(false);
+                        if (GameManager.instance.Character2BeenPicked == false)
+                        {
+                            GameManager.instance.player1GoblinAnimated.SetActive(true);
+                            GameManager.instance.ChangeCharacterModelIfSameIsChosen(1 - 1, goblinAlt, goblin);
+                        }
+                        else if (GameManager.instance.Character2BeenPicked == true)
+                        {
+                            GameManager.instance.player1GoblinAltAnimated.SetActive(true);
+                        }
+                        GameManager.instance.Character2BeenPicked = true;
+                    }
+
+                    else if (playerInput.playerIndex == 2 -1) //player 2
+                    {
+                        GameManager.instance.player2CharacterPuck.SetActive(true);
+                        GameManager.instance.player2Character2Selected.SetActive(true);
+                        GameManager.instance.player2Character2PortraitPuck.SetActive(false);
+                        if (GameManager.instance.Character2BeenPicked == false)
+                        {
+                            GameManager.instance.player2GoblinAnimated.SetActive(true);
+                            GameManager.instance.ChangeCharacterModelIfSameIsChosen(2 - 1, goblinAlt, goblin);
+                        }
+                        else if(GameManager.instance.Character2BeenPicked == true)
+                        {
+                            GameManager.instance.player2GoblinAltAnimated.SetActive(true);
+                        }
+                        GameManager.instance.Character2BeenPicked = true;
+                    }
+
+                }
+
+
+                if (Readied)
+                {
+                    readyAndWaiting = true;
+                }
+            }
+            //else if (context.canceled)
+            //{
+            //    Debug.Log("Active cancelled");
+            //    primed = true;
+            //    Readied = false;
+            //}
+        }
+    }
+
     public void JumpInput(CallbackContext context)
     {
         if (context.started)

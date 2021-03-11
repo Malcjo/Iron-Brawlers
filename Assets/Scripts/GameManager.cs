@@ -32,7 +32,10 @@ public class GameManager : MonoBehaviour
     public GameObject uimodule;
     [SerializeField] private int leftBounds, rightBounds, belowBounds, highBounds;
 
+
+    [Header("In Game UI")]
     [SerializeField] GameObject player1Wins, player2Wins, player1Loses, bothLose;
+    
     [SerializeField] private Slider player1UI, player2UI;
 
     [SerializeField] private GameObject player1Round1, player1Round2, player1Round3;
@@ -40,12 +43,24 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject player1Head, player1Chest, player1Legs;
     [SerializeField] private GameObject player2Head, player2Chest, player2Legs;
-    [SerializeField] private GameObject player1Character, player2Character;
-    [SerializeField] private GameObject player1Puck, player2Puck;
-    [SerializeField] private GameObject p1OBJ, p2OBJ;
 
-    [SerializeField] private Button Player1CharacterSelectButton, player2CharacterSelectButton;
 
+
+    [Header("Menu UI")]
+
+    public GameObject player1SolAnimated, player1SolAltAnimated, player1GoblinAnimated, player1GoblinAltAnimated;
+    public GameObject player2SolAnimated, player2SolAltAnimated, player2GoblinAnimated, player2GoblinAltAnimated;
+    public GameObject player1Character1PortraitPuck, player1Character2PortraitPuck;
+    public GameObject player2Character1PortraitPuck, player2Character2PortraitPuck;
+    public GameObject player1CharacterPuck, player2CharacterPuck;
+
+    public GameObject player1Character1Selected, player1Character2Selected;
+    public GameObject player2Character1Selected, player2Character2Selected;
+    public GameObject character1ButtonSelected, character2ButtonSelected;
+
+    public bool Character1BeenPicked = true;
+    public bool Character2BeenPicked = true;
+    public bool canJoin = false;
     /*
      * 0 = title
      * 1 = main meuu
@@ -89,6 +104,7 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
+        canJoin = false;
         ConnectToGameManager(0);
         if (sceneIndex == 1)
         {
@@ -103,6 +119,18 @@ public class GameManager : MonoBehaviour
         TrackPlayerRounds();
         TrackPlayersArmour();
     }
+    public void ReadyPlayer(int i)
+    {
+        switch (i)
+        {
+            case 1:
+                player1Ready = true;
+                break;
+            case 2:
+                player2Ready = true;
+                break;
+        }
+    }
     public void EnableEventSystemOBJ()
     {
         eventSystem.SetActive(true);
@@ -116,7 +144,25 @@ public class GameManager : MonoBehaviour
         system.SetSelectedGameObject(system.firstSelectedGameObject);
     }
 
+    public void ChangeCharacterModelIfSameIsChosen(int index, GameObject character, GameObject currentCharacter)
+    {
+        GameObject _characterSelect;
+        _characterSelect = CharacterSelect;
+        if (index == 1 - 1)
+        {
+            BindToPlayer bind;
 
+            bind = _characterSelect.GetComponent<BindToPlayer>();
+            bind.players[1].GetComponent<PlayerInputHandler>().SwitchModel(character, currentCharacter);
+        }
+        else if(index == 2 - 1)
+        {
+            BindToPlayer bind;
+
+            bind = _characterSelect.GetComponent<BindToPlayer>();
+            bind.players[0].GetComponent<PlayerInputHandler>().SwitchModel(character, currentCharacter);
+        }
+    }
     public void DisableEventSystemOBJ()
     {
         eventSystem.SetActive(false);
@@ -183,6 +229,8 @@ public class GameManager : MonoBehaviour
     }
     private void ResetMenu()
     {
+
+        EnabledJoining();
         SceneManager.MoveGameObjectToScene(this.gameObject, SceneManager.GetActiveScene());
         CharacterSelect.SetActive(false);
         MainMenu.SetActive(true);
@@ -214,16 +262,16 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Player 2 set ready");
             player2Ready = true;
-            player2Character.SetActive(true);
-            p2OBJ.SetActive(true);
-            player2Puck.SetActive(false);
+            player1SolAltAnimated.SetActive(true);
+            player2CharacterPuck.SetActive(true);
+            player1Character2PortraitPuck.SetActive(false);
         }
         else
         {
             player1Ready = true;
-            player1Character.SetActive(true);
-            p1OBJ.SetActive(true);
-            player1Puck.SetActive(false);
+            player1SolAnimated.SetActive(true);
+            player1CharacterPuck.SetActive(true);
+            player1Character1PortraitPuck.SetActive(false);
         }
     }
 
@@ -239,8 +287,8 @@ public class GameManager : MonoBehaviour
     {
         player1Ready = false;
         player2Ready = false;
-        player1Character.SetActive(false);
-        player2Character.SetActive(false);
+        player1SolAnimated.SetActive(false);
+        player1SolAltAnimated.SetActive(false);
     }
 
     public void ChangeSceneIndex(int index)
@@ -262,7 +310,7 @@ public class GameManager : MonoBehaviour
                 inputManager.DisableJoining();
                 break;
             case 2:
-                inputManager.EnableJoining();
+                //inputManager.EnableJoining();
                 break;
             case 3:
                 inputManager.DisableJoining();
@@ -288,6 +336,21 @@ public class GameManager : MonoBehaviour
                 break;
         }
     }
+    public void EnabledJoining()
+    {
+        StartCoroutine(DelayedEnabled());
+    }
+    public void DisableJoining()
+    {
+        inputManager.DisableJoining();
+    }
+    IEnumerator DelayedEnabled()
+    {
+        yield return new WaitForSeconds(0.5f);
+        canJoin = true;
+        inputManager.EnableJoining();
+    }
+
     public int draws;
     public void TimerRunOut()
     {
