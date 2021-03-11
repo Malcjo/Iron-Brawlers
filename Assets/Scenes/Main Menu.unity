@@ -89468,12 +89468,12 @@ MonoBehaviour:
   player2Legs: {fileID: 747330275}
   player1SolAnimated: {fileID: 8213258392532201648}
   player1SolAltAnimated: {fileID: 1473742459}
-  player1GoblinAnimated: {fileID: 8213258392532201648}
-  player1GoblinAltAnimated: {fileID: 1473742459}
+  player1GoblinAnimated: {fileID: 1473742459}
+  player1GoblinAltAnimated: {fileID: 8213258392532201648}
   player2SolAnimated: {fileID: 403873488}
   player2SolAltAnimated: {fileID: 1665105250521899240}
-  player2GoblinAnimated: {fileID: 403873488}
-  player2GoblinAltAnimated: {fileID: 1665105250521899240}
+  player2GoblinAnimated: {fileID: 1665105250521899240}
+  player2GoblinAltAnimated: {fileID: 403873488}
   player1Character1PortraitPuck: {fileID: 1676064430}
   player1Character2PortraitPuck: {fileID: 169023888}
   player2Character1PortraitPuck: {fileID: 658674536}

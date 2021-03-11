@@ -144,7 +144,7 @@ public class GameManager : MonoBehaviour
         system.SetSelectedGameObject(system.firstSelectedGameObject);
     }
 
-    public void ChangeCharacterModelIfSameIsChosen(int index, GameObject character, GameObject currentCharacter)
+    public void ChangeCharacterModelIfSameIsChosen(int index, GameObject character, float currentCharacter)
     {
         GameObject _characterSelect;
         _characterSelect = CharacterSelect;
