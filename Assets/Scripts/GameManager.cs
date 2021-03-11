@@ -47,7 +47,9 @@ public class GameManager : MonoBehaviour
 
 
     [Header("Menu UI")]
-    public GameObject player1Character, player2Character;
+
+    public GameObject player1SolAnimated, player1SolAltAnimated, player1GoblinAnimated, player1GoblinAltAnimated;
+    public GameObject player2SolAnimated, player2SolAltAnimated, player2GoblinAnimated, player2GoblinAltAnimated;
     public GameObject player1Character1PortraitPuck, player1Character2PortraitPuck;
     public GameObject player2Character1PortraitPuck, player2Character2PortraitPuck;
     public GameObject player1CharacterPuck, player2CharacterPuck;
@@ -142,7 +144,25 @@ public class GameManager : MonoBehaviour
         system.SetSelectedGameObject(system.firstSelectedGameObject);
     }
 
+    public void ChangeCharacterModelIfSameIsChosen(int index, GameObject character, GameObject currentCharacter)
+    {
+        GameObject _characterSelect;
+        _characterSelect = CharacterSelect;
+        if (index == 1 - 1)
+        {
+            BindToPlayer bind;
 
+            bind = _characterSelect.GetComponent<BindToPlayer>();
+            bind.players[1].GetComponent<PlayerInputHandler>().SwitchModel(character, currentCharacter);
+        }
+        else if(index == 2 - 1)
+        {
+            BindToPlayer bind;
+
+            bind = _characterSelect.GetComponent<BindToPlayer>();
+            bind.players[0].GetComponent<PlayerInputHandler>().SwitchModel(character, currentCharacter);
+        }
+    }
     public void DisableEventSystemOBJ()
     {
         eventSystem.SetActive(false);
@@ -242,14 +262,14 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Player 2 set ready");
             player2Ready = true;
-            player2Character.SetActive(true);
+            player1SolAltAnimated.SetActive(true);
             player2CharacterPuck.SetActive(true);
             player1Character2PortraitPuck.SetActive(false);
         }
         else
         {
             player1Ready = true;
-            player1Character.SetActive(true);
+            player1SolAnimated.SetActive(true);
             player1CharacterPuck.SetActive(true);
             player1Character1PortraitPuck.SetActive(false);
         }
@@ -267,8 +287,8 @@ public class GameManager : MonoBehaviour
     {
         player1Ready = false;
         player2Ready = false;
-        player1Character.SetActive(false);
-        player2Character.SetActive(false);
+        player1SolAnimated.SetActive(false);
+        player1SolAltAnimated.SetActive(false);
     }
 
     public void ChangeSceneIndex(int index)

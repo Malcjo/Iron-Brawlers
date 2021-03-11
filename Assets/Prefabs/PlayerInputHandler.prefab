@@ -276,7 +276,10 @@ MonoBehaviour:
   playerPrefab: {fileID: 3180238274731884556, guid: 089322fbd0eb25b4e9329da7f2b24dcd,
     type: 3}
   sol: {fileID: 3180238274731884556, guid: 089322fbd0eb25b4e9329da7f2b24dcd, type: 3}
+  solAlt: {fileID: 3180238274731884556, guid: 8ade5203cc890754d9b1b3f8cac6e34d, type: 3}
   goblin: {fileID: 3180238274731884556, guid: 8ade5203cc890754d9b1b3f8cac6e34d, type: 3}
+  goblinAlt: {fileID: 3180238274731884556, guid: 8ade5203cc890754d9b1b3f8cac6e34d,
+    type: 3}
   PlayerIndex: 0
   testfloat: 0.0643383
   currentScene:

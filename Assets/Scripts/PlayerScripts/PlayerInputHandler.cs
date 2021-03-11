@@ -13,10 +13,12 @@ public class PlayerInputHandler : MonoBehaviour
     private PlayerInput playerInput;
     //private PlayerControls playerControls;
     private Player.PlayerIndex _PlayerNumber;
-    [SerializeField] GameObject playerPrefab;
+    [SerializeField] public GameObject playerPrefab;
 
     [SerializeField] private GameObject sol = null;
+    [SerializeField] private GameObject solAlt = null;
     [SerializeField] private GameObject goblin = null;
+    [SerializeField] private GameObject goblinAlt = null;
     GameObject playerCharacter = null;
 
     public int PlayerIndex;
@@ -189,13 +191,13 @@ public class PlayerInputHandler : MonoBehaviour
                     GameManager.instance.player2Character1PortraitPuck.SetActive(true);
                     GameManager.instance.player2Character2PortraitPuck.SetActive(false);
                 }
-                if (GameManager.instance.Character1BeenPicked)
+                if (GameManager.instance.Character1BeenPicked == false)
                 {
                     playerPrefab = sol;
                 }
-                else
+                else if(GameManager.instance.Character1BeenPicked == true)
                 {
-                    playerPrefab = sol;
+                    playerPrefab = solAlt;
                 }
                 break;
             case PlayerCharacterEnum.Characters.Goblin:
@@ -209,13 +211,13 @@ public class PlayerInputHandler : MonoBehaviour
                     GameManager.instance.player2Character1PortraitPuck.SetActive(false);
                     GameManager.instance.player2Character2PortraitPuck.SetActive(true);
                 }
-                if (GameManager.instance.Character2BeenPicked)
+                if (GameManager.instance.Character2BeenPicked == false)
                 {
                     playerPrefab = goblin;
                 }
-                else
+                else if(GameManager.instance.Character2BeenPicked == true)
                 {
-                    playerPrefab = goblin;
+                    playerPrefab = goblinAlt;
                 }
                 break;
         }
@@ -277,7 +279,17 @@ public class PlayerInputHandler : MonoBehaviour
             }
         }
     }
-
+    public void SwitchModel(GameObject character, GameObject currentCharacter)
+    {
+        Debug.Log("Fire!");
+        if(Readied == false)
+        {
+            if (playerPrefab == currentCharacter)
+            {
+                playerPrefab = character;
+            }
+        }
+    }
     public void Activate(CallbackContext context)
     {
         if (canAct)
@@ -286,34 +298,82 @@ public class PlayerInputHandler : MonoBehaviour
             {
                 primed = false;
                 Readied = true;
-                if(playerPrefab == sol)
+                if(playerPrefab == sol || playerPrefab == solAlt) //Sol Picked
                 {
-                    GameManager.instance.Character1BeenPicked = false;
-                    if(playerInput.playerIndex == 1 -1)
+
+                    if(playerInput.playerIndex == 1 -1) // player 1
                     {
                         GameManager.instance.player1Character1Selected.SetActive(true);
                         GameManager.instance.player1Character1PortraitPuck.SetActive(false);
+                        if(GameManager.instance.Character1BeenPicked == false)
+                        {
+                            GameManager.instance.player1SolAnimated.SetActive(true);
+                            GameManager.instance.ChangeCharacterModelIfSameIsChosen(1 - 1, solAlt, sol);
+                        }
+                        else if(GameManager.instance.Character1BeenPicked == true)
+                        {
+                            GameManager.instance.player1SolAltAnimated.SetActive(true);
+                        }
+
+                        GameManager.instance.Character1BeenPicked = true;
                     }
-                    else if (playerInput.playerIndex == 2 -1)
+
+                    else if (playerInput.playerIndex == 2 -1) // player 2
                     {
                         GameManager.instance.player2Character1Selected.SetActive(true);
                         GameManager.instance.player2Character1PortraitPuck.SetActive(false);
+                        if (GameManager.instance.Character1BeenPicked == false)
+                        {
+                            GameManager.instance.player2SolAnimated.SetActive(true);
+                            GameManager.instance.ChangeCharacterModelIfSameIsChosen(2 - 1, solAlt, sol);
+                        }
+                        else if(GameManager.instance.Character1BeenPicked == true)
+                        {
+                            GameManager.instance.player2SolAltAnimated.SetActive(true);
+                        }
+                        GameManager.instance.Character1BeenPicked = true;
                     }
+
                 }
-                else if(playerPrefab == goblin)
+
+
+                else if(playerPrefab == goblin || playerPrefab == goblinAlt) //Goblin Picked
                 {
-                    GameManager.instance.Character2BeenPicked = false;
-                    if (playerInput.playerIndex == 1 -1)
+                    if (playerInput.playerIndex == 1 -1) // player 1
                     {
                         GameManager.instance.player1Character2Selected.SetActive(true);
                         GameManager.instance.player1Character2PortraitPuck.SetActive(false);
+                        if (GameManager.instance.Character2BeenPicked == false)
+                        {
+                            GameManager.instance.player1GoblinAnimated.SetActive(true);
+                            GameManager.instance.ChangeCharacterModelIfSameIsChosen(1 - 1, goblinAlt, goblin);
+                        }
+                        else if (GameManager.instance.Character2BeenPicked == true)
+                        {
+                            GameManager.instance.player1GoblinAltAnimated.SetActive(true);
+                        }
+                        GameManager.instance.Character2BeenPicked = true;
                     }
-                    else if (playerInput.playerIndex == 2 -1)
+
+                    else if (playerInput.playerIndex == 2 -1) //player 2
                     {
                         GameManager.instance.player2Character2Selected.SetActive(true);
                         GameManager.instance.player2Character2PortraitPuck.SetActive(false);
+                        if (GameManager.instance.Character2BeenPicked == false)
+                        {
+                            GameManager.instance.player2GoblinAnimated.SetActive(true);
+                            GameManager.instance.ChangeCharacterModelIfSameIsChosen(2 - 1, goblinAlt, goblin);
+                        }
+                        else if(GameManager.instance.Character2BeenPicked == true)
+                        {
+                            GameManager.instance.player2GoblinAltAnimated.SetActive(true);
+                        }
+                        GameManager.instance.Character2BeenPicked = true;
                     }
+
                 }
+
+
                 if (Readied)
                 {
                     readyAndWaiting = true;
