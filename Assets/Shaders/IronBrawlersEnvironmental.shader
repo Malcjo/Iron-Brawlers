@@ -32,7 +32,7 @@ Shader "IronBrawlersEnvironmental"
 		[Header(Wind)]
 		[Toggle(TCP2_WIND)] _UseWind ("Enable Wind", Float) = 0
 		_WindDirection ("Direction", Vector) = (1,0,0,0)
-		_WindStrength ("Strength", Range(0,0.2)) = 0.025
+		_WindStrength ("Strength", Range(0,1)) = 0.025
 		[NoScaleOffset] _WindMask ("Mask", 2D) = "white" {}
 		[NoScaleOffset] _WindTexture ("Wind Texture", 2D) = "gray" {}
 		_WindTexTilingSpeed ("Tiling (XY) Speed (ZW)", Vector) = (0.2,0.2,0.1,0.1)
@@ -552,5 +552,5 @@ Shader "IronBrawlersEnvironmental"
 	CustomEditor "ToonyColorsPro.ShaderGenerator.MaterialInspector_SG2"
 }
 
-/* TCP_DATA u config(unity:"2020.1.3f1";ver:"2.6.0";tmplt:"SG2_Template_URP";features:list["UNITY_5_4","UNITY_5_5","UNITY_5_6","UNITY_2017_1","UNITY_2018_1","UNITY_2018_2","UNITY_2018_3","UNITY_2019_1","UNITY_2019_2","UNITY_2019_3","BUMP","AUTO_TRANSPARENT_BLENDING","WIND_ANIM","WIND_SHADER_FEATURE","WIND_ANIM_TEX","FOG","TEMPLATE_LWRP"];flags:list[];flags_extra:dict[];keywords:dict[RENDER_TYPE="Opaque",RampTextureDrawer="[TCP2Gradient]",RampTextureLabel="Ramp Texture",SHADER_TARGET="3.0"];shaderProperties:list[,,,,,,,,,,,,,sp(name:"Wind Mask";imps:list[imp_mp_texture(uto:False;tov:"";tov_lbl:"";gto:False;sbt:False;scr:False;scv:"";scv_lbl:"";gsc:False;roff:False;goff:False;sin_anm:False;notile:False;triplanar_local:False;def:"white";locked_uv:False;uv:0;cc:3;chan:"RGB";mip:0;mipprop:False;ssuv_vert:False;ssuv_obj:False;uv_type:Texcoord;uv_chan:"XZ";uv_shaderproperty:__NULL__;prop:"_WindMask";md:"";custom:False;refs:"";guid:"6ce4ecd8-9bec-49ab-9e3b-183c1194c361";op:Multiply;lbl:"Mask";gpu_inst:False;locked:False;impl_index:-1)])];customTextures:list[];codeInjection:codeInjection(injectedFiles:list[];mark:False)) */
-/* TCP_HASH 1deab98ea2f1d2f44596109a3dfdc410 */
+/* TCP_DATA u config(unity:"2020.1.3f1";ver:"2.6.0";tmplt:"SG2_Template_URP";features:list["UNITY_5_4","UNITY_5_5","UNITY_5_6","UNITY_2017_1","UNITY_2018_1","UNITY_2018_2","UNITY_2018_3","UNITY_2019_1","UNITY_2019_2","UNITY_2019_3","BUMP","AUTO_TRANSPARENT_BLENDING","WIND_ANIM","WIND_SHADER_FEATURE","WIND_ANIM_TEX","FOG","TEMPLATE_LWRP"];flags:list[];flags_extra:dict[];keywords:dict[RENDER_TYPE="Opaque",RampTextureDrawer="[TCP2Gradient]",RampTextureLabel="Ramp Texture",SHADER_TARGET="3.0"];shaderProperties:list[,,,,,,,,,,,,sp(name:"Wind Strength";imps:list[imp_mp_range(def:0.025;min:0;max:1;prop:"_WindStrength";md:"";custom:False;refs:"";guid:"0814880b-3651-4ce6-866a-24eb7f2eddc7";op:Multiply;lbl:"Strength";gpu_inst:False;locked:False;impl_index:0)]),sp(name:"Wind Mask";imps:list[imp_mp_texture(uto:False;tov:"";tov_lbl:"";gto:False;sbt:False;scr:False;scv:"";scv_lbl:"";gsc:False;roff:False;goff:False;sin_anm:False;notile:False;triplanar_local:False;def:"white";locked_uv:False;uv:0;cc:3;chan:"RGB";mip:0;mipprop:False;ssuv_vert:False;ssuv_obj:False;uv_type:Texcoord;uv_chan:"XZ";uv_shaderproperty:__NULL__;prop:"_WindMask";md:"";custom:False;refs:"";guid:"6ce4ecd8-9bec-49ab-9e3b-183c1194c361";op:Multiply;lbl:"Mask";gpu_inst:False;locked:False;impl_index:-1)])];customTextures:list[];codeInjection:codeInjection(injectedFiles:list[];mark:False)) */
+/* TCP_HASH 074106d156eef7b789f844bfbbb7884c */
