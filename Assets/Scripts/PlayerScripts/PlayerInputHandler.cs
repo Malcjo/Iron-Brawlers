@@ -303,6 +303,7 @@ public class PlayerInputHandler : MonoBehaviour
 
                     if(playerInput.playerIndex == 1 -1) // player 1
                     {
+                        GameManager.instance.player1CharacterPuck.SetActive(true);
                         GameManager.instance.player1Character1Selected.SetActive(true);
                         GameManager.instance.player1Character1PortraitPuck.SetActive(false);
                         if(GameManager.instance.Character1BeenPicked == false)
@@ -320,6 +321,7 @@ public class PlayerInputHandler : MonoBehaviour
 
                     else if (playerInput.playerIndex == 2 -1) // player 2
                     {
+                        GameManager.instance.player2CharacterPuck.SetActive(true);
                         GameManager.instance.player2Character1Selected.SetActive(true);
                         GameManager.instance.player2Character1PortraitPuck.SetActive(false);
                         if (GameManager.instance.Character1BeenPicked == false)
@@ -341,6 +343,7 @@ public class PlayerInputHandler : MonoBehaviour
                 {
                     if (playerInput.playerIndex == 1 -1) // player 1
                     {
+                        GameManager.instance.player1CharacterPuck.SetActive(true);
                         GameManager.instance.player1Character2Selected.SetActive(true);
                         GameManager.instance.player1Character2PortraitPuck.SetActive(false);
                         if (GameManager.instance.Character2BeenPicked == false)
@@ -357,6 +360,7 @@ public class PlayerInputHandler : MonoBehaviour
 
                     else if (playerInput.playerIndex == 2 -1) //player 2
                     {
+                        GameManager.instance.player2CharacterPuck.SetActive(true);
                         GameManager.instance.player2Character2Selected.SetActive(true);
                         GameManager.instance.player2Character2PortraitPuck.SetActive(false);
                         if (GameManager.instance.Character2BeenPicked == false)
