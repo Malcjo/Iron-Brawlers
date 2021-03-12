@@ -77,7 +77,7 @@ public class PlayerInputHandler : MonoBehaviour
         {
             print("player in null");
 
-            if (SceneManager.GetActiveScene().buildIndex == SceneManager.GetSceneByBuildIndex(1).buildIndex)
+            if (SceneManager.GetActiveScene().buildIndex == SceneManager.GetSceneByBuildIndex(1).buildIndex || SceneManager.GetActiveScene().buildIndex == SceneManager.GetSceneByBuildIndex(2).buildIndex)
             {
                 currentScene = SceneManager.GetActiveScene();
                 StartGame();
@@ -91,6 +91,7 @@ public class PlayerInputHandler : MonoBehaviour
     private void StartGame()
     {
         playerCharacter = Instantiate(playerPrefab);
+        playerCharacter.SetActive(true);
         GameManager.instance.AddPlayerToList(playerCharacter);
         cameraScript = GameManager.instance.GetCameraScript();
         cameraScript.AddPlayers(playerCharacter);

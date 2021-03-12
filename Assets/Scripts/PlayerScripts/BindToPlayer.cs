@@ -40,14 +40,38 @@ public class BindToPlayer : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Alpha9))
+        {
+            LevelSelectNumber = 1;
+            SetLevelSelectedNumber();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            LevelSelectNumber = 2;
+            SetLevelSelectedNumber();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha8))
+        {
+            GameManager.instance.StartGame = true;
+        }
         if (SceneManager.GetActiveScene() == menuScene)
         {
             if (GameManager.instance.GetPlayer1Ready() == true && GameManager.instance.GetPlayer2Ready() == true)
             {
-                StartGame();
+                GameManager.instance.levelSelect = true;
+                if(GameManager.instance.StartGame == true)
+                {
+                    StartGame();
+                }
             }
         }
     }
+    private void SetLevelSelectedNumber()
+    {
+        GameManager.instance.LevelIDNumber = LevelSelectNumber;
+    }
+    [Range(1,2)]
+    [SerializeField] private int LevelSelectNumber = 1;
     private void StartGame()
     {
         StartCoroutine(DelayStartGame());
@@ -58,7 +82,7 @@ public class BindToPlayer : MonoBehaviour
         GameManager.instance.DisableJoining();
         GameManager.instance.ResetPlayersReady();
         GameManager.instance.DisableMenuCanvas();
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(LevelSelectNumber);
         GameManager.instance.ConnectToGameManager(1);
         GameManager.instance.inGame = true;
     }

@@ -32,7 +32,6 @@ public class GameManager : MonoBehaviour
     public GameObject uimodule;
     [SerializeField] private int leftBounds, rightBounds, belowBounds, highBounds;
 
-
     [Header("In Game UI")]
     [SerializeField] GameObject player1Wins, player2Wins, player1Loses, bothLose;
     
@@ -61,6 +60,9 @@ public class GameManager : MonoBehaviour
     public bool Character1BeenPicked = true;
     public bool Character2BeenPicked = true;
     public bool canJoin = false;
+
+    public bool StartGame = false;
+    public bool levelSelect = false;
     /*
      * 0 = title
      * 1 = main meuu
@@ -506,6 +508,7 @@ public class GameManager : MonoBehaviour
         TrackPlayer1Rounds();
         TrackPlayer2Rounds();
     }
+    public int LevelIDNumber;
     private void TrackPlayer1Rounds()
     {
         switch (player1Rounds)
